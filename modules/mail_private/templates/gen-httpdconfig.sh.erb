@@ -7,7 +7,7 @@ fi
 
 BASE=<%= @archives_www %>/mod_mbox/
 PMCS_MACRO=/etc/apache2/sites-enabled/mail-private-pmcs.macro
-COMMITTERS_MACRO=/dev/null
+COMMITTERS_MACRO=/etc/apache2/sites-enabled/mail-private-committers.macro
 
 echo "Reading $BASE"
 echo "Writing  PMCS_MACRO=$PMCS_MACRO and COMMITTERS_MACRO=$COMMITTERS_MACRO"
@@ -24,6 +24,17 @@ LDAPLIST=" $(ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org cn=* cn
 for DIR in `ls -1 ${BASE}`; do
 
   case $DIR in
+    # Handle committer access first (the PMC - if any - is not relevant)
+    # N.B. infrastructure@ was renamed to users@infra
+    committers|committers-cvs|infrastructure|infra-users|jobs|site-cvs|site-dev|concom)
+      echo "* ${DIR}... setting access to all ASF committers"
+
+      cat <<EOT >>${COMMITTERS_MACRO}
+Use MacroMboxCommitters "${DIR}"
+EOT
+
+      continue
+      ;;
     incubator-*-private|incubator-*-security)
       FALLBACK='incubator'
       PMC=`echo ${DIR} | cut -f2 -d'-'`
@@ -65,14 +76,6 @@ for DIR in `ls -1 ${BASE}`; do
 
     cat <<EOT >>${PMCS_MACRO}
 Use MacroMboxPMC "${DIR}" "${PMC}" "${LDAPCN}"
-EOT
-
-  elif [ "x$DIR" = "x"committers ] || [ "x$DIR" = "x"committers-cvs ] || [ "x$DIR" = "x"infrastructure ] || [ "x$DIR" = "x"jobs ] || [ "x$DIR" = "x"site-cvs ] || [ "x$DIR" = "x"site-dev ] || [ "x$DIR" = "x"concom ]; then
-    # NOTE: do not add the 's/-.*//' here; infrastructure-private@ and concom-private@ aren't committers-readable
-    echo "* ${DIR}... setting access to all ASF committers"
-
-    cat <<EOT >>${COMMITTERS_MACRO}
-Use MacroMboxCommitters "${DIR}"
 EOT
 
   else
