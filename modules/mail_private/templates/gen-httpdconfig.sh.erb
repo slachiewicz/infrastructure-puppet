@@ -76,10 +76,11 @@ Use MacroMboxCommitters "${DIR}"
 EOT
 
   else
-    echo "* ${DIR}... I can't seem to find an LDAP PMC group, so locking the access to ASF Members only!";
+    echo "* ${DIR}... I can't seem to find an LDAP PMC group, so default the access to ASF Members only!";
 
     cat <<EOT >>${PMCS_MACRO}
-Use MacroMboxMembers "${DIR}"
+# No need to specify member-only access as that is the default
+# Use MacroMboxMembers "${DIR}"
 EOT
 
   fi
