@@ -85,10 +85,10 @@ class mail_private (
       ensure => 'directory',
       mode   => '0755';
     "${pmc_www}/index.html-template":
-      ensure  => 'present',
-      owner   => $username,
-      group   => $username,
-      mode    => '0444',
+      ensure => 'present',
+      owner  => $username,
+      group  => $username,
+      mode   => '0444',
       source => 'puppet:///modules/mail_private/pmc/index.html-template';
     $apache2_bin:
       ensure  => 'directory',
@@ -191,20 +191,29 @@ class mail_private (
       minute      => '43',
       hour        => '*/4',
       command     => "${install_dir}/gen-httpdconfig.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
 
     'populate-pmc-index':
       user        => root,
       minute      => '13',
       hour        => '*/4',
       command     => "${install_dir}/update-pmc-dropdown.sh",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
 
     'refresh-mail-lists':
       user        => modmbox,
       minute      => '20',
       command     => "${install_dir}/refresh-index.pl | grep -v 'Reading List-Post header from .* failed' > /dev/null",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+      environment => [
+        'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+        'SHELL=/bin/sh'
+      ];
   }
 
 }
