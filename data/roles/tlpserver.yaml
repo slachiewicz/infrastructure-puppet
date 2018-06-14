@@ -2227,7 +2227,7 @@ vhosts_asf::vhosts::vhosts:
       SetEnvIf Host ^([^.]+) HOST_UNQUALIFIED=$1
       # Filter website to add Attic header if marker directory is present
       LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'"> 
+      <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
 
@@ -2317,7 +2317,7 @@ vhosts_asf::vhosts::vhosts:
       SetEnvIf Host ^([^.]+) HOST_UNQUALIFIED=$1
       # Filter website to add Attic header if marker directory is present
       LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/var/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'"> 
+      <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
 
