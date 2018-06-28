@@ -5,8 +5,12 @@ import xml.etree.cElementTree as ET
 import os
 import sys
 
-ROOT="/x1/mail-archives/mod_mbox"
-OUTFILE = "/x1/mail-archives.apache.org/mod_mbox/index.html"
+if len(sys.argv) < 2:
+  print("Usage: site-index.py $output-file")
+  sys.exit(-1)
+
+ROOT="/x1/mail-archives/mod_mbox" # TODO ought to be a param?
+OUTFILE = sys.argv[1]
 
 OUT = ""
 # Get the list of podlings from a list the Incubator PMC maintains.
