@@ -930,8 +930,8 @@ buildbot = rw
 [/httpcomponents/site]
 @httpcomponents = rw
 
-# INFRA-15083
-[/httpcomponents/httpasyncclient/branches/4.1.x]
+# INFRA-16738: This needs r/w still
+[/httpcomponents/httpasyncclient]
 @httpcomponents = rw
 
 [/httpd]
