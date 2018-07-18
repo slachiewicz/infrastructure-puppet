@@ -119,8 +119,8 @@ class mboxer (
       recipient => "|python3 ${install_base}/tools/archive.py --lid zztest@infra.apache.org";
 }
 
-  exec {"newaliases" :
-    command     => "/usr/bin/newaliases",
+  exec {'newaliases' :
+    command     => '/usr/bin/newaliases',
     refreshonly => true,
   }
 

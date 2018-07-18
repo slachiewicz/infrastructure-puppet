@@ -20,15 +20,15 @@ class rsync_asf (
 
   file {
     'rsync-offsite.sh':
-      path    => $scriptpath,
       ensure  => present,
+      path    => $scriptpath,
       mode    => '0755',
       owner   => 'root',
       group   => 'root',
       content => template('rsync_asf/rsync-offsite.sh.erb');
     $dumplist:
-      path    => $dumplist,
       ensure  => present,
+      path    => $dumplist,
       mode    => '0755',
       owner   => 'root',
       group   => 'root',
