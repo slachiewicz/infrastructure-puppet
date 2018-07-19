@@ -10,6 +10,7 @@ class jenkins_slave_windows::download (
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
   $nant = $jenkins_slave_windows::params::nant,
+  $forrest = $jenkins_slave_windows::params::forrest,
 ) {
   include jenkins_slave_windows::params
   #### Download CMake 3.7.2 from Bintray
@@ -110,6 +111,12 @@ class jenkins_slave_windows::download (
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",
         destination_directory => 'F:\jenkins\tools\nant\zips',
       }
+  #### Download forrest ####
+  define download_forrest($forrest_version = $title){
+      download_file { "Download apache-forrest-${forrest_version} zip from asf code archives" :
+        url                   => "http://archive.apache.org/dist/forrest/apache-forrest-${forrest_version}.zip",
+        destination_directory => 'F:\jenkins\tools\forrest\zips',
+      }
     }
 
   download_ant { $ant:}
@@ -120,5 +127,5 @@ class jenkins_slave_windows::download (
   download_jdk { $jdk:}
   download_maven { $maven:}
   download_nant { $nant:}
-
+  download_forrest { $forrest;}
 }

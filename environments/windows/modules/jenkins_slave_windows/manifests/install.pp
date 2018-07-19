@@ -10,6 +10,7 @@ class jenkins_slave_windows::install (
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
   $nant = $jenkins_slave_windows::params::nant,
+  $forrest = $jenkins_slave_windows::params::forrest,
 ) {
 
   include jenkins_slave_windows::params
@@ -157,6 +158,19 @@ extract_gradle { $gradle:}
     }
 
   extract_nant { $nant:}
+
+#################################################################
+
+###################### Setup Forrest #############################
+  define extract_forrest($forrest_version = $title){
+      exec { "extract ${forrest_version}" :
+        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\forrest\\zips\\apache-forrest-${forrest_version}.zip -DestinationPath F:\\jenkins\\tools\\forrest\\${forrest_version}", # lint:ignore:140chars
+        provider => powershell,
+        creates  => "F:\\jenkins\\tools\\forrest\\${forrest_version}\\bin\\forrest.bat",
+      }
+    }
+
+  extract_forrest { $forrest:}
 
 #################################################################
 }
