@@ -3,7 +3,7 @@
 class buildbot_asf (
   $username             = 'buildmaster',
   $groupname            = 'buildmaster',
-  $venv_dir             = "/x1/buildmaster",
+  $venv_dir             = '/x1/buildmaster',
 
   $bb_version           = '0.8.14',
 
@@ -24,7 +24,7 @@ class buildbot_asf (
   $log_horizon          = '40',
   $build_cache_size     = '50',
   $change_cache_size    = '10000',
-  $projects_path        = "/x1/buildmaster/master1/projects",
+  $projects_path        = '/x1/buildmaster/master1/projects',
 
   # below are contained in eyaml
 
