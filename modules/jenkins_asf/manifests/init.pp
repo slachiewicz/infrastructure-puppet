@@ -184,6 +184,12 @@ file {
     "${current_dir}/conf/context.xml":
       content => template('jenkins_asf/context.xml.erb'),
       mode    => '0644';
+    "${jenkins_home}/delete-workspace-disabled-jobs.sh":
+      ensure => 'present',
+      owner  => $username,
+      group  => $groupname,
+      mode   => '0755',
+      source => 'puppet:///modules/jenkins_asf/delete-workspace-disabled-jobs.sh';
   }
 
 
