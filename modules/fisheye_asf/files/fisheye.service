@@ -8,7 +8,7 @@ ExecStop=/usr/local/fisheye/current/bin/stop.sh
 User=fisheye
 Group=fisheye
 Environment="FISHEYE_INST=/usr/local/fisheye/fisheye-data"
-Environment="FISHEYE_OPTS=-Xmx4096m -Xms1024m -XX:MaxMetaspaceSize=4096m"
+Environment="FISHEYE_OPTS=-Xmx16384m -Xms16384m -XX:MaxMetaspaceSize=2048m -server -XX:+AlwaysPreTouch -XX:+UseG1GC -XX:+ExplicitGCInvokesConcurrent -XX:+ParallelRefProcEnabled -XX:+UseStringDeduplication"
 
 [Install]
 WantedBy=multi-user.target
