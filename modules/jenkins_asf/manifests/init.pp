@@ -190,6 +190,12 @@ file {
       group  => $groupname,
       mode   => '0755',
       source => 'puppet:///modules/jenkins_asf/delete-workspace-disabled-jobs.sh';
+    "${jenkins_home}/trim-workspace-all-jobs.sh":
+      ensure => 'present',
+      owner  => $username,
+      group  => $groupname,
+      mode   => '0755',
+      source => 'puppet:///modules/jenkins_asf/trim-workspace-all-jobs.sh';
   }
 
 
