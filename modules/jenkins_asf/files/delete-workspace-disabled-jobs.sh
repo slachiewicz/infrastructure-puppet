@@ -17,16 +17,18 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# This script checks jenkins config for any disabled jobs.
-# It then checks the jenkins config for a list of nodes.
-# It then sends a text file list of disabled jobs to all 
-# those nodes. Then it SSH as the jenkins user to each node 
-# in turn , iterating through the text file looking for 
-# matching directories. If any are found, it grabs the size
-# of the directory for logging purposes and then goes ahead 
-# and deletes that directory and its contents.
-# Finally, it sends a log file back to jenkins master 
-# detailing what it did, before then moving to the next node.
+###############################################################
+# This script checks jenkins config for any disabled jobs.    #
+# It then checks the jenkins config for a list of nodes.      #
+# It then sends a text file list of disabled jobs to all      #
+# those nodes. Then it SSH as the jenkins user to each node   #
+# in turn , iterating through the text file looking for       #
+# matching directories. If any are found, it grabs the size   #
+# of the directory for logging purposes and then goes ahead   #
+# and deletes that directory and its contents.                #
+# Finally, it sends a log file back to jenkins master         #
+# detailing what it did, before then moving to the next node. #
+###############################################################
 
 RUN_AS_USER=jenkins
 NODES_DIR=/x1/jenkins/jenkins-home/nodes/

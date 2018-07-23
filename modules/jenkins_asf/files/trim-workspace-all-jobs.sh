@@ -17,10 +17,12 @@
 # limitations under the License.                                           #
 ############################################################################
 
-# This script does a find for files older than an optional 
-# arg or default value and deletes files that match. It 
-# searches in directories based on $JENKINS_HOME and below
-# based on a list provided below.
+############################################################
+# This script does a find for files older than an optional #
+# arg or default value and deletes files that match. It    #
+# searches in directories based on $JENKINS_HOME and below #
+# based on a list provided in array below.                 #
+############################################################
 
 RUN_AS_USER=jenkins
 NODES_DIR=/x1/jenkins/jenkins-home/nodes/
