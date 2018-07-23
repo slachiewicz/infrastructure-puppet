@@ -26,6 +26,11 @@ RUN_AS_USER=jenkins
 NODES_DIR=/x1/jenkins/jenkins-home/nodes/
 NODES_LIST='/tmp/nodeslist2.txt'
 LOGS_DIR='/x1/jenkins/logs'
+MASTER_HOSTNAME='jenkins01.apache.org'
+HOSTNAME=`/bin/hostname -f`
+
+# Only makes sense to run this on jenkins master.
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]; then
 
 # node specific vars
 JENKINS_HOME=/home/jenkins
@@ -92,4 +97,7 @@ EOT
   rsync $node:/tmp/diskcleanup.txt $LOGS_DIR/$node-diskcleanup-`date +%F`.txt
   done < $NODES_LIST # end of while read
 fi # end nodes
-
+else
+echo "Please run this run on the Jenkins master only."
+  exit1
+fi

@@ -34,6 +34,11 @@ JOBS_DIR=/x1/jenkins/jenkins-home/jobs/
 DISABLED_JOBS_LIST='/tmp/disabled-jobs-list.txt'
 NODES_LIST='/tmp/nodeslist.txt'
 LOGS_DIR='/x1/jenkins/logs'
+MASTER_HOSTNAME='jenkins01.apache.org'
+HOSTNAME=`/bin/hostname -f`
+
+# Only makes sense to run this on jenkins master.
+if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]; then
 
 # run this script as the jenkins user
 if [[ `whoami` != $RUN_AS_USER ]];then
@@ -81,4 +86,7 @@ EOT
   rsync $node:/tmp/node-found-dirs.txt $LOGS_DIR/$node-`date`.txt
   done < $NODES_LIST # end of iterating all nodes
 fi
-
+else
+echo "Please run this run on the Jenkins master only."
+  exit1
+fi
