@@ -1,5 +1,0 @@
----
-classes:
-  - build_slaves::jenkins
-  - orthrus
-  - loggy
