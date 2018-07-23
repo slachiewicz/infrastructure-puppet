@@ -198,6 +198,25 @@ file {
       source => 'puppet:///modules/jenkins_asf/trim-workspace-all-jobs.sh';
   }
 
+# cron jobs
+
+cron {
+'delete-workspace-disabled-jobs-monthly':
+      user     => $username,
+      minute   => '37',
+      hour     => '03',
+      monthday => '2',
+      command  => "/home/${username}/jenkins-home/delete-workspace-disabled-jobs.sh"
+      require  => User[$username];
+
+'trim-workspaces-all-jobs-weekly':
+      user    => $username,
+      minute  => '19',
+      hour    => '04',
+      weekday => '6',
+      command => "/home/${username}/jenkins-home/trim-workspace-all-jobs.sh"
+      require => User[$username];
+}
 
   ::systemd::unit_file { 'jenkins.service':
     content => template('jenkins_asf/jenkins.service.erb'),
