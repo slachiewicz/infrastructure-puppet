@@ -100,6 +100,6 @@ EOT
   done < $NODES_LIST # end of while read
 fi # end nodes
 else
-echo "Please run this scipt on the Jenkins master only."
+echo "Please run this script on the Jenkins master only."
   exit 1
 fi
