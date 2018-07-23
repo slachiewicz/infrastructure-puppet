@@ -127,5 +127,5 @@ class jenkins_slave_windows::download (
   download_jdk { $jdk:}
   download_maven { $maven:}
   download_nant { $nant:}
-  download_forrest { $forrest;}
+  download_forrest { $forrest:}
 }
