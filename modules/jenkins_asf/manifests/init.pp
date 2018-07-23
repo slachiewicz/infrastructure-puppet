@@ -206,7 +206,7 @@ cron {
       minute   => '37',
       hour     => '03',
       monthday => '2',
-      command  => "/home/${username}/jenkins-home/delete-workspace-disabled-jobs.sh"
+      command  => "/home/${username}/jenkins-home/delete-workspace-disabled-jobs.sh",
       require  => User[$username];
 
 'trim-workspaces-all-jobs-weekly':
@@ -214,7 +214,7 @@ cron {
       minute  => '19',
       hour    => '04',
       weekday => '6',
-      command => "/home/${username}/jenkins-home/trim-workspace-all-jobs.sh"
+      command => "/home/${username}/jenkins-home/trim-workspace-all-jobs.sh",
       require => User[$username];
 }
 
