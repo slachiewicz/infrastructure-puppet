@@ -111,6 +111,7 @@ class jenkins_slave_windows::download (
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",
         destination_directory => 'F:\jenkins\tools\nant\zips',
       }
+    }
   #### Download forrest ####
   define download_forrest($forrest_version = $title){
       download_file { "Download apache-forrest-${forrest_version} zip from asf code archives" :
