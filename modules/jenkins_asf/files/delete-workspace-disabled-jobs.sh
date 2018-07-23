@@ -90,5 +90,5 @@ EOT
 fi
 else
 echo "Please run this run on the Jenkins master only."
-  exit1
+  exit 1
 fi
