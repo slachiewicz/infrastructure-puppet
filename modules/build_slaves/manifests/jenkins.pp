@@ -24,7 +24,7 @@ class build_slaves::jenkins (
     'maven',
     'jiracli',
     'jbake',
-    'gradle'
+    'gradle',
     ],
   $ant = [
     'apache-ant-1.8.4',
@@ -33,27 +33,27 @@ class build_slaves::jenkins (
     'apache-ant-1.9.9',
     'apache-ant-1.9.11',
     'apache-ant-1.10.1',
-    'apache-ant-1.10.3'
+    'apache-ant-1.10.3',
     ],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = [
     'findbugs-2.0.3',
-    'findbugs-3.0.1'
+    'findbugs-3.0.1',
     ],
   $forrest = ['apache-forrest-0.9'],
   $jiracli = [
     'jira-cli-2.1.0',
-    'atlassian-cli-6.9.0'
+    'atlassian-cli-6.9.0',
     ],
   $jbake = [
     'jbake-2.5.1',
-    'jbake-2.6.1'
+    'jbake-2.6.1',
     ],
   $gradle_versions = [
     '3.5',
     '4.3.1',
     '4.4.1',
-    '4.8.1'
+    '4.8.1',
     ],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = [
@@ -66,7 +66,7 @@ class build_slaves::jenkins (
     'apache-maven-3.3.9',
     'apache-maven-3.5.0',
     'apache-maven-3.5.2',
-    'apache-maven-3.5.4'
+    'apache-maven-3.5.4',
     ],
   $java_jenkins = [
     'jdk1.5.0_17-32',
@@ -80,7 +80,7 @@ class build_slaves::jenkins (
     'jdk1.6.0_45-32',
     'jdk1.7.0_04',
     'jdk1.7.0_55',
-    'jdk1.8.0'
+    'jdk1.8.0',
     ],
   $java_asfpackages = [
     'harmony-jdk-713673',
@@ -119,7 +119,7 @@ class build_slaves::jenkins (
     'jdk-10.0.1',
     'jdk-11-ea+8',
     'jdk-11-ea+19',
-    'jdk-11-ea+22'
+    'jdk-11-ea+22',
     ],
 ) {
 

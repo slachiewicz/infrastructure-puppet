@@ -12,7 +12,7 @@ class buildbot_slave::buildbot (
     'apache-ant-1.9.9',
     'apache-ant-1.9.11',
     'apache-ant-1.10.1',
-    'apache-ant-1.10.3'
+    'apache-ant-1.10.3',
     ],
   $maven = [
     'apache-maven-2.2.1',
@@ -24,7 +24,7 @@ class buildbot_slave::buildbot (
     'apache-maven-3.3.9',
     'apache-maven-3.5.0',
     'apache-maven-3.5.2',
-    'apache-maven-3.5.4'
+    'apache-maven-3.5.4',
     ],
   $java_asfpackages = [
     'harmony-jdk-713673',
@@ -58,12 +58,12 @@ class buildbot_slave::buildbot (
     'jdk-10.0.1',
     'jdk-11-ea+8',
     'jdk-11-ea+19',
-    'jdk-11-ea+22'
+    'jdk-11-ea+22',
 ],
   $tools = [
     'ant',
     'maven',
-    'java'
+    'java',
   ],
 ) {
 
