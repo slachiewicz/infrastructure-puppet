@@ -26,7 +26,7 @@
 
 RUN_AS_USER=jenkins
 NODES_DIR=/x1/jenkins/jenkins-home/nodes/
-NODES_LIST='/tmp/nodeslist2.txt'
+NODES_LIST='/tmp/nodeslist.txt'
 LOGS_DIR='/x1/jenkins/logs'
 MASTER_HOSTNAME='jenkins01.apache.org'
 HOSTNAME=`/bin/hostname -f`
