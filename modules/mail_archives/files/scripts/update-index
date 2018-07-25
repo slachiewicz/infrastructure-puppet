@@ -79,7 +79,7 @@ for i in ${ARCHIVES} ; do
 done
 
 if [ -x $APACHE_DIR/bin/mod-mbox-util ]; then
-  $SCRIPT_DIR/site-index.py
+  $SCRIPT_DIR/site-index.py /x1/mail-archives.apache.org/mod_mbox/index.html
 else
   $SCRIPT_DIR/create-index-all $ARCHIVES_PATH
 fi
