@@ -2224,8 +2224,10 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ http://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
+      SetEnvIf Host ^([^.]+) HOST_UNQUALIFIED=$1
+      # Filter website to add Attic header if marker directory is present
       LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+      <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
 
@@ -2312,8 +2314,10 @@ vhosts_asf::vhosts::vhosts:
       RewriteCond %%{}{HTTP_HOST} ^([^.]+)\.us.ipv4.apache.org$
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/%1-$1 [R=301,L]
 
+      SetEnvIf Host ^([^.]+) HOST_UNQUALIFIED=$1
+      # Filter website to add Attic header if marker directory is present
       LuaOutputFilter attic "/www/attic.apache.org/scripts/attic_filter.lua" output_filter
-      <If "-d '/www/attic.apache.org/flagged/%%{}{HTTP_HOST}'">
+      <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
 
