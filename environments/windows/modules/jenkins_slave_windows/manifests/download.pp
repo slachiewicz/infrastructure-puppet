@@ -46,7 +46,7 @@ class jenkins_slave_windows::download (
   }
   #### Download Visual Studio 2015 from Bintray. Manual install. ####
   download_file { 'Download Visual Studio 2015 from bintray' :
-    url                   => 'http://apache.bintray.com/WindowsPackages/vs_2015_community_ENU.exe',
+    url                   => 'http://apache.bintray.com/WindowsPackages/vs_community.exe',
     destination_directory => 'C:\temp',
   }
 
