@@ -34,10 +34,6 @@ HOSTNAME=`/bin/hostname -f`
 # Only makes sense to run this on jenkins master.
 if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]; then
 
-# node specific vars
-JENKINS_HOME=/home/jenkins
-RANGE=31
-
 # run this as the jenkins user
 if [[ `whoami` != $RUN_AS_USER ]];then
   echo "Please run this script as the $RUN_AS_USER user only."
@@ -69,26 +65,28 @@ declare -a dirs=(
 )
 
 echo "Disk space before cleanup was:" > /tmp/diskcleanup.txt
-df -h | grep ^/dev/sda1 >> /tmp/diskcleanup.txt
+df -h | grep '^/dev/sda1\|^/dev/dm-0\|^/dev/vda1' >> /tmp/diskcleanup.txt
 
-declare SPACE=`df -H | grep sda1 | awk '{print $5}' | cut -d'%' -f1`
+SPACE=`df -H | grep 'sda1\|vda1\|dm-0' | awk '{print $5}' | cut -d'%' -f1`
+JENKINS_HOME='/home/jenkins'
+RANGE=31
 echo "Space used = $SPACE"
 if [ "$SPACE" -gt 85 ];then
-for dir in "\${dirs[@]}"
+for dir in "${dirs[@]}"
  do
-  echo "checking for existance of $JENKINS_HOME/\$dir"
-  if [[ -d "$JENKINS_HOME/\$dir" ]]
+  echo "checking for existance of $JENKINS_HOME/$dir"
+  if [[ -d "$JENKINS_HOME/$dir" ]]
   then
-    cd $JENKINS_HOME/\$dir    
+    cd $JENKINS_HOME/$dir
     echo "Removing files older than $RANGE days"
-    find $JENKINS_HOME/\$dir -type f -mtime +$RANGE -delete
+    find $JENKINS_HOME/$dir -type f -mtime +$RANGE -delete
   else
-    echo "no results for $JENKINS_HOME/\$dir"
+    echo "no results for $JENKINS_HOME/$dir"
   fi
  done  # end of ssh and delete
 
 echo "Disk space after cleanup is:" >> /tmp/diskcleanup.txt
-df -h | grep ^/dev/sda1 >> /tmp/diskcleanup.txt
+df -h | grep '^/dev/sda1\|^/dev/dm-0\|^/dev/vda1' >> /tmp/diskcleanup.txt
 else
   echo "Disk cleanup not performed , disk space not at threshold" >> /tmp/diskcleanup.txt
   echo "Skipping node, cleanup not required"
