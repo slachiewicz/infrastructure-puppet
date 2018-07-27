@@ -122,6 +122,7 @@ class build_slaves::jenkins (
     'jdk-11-ea+8',
     'jdk-11-ea+19',
     'jdk-11-ea+22',
+    'openjdk-jdk-10.0.2',
     ],
 ) {
 
