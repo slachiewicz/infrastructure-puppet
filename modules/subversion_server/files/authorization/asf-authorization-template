@@ -672,6 +672,18 @@ projects_role = rw
 [/comdev/reporter.apache.org/trunk/data/releases]
 projects_role = rw
 
+# Temporary for testing new host
+[/comdev/projects.apache.org/branches/TEST_INSTALL/site/json]
+projects_role = rw
+
+# Temporary for testing new host
+[/comdev/reporter.apache.org/branches/TEST_INSTALL/data/history]
+projects_role = rw
+
+# Temporary for testing new host
+[/comdev/reporter.apache.org/branches/TEST_INSTALL/data/releases]
+projects_role = rw
+
 [/commons]
 @committers = rw
 
