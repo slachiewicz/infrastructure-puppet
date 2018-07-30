@@ -1,6 +1,5 @@
 ---
 classes:
-  - default_pvm_asf
   - apache
   - apache::mod::headers
   - apache::mod::proxy
