@@ -1804,6 +1804,9 @@ svn-role = rw
 [/tapestry/tapestry-site]
 @tapestry = rw
 
+[/tcl/rivet]
+* = r
+
 [/tcl]
 @tcl = rw
 
