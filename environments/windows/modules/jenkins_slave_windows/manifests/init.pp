@@ -72,7 +72,7 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for latest Forrest':
-    command  => "cmd /c rmdir F:\\jenkins\\tools\\forrest\\latest \"&\" mklink /d F:\\jenkins\\tools\\forrest\\latest F:\\jenkins\\tools\\forrest\\apache-forrest-0.9",# lint:ignore:140chars
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\forrest\\latest \"&\" mklink /d F:\\jenkins\\tools\\forrest\\latest F:\\jenkins\\tools\\forrest\\0.9",# lint:ignore:140chars
     onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-15)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
