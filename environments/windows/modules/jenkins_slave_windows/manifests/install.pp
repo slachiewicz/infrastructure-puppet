@@ -57,7 +57,7 @@ class jenkins_slave_windows::install (
   ###################### Setup ANT #############################
   define extract_ant($ant_version = $title){
       exec { "extract ${ant_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\ant\\zips\\asf-build-${ant_version}.zip -DestinationPath F:\\jenkins\\tools\\ant\\${ant_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-${ant_version}.zip -DestinationPath F:\\jenkins\\tools\\ant\\${ant_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\ant\\${ant_version}\\bin\\ant.cmd",
       }
@@ -71,7 +71,7 @@ class jenkins_slave_windows::install (
 ###################### Setup Chromedriver #############################
   define extract_chromedriver($chromedriver_version = $title){
       exec { "extract ${chromedriver_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\chromedriver\\zips\\asf-build-chromedriver-${chromedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-chromedriver-${chromedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\chromedriver\\${chromedriver_version}\\win32\\chromedriver.exe",
       }
@@ -84,7 +84,7 @@ class jenkins_slave_windows::install (
 ###################### Setup Geckodriver #############################
   define extract_geckodriver($geckodriver_version = $title){
       exec { "extract ${geckodriver_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\geckodriver\\zips\\asf-build-geckodriver-${geckodriver_version}.zip -DestinationPath F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-geckodriver-${geckodriver_version}.zip -DestinationPath F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\geckodriver\\${geckodriver_version}\\win32\\geckodriver.exe",
       }
@@ -97,7 +97,7 @@ extract_geckodriver { $geckodriver:}
 ###################### Setup Gradle #############################
   define extract_gradle($gradle_version = $title){
       exec { "extract ${gradle_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\gradle\\zips\\asf-build-gradle-${gradle_version}.zip -DestinationPath F:\\jenkins\\tools\\gradle\\${gradle_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-gradle-${gradle_version}.zip -DestinationPath F:\\jenkins\\tools\\gradle\\${gradle_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\gradle\\${gradle_version}\\bin\\gradle.bat",
       }
@@ -110,7 +110,7 @@ extract_gradle { $gradle:}
 ###################### Setup IEdriver #############################
   define extract_iedriver($iedriver_version = $title){
       exec { "extract ${iedriver_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\iedriver\\zips\\asf-build-iedriver-${iedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\iedriver\\${iedriver_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-iedriver-${iedriver_version}.zip -DestinationPath F:\\jenkins\\tools\\iedriver\\${iedriver_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\iedriver\\${iedriver_version}\\win32\\iedriverserver.exe",
       }
@@ -123,7 +123,7 @@ extract_gradle { $gradle:}
 ###################### Setup JDK #############################
   define extract_jdk($jdk_version = $title){
       exec { "extract ${jdk_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\java\\zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-${jdk_version}.zip -DestinationPath F:\\jenkins\\tools\\java\\${jdk_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\java\\${jdk_version}\\bin\\java.exe",
       }
@@ -137,7 +137,7 @@ extract_gradle { $gradle:}
 ###################### Setup Maven #############################
   define extract_maven($maven_version = $title){
       exec { "extract ${maven_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\maven\\zips\\asf-build-${maven_version}.zip -DestinationPath F:\\jenkins\\tools\\maven\\${maven_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-${maven_version}.zip -DestinationPath F:\\jenkins\\tools\\maven\\${maven_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\maven\\${maven_version}\\bin\\mvn",
       }
@@ -151,7 +151,7 @@ extract_gradle { $gradle:}
 ###################### Setup nant #############################
   define extract_nant($nant_version = $title){
       exec { "extract ${nant_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\nant\\zips\\asf-build-nant-${nant_version}.zip -DestinationPath F:\\jenkins\\tools\\nant\\${nant_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-nant-${nant_version}.zip -DestinationPath F:\\jenkins\\tools\\nant\\${nant_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\nant\\${nant_version}\\bin\\nant.exe",
       }
@@ -164,7 +164,7 @@ extract_gradle { $gradle:}
 ###################### Setup Forrest #############################
   define extract_forrest($forrest_version = $title){
       exec { "extract ${forrest_version}" :
-        command  => "powershell.exe Expand-Archive -Force F:\\jenkins\\tools\\forrest\\zips\\apache-forrest-${forrest_version}.zip -DestinationPath F:\\jenkins\\tools\\forrest\\${forrest_version}", # lint:ignore:140chars
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-forrest-${forrest_version}.zip -DestinationPath F:\\jenkins\\tools\\forrest\\${forrest_version}", # lint:ignore:140chars
         provider => powershell,
         creates  => "F:\\jenkins\\tools\\forrest\\${forrest_version}\\bin\\forrest.bat",
       }

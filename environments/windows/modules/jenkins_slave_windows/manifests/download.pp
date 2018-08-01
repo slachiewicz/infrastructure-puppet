@@ -38,7 +38,6 @@ class jenkins_slave_windows::download (
     url                   => 'http://apache.bintray.com/WindowsPackages/Git-2.14.3-64-bit.exe',
     destination_directory => 'C:\temp',
   }
-
   #### Download JDK1.8 from Bintray
   download_file { 'Download JDK1.8 from bintray' :
     url                   => 'http://apache.bintray.com/WindowsPackages/asf-build-jdk1.8.0_152.exe',
@@ -49,7 +48,6 @@ class jenkins_slave_windows::download (
     url                   => 'http://apache.bintray.com/WindowsPackages/vs_community.exe',
     destination_directory => 'C:\temp',
   }
-
   #### Download winSVN ####
   download_file { 'Download winsvn from bintray' :
     url                   => 'http://apache.bintray.com/WindowsPackages/Setup-Subversion-1.8.17.msi',
@@ -60,63 +58,63 @@ class jenkins_slave_windows::download (
   define download_ant($ant_version = $title){
     download_file { "Download asf-build-${ant_version} zip from bintray" :
       url                   => "http://apache.bintray.com/WindowsPackages/asf-build-${ant_version}.zip",
-      destination_directory => 'F:\jenkins\tools\ant\zips',
+      destination_directory => 'F:\tools_zips',
     }
   }
   #### Download chromeDriver ####
   define download_chromedriver($chromedriver_version = $title){
       download_file { "Download asf-build-chromedriver-${chromedriver_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-chromedriver-${chromedriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\chromedriver\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download geckoDriver ####
   define download_geckodriver($geckodriver_version = $title){
       download_file { "Download asf-build-geckodriver-${geckodriver_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-geckodriver-${geckodriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\geckodriver\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download Gradle ####
   define download_gradle($gradle_version = $title){
         download_file { "Download asf-build-gradle-${gradle_version} zip from bintray" :
           url                   => "http://apache.bintray.com/WindowsPackages/asf-build-gradle-${gradle_version}.zip",
-          destination_directory => 'F:\jenkins\tools\gradle\zips',
+          destination_directory => 'F:\tools_zips',
         }
       }
   #### Download ieDriver ####
   define download_iedriver($iedriver_version = $title){
       download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-iedriver-${iedriver_version}.zip",
-        destination_directory => 'F:\jenkins\tools\iedriver\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download JDK ####
   define download_jdk($jdk_version = $title){
       download_file { "Download asf-build-${jdk_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-${jdk_version}.zip",
-        destination_directory => 'F:\jenkins\tools\java\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download maven ####
   define download_maven($maven_version = $title){
       download_file { "Download asf-build-${maven_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-${maven_version}.zip",
-        destination_directory => 'F:\jenkins\tools\maven\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download nant ####
   define download_nant($nant_version = $title){
       download_file { "Download asf-build-nant-${nant_version} zip from bintray" :
         url                   => "http://apache.bintray.com/WindowsPackages/asf-build-nant-${nant_version}.zip",
-        destination_directory => 'F:\jenkins\tools\nant\zips',
+        destination_directory => 'F:\tools_zips',
       }
     }
   #### Download forrest ####
   define download_forrest($forrest_version = $title){
-      download_file { "Download apache-forrest-${forrest_version} zip from asf code archives" :
-        url                   => "http://archive.apache.org/dist/forrest/apache-forrest-${forrest_version}.zip",
-        destination_directory => 'F:\jenkins\tools\forrest\zips',
+      download_file { "Download apache-forrest-${forrest_version} zip from bintray" :
+        url                   => "http://apache.bintray.com/WindowsPackages/asf-build-forrest-${forrest_version}.zip",
+        destination_directory => 'F:\tools_zips',
       }
     }
 
