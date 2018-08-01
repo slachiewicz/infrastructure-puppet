@@ -5,3 +5,6 @@ classes:
 
 build_slaves::jenkins::npmrc_password: ''
 build_slaves::jenkins::nexus_password: ''
+
+datadog_agent::tags:
+  - 'monitor:jenkins_space'
