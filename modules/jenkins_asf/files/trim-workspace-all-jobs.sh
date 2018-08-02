@@ -80,7 +80,7 @@ for dir in "${dirs[@]}"
     cd $JENKINS_HOME/$dir
     echo "Removing files older than $RANGE days"
     find $JENKINS_HOME/$dir \
-      \( -path \*/.git\* -o -path \*/.svn \) -prune -o
+      \( -path \*/.git\* -o -path \*/.svn \) \
       -type f \
       -mtime +$RANGE \
       -delete
