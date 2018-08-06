@@ -482,7 +482,9 @@ build_slaves::distro_packages:
   - nodejs
   - nsis
   - openjdk-8-jdk
+  - openjdk-8-jdk-headless
   - openjdk-9-jdk
+  - openjdk-9-jdk-headless
   - php-pear
   - php-dev
   - php7.0-cli
