@@ -39,7 +39,7 @@ case $::lsbdistrelease {
   }
 
   -> exec { 'chown_lxd':
-    command  => "usermod -aG lxd ${username} && newgrp ${group}",
+    command  => "newgrp ${group} && usermod -aG ${grup} ${username}",
     path     => ['/usr/bin', '/usr/sbin',],
     user     => 'root',
     timeout  => 600,
