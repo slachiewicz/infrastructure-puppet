@@ -27,7 +27,7 @@ case $::lsbdistrelease {
     user     => 'root',
     creates  => '/snap/bin/snapcraft',
     timeout  => 600,
-    requires => Package['snapd'];
+    require  => Package['snapd'];
   }
 
   -> exec { 'install_lxd':
@@ -43,7 +43,7 @@ case $::lsbdistrelease {
     path     => ['/usr/bin', '/usr/sbin',],
     user     => 'root',
     timeout  => 600,
-    requires => [Exec['install_lxd'],User[$username]];
+    require  => [Exec['install_lxd'],User[$username]];
   }
 
   -> exec { 'init_lxd':
@@ -51,7 +51,7 @@ case $::lsbdistrelease {
     path     => '/snap/bin',
     cwd      => "/home/${username}",
     user     => $username,
-    requires => [Exec['chown_lxd'],User[$username]];
+    require  => [Exec['chown_lxd'],User[$username]];
   }
 }
   default: {
