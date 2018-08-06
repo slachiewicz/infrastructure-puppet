@@ -124,7 +124,7 @@ gitbox::custom_fragment_443: |
         Require valid-user
       </Location>
       RewriteEngine On
-      <LocationMatch "^/repos/">
+      <LocationMatch "^/repos/asf">
         Require all denied
         <If "%%{}{QUERY_STRING} =~ /service=git-receive-pack/ || %%{}{REQUEST_URI} =~ /git-receive-pack$/">
           AuthType Basic
@@ -222,6 +222,7 @@ gitbox::custom_fragment_443: |
       # Infra private area
       <Location /repos/private>
           SetEnv GIT_PROJECT_ROOT /x1/repos/private/
+          SetEnv GITWEB_CONFIG /x1/gitbox/conf/httpd/gitweb.private.pl
           AuthType Basic
           AuthName "ASF Private Repos"
           AuthBasicProvider ldap
