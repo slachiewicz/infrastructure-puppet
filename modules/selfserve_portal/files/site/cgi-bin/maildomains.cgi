@@ -40,7 +40,7 @@ rv = requests.get("https://whimsy.apache.org/public/public_podlings.json")
 podlings = {k: v for k, v in rv.json()['podling'].iteritems() if v['status'] == 'current' }
 domains.update(podlings)
 
-dlist = ['apache.org']
+dlist = ['apache.org', 'infra.apache.org']
 for cmt in domains:
     info = domains[cmt]
     if not 'mail_list' in info or not ('@' in info['mail_list'] or ' ' in info['mail_list']):
