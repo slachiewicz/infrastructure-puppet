@@ -55,7 +55,7 @@ case $::lsbdistrelease {
   }
 }
   default: {
-      fail("ASF Module snapcraft is not supported on ${::lsbdistrelease}")
+      warning("ASF Module snapcraft is not supported on ${::lsbdistrelease}")
     }
   }
 }
