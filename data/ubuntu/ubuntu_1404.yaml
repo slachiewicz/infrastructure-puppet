@@ -349,6 +349,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-apache-maven-2.2.1
   - asf-build-apache-maven-3.0.4
   - asf-build-apache-maven-3.0.5
+  - asf-build-apache-maven-3.1.1
   - asf-build-apache-maven-3.2.1
   - asf-build-apache-maven-3.2.5
   - asf-build-apache-maven-3.3.3
@@ -534,6 +535,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-apache-maven-2.2.1
   - asf-build-apache-maven-3.0.4
   - asf-build-apache-maven-3.0.5
+  - asf-build-apache-maven-3.1.1
   - asf-build-apache-maven-3.2.1
   - asf-build-apache-maven-3.2.5
   - asf-build-apache-maven-3.3.3

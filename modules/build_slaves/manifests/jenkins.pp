@@ -62,6 +62,7 @@ class build_slaves::jenkins (
     'apache-maven-2.2.1',
     'apache-maven-3.0.4',
     'apache-maven-3.0.5',
+    'apache-maven-3.1.1',
     'apache-maven-3.2.1',
     'apache-maven-3.2.5',
     'apache-maven-3.3.3',
