@@ -817,6 +817,35 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent / http://deltaspike.apache.org/
 
+  distributedlog:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.distributedlog.apache.org'
+    docroot: '/www/distributedlog.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'distributedlog.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://bookkeeper.apache.org/
+
+  distributedlog-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.distributedlog.apache.org'
+    docroot: '/www/distributedlog.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'distributedlog.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://bookkeeper.apache.org/
+
   drat:
     vhost_name: '*'
     port: 80
@@ -1945,6 +1974,35 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent / http://polygene.apache.org/
+
+  quarks:
+    vhost_name: '*'
+    port: 80
+    servername: 'www.quarks.apache.org'
+    docroot: '/www/quarks.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'quarks.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / http://edgent.apache.org/
+
+  quarks-ssl:
+    vhost_name: '*'
+    port: 443
+    ssl: true
+    servername: 'www.quarks.apache.org'
+    docroot: '/www/quarks.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'quarks.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://edgent.apache.org/
 
   zest-ssl:
     vhost_name: '*'
