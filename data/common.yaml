@@ -194,7 +194,7 @@ puppet_asf::enable_daemon: true
 snmp::agentaddress: 'udp:*:161'
 snmp::com2sec:
   - "snmp-monitor 127.0.0.1 asfro"
-  - "snmp-monitor 37.139.9.72 asfro"
+  - "snmp-monitor 62.210.60.242 asfro"
 snmp::groups:
   - "snmp-monitor v2c snmp-monitor"
 snmp::views:
