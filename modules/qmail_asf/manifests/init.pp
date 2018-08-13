@@ -15,7 +15,9 @@ class qmail_asf (
 
   # override below in eyaml
   $stats_url = '',
-  $mm_auth = '',
+  $mm_auth   = '',
+  $ap_user   = '',
+  $ap_pw     = '',
 
   $required_packages = ['qmail', 'dot-forward', 'daemontools', 'ucspi-tcp', 'rbldnsd', 'djbdns',
                           'dnscache-run', 'dnsmasq', 'clamav', 'clamav-freshclam', 'qpsmtpd'],
@@ -191,6 +193,25 @@ class qmail_asf (
       group   => $username,
       mode    => '0755',
       require => User[$username];
+    "${svn_dot_dir}/auth":
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0750',
+      require => File[$svn_dot_dir];
+    "${svn_dot_dir}/auth/svn.simple":
+      ensure  => directory,
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0750',
+      require => File["${svn_dot_dir}/auth"];
+    "${svn_dot_dir}/auth/svn.simple/d3c8a345b14f6a1b42251aef8027ab57":
+      ensure  => present,
+      owner   => $username,
+      group   => $groupname,
+      mode    => '0640',
+      content => template('qmail_asf/svn-credentials.erb'),
+      require => File["${svn_dot_dir}/auth/svn.simple"];
     $install_dir:
       ensure  => directory,
       recurse => true,
