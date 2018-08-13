@@ -46,7 +46,7 @@ elasticsearch::java_install: true
 elasticsearch::version: '5.6.6'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
-elsaticsearch::default_logging_level: 'WARN'
+elasticsearch::default_logging_level: 'WARN'
 elasticsearch::instances:
   asful:
     datadir: '/x1/elastic/db/'
