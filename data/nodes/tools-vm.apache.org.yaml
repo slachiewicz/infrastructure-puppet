@@ -286,7 +286,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'reporeq.log'
     error_log_file: 'reporeq.log'
     custom_fragment: |
-      Redirect permanent / https://reporeq.apache.org/
+      Redirect permanent / https://gitbox.apache.org/
 
   reporeq-ssl:
     vhost_name: '*'
@@ -300,26 +300,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'reporeq-ssl_access.log'
     error_log_file: 'reporeq-ssl_error.log'
     custom_fragment: |
-      AcceptPathInfo On
-      LuaScope thread
-      LuaCodeCache stat
-      AddHandler lua-script .lua
-      AddHandler cgi-script .cgi
-      FallbackResource /index.html
-      <Location />
-        Options +ExecCGI
-        AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPRemoteUserAttribute uid
-        AuthName "ASF Committers"
-        AuthType Basic
-        AuthBasicProvider ldap
-        <RequireAny>
-          Require ip 140.211.11.23
-          Require ip 54.84.58.65
-          Require ip 140.211.11.3
-          Require valid-user
-        </RequireAny>
-      </Location>
+      Redirect permanent / https://gitbox.apache.org/
   oauth:
     vhost_name: '*'
     port: 80
