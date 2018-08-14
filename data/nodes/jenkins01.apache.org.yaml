@@ -56,6 +56,14 @@ jenkins_asf::tomcat_version: '9.0.10'
 jenkins_asf::tomcat_caching_allowed: 'true'
 jenkins_asf::tomcat_caching_max_size: '200000'
 
+jenkins_asf::winnodenames:
+  - 'windows-2012-1'
+  - 'windows-2012-2'
+  - 'windows-2012-3'
+  - 'windows-2016-1'
+  - 'windows-2016-2'
+  - 'windows-2016-3'
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::timeout: 600

@@ -23,6 +23,7 @@ class jenkins_asf (
   $maxmetaspacesize              = '',
   $tomcat_caching_allowed        = '',
   $tomcat_caching_max_size       = '',
+  $winnodenames                  = '',
 
   $required_packages             = ['unzip','wget'],
 ){
@@ -196,6 +197,12 @@ file {
       group  => $groupname,
       mode   => '0755',
       source => 'puppet:///modules/jenkins_asf/trim-workspace-all-jobs.sh';
+    "${jenkins_home}/nodes/${winnodenames}/config.xml":
+      ensure => 'present',
+      owner  => $username,
+      group  => $groupname,
+      mode   => '0755',
+      content => template('jenkins_asf/node-config.xml.erb'),
   }
 
 # cron jobs
