@@ -355,6 +355,14 @@ class build_slaves::jenkins (
       source => 'puppet:///modules/build_slaves/gitconfig',
     }
 
+    file { "/etc/environment":
+      ensure => present,
+      owner  => root,
+      group  => root,
+      mode   => '0644,
+      source => 'puppet:///modules/build_slaves/environment';
+    }
+
     file {
       "/home/${build_slaves::username}/.subversion":
         ensure => directory,
