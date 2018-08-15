@@ -153,4 +153,8 @@ class jenkins_slave_windows (
   file { 'C:/Users/Jenkins/.m2/settings.xml':
     content => template ('jenkins_slave_windows/settings.xml.erb'),
   }
+
+  exec { 'set JAVA_HOME':
+    command => "cmd.exe /c setx JAVA_HOME \"F:\\jenkins\\tools\\java\\latest\"",
+  }
 }
