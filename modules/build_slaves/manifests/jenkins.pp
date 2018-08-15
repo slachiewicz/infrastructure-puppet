@@ -354,6 +354,7 @@ class build_slaves::jenkins (
       mode   => '0640',
       source => 'puppet:///modules/build_slaves/gitconfig',
     }
+  }
 
     file { "/etc/environment":
       ensure => present,
@@ -389,8 +390,6 @@ class build_slaves::jenkins (
         content => template('build_slaves/svn-credentials.erb'),
         require => File["/home/${build_slaves::username}/.subversion/auth/svn.simple"];
       }
-
-    }
 
   file { '/etc/security/limits.d/jenkins.conf':
     ensure  => file,
