@@ -200,8 +200,8 @@ file {
   }
 
   # define winnodename dirs.
-  define node_configs ($winnodename = $title) {
-      file { "${jenkins_home}/nodes/${winnodename}/config.xml":
+  ZZdefine node_configs ($winnodename = $title) {
+      file { "${jenkins_asf::jenkins_home}/nodes/${winnodename}/config.xml":
       ensure => 'present',
       owner  => $username,
       group  => $groupname,
