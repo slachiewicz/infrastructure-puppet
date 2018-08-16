@@ -66,8 +66,6 @@ vhosts_asf::vhosts::vhosts:
         path: '/.well-known/'
         url: '!'
       -
-        path: '/asfgit'
-        url: 'http://localhost:8080/viz'
-      -
         path: '/demo'
-        url: 'http://localhost:8080/proteus'
+        url: 'http://localhost:8080/proteus-new'
+
