@@ -200,15 +200,15 @@ file {
   }
 
   # define winnodename dirs.
-  ZZdefine node_configs ($winnodename = $title) {
-      file { "${jenkins_asf::jenkins_home}/nodes/${winnodename}/config.xml":
-      ensure => 'present',
-      owner  => $username,
-      group  => $groupname,
-      mode   => '0755',
-      content => template('jenkins_asf/node-config.xml.erb'),
-      }
+  define node_configs ($winnodename = $title) {
+    file { "${jenkins_asf::jenkins_home}/nodes/${winnodename}/config.xml":
+    ensure => 'present',
+    owner  => $username,
+    group  => $groupname,
+    mode   => '0755',
+    content => template('jenkins_asf/node-config.xml.erb'),
     }
+  }
 
    node_configs { $winnodenames: }
 
