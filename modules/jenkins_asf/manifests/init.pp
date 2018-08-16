@@ -197,13 +197,20 @@ file {
       group  => $groupname,
       mode   => '0755',
       source => 'puppet:///modules/jenkins_asf/trim-workspace-all-jobs.sh';
-    "${jenkins_home}/nodes/${winnodenames}/config.xml":
+  }
+
+  # define winnodename dirs.
+  define node_configs ($winnodename = $title) {
+      file { "${jenkins_home}/nodes/${winnodename}/config.xml":
       ensure => 'present',
       owner  => $username,
       group  => $groupname,
       mode   => '0755',
       content => template('jenkins_asf/node-config.xml.erb'),
-  }
+      }
+    }
+
+   node_configs { $winnodenames: }
 
 # cron jobs
 
