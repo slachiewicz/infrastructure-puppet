@@ -200,7 +200,7 @@ file {
   }
 
   # define winnodename dirs.
-  define jenkins_asf ($winnodename = $title) {
+  define node_configs ($winnodename = $title) {
       file { "${jenkins_home}/nodes/${winnodename}/config.xml":
       ensure => 'present',
       owner  => $username,
@@ -210,7 +210,7 @@ file {
       }
     }
 
-   jenkins_asf { $winnodenames: }
+   node_configs { $winnodenames: }
 
 # cron jobs
 
