@@ -95,3 +95,10 @@ postgresql::server::pg_hba_rule:
     user: 'puppetdb'
     address: '140.211.11.135/32'
     auth_method: 'md5'
+  p5db:
+    description: 'puppet5 puppetdb'
+    type: 'host'
+    database: 'p5db'
+    user: 'p5db'
+    address: '207.244.88.154/32'
+    auth_method: 'md5'
