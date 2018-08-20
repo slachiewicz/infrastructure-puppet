@@ -19,6 +19,7 @@ import hashlib, json, random, os, sys, time, subprocess
 import cgi, netaddr, smtplib, sqlite3
 from email.mime.text import MIMEText
 
+repo_dirs = ['asf', 'private'] # The sub-sections we have, asf and private
 xform = cgi.FieldStorage();
 
 # Check that this is GitHub calling
@@ -87,11 +88,11 @@ if 'pages' in data:
     if not os.path.exists(wikipath):
         os.chdir("/x1/repos/wikis/")
         subprocess.check_output(['git','clone', '--mirror', wikiurl, wikipath])
-    
+
     # chdir to wiki git, pull in changes
     os.chdir(wikipath)
     subprocess.check_output(['git','fetch'])
-    
+
     ########################
     # Get ASF ID of pusher #
     ########################
@@ -105,7 +106,7 @@ if 'pages' in data:
     if row:
         asfid = row[0]
     conn.close()
-    
+
     # Ready the hook env
     gitenv = {
         'NO_SYNC': 'yes',
@@ -125,21 +126,21 @@ if 'pages' in data:
         after = page['sha']
         before = subprocess.check_output(["git", "rev-list", "--parents", "-n", "1", after]).strip().split(' ')[1]
         update = "%s %s refs/heads/master\n" % (before if before != after else EMPTY_HASH, after)
-        
+
         # Fire off the multimail hook for the wiki
-        try:                    
+        try:
             hook = "/x1/gitbox/hooks/post-receive"
             # Fire off the email hook
             process = subprocess.Popen([hook], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=gitenv)
             out, err = process.communicate(input=update)
             log += out
             log += "[%s] [%s]: Multimail deployed (%s -> %s)!\n" % (time.strftime("%c"), wikipath, before, after)
-              
+
         except Exception as err:
             log += "[%s] [%s]: Multimail hook failed: %s\n" % (time.strftime("%c"), wikipath, err)
         open("/x1/gitbox/sync.log", "a").write(log)
-    
-    
+
+
 
 elif 'repository' in data and 'name' in data['repository']:
     reponame = data['repository']['name']
@@ -149,18 +150,27 @@ elif 'repository' in data and 'name' in data['repository']:
     before = data['before'] if 'before' in data else EMPTY_HASH
     after = data['after'] if 'after' in data else EMPTY_HASH
     repopath = "/x1/repos/asf/%s.git" % reponame
+
+    # Make sure we know which section this repo belongs to.
+    reposection = 'asf'
+    for rp in repo_dirs:
+      if os.path.exists("/x1/repos/%s/%s.git" % (rp, reponame)):
+        repopath = "/x1/repos/%s/%s.git" % (rp, reponame)
+        reposection = rp
+        break
+
     broken = False
-    
+
     # Unless asfgit is the pusher, we need to act on this.
     if pusher != 'asfgit' and os.path.exists(repopath):
-        
+
         ##################
         # Open SQLite DB #
         ##################
         conn = sqlite3.connect('/x1/gitbox/db/gitbox.db')
         cursor = conn.cursor()
-        
-        
+
+
         ########################
         # Get ASF ID of pusher #
         ########################
@@ -179,8 +189,8 @@ elif 'repository' in data and 'name' in data['repository']:
             msg['From'] = "<gitbox@gitbox.apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
-        
-        
+
+
         #######################################
         # Check that we haven't missed a push #
         #######################################
@@ -207,18 +217,18 @@ elif 'repository' in data and 'name' in data['repository']:
                 msg['From'] = "<gitbox@gitbox.apache.org>"
                 s = smtplib.SMTP('localhost')
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
-        
+
         # If new branch, fetch the old ref from head_commit
         if before and before == EMPTY_HASH and 'head_commit' in data:
             before = data['head_commit']['id']
-        
+
         ##################################
         # Write Push log, text + sqlite3 #
         ##################################
         cursor.execute("""INSERT INTO pushlog
                   (repository, asfid, githubid, baseref, ref, old, new, date)
                   VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
-        
+
         open("/x1/pushlogs/%s.txt" % reponame, "a").write(
             "[%s] %s -> %s (%s@apache.org / %s)\n" % (
                 time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
@@ -228,17 +238,17 @@ elif 'repository' in data and 'name' in data['repository']:
                 pusher
                 )
             )
-        
-        
+
+
         # commit and close sqlite, no need for it below
         conn.commit()
         conn.close()
-        
+
         ####################
         # SYNC WITH GITHUB #
         ####################
         log = "[%s] [%s.git]: Got a sync call for %s.git, pushed by %s\n" % (time.strftime("%c"), reponame, reponame, asfid)
-    
+
         # Change to repo dir
         os.chdir(repopath)
         # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
@@ -262,7 +272,7 @@ elif 'repository' in data and 'name' in data['repository']:
                 f.write("Return code: %s\nText output:\n" % rv)
                 f.write(error)
                 f.close()
-            
+
             # Send an email to users@infra.a.o with the bork
             errmsg = error.output
             msg = MIMEText(tmpl_sync_failed % locals(), _charset = "utf-8")
@@ -271,10 +281,10 @@ elif 'repository' in data and 'name' in data['repository']:
             msg['From'] = "<gitbox@apache.org>"
             s = smtplib.SMTP('localhost')
             s.sendmail(msg['From'], msg['To'], msg.as_string())
-            
+
         open("/x1/gitbox/sync.log", "a").write(log)
-        
-        
+
+
         #####################################
         # Deploy commit mails via multimail #
         #####################################
@@ -289,7 +299,7 @@ elif 'repository' in data and 'name' in data['repository']:
                     'WEB_HOST': 'https://gitbox.apache.org/',
                     'GIT_COMMITTER_NAME': asfid,
                     'GIT_COMMITTER_EMAIL': "%s@apache.org" % asfid,
-                    'GIT_PROJECT_ROOT': '/x1/repos/asf',
+                    'GIT_PROJECT_ROOT': '/x1/repos/%s' % reposection,
                     'PATH_INFO': reponame + '.git',
                     'ASFGIT_ADMIN': '/x1/gitbox',
                     'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
@@ -297,16 +307,16 @@ elif 'repository' in data and 'name' in data['repository']:
                     'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
                 }
                 update = "%s %s %s\n" % (before if before != after else EMPTY_HASH, after, ref)
-                
-                try:                    
+
+                try:
                     # Change to repo dir
                     os.chdir(repopath)
-                    
+
                     # Fire off the email hook
                     process = subprocess.Popen([hook], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=gitenv)
                     process.communicate(input=update)
                     log += "[%s] [%s.git]: Multimail deployed!\n" % (time.strftime("%c"), reponame)
-                      
+
                 except Exception as err:
                     log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
             open("/x1/gitbox/sync.log", "a").write(log)
