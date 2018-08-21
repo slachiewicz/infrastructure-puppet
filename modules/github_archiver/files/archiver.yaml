@@ -1,0 +1,37 @@
+###############################################################
+# GitHub Archiver - Archives GitHub activity on ASF services. #
+###############################################################
+# Configuration options:
+# pr:
+# - null: don't send PR/issue emails
+# - foo@bar: send notifications to foo@bar ($tlp may be used)
+# jira:
+# - null: don't notify JIRA
+# - comment: comment when a PR/issue is opened/closed/commented on, add PR link
+# - worklog: same as above, but use worklog for text, add PR link
+# - link: Only attach a PR/issue link to JIRA tickets
+# commit:
+# - null: don't send commit emails
+# - commits@$tlp.apache.org: send to email address
+#
+# github archiver will, in case no repo or project specific setting is
+# defined, looked in the git config for legacy settings.
+
+# This is the default behavior for unlisted projects, aka no repo on gitbox.
+default-unlisted:
+  commit: null
+  pr:     null
+  jira:   null
+
+# This is the default for repos with no project-wide or repo-specific
+# settings attached, but they do exist as a repo.
+default-listed:
+  commit: commits@$tlp.apache.org
+  pr:     devnull@infra.apache.org
+  jira:   null
+
+# This is a project-wide setting
+infrastructure:
+  commit: commits@infra.apache.org
+  pr:     commits@infra.apache.org
+  jira:   comment
