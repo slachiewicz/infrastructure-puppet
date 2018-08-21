@@ -13,6 +13,9 @@ apache::timeout:            600
 apache::mpm_module:         'prefork'
 apache::purge_configs:      false
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -117,4 +120,3 @@ vhosts_asf::vhosts::vhosts:
           Order allow,deny
           Allow from all
       </Directory>
-

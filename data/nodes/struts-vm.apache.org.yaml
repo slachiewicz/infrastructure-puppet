@@ -22,6 +22,9 @@ apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '50'
 apache::mod::event::threadsperchild: '5'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -35,4 +38,3 @@ vhosts_asf::vhosts::vhosts:
     ssl: false
     docroot: '/var/www'
     error_log_file: 'struts_error.log'
-

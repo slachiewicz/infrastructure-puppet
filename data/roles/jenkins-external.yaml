@@ -8,3 +8,4 @@ build_slaves::jenkins::nexus_password: ''
 
 datadog_agent::tags:
   - 'monitor:jenkins_space'
+  - 'nodetype:jenkins_slave'

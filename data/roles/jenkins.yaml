@@ -5,3 +5,4 @@ classes:
 
 datadog_agent::tags:
   - 'monitor:jenkins_space'
+  - 'nodetype:jenkins_slave'

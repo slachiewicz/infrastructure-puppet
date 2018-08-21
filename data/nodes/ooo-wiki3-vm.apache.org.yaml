@@ -18,6 +18,9 @@ apache::mpm_module: 'prefork'
 apache::mod::prefork::maxrequestworkers: '120'
 apache::mod::prefork::startservers: '10'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
