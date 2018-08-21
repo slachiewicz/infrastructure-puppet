@@ -1716,7 +1716,7 @@ svn-site-role = rw
 @shiro = rw
 
 [/sis]
-* = r
+@sis-pmc = rw
 
 [/sis/site]
 @sis = rw
