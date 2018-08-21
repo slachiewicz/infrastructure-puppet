@@ -6,11 +6,21 @@ import os
 import sys
 
 if len(sys.argv) < 2:
-  print("Usage: site-index.py $output-file")
+  print("Usage: site-index.py $output-file [[ROOT] K]")
   sys.exit(-1)
 
-ROOT="/x1/mail-archives/mod_mbox" # TODO ought to be a param?
 OUTFILE = sys.argv[1]
+
+if len(sys.argv) > 2:
+  ROOT = sys.argv[2]
+else:
+  ROOT="/x1/mail-archives/mod_mbox"
+
+# allow for blanks at head of TLP block
+if len(sys.argv) > 3:
+  K = int(sys.argv[3])
+else:
+  K = 3
 
 OUT = ""
 # Get the list of podlings from a list the Incubator PMC maintains.
@@ -113,7 +123,9 @@ OUT += """
 """
 i = 0
 colcount = 0
+count = count + (len(keys) * K) # allow for blanks
 for tlp in keys:
+    colcount = colcount + K # allow for blanks between lists
     if tlp == "asf-wide":
         OUT += "<li><h3><a name='asf-wide'>ASF-wide lists:</a></h3>"
     else:
