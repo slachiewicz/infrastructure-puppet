@@ -32,6 +32,9 @@ apache::default_vhost: false
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
 apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3']
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
@@ -155,7 +158,7 @@ vhosts_whimsy::vhosts::vhosts:
       - /officers/
       - /treasurer/
       - path: /board/agenda/
-        except: 
+        except:
         - app.js
         - app.js.map
         - ".*\\.js\\.rb"
@@ -232,7 +235,7 @@ vhosts_whimsy::vhosts::vhosts:
 
       SSLProxyEngine On
       ProxyPass "/board/agenda/websocket/"  "wss://localhost:34234/"
-      
+
       # We now have local custom error pages
       ErrorDocument 401 /401.html
       ErrorDocument 404 /404.html

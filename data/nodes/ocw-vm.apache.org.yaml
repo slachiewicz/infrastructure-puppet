@@ -8,6 +8,9 @@ classes:
 
 apache::default_vhost: false
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 default_pvm_asf::java: false
 default_pvm_asf::required_packages:
   - nodejs

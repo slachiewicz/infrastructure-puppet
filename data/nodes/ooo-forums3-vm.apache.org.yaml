@@ -18,6 +18,9 @@ apache::mpm_module: 'prefork'
 apache::mod::prefork::maxrequestworkers: '120'
 apache::mod::prefork::startservers: '10'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -95,4 +98,3 @@ vhosts_asf::vhosts::vhosts:
           RewriteRule ^groupe([0-9]*).* /fr/forum/memberlist.php?mode=group&g=$1
           RewriteRule ^equipe\.* /fr/forum/memberlist.php?mode=leaders
         </Directory>
-        

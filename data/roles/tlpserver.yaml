@@ -83,6 +83,9 @@ base::basepackages:
   - lua-socket
   - lua-posix
 
+datadog_agent::tags:
+  - 'nodetype:infra'
+
 dnsclient::searchorder: 'apache.org'
 
 dnsclient::nameservers:

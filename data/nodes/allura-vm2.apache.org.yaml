@@ -5,6 +5,9 @@ classes:
   - loggy
   - stunnel_asf
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 

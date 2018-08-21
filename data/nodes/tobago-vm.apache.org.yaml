@@ -5,3 +5,5 @@ classes:
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
+datadog_agent::tags:
+  - 'nodetype:project'

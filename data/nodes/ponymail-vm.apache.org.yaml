@@ -48,6 +48,9 @@ base::basepackages:
   - 'lua5.2-socket'
   - 'lua5.2-sec'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 httpd_modules::dev_package:
   - 'apache2-dev'
 
@@ -72,7 +75,7 @@ oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
 postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
-    
+
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'
@@ -94,7 +97,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'ponymail-vm_error.log'
     custom_fragment: |
       Redirect permanent / https://ponymail-vm.apache.org/
-      
+
   ponymail-vm-ssl:
     vhost_name: '*'
     ensure: 'present'

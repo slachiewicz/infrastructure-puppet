@@ -28,6 +28,9 @@ apache::mod::event::startservers: '5'
 apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 base::basepackages:
   - 'jetty'
   - 'lua5.2'
@@ -76,4 +79,3 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / http://127.0.0.1:3030/
       ProxyPreserveHost On
       RequestHeader set X-Forwarded-Proto http
-

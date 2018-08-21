@@ -11,6 +11,9 @@ classes:
 base::basepackages:
     - 'openjdk-8-jdk'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 vhosts_asf::vhosts::vhosts:
   archiva.apache.org-80:
     vhost_name: '*'
@@ -47,11 +50,11 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /archiva/ http://localhost:9191/ connectiontimeout=15 timeout=180
       ProxyPassReverse /archiva/ http://localhost:9191/
 
-          #cache directive 
+          #cache directive
           # default
           Header set Cache-Control "max-age=86401, public"
 
-          #Header set Cache-control "max-age=0, must-revalidate, no-store" 
+          #Header set Cache-control "max-age=0, must-revalidate, no-store"
           #Header append Cache-control "public"
 
           # *.jsp, *.action  no-cache=true

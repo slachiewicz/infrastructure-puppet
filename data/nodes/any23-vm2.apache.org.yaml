@@ -13,6 +13,9 @@ base::basepackages:
     - 'maven'
     - 'openjdk-8-jdk'
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 tomcat::install:
   '/opt/tomcat9':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M21/bin/apache-tomcat-9.0.0.M21.tar.gz'
@@ -33,7 +36,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'any23-vm2.apache.org_error.log'
     custom_fragment: |
       RewriteEngine On
-      
+
       ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
       <Directory "/usr/lib/cgi-bin">
           AllowOverride None
@@ -41,7 +44,7 @@ vhosts_asf::vhosts::vhosts:
           Order allow,deny
           Allow from all
       </Directory>
-      
+
       Alias /doc/ "/usr/share/doc/"
       <Directory "/usr/share/doc/">
           Options Indexes MultiViews FollowSymLinks

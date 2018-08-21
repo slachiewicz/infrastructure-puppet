@@ -3,3 +3,5 @@
 base::basepackages:
   - docker-engine
 
+datadog_agent::tags:
+  - 'nodetype:project'

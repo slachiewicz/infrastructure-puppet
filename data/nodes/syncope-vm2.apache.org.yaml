@@ -31,6 +31,9 @@ base::basepackages:
   - maven
   - tomcat8
 
+datadog_agent::tags:
+  - 'nodetype:project'
+
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:
