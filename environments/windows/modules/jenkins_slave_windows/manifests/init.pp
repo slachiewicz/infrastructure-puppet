@@ -155,6 +155,6 @@ class jenkins_slave_windows (
   }
 
   exec { 'set JAVA_HOME':
-    command => "cmd.exe /c setx JAVA_HOME \"F:\\jenkins\\tools\\java\\latest\"",
+    command => "c:\Windows\System32\cmd.exe /c setx JAVA_HOME \"F:\\jenkins\\tools\\java\\latest\"",
   }
 }
