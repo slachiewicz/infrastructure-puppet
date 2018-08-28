@@ -62,6 +62,7 @@ class buildbot_slave::buildbot (
     'jdk-11-ea+8',
     'jdk-11-ea+19',
     'jdk-11-ea+22',
+    'jdk-11-ea+28',
     'openjdk-jdk-10.0.2',
 ],
   $tools = [
@@ -188,7 +189,7 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest11':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk-11-ea+22',
+    target => '/usr/local/asfpackages/java/jdk-11-ea+28',
   }
 
 }

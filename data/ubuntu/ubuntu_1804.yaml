@@ -396,6 +396,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk11-ea+8
   - asf-build-jdk11-ea+19
   - asf-build-jdk11-ea+22
+  - asf-build-jdk11-ea+28
   - asf-build-jira-cli-2.1.0
   - asf-build-jira-cli-6.9.0
   - asf-build-openjdk-jdk-10.0.2
@@ -559,6 +560,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk11-ea+8
   - asf-build-jdk11-ea+19
   - asf-build-jdk11-ea+22
+  - asf-build-jdk11-ea+28
   - asf-build-openjdk-jdk-10.0.2
 
 buildbot_slave::bb_basepackages:
