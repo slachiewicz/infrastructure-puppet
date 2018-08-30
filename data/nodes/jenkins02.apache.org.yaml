@@ -10,6 +10,8 @@ classes:
   - blocky
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
+  - dell
+  - dell::openmanage
   - fail2ban_asf::config
     # - jenkins_asf
   - kif
