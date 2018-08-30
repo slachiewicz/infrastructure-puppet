@@ -11,7 +11,7 @@ classes:
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
   - fail2ban_asf::config
-  - jenkins_asf
+    # - jenkins_asf
   - kif
   - loggy
   - oraclejava::install
