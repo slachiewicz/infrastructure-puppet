@@ -13,7 +13,7 @@ classes:
   - dell
   - dell::openmanage
   - fail2ban_asf::config
-    # - jenkins_asf
+  - jenkins_asf
   - kif
   - loggy
   - oraclejava::install
