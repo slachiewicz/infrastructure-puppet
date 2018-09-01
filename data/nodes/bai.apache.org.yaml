@@ -130,7 +130,7 @@ rsync::server::module:
     read_only: 'no'
   jenkins:
     path: '/x1/backups/jenkins-master/./target/'
-    hosts_allow: '127.0.0.1 62.210.60.235'
+    hosts_allow: '127.0.0.1 195.201.213.130'
     auth_users: 'apb-jenkins'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
