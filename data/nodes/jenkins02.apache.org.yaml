@@ -187,7 +187,7 @@ rsync_asf::cron_hour: 20
 rsync_asf::cron_minute: 07
 
 rsync_asf::fslist:
-  - /x1/jenkins-home/configs
+  - /x1/jenkins/jenkins-home/config-history
 
 sysctl:
   fs.nr_open:
