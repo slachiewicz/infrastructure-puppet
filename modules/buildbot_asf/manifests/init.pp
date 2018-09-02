@@ -24,7 +24,8 @@ class buildbot_asf (
   $log_horizon          = '40',
   $build_cache_size     = '50',
   $change_cache_size    = '10000',
-  $projects_path        = '/x1/buildmaster/master1/projects',
+  $projects_path        = "${venv_dir}/${buildmaster_work_dir}/projects",
+  $public_html          = "${venv_dir}/${buildmaster_work_dir}/public_html",
 
   # below are contained in eyaml
 
@@ -116,48 +117,60 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/root.html';
-    "${venv_dir}/master1/public_html/asf_logo_wide_2016.png":
+    "${public_html}/asf_logo_wide_2016.png":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/asf_logo_wide_2016.png';
-    "${venv_dir}/master1/public_html/bg_gradient.jpg":
+    "${public_html}/bg_gradient.jpg":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/bg_gradient.jpg';
-    "${venv_dir}/master1/public_html/default.css":
+    "${public_html}/default.css":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/default.css';
-    "${venv_dir}/master1/public_html/favicon.ico":
+    "${public_html}/favicon.ico":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/favicon.ico';
-    "${venv_dir}/master1/public_html/style.css":
+    "${public_html}/style.css":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/style.css';
-    "${venv_dir}/master1/public_html/robots.txt":
+    "${public_html}/robots.txt":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/robots.txt';
-    "${venv_dir}/master1/public_html/sitemap-index.xml":
+    "${public_html}/sitemap-index.xml":
       ensure => 'present',
       mode   => '0644',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/sitemap-index.xml';
+    "${public_html}/buildbot.css":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/buildbot.css';
+    "${public_html}/buildbot.html":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/buildbot.html';
 
     # configscanner daemon
 
@@ -187,36 +200,36 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-master-index.sh';
-    "${venv_dir}/master1/public_html/projects/openoffice/":
+    "${public_html}/projects/openoffice/":
       ensure => 'directory',
       mode   => '0755',
       owner  => $username,
       group  => $groupname;
-    "${venv_dir}/master1/public_html/projects/openoffice/create-ooo-snapshots-index.sh":
+    "${public_html}/projects/openoffice/create-ooo-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/create-ooo-snapshots-index.sh';
-    "${venv_dir}/master1/public_html/projects/xmlgraphics/fop/create-fop-snapshots-index.sh":
+    "${public_html}/projects/xmlgraphics/fop/create-fop-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/projects/create-fop-snapshots-index.sh';
-    "${venv_dir}/master1/public_html/projects/xmlgraphics/batik/create-batik-snapshots-index.sh":
+    "${public_html}/projects/xmlgraphics/batik/create-batik-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/projects/create-batik-snapshots-index.sh';
-    "${venv_dir}/master1/public_html/projects/xmlgraphics/commons/create-commons-snapshots-index.sh":
+    "${public_html}/projects/xmlgraphics/commons/create-commons-snapshots-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/projects/create-commons-snapshots-index.sh';
-    "${venv_dir}/master1/public_html/projects/subversion/nightlies/create-subversion-nightlies-index.sh":
+    "${public_html}/projects/subversion/nightlies/create-subversion-nightlies-index.sh":
       ensure => 'present',
       mode   => '0755',
       owner  => $username,
@@ -237,35 +250,35 @@ class buildbot_asf (
       user        => $username,
       minute      => 40,
       hour        => 5,
-      command     => "${venv_dir}/master1/public_html/projects/openoffice/create-ooo-snapshots-index.sh",
+      command     => "${public_html}/projects/openoffice/create-ooo-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-fop-snapshots-index':
       user        => $username,
       minute      => '10',
       hour        => '10',
-      command     => "${venv_dir}/master1/public_html/projects/xmlgraphics/fop/create-fop-snapshots-index.sh",
+      command     => "${public_html}/projects/xmlgraphics/fop/create-fop-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-batik-snapshots-index':
       user        => $username,
       minute      => '15',
       hour        => '10',
-      command     => "${venv_dir}/master1/public_html/projects/xmlgraphics/batik/create-batik-snapshots-index.sh",
+      command     => "${public_html}/projects/xmlgraphics/batik/create-batik-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-commons-snapshots-index':
       user        => $username,
       minute      => '20',
       hour        => '10',
-      command     => "${venv_dir}/master1/public_html/projects/xmlgraphics/commons/create-commons-snapshots-index.sh",
+      command     => "${public_html}/projects/xmlgraphics/commons/create-commons-snapshots-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
     'create-subversion-nightlies-index':
       user        => $username,
       minute      => '5',
       hour        => '4',
-      command     => "${venv_dir}/master1/public_html/projects/subversion/nightlies/create-subversion-nightlies-index.sh",
+      command     => "${public_html}/projects/subversion/nightlies/create-subversion-nightlies-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
   }
