@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/bin/bash -c "cd /x1/buildmaster && source bin/activate && buildbot start ."
+ExecStart=/bin/bash -c "cd /x1/buildmaster && source bin/activate && buildbot start master1"
 User=buildmaster
 Restart=always
 
