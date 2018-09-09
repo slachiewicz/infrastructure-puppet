@@ -174,6 +174,15 @@ class buildbot_asf (
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/configscanner.py';
 
+    # buildbot startup
+
+    '/etc/systemd/system/buildbot.service':
+      ensure => 'present',
+      mode   => '0755',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/buildbot.ubuntu';
+
     # required scripts for cron jobs
 
     "${venv_dir}/master1/config-update-check.sh":
@@ -284,6 +293,15 @@ class buildbot_asf (
     enable    => true,
     hasstatus => true,
     subscribe => File['/x1/buildmaster/master1/configscanner.py'],
+  }
+
+  # buildbot startup script
+
+  service { 'buildbot':
+    ensure    => 'running',
+    enable    => true,
+    hasstatus => true,
+    subscribe => File['/etc/systemd/system/buildbot.service'],
   }
 
 }
