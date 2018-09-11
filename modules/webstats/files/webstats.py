@@ -1,18 +1,18 @@
 #!/usr/bin/env python
-from elasticsearch import Elasticsearch, helpers
-from pyexcel_ods import save_data
-from collections import OrderedDict
+import elasticsearch
+import pyexcel_ods
+import collections
 
 
 # Elastic handler
-es = Elasticsearch([
+es = elasticsearch.Elasticsearch([
         {'host': 'localhost', 'port': 9200, 'url_prefix': '', 'use_ssl': False},
 ])
         
 
 # Make a "book" (an ODS file)
 def makeBook(domain):
-        book = OrderedDict()
+        book = collections.OrderedDict()
         
         # Get unique IPs
         query = {"query":{"bool":{"must":[{"query_string":{"query":"vhost:\"%s\" AND document:*.html AND useragent:mozilla" % domain,"analyze_wildcard":True}},{"range":{"@timestamp":{"gte":"now-30d","lte":"now","format":"epoch_millis"}}}],"must_not":[]}},"size":0,"_source":{"excludes":[]},"aggs":{"uniques":{"date_histogram":{"field":"@timestamp","interval":"1d","time_zone":"Europe/Berlin","min_doc_count":1},"aggs":{"1":{"cardinality":{"field":"clientip.keyword"}}}}}}        
@@ -65,7 +65,7 @@ def makeBook(domain):
         book.update({'Geomapping, past month': arr})
         
         
-        save_data("/var/www/snappy/exports/%s.ods" % domain, book)
+        pyexcel_ods.save_data("/var/www/snappy/exports/%s.ods" % domain, book)
 
 domains = open("/var/www/snappy/domains.txt").read().split()
 for sdomain in domains:
