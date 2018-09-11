@@ -16,7 +16,7 @@ class asful (
       group  => 'elasticsearch',
       content => template('asful/yaml.erb'),
     }
-    
+
   file {
     '/usr/local/etc/webstats.py':
       ensure => file,
@@ -31,7 +31,7 @@ class asful (
       group  => 'www-data',
       source => 'puppet:///modules/asful/webstats-domains.txt';
   }
-  
+
   cron {
     'run-webstats':
       user        => 'www-data',
