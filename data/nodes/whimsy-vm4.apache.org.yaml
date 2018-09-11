@@ -222,6 +222,11 @@ vhosts_whimsy::vhosts::vhosts:
         Options +Indexes
       </Directory>
 
+      # WHIMSY-199
+      <Directory /srv/whimsy/www/board/minutes>
+        AllowOverride FileInfo
+      </Directory>
+
       RewriteEngine on
       RewriteRule ^.*$ - [E=HTTP_AUTHORIZATION:%(HTTP:Authorization)]
 
