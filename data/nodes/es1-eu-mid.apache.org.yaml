@@ -13,6 +13,7 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
+  - webstats
 
 base::basepackages:
   - 'lua5.2'
