@@ -223,7 +223,7 @@ vhosts_whimsy::vhosts::vhosts:
       </Directory>
 
       # WHIMSY-199
-      <Directory /srv/whimsy/www/board/minutes>
+      <Directory /x1/srv/whimsy/www/board/minutes>
         AllowOverride FileInfo
       </Directory>
 
