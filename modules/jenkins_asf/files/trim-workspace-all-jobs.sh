@@ -26,9 +26,9 @@
 
 RUN_AS_USER=jenkins
 NODES_DIR=/x1/jenkins/jenkins-home/nodes/
-NODES_LIST='/tmp/nodeslist.txt'
+NODES_LIST='/x1/jenkins/nodeslist.txt'
 LOGS_DIR='/x1/jenkins/logs'
-MASTER_HOSTNAME='jenkins01.apache.org'
+MASTER_HOSTNAME='jenkins02.apache.org'
 HOSTNAME=`/bin/hostname -f`
 
 # Only makes sense to run this on jenkins master.
@@ -71,7 +71,7 @@ SPACE=`df -H | grep 'sda1\|vda1\|dm-0' | awk '{print $5}' | cut -d'%' -f1`
 JENKINS_HOME='/home/jenkins'
 RANGE=31
 echo "Space used = $SPACE"
-if [ "$SPACE" -gt 85 ];then
+if [ "$SPACE" -gt 80 ];then
 for dir in "${dirs[@]}"
  do
   echo "checking for existance of $JENKINS_HOME/$dir"
@@ -80,11 +80,10 @@ for dir in "${dirs[@]}"
     cd $JENKINS_HOME/$dir
     echo "Removing files older than $RANGE days"
     find $JENKINS_HOME/$dir \
-      -path \*/.git\* -prune -o \
-      -path \*/.svn\* -prune -o \
+      -not -path .git -not -path .svn \
       -type f \
       -mtime +$RANGE \
-      -exec echo rm {} \;
+      -delete
   else
     echo "no results for $JENKINS_HOME/$dir"
   fi
