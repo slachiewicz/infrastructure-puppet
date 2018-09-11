@@ -9,13 +9,13 @@ class webstats (
       mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data',
-      source => 'puppet:///modules/asful/webstats.py';
+      source => 'puppet:///modules/webstats/webstats.py';
     '/var/www/snappy/domains.txt':
       ensure => file,
       mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data',
-      source => 'puppet:///modules/asful/webstats-domains.txt';
+      source => 'puppet:///modules/webstats/webstats-domains.txt';
   }
 
   cron {
