@@ -252,11 +252,18 @@ elif 'repository' in data and 'name' in data['repository']:
         # Change to repo dir
         os.chdir(repopath)
         # Run 'git fetch --prune' (fetch changes, prune away branches no longer present in remote)
-        p = subprocess.Popen(["git", "fetch", "--prune"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
-        output,error = p.communicate()
-        rv = p.poll()
+        rv = True
+        i = 0
+        # Try fetching 5 times, 2 secs in between.
+        # Sometimes, github hiccups here!
+        while i < 5 and rv:
+            i += 1
+            time.sleep(2)
+            p = subprocess.Popen(["git", "fetch", "--prune"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
+            output,error = p.communicate()
+            rv = p.poll()
         if not rv:
             log += "[%s] [%s.git]: Git fetch succeeded\n" % (time.strftime("%c"), reponame)
             try:
