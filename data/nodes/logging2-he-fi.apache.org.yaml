@@ -35,7 +35,7 @@ elasticsearch::jvm_options:
   - '-Xms30g'
   - '-Xmx30g'
 elasticsearch::java_install: true
-elasticsearch::version: '6.4.0'
+elasticsearch::version: '5.6.11'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 elasticsearch::default_logging_level: 'WARN'
