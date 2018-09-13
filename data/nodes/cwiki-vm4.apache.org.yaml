@@ -10,6 +10,7 @@ classes:
   - blocky
   - loggy
   - datadog_agent::integrations::apache
+  - oraclejava::install
   - ssl::name::cwiki_apache_org 
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
@@ -114,3 +115,7 @@ vhosts_asf::vhosts::vhosts:
 
         RewriteCond %%{}{QUERY_STRING} file: [NC]
         RewriteRule viewdefaultdecorator - [F,END]
+
+
+oraclejava::install::version: '8'
+oraclejava::install::unlimited_jce: true
