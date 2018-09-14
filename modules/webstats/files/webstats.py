@@ -14,25 +14,69 @@ es = elasticsearch.Elasticsearch([
 def makeBook(domain):
         book = collections.OrderedDict()
         
+        # This is the global search. We'll adjust as needed
+        query = {
+            "query": {
+                "bool": {
+                    "must": [{
+                            "query_string": {
+                                "query": "vhost:\"%s\" AND document:*.html AND useragent:mozilla" % domain,
+                                "analyze_wildcard": True
+                            }
+                        }, {
+                            "range": {
+                                "@timestamp": {
+                                    "gte": "now-30d",
+                                    "lte": "now",
+                                    "format": "epoch_millis"
+                                }
+                            }
+                        }
+                    ],
+                    "must_not": []
+                }
+            },
+            "size": 0,
+            "_source": {
+                "excludes": []
+            },
+        }
+        
         # Get unique IPs
-        query = {"query":{"bool":{"must":[{"query_string":{"query":"vhost:\"%s\" AND document:*.html AND useragent:mozilla" % domain,"analyze_wildcard":True}},{"range":{"@timestamp":{"gte":"now-30d","lte":"now","format":"epoch_millis"}}}],"must_not":[]}},"size":0,"_source":{"excludes":[]},"aggs":{"uniques":{"date_histogram":{"field":"@timestamp","interval":"1d","time_zone":"Europe/Berlin","min_doc_count":1},"aggs":{"1":{"cardinality":{"field":"clientip.keyword"}}}}}}        
+        query['aggs'] = {
+                "per_day": {
+                    "date_histogram": {
+                        "field": "@timestamp",
+                        "interval": "1d",
+                        "time_zone": "UTC",
+                        "min_doc_count": 1
+                    },
+                    "aggs": {
+                        "uniques": {
+                            "cardinality": {
+                                "field": "clientip.keyword"
+                            }
+                        }
+                    }
+                }
+            }
         res = es.search(index='loggy-*', request_timeout=90, body = query)
         
         arr = [['Date', 'Unique visitors']]
-        for el in res['aggregations']['uniques']['buckets']:
+        for el in res['aggregations']['per_day']['buckets']:
                 d = el['key_as_string'].replace(' 00:00:00', '')
-                c = el['1']['value']
+                c = el['uniques']['value']
                 arr.append([d,c])
         book.update({'Unique visitors, past month': arr})
         
         
         
         # Get page views
-        query = {"query":{"bool":{"must":[{"query_string":{"query":"vhost:\"%s\" AND document:*.html AND useragent:mozilla" % domain,"analyze_wildcard":True}},{"range":{"@timestamp":{"gte":"now-30d","lte":"now","format":"epoch_millis"}}}],"must_not":[]}},"size":0,"_source":{"excludes":[]},"aggs":{"uniques":{"date_histogram":{"field":"@timestamp","interval":"1d","time_zone":"Europe/Berlin","min_doc_count":1}}}}        
+        # We already have the data here, so no need for an additional query.
         res = es.search(index='loggy-*', request_timeout=90, body = query)
         
         arr = [['Date', 'Pageviews']]
-        for el in res['aggregations']['uniques']['buckets']:
+        for el in res['aggregations']['per_day']['buckets']:
                 d = el['key_as_string'].replace(' 00:00:00', '')
                 c = el['doc_count']
                 arr.append([d,c])
@@ -41,24 +85,65 @@ def makeBook(domain):
         
         
         # Get most visited pages
-        query = {"query":{"bool":{"must":[{"query_string":{"query":"vhost:\"%s\" AND uri:*.html AND useragent:mozilla" % domain,"analyze_wildcard":True}},{"range":{"@timestamp":{"gte":"now-30d","lte":"now","format":"epoch_millis"}}}],"must_not":[]}},"size":0,"_source":{"excludes":[]},"aggs":{"2":{"terms":{"field":"uri.keyword","size":50,"order":{"_count":"desc"}}}}}
+        query["aggs"] = {
+                "popular" : {
+                        "terms" : {
+                                "field" : "uri.keyword",
+                                "size" : 50,
+                                "order" : {"_count":"desc"}
+                                }
+                        }
+                }
         res = es.search(index='loggy-*', request_timeout=90, body = query)
         
         arr = [['URI', 'Pageviews']]
-        for el in res['aggregations']['2']['buckets']:
-                d = el['key'].replace(' 00:00:00', '')
+        for el in res['aggregations']['popular']['buckets']:
+                d = el['key']
                 c = el['doc_count']
                 arr.append([d,c])
         book.update({'Most visited pages, past month': arr})
         
         
         
+        # Get top referrers
+        query["aggs"] = {
+                "refs" : {
+                        "terms" : {
+                                "field" : "referer.keyword",
+                                "size" : 25,
+                                "order" : {"_count":"desc"}
+                                }
+                        }
+                }
+        res = es.search(index='loggy-*', request_timeout=90, body = query)
+        
+        arr = [['Referrer', 'Pageviews']]
+        for el in res['aggregations']['refs']['buckets']:
+                d = el['key']
+                c = el['doc_count']
+                # We only use it if > 10 people have used it, so as to not divulge PII
+                if c > 10:
+                        arr.append([d,c])
+        book.update({'Top referrers, past month': arr})
+        
+        
+        
         # Geomapping
-        query = {"query":{"bool":{"must":[{"query_string":{"query":"vhost:\"%s\" AND useragent:mozilla AND NOT (geo_country.keyword in (\"EU\", \"AP\", \"A1\", \"A2\", \"SX\", \"SS\", \"-\")) AND NOT geo_country.keyword:\"-\"" % domain,"analyze_wildcard":True}},{"range":{"@timestamp":{"gte":"now-30d","lte":"now","format":"epoch_millis"}}}],"must_not":[]}},"size":0,"_source":{"excludes":[]},"aggs":{"2":{"terms":{"field":"geo_country.keyword","size":200,"order":{"_count":"desc"}}}}}
+        # We need to weed out some things here
+        query["query"]["bool"]["must_not"].append({"query_string": {"query": '(geo_country.keyword in ("EU", "AP", "A1", "A2", "SX", "SS", "-")) AND NOT geo_country.keyword:"-"'}})
+        query["aggs"] = {
+                "country" : {
+                        "terms" : {
+                                "field" : "geo_country.keyword",
+                                "size" : 200,
+                                "order" : {"_count":"desc"}
+                                }
+                        }
+                }
         res = es.search(index='loggy-*', request_timeout=90, body = query)
         
         arr = [['Country', 'Pageviews']]
-        for el in res['aggregations']['2']['buckets']:
+        for el in res['aggregations']['country']['buckets']:
                 d = el['key']
                 c = el['doc_count']
                 arr.append([d,c])
