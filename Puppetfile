@@ -15,6 +15,8 @@ mod 'apt',
 mod 'awscli',
   :git => 'https://github.com/clambertus/puppet-awscli'
 
+mod 'bind',
+  :git => 'https://github.com/thias/puppet-bind'
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
