@@ -69,7 +69,7 @@ df -h | grep '^/dev/sda1\|^/dev/dm-0\|^/dev/vda1' >> /tmp/diskcleanup.txt
 
 SPACE=`df -H | grep 'sda1\|vda1\|dm-0' | awk '{print $5}' | cut -d'%' -f1`
 JENKINS_HOME='/home/jenkins'
-RANGE=31
+RANGE=15
 echo "Space used = $SPACE"
 if [ "$SPACE" -gt 80 ];then
 for dir in "${dirs[@]}"
