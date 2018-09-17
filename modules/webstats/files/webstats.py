@@ -122,7 +122,7 @@ def makeBook(domain):
                 d = el['key']
                 c = el['doc_count']
                 # We only use it if > 10 people have used it, so as to not divulge PII
-                if c > 10:
+                if c > 10 and d != '-':
                         arr.append([d,c])
         book.update({'Top referrers, past month': arr})
         
@@ -146,7 +146,8 @@ def makeBook(domain):
         for el in res['aggregations']['country']['buckets']:
                 d = el['key']
                 c = el['doc_count']
-                arr.append([d,c])
+                if d != '-':
+                        arr.append([d,c])
         book.update({'Geomapping, past month': arr})
         
         
