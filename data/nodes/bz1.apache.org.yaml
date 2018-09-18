@@ -52,7 +52,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     port: 80
     serveradmin: 'users@infra.apache.org'
-    ip: "%{::ipaddress_eth1}"
+    ip: "%{::ipaddress_ens3}"
     ip_based: true
     docroot: '/var/www/html'
     manage_docroot: false
@@ -120,5 +120,5 @@ vhosts_asf::vhosts::vhosts:
       RemoteIPHeader X-Forwarded-For
 
 ntp::interfaces:
-  - eth1
+  - ens3
   - lo
