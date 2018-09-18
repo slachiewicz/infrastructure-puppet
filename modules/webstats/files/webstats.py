@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import elasticsearch
 import pyexcel_ods
 import collections
-
+import requests
 
 # Elastic handler
 es = elasticsearch.Elasticsearch([
@@ -144,16 +144,36 @@ def makeBook(domain):
         
         arr = [['Country', 'Pageviews']]
         for el in res['aggregations']['country']['buckets']:
-                d = el['key']
-                c = el['doc_count']
-                if d != '-':
+                if el['key'] != '-':
+                        d = el['key']
+                        c = el['doc_count']
                         arr.append([d,c])
         book.update({'Geomapping, past month': arr})
         
         
         pyexcel_ods.save_data("/var/www/snappy/exports/%s.ods" % domain, book)
 
-domains = open("/var/www/snappy/domains.txt").read().split()
-for sdomain in domains:
-        if sdomain:
-                makeBook(sdomain)
+
+if __name__ == '__main__':
+        # Get all projects, committees, podlings
+        cmts = requests.get('https://whimsy.apache.org/public/committee-info.json').json()
+        pods = requests.get('https://whimsy.apache.org/public/public_podlings.json').json()
+        
+        
+        # Churn out a list of sub-domains to gather stats for
+        subdomains = ['www.openoffice.org', 'openoffice.org', 'www.apache.org', 'apache.org']
+        for k, cmt in cmts['committees'].items():
+            if not '@' in cmt['mail_list']:
+                subdomain = "%s.apache.org" % cmt['mail_list']
+                subdomains.append(subdomain)
+        
+        for k, cmt in pods['podling'].items():
+            subdomain = "%s.apache.org" % k
+            if cmt['status'] == "current" and subdomain not in subdomains:
+                subdomains.append(subdomain)
+                
+        for sdomain in sorted(subdomains):
+                if sdomain:
+                        print("Charting %s" % sdomain)
+                        makeBook(sdomain)
+        print("All done")
