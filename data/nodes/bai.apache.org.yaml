@@ -131,7 +131,7 @@ rsync::server::module:
   jenkins02:
     path: '/x1/backups/jenkins02/./target/'
     hosts_allow: '127.0.0.1 195.201.213.130'
-    auth_users: 'apb-jenkins'
+    auth_users: 'apb-jenkins02'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
   svn01-us-west:
