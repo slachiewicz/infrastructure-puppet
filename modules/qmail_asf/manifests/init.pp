@@ -270,6 +270,12 @@ class qmail_asf (
       content => template('qmail_asf/move-allowed-poster.erb'),
       mode    => '0755';
 
+    "${apmail_home}/.ezmlmrc":
+      owner   => $username,
+      group   => $groupname,
+      content => template('qmail_asf/ezmlmrc.erb'),
+      mode    => '0644';
+
   # symlinks
 
     "/home/${username}":
