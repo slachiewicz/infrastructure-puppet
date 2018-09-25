@@ -133,7 +133,7 @@ Facter.add("noderole") do
       "jenkins"
     elsif hostname.include? "jenkins-win" # include all Windows nodes
       "jenkins-win"
-    elsif hostname.include?("jenkins-beam") || hostname.include?("jenkins-cassandra") || hostname.include?("jenkins-beam")
+    elsif hostname.include?("jenkins-beam") || hostname.include?("jenkins-cassandra") || hostname.include?("beam-jenkins")
       "jenkins-external"
     elsif hostname =~ /openwhisk-vm\d-he-de/ # OpenWhisk Jenkins boxes
       "jenkins"
