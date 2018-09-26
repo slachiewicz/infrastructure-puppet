@@ -68,7 +68,7 @@
       <vendor>oracle</vendor>
     </provides>
     <configuration>
-      <jdkHome>/home/jenkins/tools/java/latest11/</jdkHome>
+      <jdkHome>/home/buildslave/slave/tools/java/latest11/</jdkHome>
     </configuration>
   </toolchain>
 </toolchains>
