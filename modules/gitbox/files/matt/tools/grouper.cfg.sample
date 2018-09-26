@@ -7,7 +7,7 @@ token:              abcdef1234567890
 
 # Example project with hardcoded member list, avoids LDAP
 [group:openwhisk]
-members:            humbedooh gstein pono
+members:            humbedooh gstein
 
 # Example podling extended with IPMC
 [group:ponymail]
