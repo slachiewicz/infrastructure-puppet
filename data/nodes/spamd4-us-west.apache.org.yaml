@@ -36,6 +36,7 @@ postfix::dbfile:
       subversion.com          smtp:[hermes.apache.org]:2025
       subversion.net          smtp:[hermes.apache.org]:2025
       subversion.org          smtp:[hermes.apache.org]:2025
+      testing10@infra.apache.org smtp:[hermes-vm.apache.org]:2025
 
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
