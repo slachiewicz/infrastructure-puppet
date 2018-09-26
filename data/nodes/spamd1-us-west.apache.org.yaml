@@ -26,6 +26,7 @@ postfix::server::transport_maps: 'hash:/etc/postfix/transport_maps'
 postfix::dbfile:
   transport_maps:
     content: |
+      testing10@infra.apache.org smtp:[hermes-vm.apache.org]:587
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025
       apachecon.com           smtp:[hermes.apache.org]:2025
@@ -33,7 +34,6 @@ postfix::dbfile:
       subversion.com          smtp:[hermes.apache.org]:2025
       subversion.net          smtp:[hermes.apache.org]:2025
       subversion.org          smtp:[hermes.apache.org]:2025
-      testing10@infra.apache.org smtp:[hermes-vm.apache.org]:2025
 
 
 # As used by the spamassassin/templates/spamassasssin-default.erb
