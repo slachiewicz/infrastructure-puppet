@@ -368,7 +368,7 @@ for arg in $lists; do
         $XCMD $ezsub . "archive@mail-archive.com"
         # fetch address for markmail
         LISTREV=`echo $listname@$listhost | perl -F\\[.@\\] -nale 'print join ".", reverse @F'`
-        MMADDR=`curl -s "http://markmail.org/manage/list/add?auth=<%= @mm_auth %>&list=$LISTREV" | sed -e 's/^.* user //; s/\.  Try again\.//'`
+        MMADDR=`curl -s "https://markmail.org/manage/list/add?auth=<%= @mm_auth %>&list=$LISTREV" | sed -e 's/^.* user //; s/\.  Try again\.//'`
         $XCMD $ezsub . "$MMADDR"
     else
         $XCMD $ezsub . "private@$mboxhost"
