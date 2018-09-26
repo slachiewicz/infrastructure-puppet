@@ -47,7 +47,7 @@ elasticsearch::instances:
     config:
       node.name: 'comdev'
       network.host: '127.0.0.1'
-  
+
 
 httpd_modules::dev_package:
   - 'apache2-dev'
@@ -57,7 +57,11 @@ logrotate::rule:
     ensure: 'present'
 
 postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
-    
+
+python::python_pips:
+  gunicorn:
+    ensure: present
+
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'
