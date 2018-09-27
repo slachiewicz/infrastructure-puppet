@@ -51,7 +51,7 @@ class qmail_asf (
 
   # qmail specific 
 
-  $qmail_dir          = '/var/qmail'
+  $qmail_dir          = '/var/lib/qmail'
   $control_dir        = "${qmail_dir}/control"
 
   user {
