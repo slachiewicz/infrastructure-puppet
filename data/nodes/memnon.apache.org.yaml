@@ -67,6 +67,7 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       IndexOptions FoldersFirst FancyIndexing
+      AddType text/plain .asc .md5 .sha .sha1 .sha2 .sha256 .sha512 .sha3 .mds
       
   archive_https:
     vhost_name: '*'
@@ -87,3 +88,4 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       IndexOptions FoldersFirst FancyIndexing
+      AddType text/plain .asc .md5 .sha .sha1 .sha2 .sha256 .sha512 .sha3 .mds
