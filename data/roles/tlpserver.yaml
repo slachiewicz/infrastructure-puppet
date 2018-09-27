@@ -714,112 +714,6 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
 
-  apachecon-eu:
-    vhost_name: '*'
-    port: 80
-    servername: 'eu.apachecon.com'
-    docroot: '/www/html'
-    manage_docroot: false
-    serveraliases:
-      - 'apachecon.eu'
-      - 'www.apachecon.eu'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect / http://events.linuxfoundation.org/events/apachecon-europe/
-
-  apachecon-na:
-    vhost_name: '*'
-    port: 80
-    servername: 'na14.apachecon.com'
-    docroot: '/www/archive.apachecon.com'
-    manage_docroot: false
-    serveraliases:
-      - 'us.apachecon.com'
-      - 'na.apachecon.com'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect / http://events.linuxfoundation.org/events/apachecon-north-america/
-
-  apacheextras:
-    vhost_name: '*'
-    port: 80
-    servername: 'apacheextras.org'
-    docroot: '/www/html'
-    serveraliases:
-      - 'apache-extras.org'
-      - 'apachextras.org'
-      - 'www.apache-extras.org'
-      - 'www.apaceextras.org'
-      - 'www.apachextras.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://code.google.com/a/apache-extras.org
-
-  cloudstack:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.cloudstack.org'
-    docroot: '/www/cloudstack.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'cloudstack.org'
-      - 'cloudstack.com'
-      - 'www.cloudstack.com'
-      - 'cloudstack.org.uk'
-      - 'www.cloudstack.org.uk'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://cloudstack.apache.org
-
-  cloudstack-docs:
-    vhost_name: '*'
-    port: 80
-    servername: 'docs.cloudstack.org'
-    docroot: '/www/cloudstack.apache.org'
-    manage_docroot: false
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://cloudstack.apache.org/docs/
-
-  couchapp:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.couchapp.org'
-    docroot: '/www/couchdb.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'couchapp.org'
-      - 'couchapp.com'
-      - 'couchhack.org'
-      - 'www.couchapp.com'
-      - 'www.couchhack.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://docs.couchdb.com/en/latest/couchapp/ddocs.html
-
-  deltaspike:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.deltaspike.org'
-    docroot: '/www/deltaspike.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'deltaspike.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://deltaspike.apache.org/
-
   distributedlog:
     vhost_name: '*'
     port: 80
@@ -888,26 +782,6 @@ vhosts_asf::vhosts::vhosts:
       -
         path: '/solr'
         url: 'http://drat-vm.apache.org:8080/solr'
-
-  freemarker:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.freemarker.org'
-    docroot: '/www/freemarker.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'freemarker.org'
-      - 'freemarker.apache.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    directories:
-      -
-        path: '/www/freemarker.apache.org'
-        allow_override:
-              - 'FileInfo'
-    custom_fragment: |
-      RewriteRule ^/(.*)$ https://freemarker.apache.org/$1 [R]
 
   gump:
     vhost_name: '*'
@@ -1527,39 +1401,6 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/jackrabbit-$1 [R=301,L]
 
-
-  jclouds:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.jclouds.org'
-    serveraliases:
-      - 'www.jclouds.net'
-      - 'www.jclouds.com'
-      - 'jclouds.org'
-      - 'jclouds.net'
-      - 'jclouds.com'
-    docroot: '/www/jclouds.apache.org'
-    manage_docroot: false
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://jclouds.apache.org/
-
-  jspwiki.org:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.jspwiki.org'
-    serveraliases:
-      - 'jspwiki.org'
-    docroot: '/www/jspwiki.apache.org'
-    manage_docroot: false
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://jspwiki.apache.org/
-
   jspwiki:
     vhost_name: '*'
     port: 80
@@ -1589,68 +1430,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent /doc https://jspwiki-doc.apache.org
       Redirect permanent /wiki https://jspwiki-wiki.apache.org
-
-  libcloud:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.libcloud.org'
-    docroot: '/www/libcloud.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'libcloud.org'
-      - 'www.libcloud.net'
-      - 'libcloud.net'
-      - 'www.libcloud.com'
-      - 'libcloud.com'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://libcloud.apache.org/
-
-  myfaces:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.myfaces.org'
-    docroot: '/www/myfaces.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'myfaces.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://myfaces.apache.org/
-
-  odftoolkit:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.odftoolkit.org'
-    docroot: '/www/odftoolkit.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'odftoolkit.org'
-      - 'www.odf-toolkit.com'
-      - 'odf-toolkit.com'
-      - 'www.odf-toolkit.net'
-      - 'odf-toolkit.net'
-      - 'www.odf-toolkit.org'
-      - 'odf-toolkit.org'
-      - 'www.odfcoalition.com'
-      - 'odfcoalition.com'
-      - 'www.odfcoalition.net'
-      - 'odfcoalition.net'
-      - 'www.odfcoalition.org'
-      - 'odfcoalition.org'
-      - 'www.odftoolkit.com'
-      - 'odftoolkit.com'
-      - 'www.odftoolkit.net'
-      - 'odftoolkit.net'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://incubator.apache.org/odftoolkit/
 
   ofbiz:
     vhost_name: '*'
@@ -1949,35 +1728,6 @@ vhosts_asf::vhosts::vhosts:
       RewriteOptions inherit
       Use BlockSvn
 
-  projectgeode:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.projectgeode.org'
-    docroot: '/www/geode.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'projectgeode.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://geode.apache.org
-
-  qi4j:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.qi4j.org'
-    docroot: '/www/polygene.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'qi4j.org'
-      - 'zest.apache.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://polygene.apache.org/
-
   quarks:
     vhost_name: '*'
     port: 80
@@ -2160,24 +1910,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Redirect permanent / http://spamassassin.apache.org/
 
-  subversion.org:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.subversion.org'
-    docroot: '/www/subversion.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'subversion.org'
-      - 'www.subversion.net'
-      - 'subversion.net'
-      - 'www.subversion.com'
-      - 'subversion.com'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      RedirectMatch permanent ^ http://subversion.apache.org/
-
   svn.collab.net:
     vhost_name: '*'
     port: 80
@@ -2189,20 +1921,6 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       RedirectMatch ^ https://subversion.apache.org/source-code
-
-  tinkerpop.com:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.tinkerpop.com'
-    docroot: '/www/tinkerpop.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'tinkerpop.com'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      RedirectMatch permanent ^ http://tinkerpop.apache.org/
 
   tlp:
     vhost_name: '*'
@@ -2654,20 +2372,6 @@ vhosts_asf::vhosts::vhosts:
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/ws-$1 [R=301,L]
 
-  www-jspwiki:
-    vhost_name: '*'
-    port: 80
-    servername: 'www.jspwiki.org'
-    docroot: '/www/jspwiki.apache.org'
-    manage_docroot: false
-    serveraliases:
-      - 'jspwiki.org'
-    serveradmin: 'users@infra.apache.org'
-    access_log_file: '/x1/logs/weblog.log'
-    error_log_file: '/x1/logs/errorlog.log'
-    custom_fragment: |
-      Redirect permanent / http://jspwiki.apache.org/
-
   xalan:
     vhost_name: '*'
     port: 80
@@ -2737,7 +2441,6 @@ vhosts_asf::vhosts::vhosts:
 
       #/mail/* -> mail-archives.a.o/mod_mbox/tlp-list
       RewriteRule ^/mail/(.*)$ https://mail-archives.apache.org/mod_mbox/xalan-$1 [R=301,L]
-
 
   xerces:
     vhost_name: '*'
@@ -2919,7 +2622,6 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       # Change to infra.a.o later on.
       Redirect / https://infra-test.apache.org/
-
 
   infra-ssl:
     vhost_name: '*'
