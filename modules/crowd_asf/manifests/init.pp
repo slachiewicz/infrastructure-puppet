@@ -144,6 +144,7 @@ class crowd_asf (
       require => File[$parent_dir];
     "${install_dir}/crowd-webapp/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
+      notify  => Service['crowd'],
       mode    => '0644';
     "${install_dir}/apache-tomcat/conf/server.xml":
       content => template('crowd_asf/server.xml.erb'),
@@ -151,11 +152,6 @@ class crowd_asf (
     "${install_dir}/apache-tomcat/bin/setenv.sh":
       content => template('crowd_asf/setenv.sh.erb'),
       mode    => '0644';
-    # "${crowd_home}/crowd.cfg.xml":
-    # content => template('crowd_asf/crowd.cfg.xml.erb'),
-    # owner   => 'crowd',
-    # group   => 'crowd',
-    # mode    => '0644';
     "${mysql_connector_dest_dir}/mysql-connector-java.jar":
       ensure => link,
       target => $mysql_connector_path;
