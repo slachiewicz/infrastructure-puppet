@@ -144,7 +144,6 @@ class crowd_asf (
       require => File[$parent_dir];
     "${install_dir}/crowd-webapp/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
-      notify  => Service['crowd.service'],
       mode    => '0644';
     "${install_dir}/apache-tomcat/conf/server.xml":
       content => template('crowd_asf/server.xml.erb'),
