@@ -142,6 +142,9 @@ class crowd_asf (
       owner   => 'root',
       group   => 'root',
       require => File[$parent_dir];
+    "${crowd_home}/shared/crowd.cfg.xml":
+      content => template('crowd_asf/crowd.cfg.xml.erb',
+      mode    => '0640';
     "${install_dir}/crowd-webapp/WEB-INF/classes/crowd-init.properties":
       content => template('crowd_asf/crowd-init.properties.erb'),
       mode    => '0644';
