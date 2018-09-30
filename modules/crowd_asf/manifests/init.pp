@@ -28,9 +28,9 @@ class crowd_asf (
   $maxmetaspacesize              = '',
 
   # below are contained in eyaml
-  $crowd_license_hash       = '',
-  $crowd_license_message    = '',
-  $crowd_setup_server_id    = '',
+  $crowd_license_hash            = '',
+  $crowd_license_message         = '',
+  $crowd_setup_server_id         = '',
   $hibernate_connection_password = '',
   $hibernate_connection_username = '',
   $hibernate_connection_url      = '',
