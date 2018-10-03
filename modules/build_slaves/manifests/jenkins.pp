@@ -605,6 +605,14 @@ class build_slaves::jenkins (
       ];
   }
 
+  tidy {
+    'ws-cleanup':
+      path    => '/home/jenkins/jenkins-slave/workspace/',
+      age     => '60m',
+      matches => [ '*ws-cleanup*' ],
+      rmdirs  => true,
+      recurse => '1',
+  }
 
   service { 'apache2':
     ensure => 'stopped',
