@@ -131,6 +131,16 @@ Facter.add("noderole") do
       "tlpserver"
     elsif hostname.include? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
       "jenkins"
+    elsif hostname.include? "penates" # old named nodes
+      "jenkins"
+    elsif hostname.include? "pietas"
+      "jenkins"
+    elsif hostname.include? "pomona"
+      "jenkins"
+    elsif hostname.include? "prosperina"
+      "jenkins"
+    elsif hostname.include? "priapus"
+      "jenkins"
     elsif hostname.include? "jenkins-win" # include all Windows nodes
       "jenkins-win"
     elsif hostname.include?("jenkins-beam") || hostname.include?("beam-jenkins") # beam is infra mangaged
