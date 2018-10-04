@@ -7,6 +7,7 @@ classes:
   - blocky
   - elasticsearch
   - kif
+  - jenkins_node_monitor
   - loggy
   - rootbin_asf
   - ssl::name::wildcard_apache_org
@@ -14,13 +15,21 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - zmanda_asf::client
-  
+
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
 
 base::gempackages:
   - 'r10k'
   - 'puppet-lint'
+
+cron:
+  # JNM: Jenkins Node Monitor, check status of Jenkins nodes and pushes that to DataDog
+  jnm:
+    user: 'root'
+    minute: '*/10'
+    hour: '*'
+    command: 'cd /usr/local/etc/jenkins_node_monitor/ && python jnm.py > /dev/null 2>&1'
 
 elasticsearch::jvm_options:
   - '-Xms2g'
@@ -118,4 +127,3 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       AddHandler cgi-script .cgi
-
