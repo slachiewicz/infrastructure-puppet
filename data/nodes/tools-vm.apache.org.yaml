@@ -10,7 +10,6 @@ classes:
   - etherpad_lite
   - etherpad_lite::site
   - git_self_serve::tools
-  - jenkins_node_monitor
   - kif
   - loggy
   - pad_asf
@@ -55,19 +54,13 @@ base::basepackages:
   - 'nodejs'
 
 cron:
-  # JNM: Jenkins Node Monitor, check status of Jenkins nodes and pushes that to DataDog
-  jnm:
-    user: 'root'
-    minute: '*/10'
-    hour: '*'
-    command: 'cd /usr/local/etc/jenkins_node_monitor/ && python jnm.py > /dev/null 2>&1'
   remove-locks:
     user: 'root'
     minute: '28'
     hour: '0'
     weekday: '7'
     command: '/usr/bin/find /tmp -name "mailinglist-*.json.lock" -atime +7 -delete > /dev/null 2>&1'
-  
+
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
 elasticsearch::java_install: true
@@ -82,7 +75,7 @@ elasticsearch::instances:
       network.host: '127.0.0.1'
       init_defaults:
         ES_HEAP_SIZE: '2g'
-        
+
 etherpad_lite::site::etherpad_title: 'ASF EtherPad'
 
 httpd_modules::dev_package:
@@ -111,7 +104,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'pad.apache.org.error.log'
     custom_fragment: |
       Redirect permanent / https://pad.apache.org/
-      
+
   etherpad-lite-ssl:
     vhost_name: '*'
     ensure: 'present'
@@ -155,7 +148,7 @@ vhosts_asf::vhosts::vhosts:
       ErrorDocument 500 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=500
       ErrorDocument 502 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=502
       ErrorDocument 503 http://www.apache.org/dev/service_unavailable.html?site=pad.apache.org&code=503
-    
+
   paste:
     vhost_name: '*'
     port: 80
@@ -167,7 +160,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'paste_error.log'
     custom_fragment: |
       Redirect permanent / https://paste.apache.org/
-      
+
   paste-ssl:
     vhost_name: '*'
     ensure: 'present'
@@ -195,7 +188,7 @@ vhosts_asf::vhosts::vhosts:
           AuthBasicProvider ldap
           require valid-user
       </Location>
-      
+
   shorten:
     vhost_name: '*'
     port: 80
@@ -207,7 +200,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 's_error.log'
     custom_fragment: |
       Redirect permanent / https://s.apache.org/
-      
+
   shorten-ssl:
     vhost_name: '*'
     ensure: 'present'
@@ -234,7 +227,7 @@ vhosts_asf::vhosts::vhosts:
           AuthBasicProvider ldap
           require valid-user
       </Location>
-      
+
   reference:
     vhost_name: '*'
     port: 80
@@ -342,7 +335,7 @@ vhosts_asf::vhosts::vhosts:
         AuthType Basic
         AuthBasicProvider ldap
         Require valid-user
-      </Location> 
+      </Location>
   id:
     vhost_name: '*'
     port: 80
