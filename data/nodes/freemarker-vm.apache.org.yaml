@@ -4,6 +4,3 @@ classes:
 
 base::basepackages:
   - 'openjdk-8-jdk'
-
-datadog_agent::tags:
-  - 'nodetype:project'

@@ -1,6 +1,3 @@
 ---
 classes:
   - cordova_pvm_asf
-
-datadog_agent::tags:
-  - 'nodetype:project'

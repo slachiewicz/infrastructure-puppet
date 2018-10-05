@@ -7,9 +7,6 @@ classes:
   - apache::mod::rewrite
   - vhosts_asf::vhosts
 
-datadog_agent::tags:
-  - 'nodetype:project'
-
 logrotate::rule:
   apache2:
     ensure: 'present'

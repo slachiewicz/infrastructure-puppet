@@ -1,6 +1,3 @@
 ---
 classes:
   - loggy
-
-datadog_agent::tags:
-  - 'nodetype:project'

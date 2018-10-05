@@ -11,9 +11,6 @@ classes:
 base::basepackages:
     - 'openjdk-8-jdk'
 
-datadog_agent::tags:
-  - 'nodetype:project'
-
 vhosts_asf::vhosts::vhosts:
   archiva.apache.org-80:
     vhost_name: '*'
