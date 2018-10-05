@@ -6,6 +6,7 @@ classes:
   - aim_server
   - blocky
   - elasticsearch
+  - gitpubsub
   - kif
   - jenkins_node_monitor
   - loggy
