@@ -13,9 +13,6 @@ base::basepackages:
     - 'maven'
     - 'openjdk-8-jdk'
 
-datadog_agent::tags:
-  - 'nodetype:project'
-
 tomcat::install:
   '/opt/tomcat9':
     source_url: 'https://dist.apache.org/repos/dist/release/tomcat/tomcat-9/v9.0.0.M21/bin/apache-tomcat-9.0.0.M21.tar.gz'

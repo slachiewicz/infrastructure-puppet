@@ -2,7 +2,3 @@
 classes:
   - build_slaves::jenkins
   - build_slaves::snapcraft
-
-datadog_agent::tags:
-  - 'monitor:jenkins_space'
-  - 'nodetype:jenkins_slave'
