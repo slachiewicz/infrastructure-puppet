@@ -76,7 +76,7 @@ vhosts_asf::vhosts::vhosts:
     port: 80
     docroot: '/var/www/reporter.apache.org/site'
     docroot_owner: "%{apache::user}"
-    docroot_group: "%{apache::group}" 
+    docroot_group: "%{apache::group}"
     servername: 'reporter.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'

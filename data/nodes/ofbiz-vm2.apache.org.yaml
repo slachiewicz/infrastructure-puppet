@@ -34,9 +34,6 @@ base::hosts:
   demo-old.ofbiz.apache.org:
     ip: '10.20.2.166'
 
-datadog_agent::tags:
-  - 'nodetype:project'
-
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:

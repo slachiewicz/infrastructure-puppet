@@ -24,9 +24,6 @@ base::basepackages:
   - 'x264'
   - 'zlib1g-dev'
 
-datadog_agent::tags:
-  - 'nodetype:project'
-
 letsencrypt::email: 'root@apache.org'
 letsencrypt::manage_dependencies: false
 letsencrypt::certonly:

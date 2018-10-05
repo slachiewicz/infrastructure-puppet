@@ -140,7 +140,7 @@ $pbcsPwd  = ''
 
   tidy { '/x1/gitbox/db/backups':
         age     => '1w',
-        recurse => 1,
+        recurse => false,
         matches => ['*.bak'],
   }
 
