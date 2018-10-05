@@ -358,6 +358,12 @@ class NodeThread(Thread):
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             js['@node'] = hostname
+            # Rogue string sometimes, we don't want that!
+            if 'bytes' in js:
+                try:
+                    js['bytes'] = int(js['bytes'])
+                except:
+                    js['bytes'] = 0
             if mytags:
                 js['@tags'] = mytags
             if 'request' in js and not 'url' in js:
