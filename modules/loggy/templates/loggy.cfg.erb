@@ -5,6 +5,9 @@
 # /var/log would also check /var/log/tomcat/ for instance.
 paths:          /var/log/, /x1/log/
 
+[Tags]
+<%= scope.lookupvar("datadog_agent::tags").join("\n") %>
+
 # Primary and secondary JSON receiver.
 [ElasticSearch:Primary]
 host:   es1-eu-mid.apache.org
