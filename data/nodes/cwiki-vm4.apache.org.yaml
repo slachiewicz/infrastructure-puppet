@@ -102,7 +102,7 @@ vhosts_asf::vhosts::vhosts:
         # cwiki
         ProxyPass /intermediates !
         ProxyPass /confluence//spaces/viewdefaultdecorator.action !
-        ProxyPass /confluence/ http://127.0.0.1:8888/confluence/
+        ProxyPass /confluence/ http://127.0.0.1:8888/confluence/ disablereuse=On timeout=500
         ProxyPass /server-status !
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
         RewriteCond $1 !(confluence|intermediates|server-status)
