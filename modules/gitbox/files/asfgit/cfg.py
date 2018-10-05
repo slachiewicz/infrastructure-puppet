@@ -9,7 +9,7 @@ import asfgit.util as util
 NO_DEFAULT = object()
 DEFAULT_SUBJECT = "%(repo)s git commit: %(subject)s"
 
-DEFAULT_PUBSUB_HOST = "wilderness.apache.org"
+DEFAULT_PUBSUB_HOST = "gitpubsub.apache.org"
 DEFAULT_PUBSUB_PORT = "2069"
 DEFAULT_PUBSUB_PATH = "/json"
 
