@@ -194,6 +194,12 @@ rsync::server::module:
     auth_users: 'apb-wilderness'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  git1-us-west:
+    path: '/x1/backups/git1-us-west/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.23'
+    auth_users: 'apb-git1-us-west'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
