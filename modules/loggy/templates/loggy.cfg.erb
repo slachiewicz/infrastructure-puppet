@@ -6,9 +6,9 @@
 paths:          /var/log/, /x1/log/
 
 [Tags]
-<% if scope.lookupvar("tags") -%>
+<% if scope.lookupvar("datadog::tags") -%>
 datadog: yes
-<% tags.each do |tag| -%>
+<% datadog::tags.each do |tag| -%>
 <% if tag.include?(':') -%>
 <%= tag %>
 <% end -%>
