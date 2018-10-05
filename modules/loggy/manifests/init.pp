@@ -7,6 +7,7 @@ class loggy (
   $username       = 'root',
   $group          = 'root',
   $route          = '',
+  $tags           = $datadog_agent::tags
 ){
   require python
 
