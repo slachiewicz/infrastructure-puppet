@@ -6,7 +6,10 @@
 paths:          /var/log/, /x1/log/
 
 [Tags]
-<%= scope.lookupvar("::datadog_agent::tags").join("\n") %>
+<% if @datadog_agent::tags -%>
+datadog: yes
+<%= scope.lookupvar("datadog_agent::tags").join("\n") %>
+<% end -%>
 
 # Primary and secondary JSON receiver.
 [ElasticSearch:Primary]
