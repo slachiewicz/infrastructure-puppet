@@ -1,13 +1,13 @@
 #/etc/puppet/modules/loggy/manifests/init.pp
 
-class loggy (
+class loggy inherits datadog_agent::tags (
   $service_name   = 'loggy',
   $shell          = '/bin/bash',
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
   $route          = '',
-  $tags           = $::datadog_agent::tags
+  $tags           = $datadog_agent::tags
 ){
   require python
 
