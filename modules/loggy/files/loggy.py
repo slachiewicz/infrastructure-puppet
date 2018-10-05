@@ -54,6 +54,8 @@ elif osname == "freebsd":
 from elasticsearch import Elasticsearch, helpers
 
 config = ConfigParser.ConfigParser()
+dd_config = ConfigParser.ConfigParser()
+mytags = ''
 
 paths = ['/var/log/', '/x1/log']
 
@@ -356,6 +358,8 @@ class NodeThread(Thread):
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             js['@node'] = hostname
+            if mytags:
+                js['@tags'] = mytags
             if 'request' in js and not 'url' in js:
                 match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+", js['request'])
                 if match:
@@ -756,6 +760,12 @@ if args.kill:
     daemon.stop()
 else:
     config.read("loggy.cfg")
+    if os.path.exists('/etc/dd-agent/datadog.conf'):
+        dd_config.read('/etc/dd-agent/datadog.conf')
+        if dd_config.has_option('Main', 'tags'):
+            mytags = dd_config.get('Main', 'tags')
+        
+    
     
     if args.daemon:
         print("Daemonizing...")
