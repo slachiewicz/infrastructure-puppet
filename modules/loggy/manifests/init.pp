@@ -7,7 +7,7 @@ class loggy (
   $username       = 'root',
   $group          = 'root',
   $route          = ''
-) inherits datadog_agent::tags {
+) inherits datadog_agent::params {
   require python
 
   package { 'gcc':
