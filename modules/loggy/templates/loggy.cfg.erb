@@ -8,7 +8,7 @@ paths:          /var/log/, /x1/log/
 [Tags]
 <% if scope.lookupvar("tags") -%>
 datadog: yes
-<%= scope.lookupvar("tags").join("\n") %>
+<%= tags.join("\n") %>
 <% end -%>
 
 # Primary and secondary JSON receiver.
