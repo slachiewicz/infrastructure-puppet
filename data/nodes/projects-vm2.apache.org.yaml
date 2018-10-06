@@ -55,6 +55,7 @@ vhosts_asf::vhosts::vhosts:
     servername: 'projects.apache.org'
     serveraliases:
       - 'projects-new.apache.org'
+      - 'projects-test.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'
     options:
@@ -65,7 +66,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       AddHandler cgi-script .py
       <Location />
-        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
+        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140 62.210.60.251
       </Location>
       <Directory /var/www/projects.apache.org/site/json/>
         Header set Access-Control-Allow-Origin "*"
@@ -78,6 +79,8 @@ vhosts_asf::vhosts::vhosts:
     docroot_owner: "%{apache::user}"
     docroot_group: "%{apache::group}" 
     servername: 'reporter.apache.org'
+    serveraliases:
+      - 'reporter-test.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'
     options:
@@ -88,7 +91,7 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       AddHandler cgi-script .py
       <Location />
-        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140
+        Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140 62.210.60.251
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
 
