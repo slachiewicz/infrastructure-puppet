@@ -700,6 +700,8 @@ projects_role = rw
 # migrated to gitbox
 [/commons/proper/weaver]
 * = r
+[/commons/proper/jexl]
+* = r
 
 # Note: since commons/proper/[lang|math|scxml] have now been moved under _moved_to_git and
 # only a README remains, there is now no need to make those directory trees read-only.
