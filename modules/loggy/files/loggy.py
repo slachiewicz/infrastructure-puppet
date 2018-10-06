@@ -57,6 +57,12 @@ config = ConfigParser.ConfigParser()
 dd_config = ConfigParser.ConfigParser()
 mytags = ''
 
+# These boxes have the wrong tags due to Puppet. override!
+tag_overrides = {
+    'tlp-he-fi.apache.org': 'dc:hetzner',
+    'tlp-us-east.apache.org': 'dc:azure'
+}
+
 paths = ['/var/log/', '/x1/log']
 
 
@@ -770,7 +776,8 @@ else:
         dd_config.read('/etc/dd-agent/datadog.conf')
         if dd_config.has_option('Main', 'tags'):
             mytags = dd_config.get('Main', 'tags')
-        
+        if hostname in tag_overrides:
+            mytags = tag_overrides[hostname]
     
     
     if args.daemon:
