@@ -37,7 +37,6 @@ base::basepackages:
   - 'lua5.2-cjson'
   - 'lua5.2-socket'
   - 'lua5.2-sec'
-  - 'mod-lua-asf'
 
 logrotate::rule:
   apache2:
