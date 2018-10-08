@@ -86,7 +86,7 @@ def getGitHubRepos():
     logging.info(
         "Fetching list of GitHub repos, hang on (this may take a while!)..")
     repos = []
-    for n in range(1, 100):  # 100 would be 3000 repos, we have 750ish now...
+    for n in range(1, 150):  # 150 would be 4500 repos, we have 1750ish now...
         url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (
             ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
@@ -105,7 +105,7 @@ def getGitHubTeamMembers(teamID):
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 100):  # 100 would be 3000 repos, we have 750ish now...
+    for n in range(1, 100):  # 100 would be 3000 members
         url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (
             teamID, ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
@@ -124,7 +124,7 @@ def getGitHubTeamRepos(teamID):
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 10):
+    for n in range(1, 20):
         url = "https://api.github.com/teams/%s/repos?access_token=%s&page=%u" % (
             teamID, ORG_READ_TOKEN, n)
         response = urllib2.urlopen(url)
