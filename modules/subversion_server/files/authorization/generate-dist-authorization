@@ -16,7 +16,7 @@ pmcs=`$LDAPSEARCH -x -LLL -b $BASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '
 
 projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
 
-committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: , :bookkeeper: , :camel: , :zookeeper:"
+committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: , :bookkeeper: , :camel: , :zookeeper: , :trafficcontrol:"
 
 # preamble
 cat <<EOF
