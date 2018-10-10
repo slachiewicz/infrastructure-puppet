@@ -40,19 +40,19 @@ cron:
   # MFA: Collate MFA status for org members
   mfa:
     user: 'root'
-    minute: [5,35]
+    minute: [15]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
   # Grouper: invite gitbox members to their repos/teams
   grouper:
     user: 'root'
-    minute: [10,40]
+    minute: [30]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
   # GHAdd: Invite people to ASF GH Org based on LDAP
   ghadd:
     user: 'root'
-    minute: [0,30]
+    minute: [0]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
   # JSONStats: collect traffic stats from GH
