@@ -131,6 +131,8 @@ Facter.add("noderole") do
       "tlpserver"
     elsif hostname.include? "asf9" # include all asf9?? Oath/Y! Jenkins nodes
       "jenkins"
+    elsif hostname.include? "lucene" # old named nodes
+      "jenkins"
     elsif hostname.include? "penates" # old named nodes
       "jenkins"
     elsif hostname.include? "pietas"
@@ -145,7 +147,7 @@ Facter.add("noderole") do
       "jenkins-win"
     elsif hostname.include?("jenkins-beam") || hostname.include?("beam-jenkins") # beam is infra mangaged
       "jenkins"
-    elsif hostname.include?("jenkins-cassandra") 
+    elsif hostname.include?("jenkins-cassandra")
       "jenkins-external"
     elsif hostname =~ /openwhisk-vm\d-he-de/ # OpenWhisk Jenkins boxes
       "jenkins"
