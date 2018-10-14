@@ -1,0 +1,13 @@
+[Unit]
+Description=qpsmtpd
+
+[Service]
+User=smtpd
+Group=smtpd
+Type=forking
+ExecStart=/usr/bin/qpsmtpd-forkserver -p 2025 -m 0 -c 200 -u smtpd
+ExecStop=
+
+[Install]
+WantedBy=multi-user.target
+Alias=qpsmtpd.service
