@@ -72,6 +72,26 @@ class qmail_asf (
       name   => $groupname,
   }
 
+  # smtpd
+
+  user {
+    'smtpd':
+      ensure     => 'present',
+      name       => 'smtpd',
+      home       => "${parent_dir}/smtpd",
+      shell      => '/bin/bash',
+      groups     => ['smptd','apmail'],
+      managehome => true,
+      require    => Group['apmail'],
+      system     => true,
+  }
+
+  group {
+    'smtpd':
+      ensure => 'present',
+      name   => 'smtpd',
+  }
+
   ### - Download, extract, configure, compile and install ezmlm-idx - ###
 
   # download ezmlm
