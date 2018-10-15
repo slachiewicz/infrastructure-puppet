@@ -311,7 +311,7 @@ class qmail_asf (
   }
 
   ::systemd::unit_file { 'qpsmtpd.service':
-      source => 'puppet:///modules/qmail_asf/qptmtpd.service',
+      source => 'puppet:///modules/qmail_asf/qpsmtpd.service',
   }
 
 }
