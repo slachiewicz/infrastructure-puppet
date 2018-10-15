@@ -80,7 +80,7 @@ class qmail_asf (
       name       => 'smtpd',
       home       => "${parent_dir}/smtpd",
       shell      => '/bin/bash',
-      groups     => ['smptd','apmail'],
+      groups     => ['smtpd','apmail'],
       managehome => true,
       require    => Group['apmail'],
       system     => true,
