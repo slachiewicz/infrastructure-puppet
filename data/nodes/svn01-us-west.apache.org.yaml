@@ -231,6 +231,9 @@ vhosts_asf::vhosts::vhosts:
       # NOTE: Infrastructure defines the limit for each path/PMC. Contact them
       #       for a value larger than the global 100M setting.
       #
+      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/pulsar/>
+        LimitRequestBody 450000000
+      </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/servicemix/>
         LimitRequestBody 35000000
       </LocationMatch>
