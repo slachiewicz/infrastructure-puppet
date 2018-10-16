@@ -234,9 +234,6 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/pulsar/>
         LimitRequestBody 450000000
       </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/servicemix/>
-        LimitRequestBody 35000000
-      </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/ctakes/>
         LimitRequestBody 450000000
       </LocationMatch>
@@ -245,9 +242,6 @@ vhosts_asf::vhosts::vhosts:
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/ctakes/>
         LimitRequestBody 700000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/manifoldcf/>
-        LimitRequestBody 350000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/stratos/>
         LimitRequestBody 500000000
@@ -264,20 +258,11 @@ vhosts_asf::vhosts::vhosts:
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/joshua/>
         LimitRequestBody 500000000
       </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/incubator/gearpump/>
-        LimitRequestBody 350000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/nutch/>
-        LimitRequestBody 350000000
-      </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/zeppelin/>
         LimitRequestBody 1000000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/phoenix/>
         LimitRequestBody 600000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/storm/>
-        LimitRequestBody 300000000
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/kylin/>
         LimitRequestBody 500000000
@@ -287,15 +272,6 @@ vhosts_asf::vhosts::vhosts:
       </LocationMatch>
       <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/hadoop/>
         LimitRequestBody 750000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/syncope/>
-        LimitRequestBody 300000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/mahout/>
-        LimitRequestBody 350000000
-      </LocationMatch>
-      <LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/pig/>
-        LimitRequestBody 350000000
       </LocationMatch>
       #<LocationMatch /repos/dist/!svn/(txr|wrk)/[^/]+/dev/$PMC/>
       #  LimitRequestBody $LIMIT
