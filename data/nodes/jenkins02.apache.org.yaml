@@ -170,11 +170,11 @@ vhosts_asf::vhosts::vhosts:
         RequestHeader set X-Forwarded-Port "443"
         ProxyPreserveHost On
         ProxyRequests     Off
-        AllowEncodedSlashes NoDecode
+        AllowEncodedSlashes On
         RewriteRule "/analysis$" "/analysis/" [R]
         RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
         ProxyPassReverse "/analysis/" "https://builds.apache.org/analysis/"
-        ProxyPass / http://127.0.0.1:8080/ nocanon
+        ProxyPass / http://127.0.0.1:8080/
         ProxyPassReverse / http://127.0.0.1:8080/
         ProxyPassReverse  /  http://builds.apache.org/
         RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
