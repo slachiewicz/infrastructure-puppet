@@ -310,8 +310,4 @@ class qmail_asf (
       require => Exec['extract-ezmlm'];
   }
 
-  ::systemd::unit_file { 'qpsmtpd.service':
-      source => 'puppet:///modules/qmail_asf/qpsmtpd.service',
-  }
-
 }
