@@ -424,6 +424,8 @@ build_slaves::distro_packages:
   - erlang-eunit
   - firefox
   - flex
+  - g+-mingw-w64-x86-64
+  - g+-mingw
   - g++
   - g++-4.8-multilib
   - g++-multilib
@@ -498,6 +500,7 @@ build_slaves::distro_packages:
   - python-boto
   - python-setuptools
   - python3-dev
+  - qt4-qmake
   - re2c
   - ruby
   - ruby-dev
