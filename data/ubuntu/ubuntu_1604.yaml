@@ -9,7 +9,7 @@ classes:
   - fail2ban_asf::config
   - git_asf
   - orthrus
-  - postfix::server
+  - postfix_asf_server
   - python
   - subversionclient
   - tz16_asf
