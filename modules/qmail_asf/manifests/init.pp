@@ -313,7 +313,7 @@ class qmail_asf (
   exec { 'control-files':
     command => 'svn co https://svn.apache.org/repos/infra/infrastructure/trunk/qmail/control/',
     path    => '/usr/bin/',
-    cwd     => '$qmail_dir',
+    cwd     => $qmail_dir,
     user    => $username,
     group   => $groupname,
     creates => "${control_dir}/me.asf",
