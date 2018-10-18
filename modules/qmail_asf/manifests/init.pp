@@ -261,11 +261,9 @@ class qmail_asf (
       require => Package['qmail'];
     $qpsmtpd_dir:
       ensure  => directory,
-      recurse => true,
-      owner   => 'smtpd'
-      group   => 'smtpd'
+      owner   => 'smtpd',
+      group   => 'smtpd',
       mode    => '0755',
-      source  => 'puppet:///modules/qmail_asf/apmail/qpsmtpd',
       require => User['smtpd'];
     $control_dir:
       ensure  => directory,
@@ -341,4 +339,12 @@ class qmail_asf (
     require => [ Package['subversion'], User[$username] , File[$control_dir]],
   }
 
+  exec { 'qpsmtpd-files':
+    command => "svn co https://svn.apache.org/repos/infra/infrastructure/qpsmtpd/ --config-dir=${svn_dot_dir}",
+    path    => '/usr/bin/',
+    cwd     => "${parent_dir}/smtpd",
+    user    => $username,
+    group   => $groupname,
+    require => [ Package['subversion'], User['smtpd']],
+  }
 }
