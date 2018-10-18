@@ -262,8 +262,8 @@ class qmail_asf (
     $qpsmtpd_dir:
       ensure  => directory,
       owner   => 'smtpd',
-      group   => 'smtpd',
-      mode    => '0755',
+      group   => $groupname,
+      mode    => '0775',
       require => User['smtpd'];
     $control_dir:
       ensure  => directory,
