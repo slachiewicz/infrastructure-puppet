@@ -10,7 +10,7 @@ class qmail_asf (
   $shell                         = '/bin/bash',
 
   # override below in yaml
-  $parent_dir,
+  $parent_dir    = '/x1',
   $ezmlm_version = '',
 
   # override below in eyaml
@@ -19,11 +19,23 @@ class qmail_asf (
   $ap_user   = '',
   $ap_pw     = '',
 
-  $required_packages = ['qmail', 'dot-forward', 'daemontools', 'ucspi-tcp', 'rbldnsd', 'djbdns',
-                          'dnscache-run', 'dnsmasq', 'clamav', 'clamav-freshclam', 'qpsmtpd'],
+  $required_packages = [
+    'qmail',
+    'dot-forward',
+    'daemontools',
+    'ucspi-tcp',
+    'rbldnsd',
+    'djbdns',
+    'dnscache-run',
+    'dnsmasq',
+    'clamav',
+    'clamav-freshclam',
+    'qpsmtpd'
+  ],
 ){
 
-# install required packages:
+  # install required packages:
+
   package {
     $required_packages:
       ensure => 'present',
@@ -318,6 +330,15 @@ class qmail_asf (
     group   => $groupname,
     creates => "${control_dir}/me.asf",
     require => [ Package['subversion'], User[$username] , File[$control_dir]],
+  }
+
+  exec { 'qpsmtpd-files':
+    command => "svn co https://svn.apache.org/repos/infra/infrastructure/qpsmtpd/ --config-dir=${svn_dot_dir}",
+    path    => '/usr/bin/',
+    cwd     => "${parent_dir}/smtpd",
+    user    => 'smtpd',
+    group   => 'smtpd',
+    require => [ Package['subversion'], User['smtpd']],
   }
 
 }
