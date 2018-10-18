@@ -210,13 +210,13 @@ gitbox::custom_fragment_443: |
       </Location>
       <LocationMatch "^/setup/(newrepo.*|resync.cgi)">
           AuthType Basic
-          AuthName "ASF Committers"
+          AuthName "ASF Project Chairs Only!"
           AuthBasicProvider ldap
           AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
           Require ldap-attribute gidNumber=5000
-          Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+          Require ldap-group cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org
           Require valid-user
       </LocationMatch>
       # Infra private area
