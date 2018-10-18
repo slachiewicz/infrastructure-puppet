@@ -50,6 +50,7 @@ class qmail_asf (
   $logs2_dir          = "${apmail_home}/logs2"
   $json_dir           = "${apmail_home}/json"
   $svn_dot_dir        = "${apmail_home}/.subversion2"
+  $qpsmtpd_dir        = "${parent_dir}/smtpd/qpsmtpd"
   $mailqsize_port     = '8083'
 
   # ezmlm specific
@@ -258,6 +259,14 @@ class qmail_asf (
       group   => qmail,
       mode    => '0755',
       require => Package['qmail'];
+    $qpsmtpd_dir:
+      ensure  => directory,
+      recurse => true,
+      owner   => 'smtpd'
+      group   => 'smtpd'
+      mode    => '0755',
+      source  => 'puppet:///modules/qmail_asf/apmail/qpsmtpd',
+      require => User['smtpd'];
     $control_dir:
       ensure  => directory,
       owner   => $username,
@@ -330,15 +339,6 @@ class qmail_asf (
     group   => $groupname,
     creates => "${control_dir}/me.asf",
     require => [ Package['subversion'], User[$username] , File[$control_dir]],
-  }
-
-  exec { 'qpsmtpd-files':
-    command => "svn co https://svn.apache.org/repos/infra/infrastructure/qpsmtpd/ --config-dir=${svn_dot_dir}",
-    path    => '/usr/bin/',
-    cwd     => "${parent_dir}/smtpd",
-    user    => 'smtpd',
-    group   => 'smtpd',
-    require => [ Package['subversion'], User['smtpd']],
   }
 
 }
