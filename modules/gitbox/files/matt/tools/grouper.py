@@ -148,8 +148,8 @@ def getGitHubTeamRepos(teamID):
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 20):
-        url = "https://api.github.com/teams/%s/repos?access_token=%s&page=%u" % (
+    for n in range(1, 50): # 50 pages = 500 repos max
+        url = "https://api.github.com/teams/%s/repos?per_page=10&access_token=%s&page=%u" % (
             teamID, ORG_READ_TOKEN, n)
         data = getJSON(url)
         # Break if no more members
