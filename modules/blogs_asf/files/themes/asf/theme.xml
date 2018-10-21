@@ -81,7 +81,7 @@
             <templateLanguage>velocity</templateLanguage>
         </rendition>
     </template>
-    
+
     <template action="tagsIndex">
         <name>TagsIndex</name>
         <description>Tag index page</description>
@@ -93,5 +93,5 @@
             <contentsFile>tagsIndex.vm</contentsFile>
         </rendition>
     </template>
-    
+
 </weblogtheme>
