@@ -20,9 +20,9 @@ apache::mod::event::maxconnectionsperchild: '200000'
 apache::mod::event::maxrequestworkers: '800'
 apache::mod::event::maxsparethreads: '200'
 apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '4'
+apache::mod::event::serverlimit: '6'
 apache::mod::event::startservers: '2'
-apache::mod::event::threadlimit: '800'
+apache::mod::event::threadlimit: '1200'
 apache::mod::event::threadsperchild: '200'
 
 apache::mod::status::allow_from:
