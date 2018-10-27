@@ -4,9 +4,9 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart= /usr/bin/<%= @service_name %> start <%= @slave_dir %>"
-ExecStop= /usr/bin/<%= @service_name %> stop <%= @slave_dir %>"
-ExecReload= /usr/bin/<%= @service_name %> reload <%= @slave_dir %>"
+ExecStart= /usr/bin/<%= @service_name %> start <%= @slave_dir %>
+ExecStop= /usr/bin/<%= @service_name %> stop <%= @slave_dir %>
+ExecReload= /usr/bin/<%= @service_name %> reload <%= @slave_dir %>
 
 User=<%= @username %>
 Group=<%= @groupname %>
