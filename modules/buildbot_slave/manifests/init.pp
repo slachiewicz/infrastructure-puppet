@@ -8,7 +8,6 @@ class buildbot_slave (
   $shell             = '/bin/bash',
   $user_present      = 'present',
   $username          = 'buildslave',
-  $service_ensure    = 'running',
   $service_name      = 'buildslave',
   $gradle_versions   = ['3.5', '4.3', '4.3.1'],
 
@@ -188,14 +187,12 @@ class buildbot_slave (
     "/home/${username}/slave/buildbot.tac":
       content => template('buildbot_slave/buildbot.tac.erb'),
       mode    => '0644',
-      notify  => Service[$service_name],
       require => Exec['bootstrap-buildslave'];
 
     "/home/${username}/slave/private.py":
       content => template('buildbot_slave/private.py.erb'),
       owner   => $username,
       mode    => '0640',
-      notify  => Service[$service_name],
       require => Exec['bootstrap-buildslave'];
 
     "/home/${username}/slave/info/host":
