@@ -24,6 +24,8 @@ class buildbot_slave (
 
 ){
 
+  $slave_dir = "/home/${username}/slave"
+
   include buildbot_slave::buildbot
 
   # install gradle PPA and gradle 2.x
@@ -207,13 +209,8 @@ class buildbot_slave (
       require => Exec['bootstrap-buildslave'];
   }
 
-  -> service {
-    $service_name:
-      ensure     => $service_ensure,
-      enable     => true,
-      hasstatus  => false,
-      hasrestart => true,
-      require    => Exec['bootstrap-buildslave'];
-  }
+  ::systemd::unit_file { 'buildslave.service':
+      content => template('buildbot_slave/buildslave.service.erb'),
+}
 
 }

@@ -1,0 +1,20 @@
+[Unit]
+Description=Buildbot Slave
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "cd <%= @slave_dir => && <%= @service_name %> start ."
+ExecStop=/bin/bash -c "cd <%= @slave_dir => && <%= @service_name %> stop ."
+ExecRestart=/bin/bash -c "cd <%= @slave_dir => && <%= @service_name %> restart ."
+ExecReload=/bin/bash -c "cd <%= @slave_dir => && <%= @service_name %> reload ."
+
+User=<%= @username %>
+Group=<%= @groupname %>
+Restart=always
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
