@@ -34,9 +34,11 @@ class whimsy_server (
     zlib1g-dev,
 
     imagemagick,
+    img2pdf,
     nodejs,
     pdftk,
     procmail,
+    poppler-utils,
 
     gnupg2,
   ]
