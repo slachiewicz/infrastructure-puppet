@@ -1,7 +1,5 @@
 # /etc/puppet/modules/httpd_asf/manifests/high.pp
 
-include httpd_asf
-
 # httpd:asf high class
 class httpd_asf::high (
 

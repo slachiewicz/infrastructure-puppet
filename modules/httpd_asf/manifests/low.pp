@@ -1,7 +1,5 @@
 # /etc/puppet/modules/httpd_asf/manifests/low.pp
 
-include httpd_asf
-
 # httpd:asf low class
 class httpd_asf::low (
 

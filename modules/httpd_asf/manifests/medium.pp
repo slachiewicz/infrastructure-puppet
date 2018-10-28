@@ -1,7 +1,5 @@
 # /etc/puppet/modules/httpd_asf/manifests/medium.pp
 
-include httpd_asf
-
 # httpd:asf medium class
 class httpd_asf::medium (
 
