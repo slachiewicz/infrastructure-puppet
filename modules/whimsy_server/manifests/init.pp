@@ -39,6 +39,7 @@ class whimsy_server (
     pdftk,
     procmail,
     poppler-utils,
+    texlive-extra-utils,
 
     gnupg2,
   ]
