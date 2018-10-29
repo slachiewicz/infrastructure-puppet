@@ -3,7 +3,7 @@ Description=Buildbot Slave
 After=multi-user.target
 
 [Service]
-Type=simple
+Type=forking
 ExecStart= /usr/bin/<%= @service_name %> start .
 ExecStop= /usr/bin/<%= @service_name %> stop .
 ExecReload= /usr/bin/<%= @service_name %> reload .
@@ -17,3 +17,4 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
+Alias=buildslave.service
