@@ -4,13 +4,13 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart= /usr/bin/<%= @service_name %> start <%= @slave_dir %>
-ExecStop= /usr/bin/<%= @service_name %> stop <%= @slave_dir %>
-ExecReload= /usr/bin/<%= @service_name %> reload <%= @slave_dir %>
+ExecStart= /usr/bin/<%= @service_name %> start .
+ExecStop= /usr/bin/<%= @service_name %> stop .
+ExecReload= /usr/bin/<%= @service_name %> reload .
 
 User=<%= @username %>
-Group=<%= @groupname %>
-Restart=always
+WorkingDirectory=<%= @slave_dir %>
+Restart=on-failure
 
 StandardOutput=journal
 StandardError=journal
