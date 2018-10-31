@@ -2,11 +2,12 @@
 classes:
   - apache
   - apache::mod::ssl
+  - blocky
   - kif
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
-  
+
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::max_keepalive_requests: 1000
@@ -68,7 +69,7 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       IndexOptions FoldersFirst FancyIndexing
       AddType text/plain .asc .md5 .sha .sha1 .sha2 .sha256 .sha512 .sha3 .mds
-      
+
   archive_https:
     vhost_name: '*'
     port: 443
