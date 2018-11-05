@@ -104,6 +104,7 @@ class build_slaves::jenkins (
     'jdk1.8.0_144-unlimited-security',
     'jdk1.8.0_152',
     'jdk1.8.0_172',
+    'jdk1.8.0_191',
     'jigsaw-jdk-9-ea-b156',
     'jdk-9-ea-b179',
     'jdk-9-b181',
@@ -526,7 +527,7 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/java/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_191',
   }
   file { "/home/${build_slaves::username}/tools/java/latest1.4":
     ensure => link,
@@ -546,7 +547,7 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/java/latest1.8":
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_191',
   }
   file { "/home/${build_slaves::username}/tools/java/latest1.9":
     ensure => link,
