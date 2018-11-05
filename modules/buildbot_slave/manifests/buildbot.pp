@@ -65,7 +65,7 @@ class buildbot_slave::buildbot (
     'jdk-11-ea+22',
     'jdk-11-ea+28',
     'openjdk-jdk-10.0.2',
-    'openjdk-12-ea+18',
+    'openjdk12-ea+18',
 ],
   $tools = [
     'ant',

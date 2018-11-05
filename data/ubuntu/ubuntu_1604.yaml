@@ -403,7 +403,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jira-cli-2.1.0
   - asf-build-jira-cli-6.9.0
   - asf-build-openjdk-jdk-10.0.2
-  - asf-build-openjdk-12-ea+18
+  - asf-build-openjdk12-ea+18
 
 # Not all build slaves. This is just for Jenkins slaves.
 build_slaves::distro_packages:
@@ -573,7 +573,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk11-ea+22
   - asf-build-jdk11-ea+28
   - asf-build-openjdk-jdk-10.0.2
-  - asf-build-openjdk-12-ea+18
+  - asf-build-openjdk12-ea+18
 
 buildbot_slave::bb_basepackages:
   - ant
