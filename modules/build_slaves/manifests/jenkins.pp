@@ -212,13 +212,13 @@ class build_slaves::jenkins (
     }
   }
   #define gradle symlinking
-  define build_slaves::symlink_gradle ($gradle_versions = $title) {
-    package {"gradle-${gradle_versions}":
+  define build_slaves::symlink_gradle ($gradleversions = $title) {
+    package {"gradle-${gradleversions}":
       ensure => latest,
     }
-    -> file {"/home/${build_slaves::username}/tools/gradle/${gradle_versions}":
+    -> file {"/home/${build_slaves::username}/tools/gradle/${gradleversions}":
       ensure => link,
-      target => "/usr/lib/gradle/${gradle_versions}",
+      target => "/usr/lib/gradle/${gradleversions}",
     }
   }
 
@@ -564,7 +564,8 @@ class build_slaves::jenkins (
     target => '/usr/local/asfpackages/java/jdk-11-ea+28',
   }
 
-
+  # install all the gradle versions, create symlinks
+  build_slaves::symlink_gradle { $gradle_versions: }
   # make latest gradle symlink
   file { "/home/${build_slaves::username}/tools/gradle/latest":
     ensure => link,
