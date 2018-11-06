@@ -17,6 +17,7 @@ classes:
   - oraclejava::install
   - rsync::server
   - rsync_asf
+  - snmp
   - stunnel_asf
   - ssl::name::wildcard_apache_org
   - sysctl_asf
@@ -188,6 +189,9 @@ rsync_asf::cron_minute: 07
 
 rsync_asf::fslist:
   - /x1/jenkins/jenkins-home/config-history
+
+snmp::snmpd_config:
+  - 'dlmod swRaidMIB /usr/lib/swRaidPlugin.so'
 
 sysctl:
   fs.nr_open:
