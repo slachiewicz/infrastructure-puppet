@@ -58,6 +58,7 @@ class build_slaves::jenkins (
     '4.8.1',
     '4.9',
     '4.10',
+    '4.10.2',
     ],
   # $maven_old = ['apache-maven-3.0.4','apache-maven-3.2.1'],
   $maven = [
@@ -569,7 +570,7 @@ class build_slaves::jenkins (
   # make latest gradle symlink
   file { "/home/${build_slaves::username}/tools/gradle/latest":
     ensure => link,
-    target => '/usr/lib/gradle/default',
+    target => '/usr/lib/gradle/4.10.2',
   }
 
   cron {
