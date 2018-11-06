@@ -212,13 +212,13 @@ class build_slaves::jenkins (
     }
   }
   #define gradle symlinking
-  define build_slaves::symlink_gradle ($gradleversions = $title) {
-    package {"gradle-${gradleversions}":
+  define build_slaves::symlink_gradle ($gradle_versions = $title) {
+    package {"gradle-${gradle_versions}":
       ensure => latest,
     }
-    -> file {"/home/${build_slaves::username}/tools/gradle/${gradleversions}":
+    -> file {"/home/${build_slaves::username}/tools/gradle/${gradle_versions}":
       ensure => link,
-      target => "/usr/lib/gradle/${gradleversions}",
+      target => "/usr/lib/gradle/${gradle_versions}",
     }
   }
 
