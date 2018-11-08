@@ -50,7 +50,6 @@ class qmail_asf (
   $logs2_dir          = "${apmail_home}/logs2"
   $json_dir           = "${apmail_home}/json"
   $svn_dot_dir        = "${apmail_home}/.subversion2"
-  $qpsmtpd_dir        = "${parent_dir}/smtpd/qpsmtpd"
   $mailqsize_port     = '8083'
 
   # ezmlm specific
@@ -86,24 +85,6 @@ class qmail_asf (
   }
 
   # smtpd
-
-  user {
-    'smtpd':
-      ensure     => 'present',
-      name       => 'smtpd',
-      home       => "${parent_dir}/smtpd",
-      shell      => '/bin/bash',
-      groups     => ['smtpd','apmail'],
-      managehome => true,
-      require    => Group['apmail'],
-      system     => true,
-  }
-
-  group {
-    'smtpd':
-      ensure => 'present',
-      name   => 'smtpd',
-  }
 
   ### - Download, extract, configure, compile and install ezmlm-idx - ###
 
@@ -259,12 +240,6 @@ class qmail_asf (
       group   => qmail,
       mode    => '0755',
       require => Package['qmail'];
-    $qpsmtpd_dir:
-      ensure  => directory,
-      owner   => 'smtpd',
-      group   => $groupname,
-      mode    => '0775',
-      require => User['smtpd'];
     $control_dir:
       ensure  => directory,
       owner   => $username,
@@ -333,12 +308,4 @@ class qmail_asf (
     require => [ Package['subversion'], User[$username] , File[$control_dir]],
   }
 
-  exec { 'qpsmtpd-files':
-    command => "svn co https://svn.apache.org/repos/infra/infrastructure/qpsmtpd/ --config-dir=${svn_dot_dir}",
-    path    => '/usr/bin/',
-    cwd     => "${parent_dir}/smtpd",
-    user    => $username,
-    group   => $groupname,
-    require => [ Package['subversion'], User['smtpd']],
-  }
 }
