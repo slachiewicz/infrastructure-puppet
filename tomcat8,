@@ -1,0 +1,2 @@
+puppet-lint: no file specified or specified file does not exist
+puppet-lint: try 'puppet-lint --help' for more information
