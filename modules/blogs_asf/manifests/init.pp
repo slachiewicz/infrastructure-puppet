@@ -200,7 +200,7 @@ class blogs_asf (
       owner   => 'www-data',
       group   => 'www-data',
       mode    => '0640';
-    '/var/www/html/preview/preview/.cgi':
+    '/var/www/html/preview/preview.cgi':
       ensure  => present,
       owner   => 'www-data',
       group   => 'www-data',
