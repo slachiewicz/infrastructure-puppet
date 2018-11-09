@@ -66,6 +66,11 @@ class qmail_asf (
   $qmail_dir          = '/var/lib/qmail'
   $control_dir        = "${qmail_dir}/control"
 
+  # qpsmtpd  specific
+
+  $qpsmtpd_dir        = '/etc/qpsmtpd'
+  $qpsmtpd_log_dir    = '/var/log/qmail/qpsmtpd'
+
   user {
     $username:
       ensure     => $user_present,
@@ -234,6 +239,11 @@ class qmail_asf (
       mode    => '0755',
       source  => 'puppet:///modules/qmail_asf/ezmlm/conf',
       require => [User[$username] , Exec[extract-ezmlm]];
+    $qpsmtpd_log_dir:
+      ensure  => directory,
+      owner   => 'qmaill',
+      group   => 'qmail',
+      mode    => '2755';
     $qmail_dir:
       ensure  => directory,
       owner   => root,
@@ -284,6 +294,25 @@ class qmail_asf (
       content => template('qmail_asf/ezmlmrc.erb'),
       mode    => '0644';
 
+    # qpsmtpd startup and logging scripts
+
+    "$qpsmtpd_dir/log":
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755';
+    "$qpsmtpd_dir/log/run":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/log/run';
+    "$qpsmtpd_dir/run":
+      owner   => 'root',
+      group   => 'root',
+      recurse => true,
+      mode    => '0755',
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/run';
+
   # symlinks
 
     "/home/${username}":
@@ -296,6 +325,11 @@ class qmail_asf (
       ensure  => link,
       target  => "${install_dir}/lang/en_US",
       require => Exec['extract-ezmlm'];
+
+    '/etc/service/qpsmtpd':
+      ensure  => link,
+      target  => $qpsmtpd_dir,
+      require => Package['qpsmtpd'];
   }
 
   exec { 'control-files':
