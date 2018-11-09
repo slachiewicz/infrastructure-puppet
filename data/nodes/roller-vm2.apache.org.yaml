@@ -10,6 +10,7 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - oraclejava::install
+  - vhosts_asf::modules
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
