@@ -5,7 +5,6 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
-  - apache::mod::cgi
   - blocky
   - loggy
   - ssl::name::wildcard_apache_org
@@ -18,17 +17,17 @@ oraclejava::install::unlimited_jce: true
 apache::keepalive: 'On'
 apache::keepalive_timeout: '15'
 apache::timeout: 600
-apache::mpm_module: 'prefork'
-apache::mod::prefork::listenbacklog: '511'
-apache::mod::prefork::maxclients: '500'
-apache::mod::prefork::maxconnectionsperchild: '200000'
-apache::mod::prefork::maxrequestworkers: '500'
-apache::mod::prefork::maxsparethreads: '250'
-apache::mod::prefork::minsparethreads: '150'
-apache::mod::prefork::serverlimit: '10'
-apache::mod::prefork::startservers: '5'
-apache::mod::prefork::threadlimit: '500'
-apache::mod::prefork::threadsperchild: '50'
+apache::mpm_module: 'event'
+apache::mod::event::listenbacklog: '511'
+apache::mod::event::maxclients: '500'
+apache::mod::event::maxconnectionsperchild: '200000'
+apache::mod::event::maxrequestworkers: '500'
+apache::mod::event::maxsparethreads: '250'
+apache::mod::event::minsparethreads: '150'
+apache::mod::event::serverlimit: '10'
+apache::mod::event::startservers: '5'
+apache::mod::event::threadlimit: '500'
+apache::mod::event::threadsperchild: '50'
 
 # blogs_asf class variables.
 blogs_asf::roller_version: '5.1'
@@ -49,6 +48,10 @@ blogs_asf::session_timeout: '480'
 logrotate::rule:
   apache2:
     ensure: 'present'
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
 
 vhosts_asf::vhosts::vhosts:
   roller-vm2-80:
