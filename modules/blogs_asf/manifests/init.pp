@@ -197,10 +197,14 @@ class blogs_asf (
       ];
     '/var/www/html/preview':
       ensure  => present,
-      recurse => true,
-      owner   => 'tomcat8',
-      group   => 'root',
-      mode    => '0640',
-      source  => 'puppet:///modules/blogs_asf/preview';
+      owner   => 'www-data',
+      group   => 'www-data',
+      mode    => '0640';
+    '/var/www/html/preview/preview/.cgi':
+      ensure  => present,
+      owner   => 'www-data',
+      group   => 'www-data',
+      mode    => '0755',
+      source  => 'puppet:///modules/blogs_asf/preview/preview.cgi';
   }
 }
