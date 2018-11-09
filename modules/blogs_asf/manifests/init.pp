@@ -1,7 +1,7 @@
 #/etc/puppet/modules/blogs_asf/manifests/init.pp
 
 class blogs_asf (
-  $required_packages = ['tomcat8'],
+  $required_packages = ['tomcat8', 'libwww-perl', 'liblwp-protocol-https-perl'],
 
 # override below in yaml
   $roller_version          = '',
