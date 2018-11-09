@@ -52,6 +52,8 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   cgi:
     name: 'cgi'
+  cgid:
+    name: 'cgid'
 
 vhosts_asf::vhosts::vhosts:
   roller-vm2-80:
