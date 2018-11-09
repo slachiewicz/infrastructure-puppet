@@ -6,7 +6,7 @@ use LWP;
 use CGI::Carp qw(fatalsToBrowser);
 
 my $user = 'preview';
-my $site = 'http://blogs.apache.org';
+my $site = 'https://blogs.apache.org';
 
 open(C, "< .$user") or die "Unable to open handle to .$user: $!\n";
 my $pass = <C>;
