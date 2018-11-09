@@ -81,8 +81,11 @@ vhosts_asf::vhosts::vhosts:
       - MultiViews
       - ExecCGI
     custom_fragment: |
-      ScriptAlias /preview "/var/www/html/preview/preview.cgi"
+      ProxyPreserveHost On
+      AddHandler cgi-script .cgi
+      ScriptAliasMatch ^/preview/?.* "/var/www/html/preview/preview.cgi"
       RewriteEngine On
+
       ProxyPass /preview !
       ProxyPass / http://127.0.0.1:8080/
       ProxyPassReverse / http://127.0.0.1:8080/

@@ -100,6 +100,15 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 
+      SSLProxyEngine On
+      SSLProxyCheckPeerCN off
+      SSLProxyCheckPeerExpire off
+      SSLInsecureRenegotiation on
+
+      ProxyPreserveHost On
+      Proxypass /preview/ https://10.10.3.8/preview/
+      ProxyPassReverse / http://roller-vm2.apache.org/
+
       Proxypass / http://10.10.3.8:8080/
       ProxypassReverse / http://10.10.3.8:8080/
       ProxypassReverse / http://10.10.3.8/
