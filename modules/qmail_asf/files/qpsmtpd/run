@@ -1,5 +1,6 @@
 #!/bin/sh
 #
+export QPSMTPD_CONFIG=/etc/qpsmtpd
 QPUSER=qpsmtpd
 # limit qpsmtpd to 300MB memory
 MAXRAM=300000000
