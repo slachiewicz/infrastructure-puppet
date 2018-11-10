@@ -30,7 +30,8 @@ class qmail_asf (
     'dnsmasq',
     'clamav',
     'clamav-freshclam',
-    'qpsmtpd'
+    'qpsmtpd',
+    'libnet-ldap-perl'
   ],
 ){
 
