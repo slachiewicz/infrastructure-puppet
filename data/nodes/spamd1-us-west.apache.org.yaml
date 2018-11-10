@@ -27,6 +27,7 @@ postfix::dbfile:
   transport_maps:
     content: |
       testing10@infra.apache.org smtp:[hermes-vm.apache.org]:2025
+      localgnome@infra.apache.org smtp:[hermes-vm.apache.org]:2025
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025
       apachecon.com           smtp:[hermes.apache.org]:2025
