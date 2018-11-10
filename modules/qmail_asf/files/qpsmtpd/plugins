@@ -12,7 +12,8 @@ check_relay
 #dnsbl
 check_badmailfrom
 check_badrcptto
-check_badrcptto_patterns
+# merged into badrcptto on ubuntu
+# check_badrcptto_patterns
 check_spamhelo
 #check_virtualdomains
 
@@ -24,7 +25,8 @@ rcpt_ok
 # content filters
 #virus/klez_filter
 
-check_badheaders
+# not supported in ubuntu qpsmtpd
+# check_badheaders
 
 # mimics the control/signatures patch
 #exe_filter
@@ -49,4 +51,5 @@ check_badheaders
 #spamwatch
 
 # queue the mail with qmail-queue
-queue/qmail-queue
+# specify the queue path
+queue/qmail-queue /var/lib/qmail/bin/qmail-queue
