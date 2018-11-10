@@ -313,6 +313,15 @@ class qmail_asf (
       mode    => '0755',
       source  => 'puppet:///modules/qmail_asf/qpsmtpd/run';
 
+  # qpsmtpd config scripts
+
+    "$qpsmtpd_dir/plugins":
+      owner   => 'root',
+      group   => 'root',
+      recurse => true,
+      mode    => '0644',
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/plugins';
+
   # symlinks
 
     "/home/${username}":
