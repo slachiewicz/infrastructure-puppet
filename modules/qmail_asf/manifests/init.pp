@@ -294,33 +294,15 @@ class qmail_asf (
       content => template('qmail_asf/ezmlmrc.erb'),
       mode    => '0644';
 
-    # qpsmtpd startup and logging scripts
-
-    "$qpsmtpd_dir/log":
-      ensure  => 'directory',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755';
-    "$qpsmtpd_dir/log/run":
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      source  => 'puppet:///modules/qmail_asf/qpsmtpd/log/run';
-    "$qpsmtpd_dir/run":
-      owner   => 'root',
-      group   => 'root',
-      recurse => true,
-      mode    => '0755',
-      source  => 'puppet:///modules/qmail_asf/qpsmtpd/run';
-
   # qpsmtpd config scripts
 
-    "$qpsmtpd_dir/plugins":
+    "$qpsmtpd_dir":
+      ensure  => directory,
       owner   => 'root',
       group   => 'root',
       recurse => true,
       mode    => '0644',
-      source  => 'puppet:///modules/qmail_asf/qpsmtpd/plugins';
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/config';
 
   # symlinks
 
@@ -335,10 +317,30 @@ class qmail_asf (
       target  => "${install_dir}/lang/en_US",
       require => Exec['extract-ezmlm'];
 
+  # services
+
     '/etc/service/qpsmtpd':
-      ensure  => link,
-      target  => $qpsmtpd_dir,
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => Package['qpsmtpd'];
+    "/etc/service/qpsmtpd/log":
+      ensure  => directory,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755';
+    "/etc/service/qpsmtpd/log/run":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/service/log/run';
+    "/etc/service/qpsmtpd/run":
+      owner   => 'root',
+      group   => 'root',
+      recurse => true,
+      mode    => '0755',
+      source  => 'puppet:///modules/qmail_asf/qpsmtpd/service/run';
   }
 
   exec { 'control-files':
