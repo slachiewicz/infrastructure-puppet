@@ -342,6 +342,8 @@ class qmail_asf (
       recurse => true,
       mode    => '0755',
       source  => 'puppet:///modules/qmail_asf/qpsmtpd/service/run';
+    "/etc/service/qmail-smtpd":
+      ensure  => absent;
   }
 
   exec { 'control-files':
