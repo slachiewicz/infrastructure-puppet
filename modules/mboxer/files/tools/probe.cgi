@@ -24,9 +24,9 @@ def run_check():
 
 def send_probe():
     server = smtplib.SMTP('mx1-lw-us.apache.org')
-    emlid = "<%s>" % str(uuid.uuid4())
+    emlid = "<%s@mbox-vm.apache.org>" % str(uuid.uuid4())
     msg = "From: probe@mbox-vm.apache.org\r\nMessage-ID: %s\r\nTo: roundtrip@apache.org\r\nSubject: Roundtrip Test\r\n\r\nID: %s TIMESTAMP: %u\r\n" % (emlid, emlid, time.time())
-    server.sendmail('tools@tools-vm2.apache.org', ['roundtrip@apache.org'], msg)
+    server.sendmail('probe@mbox-vm.apache.org', ['roundtrip@apache.org'], msg)
     server.quit()
     js = json.load(open("/var/www/html/probes.json", "r"))
     
