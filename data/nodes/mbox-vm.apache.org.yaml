@@ -60,4 +60,4 @@ cron:
     user: 'root'
     minute: '*/5'
     hour: '*'
-command: 'python3 /usr/local/etc/mboxer/tools/probe.cgi probe'
+    command: 'python3 /usr/local/etc/mboxer/tools/probe.cgi probe'
