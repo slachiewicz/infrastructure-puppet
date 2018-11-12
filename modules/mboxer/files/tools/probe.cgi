@@ -46,7 +46,8 @@ def www():
     y = 0
     for id, el in js.items():
         if el['timestamp'] > (now - 86400):
-            if 'delay' in el:
+            # Average delivery speed over the past hour
+            if 'delay' in el and el['delivered'] > (now - 3600):
                 x += el['delay']
                 y += 1
             if not 'delay' in el and el['timestamp'] < (now - 900):
