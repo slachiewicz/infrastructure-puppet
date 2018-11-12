@@ -1,8 +1,11 @@
 ---
 classes:
+  - apache
   - zmanda_asf::client
   - mboxer
   - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
 
 base::basepackages:
   - jed
@@ -28,3 +31,25 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AllowTCPForwarding: 'no'
     PermitTunnel: 'no'
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
+vhosts_asf::vhosts::vhosts:
+  status:
+    vhost_name: 'mbox-vm.apache.org'
+    port: 80
+    docroot: '/var/www/html'
+    default_vhost: true
+    manage_docroot: false
+    servername: 'mbox-vm.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directoryindex: 'index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler cgi-script .cgi
