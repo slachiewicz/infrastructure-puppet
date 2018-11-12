@@ -59,7 +59,7 @@ def www():
         print("Status: 200 Okay\r\nContent-Type: text/plain\r\n\r\n")
         print("Roundtrips for the past 24 hours are all okay\r\n")
         if y > 0:
-            print("Average delay: %u seconds" % (x/y))
+            print("Average delay:%u seconds" % (x/y))
     else:
         print("Status: 500 Roundtrip errors detected\r\nContent-Type: text/plain\r\n\r\n")
         print(out)
