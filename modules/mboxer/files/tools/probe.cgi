@@ -23,7 +23,7 @@ def run_check():
                 f.close()
 
 def send_probe():
-    server = smtplib.SMTP('localhost')
+    server = smtplib.SMTP('mx1-lw-us.apache.org')
     emlid = str(uuid.uuid4())
     msg = "From: tools@tools-vm2.apache.org\r\nTo: roundtrip@apache.org\r\nSubject: Roundtrip Test\r\n\r\nID: %s TIMESTAMP: %u\r\n" % (emlid, time.time())
     server.sendmail('tools@tools-vm2.apache.org', ['roundtrip@apache.org'], msg)
