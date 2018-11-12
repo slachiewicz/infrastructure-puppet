@@ -176,6 +176,17 @@ apt::sources:
     include:
       deb: true
       src: false
+  'certbot':
+    ensure: 'present'
+    location: 'http://ppa.launchpad.net/letsencrypt/letsencrypt/ubuntu'
+    release: 'xenial'
+    repos: 'main'
+    key:
+        id: 'C871CF14D6A1C3D7D5E784C2BA0A20FC7B4DD417'
+        server: 'hkp://keyserver.ubuntu.com:80'
+    include:
+        src: false
+        deb: true
 
 apt::force:
   'orthrus':
