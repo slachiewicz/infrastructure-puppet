@@ -53,3 +53,11 @@ vhosts_asf::vhosts::vhosts:
       - ExecCGI
     custom_fragment: |
       AddHandler cgi-script .cgi
+
+cron:
+  # Roundtrip checks every 5 minutes
+  probe:
+    user: 'root'
+    minute: '*/5'
+    hour: '*'
+command: 'python3 /usr/local/etc/mboxer/tools/probe.cgi probe'
