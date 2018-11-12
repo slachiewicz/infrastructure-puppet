@@ -38,7 +38,7 @@ vhosts_asf::modules::modules:
 
 vhosts_asf::vhosts::vhosts:
   status:
-    vhost_name: 'mbox-vm.apache.org'
+    vhost_name: '*'
     port: 80
     docroot: '/var/www/html'
     default_vhost: true
