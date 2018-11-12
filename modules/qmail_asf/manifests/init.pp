@@ -31,7 +31,8 @@ class qmail_asf (
     'clamav',
     'clamav-freshclam',
     'qpsmtpd',
-    'libnet-ldap-perl'
+    'libnet-ldap-perl',
+    'certbot'
   ],
 ){
 
