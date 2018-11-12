@@ -178,7 +178,7 @@ apt::sources:
       src: false
   'certbot':
     ensure: 'present'
-    location: 'http://ppa.launchpad.net/letsencrypt/letsencrypt/ubuntu'
+    location: 'http://ppa.launchpad.net/certbot/certbot/ubuntu'
     release: 'xenial'
     repos: 'main'
     key:
