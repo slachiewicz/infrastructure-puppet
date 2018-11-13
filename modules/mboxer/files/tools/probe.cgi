@@ -45,7 +45,7 @@ def www():
     x = 0
     y = 0
     for id, el in js.items():
-        if el['timestamp'] > (now - 86400):
+        if el['timestamp'] > (now - 3600):
             # Average delivery speed over the past hour
             if 'delay' in el and el['delivered'] > (now - 3600):
                 x += el['delay']
@@ -58,7 +58,7 @@ def www():
                 out += "Message %s was sent at %u, but took %u seconds to be delivered!\n" % (id, el['timestamp'], el['delay'])
     if not bads:
         print("Status: 200 Okay\r\nContent-Type: text/plain\r\n\r\n")
-        print("Roundtrips for the past 24 hours are all okay\r\n")
+        print("Roundtrips for the past hour are all okay\r\n")
         if y > 0:
             print("Average delay:%u seconds" % (x/y))
     else:
