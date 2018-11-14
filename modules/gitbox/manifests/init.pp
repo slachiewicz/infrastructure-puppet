@@ -131,20 +131,17 @@ $pbcsPwd  = ''
       command     => "cd /x1/gitbox/db && /usr/bin/sqlite3 gitbox.db \".backup backups/gitbox.db.$(date +\\%Y\\%m\\%d\\%H).bak\"",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => File['/x1/gitbox/db'];
+    'db-cleanup':
+      user        => 'www-data',
+      minute      => '45',
+      command     => "find /x1/gitbox/db/backups -mtime +7 -delete",
+      require     => File['/x1/gitbox/db'];
     'generate-index':
       user        => 'www-data',
       minute      => '*/4',
       command     => 'python /x1/gitbox/bin/generate-index.py > /tmp/gi-tmp.html && cp /tmp/gi-tmp.html /x1/gitbox/htdocs/repos.html', # lint:ignore:double_quoted_strings, lint:ignore:140chars
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
   }
-
-  tidy { '/x1/gitbox/db/backups':
-    age     => '1w',
-    recurse => true,
-    matches => ['*.bak'],
-  }
-
-
 
   ## Unless declared otherwise the default behaviour is to enable these modules
   apache::mod { 'authnz_ldap': }
