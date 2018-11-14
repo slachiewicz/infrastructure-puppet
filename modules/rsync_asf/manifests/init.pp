@@ -18,6 +18,9 @@ class rsync_asf (
   # needed for join function
   include stdlib
 
+  # stunnel dependency
+  include stunnel_asf
+
   file {
     'rsync-offsite.sh':
       ensure  => present,

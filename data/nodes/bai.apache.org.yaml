@@ -200,6 +200,12 @@ rsync::server::module:
     auth_users: 'apb-git1-us-west'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  gitbox:
+    path: '/x1/backups/gitbox/./target/'
+    hosts_allow: '127.0.0.1 52.202.80.70'
+    auth_users: 'apb-gitbox'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
