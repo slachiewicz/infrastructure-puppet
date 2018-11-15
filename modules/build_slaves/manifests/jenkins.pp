@@ -565,6 +565,10 @@ class build_slaves::jenkins (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-11.0.1',
   }
+  file { "/home/${build_slaves::username}/tools/java/latest12":
+    ensure => link,
+    target => '/usr/local/asfpackages/java/openjdk-12-ea+18',
+  }
 
   # install all the gradle versions, create symlinks
   build_slaves::symlink_gradle { $gradle_versions: }

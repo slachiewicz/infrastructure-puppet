@@ -194,5 +194,9 @@ class buildbot_slave::buildbot (
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk-11.0.1',
   }
+  file { '/home/buildslave/slave/tools/java/latest12':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/openjdk-12-ea+18',
+  }
 
 }
