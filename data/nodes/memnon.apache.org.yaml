@@ -16,14 +16,14 @@ apache::default_vhost:      false
 apache::docroot:            '/x1/archive.apache.org'
 
 apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '800'
+apache::mod::event::maxclients: '2000'
 apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '800'
-apache::mod::event::maxsparethreads: '200'
+apache::mod::event::maxrequestworkers: '2000'
+apache::mod::event::maxsparethreads: '400'
 apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '6'
-apache::mod::event::startservers: '2'
-apache::mod::event::threadlimit: '1200'
+apache::mod::event::serverlimit: '12'
+apache::mod::event::startservers: '6'
+apache::mod::event::threadlimit: '2400'
 apache::mod::event::threadsperchild: '200'
 
 apache::mod::status::allow_from:
