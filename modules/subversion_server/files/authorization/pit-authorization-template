@@ -715,9 +715,6 @@ svn = r
 @infrastructure-interest = r
 @infrastructure = rw
 
-[/infrastructure/trunk/machines/root/bin]
-puppetsvn = r
-
 [/infrastructure/trunk/machines/vms/svn-qavm2.apache.org]
 @subversion = rw
 
@@ -744,9 +741,6 @@ whimsysvn = r
 @committers  = rw
 * = 
 
-[/infrastructure/trunk/puppet]
-puppetsvn = r
-
 [/infrastructure/trunk/qmail]
 smtpd = r
 @member = rw
@@ -756,10 +750,6 @@ apezmlm = rw
 [/infrastructure/trunk/roller]
 @infrastructure-interest = rw
 
-
-[/infrastructure/trunk/ssh_keys]
-puppetsvn = r
-
 [/infrastructure/trunk/ssh_keys/people]
 @committers  = rw
 @infrastructure = rw
@@ -767,7 +757,6 @@ puppetsvn = r
 @svnadmins = rw
 
 [/infrastructure/trunk/ssh_keys/services]
-puppetsvn = r
 @infrastructure = rw
 @infrastructure-interest = rw
 @svnadmins = rw
