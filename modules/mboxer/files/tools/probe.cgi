@@ -50,10 +50,10 @@ def www():
             if 'delay' in el and el['delivered'] > (now - 3600):
                 x += el['delay']
                 y += 1
-            if not 'delay' in el and el['timestamp'] < (now - 900):
+            if not 'delay' in el and el['timestamp'] < (now - 1200):
                 bads += 1
                 out += "Message %s was sent at %u (%u seconds ago) but hasn't been delivered yet!\n" % (id, el['timestamp'], now - el['timestamp'])
-            elif 'delay' in el and el['delay'] > 600:
+            elif 'delay' in el and el['delay'] > 900:
                 bads += 1
                 out += "Message %s was sent at %u, but took %u seconds to be delivered!\n" % (id, el['timestamp'], el['delay'])
     if not bads:
