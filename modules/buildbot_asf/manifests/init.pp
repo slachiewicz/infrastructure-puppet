@@ -173,6 +173,18 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/sitemap-index.xml';
+    "${venv_dir}/master1/public_html/buildbot.html":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/public_html/buildbot.html';
+    "${venv_dir}/master1/public_html/buildbot.css":
+      ensure => 'present',
+      mode   => '0644',
+      owner  => $username,
+      group  => $groupname,
+      source => 'puppet:///modules/buildbot_asf/public_html/buildbot.css';
 
     # configscanner daemon
 
