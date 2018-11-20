@@ -25,6 +25,7 @@ import urlparse
 import urllib2
 import json
 import requests
+import ConfigParser
 
 __usage__ = "%prog [OPTIONS] GIT_URL GIT_DIR"
 
