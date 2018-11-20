@@ -30,6 +30,12 @@ fi
 GIT_NAME=`basename "$GIT_DIR"`
 GIT_EXEC="git"
 
+# If moved to gitbox, don't update!
+  if test -f "/x1/git/mirrors.moved/$GIT_DIR"; then
+    echo "Moved to gitbox, not touching it!"
+    exit 0
+  fi
+
 if test -n "$2"; then
     GIT_EXEC = "$2"
 fi
