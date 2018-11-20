@@ -122,6 +122,10 @@ for d in *.git; do
   export GIT_DIR
   giturl="git://git.apache.org/$d"
   g=`git config remote.origin.url`
+  # If moved to gitbox, don't display it
+  if test -f "/x1/git/mirrors.moved/$d"; then
+    continue
+  fi
   if test -n "$g"; then
     cat <<EOT >>index.new
           <tr>
