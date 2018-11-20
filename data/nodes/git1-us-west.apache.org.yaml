@@ -162,7 +162,7 @@ gitserver_asf::custom_fragment_443: |
           AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
-          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
           Require valid-user
           Options ExecCGI FollowSymlinks
           AddHandler cgi-script .cgi
