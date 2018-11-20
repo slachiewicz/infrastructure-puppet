@@ -13,7 +13,7 @@ class blocky (
   cron {
     'restart_blocky':
     user    => root,
-    command => 'service blocky restart',
+    command => '/usr/sbin/service blocky restart',
     minute  => '5';
     }
 
