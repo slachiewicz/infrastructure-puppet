@@ -117,6 +117,7 @@ gitserver_asf::custom_fragment_443: |
 
       # INFRA-4331: Handler for Github pull request notifications
       ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
+      
 
 
       <Directory /usr/lib/cgi-bin>
@@ -153,6 +154,19 @@ gitserver_asf::custom_fragment_443: |
       RewriteRule ^/repos/asf/?$ /x1/git/asfgit-admin/asf/site/htdocs/repos.html [L,END]
 
       SetEnv GIT_HTTP_EXPORT_ALL
+      
+      <Location /gitbox>
+          AuthType Basic
+          AuthName "GitBox Area"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+          Require valid-user
+          Options ExecCGI FollowSymlinks
+          AddHandler cgi-script .cgi
+      </Location>
 
       <Location /repos/asf>
           SetEnv GIT_PROJECT_ROOT /x1/git/repos/asf/
