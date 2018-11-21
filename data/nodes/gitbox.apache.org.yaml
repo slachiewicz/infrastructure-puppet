@@ -106,6 +106,7 @@ gitbox::custom_fragment_80: |
 
 gitbox::custom_fragment_443: |
       ServerName gitbox.apache.org
+      Timeout 600
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
       SetEnv ASFGIT_ADMIN /x1/gitbox/
       SetEnv WRITE_LOCK /etc/nocommit
