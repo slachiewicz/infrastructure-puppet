@@ -181,7 +181,7 @@ class Blocky(Thread):
 							# Check if we already have such a ban in place using iptables -C
 							try:
 								subprocess.check_call([
-									"iptables",
+									"/sbin/iptables",
 									"-C", "INPUT",
 									"-s", i,
 									"-j", "DROP",
@@ -193,7 +193,7 @@ class Blocky(Thread):
 							except subprocess.CalledProcessError as err:
 								# We're here which means the rule didn't exist, so let's add it!
 								subprocess.check_call([
-									"iptables",
+									"/sbin/iptables",
 									"-A", "INPUT",
 									"-s", i,
 									"-j", "DROP",
@@ -201,7 +201,7 @@ class Blocky(Thread):
 									"--comment",
 									"Banned by Blocky"
 									])
-								message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
+								message = """%s banned %s (%s) - Unban with: sudo /sbin/iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
 								syslog.syslog(syslog.LOG_INFO, message)
 						except Exception as err:
 							syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
@@ -212,7 +212,7 @@ class Blocky(Thread):
 						# Check if we already have such a ban in place using iptables -C
 						try:
 							subprocess.check_call([
-								"iptables",
+								"/sbin/iptables",
 								"-C", "INPUT",
 								"-s", i,
 								"-j", "DROP",
@@ -223,7 +223,7 @@ class Blocky(Thread):
 							# If we reach this point, the rule exists, and we can remove it
 							syslog.syslog(syslog.LOG_INFO, "Unbanning %s" % i)
 							subprocess.check_call([
-								"iptables",
+								"/sbin/iptables",
 								"-D", "INPUT",
 								"-s", i,
 								"-j", "DROP",
