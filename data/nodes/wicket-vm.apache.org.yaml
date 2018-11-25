@@ -4,6 +4,7 @@ classes:
   - apache
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::proxy_wstunnel
   - apache::mod::rewrite
   - vhosts_asf::vhosts
 
