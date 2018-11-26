@@ -26,6 +26,9 @@ memcached::max_memory: '10%'
 memcached::listen_ip: '127.0.0.1'
 memcached::tcp_port: '11211'
 
+postfix::server::relayhost: '[mail-relay.apache.org]:587'
+postfix::server::smtp_use_tls: true
+
 vhosts_asf::vhosts::vhosts:
   ooo-forums3-80:
     vhost_name: '*'
