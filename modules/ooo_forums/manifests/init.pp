@@ -4,6 +4,7 @@ class ooo_forums (
 
   $username      = 'phpbb',
   $groupname     = 'phpbb',
+) {
 
   user {
     $username:
