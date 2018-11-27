@@ -18,6 +18,37 @@ apache::mpm_module: 'prefork'
 apache::mod::prefork::maxrequestworkers: '120'
 apache::mod::prefork::startservers: '10'
 
+apt::always_apt_update: true
+
+# ubuntu 16.04 requies a separate ppa to maintain php 5.6
+# install ppa before installing apache and the rest of the php mods
+
+apt::ppa:
+  ppa:ondrej/php:
+    ensure: 'present'
+    before:
+      - Class[Apache]
+      - Package[php5.6-mysql]
+
+# puppetlabs-apache has code that forces php7 on ubuntu 16.04
+# these lines force it back to 5.6 but would need updating if
+# php upgrades to other than 5.6.
+
+apache::mod::php::php_version: '5'
+apache::mod::php::package_name: 'libapache2-mod-php5.6'
+apache::mod::php::path: '/usr/lib/apache2/modules/libphp5.6.so'
+
+base::basepackages:
+  - php5.6-cli
+  - php5.6-curl
+  - php5.6-zip
+  - php5.6-bz2
+  - php5.6-mcrypt
+  - php5.6-mbstring
+  - php5.6-gd
+  - php5.6-mysql
+  - php5.6-xml
+
 logrotate::rule:
   apache2:
     ensure: 'present'

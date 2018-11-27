@@ -106,6 +106,9 @@ class base (
   $aptsource = hiera_hash('apt::source',{})
   create_resources(apt::source, $aptsource)
 
+  $aptppa = hiera_hash('apt::ppa',{})
+  create_resources(apt::ppa, $aptppa)
+
   class { "base::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 }
