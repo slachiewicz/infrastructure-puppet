@@ -14,7 +14,9 @@ def run_check():
         id = m.group(1)
         ts = int(m.group(2))
         diff = time.time() - ts
-        js = json.load(open("/tmp/probes.json", "r"))
+        f = open("/tmp/probes.json", "r")
+        js = json.load(f)
+        f.close()
         if id in js:
             js[id]['delivered'] = time.time()
             js[id]['delay'] = diff
@@ -31,7 +33,9 @@ def send_probe():
     server.sendmail('probe@mbox-vm.apache.org', ['roundtrip@apache.org'], msg)
     server.quit()
     try:
-        js = json.load(open("/tmp/probes.json", "r"))
+        f = open("/tmp/probes.json", "r")
+        js = json.load(f)
+        f.close()
     except:
         js = {}
     
@@ -54,7 +58,9 @@ def www():
     bads = 0
     out = ""
     now = time.time()
-    js = json.load(open("/tmp/probes.json", "r"))
+    f = open("/tmp/probes.json", "r")
+    js = json.load()
+    f.close()
     x = 0
     y = 0
     for id, el in js.items():
