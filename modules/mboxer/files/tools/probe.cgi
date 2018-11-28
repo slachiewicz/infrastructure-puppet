@@ -33,8 +33,9 @@ def send_probe():
     
     newjson = {}
     now = time.time()
+    # Trim to only last 24 hours of responses
     for id, el in js.items():
-        if el['timestamp'] >= now - 86400:
+        if el['timestamp'] >= (now - 86400):
             newjson[id] = el
     newjson[emlid] = {
         'timestamp': time.time(),
@@ -57,7 +58,7 @@ def www():
             if 'delay' in el and el['delivered'] > (now - 3600):
                 x += el['delay']
                 y += 1
-            if not 'delay' in el and el['timestamp'] < (now - 1200):
+            if 'delay' not in el and el['timestamp'] < (now - 1200):
                 bads += 1
                 out += "Message %s was sent at %u (%u seconds ago) but hasn't been delivered yet!\n" % (id, el['timestamp'], now - el['timestamp'])
             elif 'delay' in el and el['delay'] > 900:
