@@ -143,7 +143,7 @@ rsync::server::module:
   mysql3-us-west:
     path: '/x1/backups/mysql3-us-west/./target/'
     hosts_allow: '127.0.0.1 209.188.14.131'
-    auth_users: 'apb-mysql'
+    auth_users: 'apb-mysql3-us-west'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
   mysql1-il-eu:
