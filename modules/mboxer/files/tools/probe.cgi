@@ -18,10 +18,10 @@ def run_check():
         if id in js:
             js[id]['delivered'] = time.time()
             js[id]['delay'] = diff
-            with open("/var/www/html/probes.json.new", "w") as f:
+            with open("/tmp/probes.json.new", "w") as f:
                 json.dump(js, f, indent = 2)
                 f.close()
-            os.replace('/var/www/html/probes.json.new', '/var/www/html/probes.json')
+            os.replace('/tmp/probes.json.new', '/var/www/html/probes.json')
 
 def send_probe():
     server = smtplib.SMTP('mx1-lw-us.apache.org')
@@ -40,10 +40,10 @@ def send_probe():
     newjson[emlid] = {
         'timestamp': time.time(),
     }
-    with open("/var/www/html/probes.json.new", "w") as f:
+    with open("/tmp/probes.json.new", "w") as f:
         json.dump(newjson, f, indent = 2)
         f.close()
-    os.replace('/var/www/html/probes.json.new', '/var/www/html/probes.json')
+    os.replace('/tmp/probes.json.new', '/var/www/html/probes.json')
 
 def www():
     bads = 0
