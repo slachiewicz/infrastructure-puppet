@@ -14,14 +14,14 @@ def run_check():
         id = m.group(1)
         ts = int(m.group(2))
         diff = time.time() - ts
-        js = json.load(open("/var/www/html/probes.json", "r"))
+        js = json.load(open("/tmp/probes.json", "r"))
         if id in js:
             js[id]['delivered'] = time.time()
             js[id]['delay'] = diff
             with open("/tmp/probes.json.new", "w") as f:
                 json.dump(js, f, indent = 2)
                 f.close()
-            os.replace('/tmp/probes.json.new', '/var/www/html/probes.json')
+            os.replace('/tmp/probes.json.new', '/tmp/probes.json')
 
 def send_probe():
     server = smtplib.SMTP('mx1-lw-us.apache.org')
@@ -29,7 +29,10 @@ def send_probe():
     msg = "From: probe@mbox-vm.apache.org\r\nMessage-ID: %s\r\nTo: roundtrip@apache.org\r\nSubject: Roundtrip Test\r\n\r\nID: %s TIMESTAMP: %u\r\n" % (emlid, emlid, time.time())
     server.sendmail('probe@mbox-vm.apache.org', ['roundtrip@apache.org'], msg)
     server.quit()
-    js = json.load(open("/var/www/html/probes.json", "r"))
+    try:
+        js = json.load(open("/tmp/probes.json", "r"))
+    except:
+        js = {}
     
     newjson = {}
     now = time.time()
@@ -43,13 +46,14 @@ def send_probe():
     with open("/tmp/probes.json.new", "w") as f:
         json.dump(newjson, f, indent = 2)
         f.close()
-    os.replace('/tmp/probes.json.new', '/var/www/html/probes.json')
+    os.replace('/tmp/probes.json.new', '/tmp/probes.json')
+    os.chmod('/tmp/probes.json', 0o666)
 
 def www():
     bads = 0
     out = ""
     now = time.time()
-    js = json.load(open("/var/www/html/probes.json", "r"))
+    js = json.load(open("/tmp/probes.json", "r"))
     x = 0
     y = 0
     for id, el in js.items():
