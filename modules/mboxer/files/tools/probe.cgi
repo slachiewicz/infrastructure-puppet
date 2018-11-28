@@ -59,7 +59,7 @@ def www():
     out = ""
     now = time.time()
     f = open("/tmp/probes.json", "r")
-    js = json.load()
+    js = json.load(f)
     f.close()
     x = 0
     y = 0
