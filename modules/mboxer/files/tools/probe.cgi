@@ -22,6 +22,7 @@ def run_check():
                 json.dump(js, f, indent = 2)
                 f.close()
             os.replace('/tmp/probes.json.new', '/tmp/probes.json')
+            os.chmod('/tmp/probes.json', 0o666)
 
 def send_probe():
     server = smtplib.SMTP('mx1-lw-us.apache.org')
