@@ -238,6 +238,8 @@ perl={reuse:asf-authorization:perl}
 perl-pmc={ldap:cn=perl,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 phoenix={reuse:asf-authorization:phoenix}
 phoenix-pmc={ldap:cn=phoenix,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+# note PPMC, not PMC here:
+pinot-ppmc={ldap:cn=pinot,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 pivot={reuse:asf-authorization:pivot}
 pivot-pmc={ldap:cn=pivot,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 poi={reuse:asf-authorization:poi}
@@ -925,6 +927,9 @@ openejb-tck = r
 
 [/pmc/incubator/openwhisk]
 @openwhisk-ppmc = rw
+
+[/pmc/incubator/pinot]
+@pinot-ppmc = rw
 
 [/pmc/johnzon]
 @johnzon-pmc = rw
