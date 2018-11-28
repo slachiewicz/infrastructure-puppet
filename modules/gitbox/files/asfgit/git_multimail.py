@@ -1317,7 +1317,7 @@ class ReferenceChange(Change):
         values['refname'] = self.refname
         values['short_refname'] = self.short_refname
         values['msgid'] = self.msgid
-        values['recipients'] = self.recipients
+        values['recipients'] = ", ".join(recips)
         values['oldrev'] = str(self.old)
         values['oldrev_short'] = self.old.short
         values['newrev'] = str(self.new)
