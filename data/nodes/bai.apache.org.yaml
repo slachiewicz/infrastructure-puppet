@@ -206,6 +206,54 @@ rsync::server::module:
     auth_users: 'apb-gitbox'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  home:
+    path: '/x1/backups/home/./target/'
+    hosts_allow: '127.0.0.1 163.172.16.173'
+    auth_users: 'apb-home'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  jira-lw-us:
+    path: '/x1/backups/jira-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.139'
+    auth_users: 'apb-jira-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  mbox-vm:
+    path: '/x1/backups/mbox-vm/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.138'
+    auth_users: 'apb-mbox-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  moin-vm:
+    path: '/x1/backups/moin-vm/./target/'
+    hosts_allow: '127.0.0.1 163.172.69.106'
+    auth_users: 'apb-moin-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  psql01-lw-us:
+    path: '/x1/backups/psql01-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.141'
+    auth_users: 'apb-psql01-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  repository-vm2:
+    path: '/x1/backups/repository-vm2/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.140'
+    auth_users: 'apb-repository-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  devops:
+    path: '/x1/backups/devops/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.135'
+    auth_users: 'apb-devops'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  cwiki-vm4:
+    path: '/x1/backups/cwiki-vm4/./target/'
+    hosts_allow: '127.0.0.1 209.188.14.145'
+    auth_users: 'apb-cwiki-vm4'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
