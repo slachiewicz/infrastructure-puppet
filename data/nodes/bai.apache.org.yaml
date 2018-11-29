@@ -260,6 +260,18 @@ rsync::server::module:
     auth_users: 'apb-fisheye'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  tools-vm:
+    path: '/x1/backups/tools-vm/./target/'
+    hosts_allow: '127.0.0.1 37.48.69.235'
+    auth_users: 'apb-tools-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  tools-vm2:
+    path: '/x1/backups/tools-vm2/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.242'
+    auth_users: 'apb-tools-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:

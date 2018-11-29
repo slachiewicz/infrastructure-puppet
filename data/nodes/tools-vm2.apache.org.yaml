@@ -11,11 +11,17 @@ classes:
   - jenkins_node_monitor
   - loggy
   - rootbin_asf
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
-  - zmanda_asf::client
+
+rsync_asf::cron_hour: 21
+rsync_asf::cron_minute: 07
+
+rsync_asf::fslist:
+  - /x1
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
