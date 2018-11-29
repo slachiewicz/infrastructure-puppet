@@ -9,6 +9,7 @@ classes:
   - mysql_asf::backup
   - mysql::server
   - oraclejava::install
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
