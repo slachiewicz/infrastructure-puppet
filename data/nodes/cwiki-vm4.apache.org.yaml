@@ -11,10 +11,17 @@ classes:
   - loggy
   - datadog_agent::integrations::apache
   - oraclejava::install
+  - rsync_asf
   - ssl::name::cwiki_apache_org 
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
+
+rsync_asf::cron_hour: 16
+rsync_asf::cron_minute: 02
+
+rsync_asf::fslist:
+  - /x1/cwiki/confluence-data
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
