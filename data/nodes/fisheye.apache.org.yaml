@@ -12,6 +12,13 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
+rsync_asf::cron_hour: 22
+rsync_asf::cron_minute: 19
+
+rsync_asf::fslist:
+  - /x1/db_dump
+  - /usr/local/fisheye/fisheye-data
+
 puppet_asf::environment: 'test'
 
 oraclejava::install::version: '8'

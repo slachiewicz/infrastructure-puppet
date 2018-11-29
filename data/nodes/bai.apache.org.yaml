@@ -254,6 +254,12 @@ rsync::server::module:
     auth_users: 'apb-cwiki-vm4'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  fisheye:
+    path: '/x1/backups/fisheye/./target/'
+    hosts_allow: '127.0.0.1 138.201.63.136'
+    auth_users: 'apb-fisheye'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
