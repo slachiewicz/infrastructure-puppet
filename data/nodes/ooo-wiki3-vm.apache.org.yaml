@@ -5,6 +5,8 @@ classes:
   - apache::mod::mime
   - apache::mod::php
   - apache::mod::rewrite
+  - kif
+  - loggy
   - memcached
   - ooo_mwiki
   - ssl::name::wildcard_openoffice_org
