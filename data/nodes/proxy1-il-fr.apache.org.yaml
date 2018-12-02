@@ -58,7 +58,7 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 80
-    servername: 'projects-test.apache.org'
+    servername: 'projects.apache.org'
     serveradmin: 'dev@community.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'projects.apache.org.http_access.log'
@@ -73,7 +73,7 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'projects-test.apache.org'
+    servername: 'projects.apache.org'
     serveradmin: 'dev@community.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'projects.apache.org.ssl_access.log'
@@ -103,20 +103,20 @@ vhosts_asf::vhosts::vhosts:
     vhost_name: '*'
     ensure: 'present'
     port: 80
-    servername: 'reporter-test.apache.org'
+    servername: 'reporter.apache.org'
     serveradmin: 'dev@community.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'reporter.apache.org.http_access.log'
     error_log_file: 'reporter.apache.org.error.log'
     custom_fragment: |
-      Redirect permanent / https://reporter-test.apache.org/
+      Redirect permanent / https://reporter.apache.org/
 
   reporter-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'reporter-test.apache.org'
+    servername: 'reporter.apache.org'
     serveradmin: 'dev@community.apache.org'
     docroot: '/var/www/html'
     access_log_file: 'reporter.apache.org.ssl_access.log'

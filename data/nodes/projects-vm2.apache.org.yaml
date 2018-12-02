@@ -54,8 +54,7 @@ vhosts_asf::vhosts::vhosts:
     docroot_group: "%{apache::group}"
     servername: 'projects.apache.org'
     serveraliases:
-      - 'projects-new.apache.org'
-      - 'projects-test.apache.org'
+      - 'projects.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'
     options:
@@ -80,7 +79,7 @@ vhosts_asf::vhosts::vhosts:
     docroot_group: "%{apache::group}" 
     servername: 'reporter.apache.org'
     serveraliases:
-      - 'reporter-test.apache.org'
+      - 'reporter.apache.org'
     serveradmin: 'dev@community.apache.org'
     directoryindex: 'index.py index.html'
     options:
