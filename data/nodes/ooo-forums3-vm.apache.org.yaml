@@ -107,8 +107,9 @@ vhosts_asf::vhosts::vhosts:
           # This first condition bypasses all of this crap for 99+% of requests since
           # regular phpBB access requests match this condition
           #
-          RewriteCond %{}{REQUEST_URI} !/fr/forum/(\w+\d+|equipe)
-          RewriteRule (.*) $1                                              [skip=19]
+          # skip these since we are already in the fr/forum
+          #RewriteCond %{}{REQUEST_URI} !/fr/forum/(\w+\d+|equipe)
+          #RewriteRule (.*) $1                                              [skip=19]
           #
           # The old FR Forum "SEO-friendly" URIs
           #
