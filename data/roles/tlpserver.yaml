@@ -661,6 +661,10 @@ vhosts_asf::vhosts::vhosts:
     ssl_key: '/etc/ssl/private/apachecon.com.key'
     custom_fragment: |
       Redirect permanent /c http://archive.apachecon.com/c
+      <Directory /var/www/apachecon.com>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
 
   apachecon-archive:
     vhost_name: '*'
