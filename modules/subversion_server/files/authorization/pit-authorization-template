@@ -488,6 +488,7 @@ apsecmail = rw
 @audit = rw
 @accounting = rw
 @svnadmins = rw
+@treasurer = rw
 @infrastructure-root = rw
 @virtualmgmt = rw
 * =
