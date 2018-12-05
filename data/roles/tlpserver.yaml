@@ -639,6 +639,10 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /c http://archive.apachecon.com/c
+      <Directory /var/www/apachecon.com>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
 
   apachecon-ssl:
     vhost_name: '*'
