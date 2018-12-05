@@ -531,6 +531,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/archiva/attic]
 * = r
 
+[/archiva/site-content]
+* = r
+
 [/archiva/sandbox]
 @committers  = rw
 
