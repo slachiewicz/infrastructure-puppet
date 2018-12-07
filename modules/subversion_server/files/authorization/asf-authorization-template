@@ -736,6 +736,9 @@ projects_role = rw
 [/creadur]
 @creadur = rw
 
+[/creadur/rat]
+* = r
+
 [/crunch]
 @crunch = rw
 
