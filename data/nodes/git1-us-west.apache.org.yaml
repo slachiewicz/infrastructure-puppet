@@ -164,7 +164,6 @@ gitserver_asf::custom_fragment_443: |
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-          Require valid-user
           Options ExecCGI FollowSymlinks
           AddHandler cgi-script .cgi
       </Location>
