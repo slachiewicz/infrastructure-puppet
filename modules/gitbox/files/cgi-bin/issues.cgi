@@ -382,7 +382,7 @@ def main():
         sendEmail(mailto, email['subject'], email['message'])
 
     # Now do JIRA if need be
-    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'default'
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'worklog nocomment' # Default to no visible notification.
 
     if jiraopt and fmt:
         if 'title' in fmt:
