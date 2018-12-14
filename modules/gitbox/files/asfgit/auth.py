@@ -24,14 +24,19 @@ def authorized_committers(repo_name):
 
     for admin in parser.get("groups", "gitadmins").split(","):
         writers.add(util.decode(admin.strip()))
-
+    
+    # Override LDAP path present in config for repo?
     if parser.has_option("groups", repo_name):
         dn = parser.get("groups", repo_name).strip()
     else:
         # drop subproject name if present
         repo_name = SUBPROJECT_RE.sub("", repo_name)
-        dn = GROUP_DN % {"group": repo_name}
-        pdn = PGROUP_DN % {"group": repo_name}
+        # Override LDAP path present in config for global project?
+        if parser.has_option("groups", repo_name):
+          dn = parser.get("groups", repo_name).strip()
+        else:
+          dn = GROUP_DN % {"group": repo_name}
+          pdn = PGROUP_DN % {"group": repo_name}
 
     # Individually granted access
     if parser.has_option("individuals", repo_name):
