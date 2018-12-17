@@ -64,7 +64,7 @@ except:
     sys.exit(0)
 
 try:
-    
+
     # Create cwiki space
     subprocess.check_output([
         '/usr/bin/java', '-jar', sscommon.cwikijar,
@@ -76,7 +76,7 @@ try:
         '--space', space,
         '--description', description,
         ], stderr=subprocess.STDOUT)
-    
+
     # Set Admin
     subprocess.check_output([
         '/usr/bin/java', '-jar', sscommon.cwikijar,
@@ -102,7 +102,7 @@ try:
         '--permissions', 'VIEWSPACE',
         '--group', 'Anonymous',
         ], stderr=subprocess.STDOUT)
-    
+
     # Enable logged in users read and export space perms
     subprocess.check_output([
         '/usr/bin/java', '-jar', sscommon.cwikijar,
@@ -147,4 +147,3 @@ except subprocess.CalledProcessError as err:
         f.close()
     sscommon.hipchat("A new Confluence space, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (space, space, requser, uid))
     print("Status: 500 Creation failed\r\n\r\n<h2>Confluence Space creation failed!</h2><pre>Creation of the CONFLUENCE Space may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
-

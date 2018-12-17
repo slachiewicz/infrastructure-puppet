@@ -219,19 +219,7 @@ class JiraTicket:
             self.auth = str(base64.encodestring(bytes('%s:%s' % (jira_user, jira_pass)))).replace('\n', '')
         self.sender = author
         try:
-            # Try to fetch JIRA username by searching for the email
-            if self.email != None:
-                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
-                obj = requests.get(url,
-                    headers = {'Authorization': 'Basic %s' % self.auth},
-                    params = { 'username': self.email, 'maxResults': 3}
-                    ).json()
-                if len(obj) > 0 and "name" in obj[0]:
-                    logging.info("Found matching email record in JIRA user database")
-                    self.sender = "[~%s]" % obj[0]['name']
-                    self.sendIt = True
-
-            # If that failed, try to find a user using ldap's alt email
+            # Try to find a user using ldap's alt email
             if self.sendIt == False and self.asfuid:
                 # Only run this stuff if the uid is actually an Apache uid
                 if re.match("^([a-z0-9]+)$", self.asfuid):
@@ -255,25 +243,6 @@ class JiraTicket:
 
                     except Exception as info:
                         logging.warning("LDAP error: %s", info)
-
-            #If still not found, try searching for full name instead
-            if self.sendIt == False and self.author:
-                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
-                obj = requests.get(url,
-                    headers = {'Authorization': 'Basic %s' % self.auth},
-                    params = { 'username': self.author, 'maxResults': 3}
-                    ).json()
-                if len(obj) > 0 and "name" in obj[0]:
-                    if "displayName" in obj[0] and obj[0]['displayName'] == self.author:
-                        logging.info("Found matching full name in JIRA user database")
-                        self.sender = "[~%s]" % obj[0]['name']
-#                   else:
-#                       logging.info("Found a username in JIRA user database")
-#                       self.sender = "[~%s]" % obj[0]['name']
-                    self.sendIt = True
-                else:
-                    self.sender = author if author else email
-                    self.sendIt = True
 
             # Fall back to raw email/author if no username was found
             if not self.sender:
