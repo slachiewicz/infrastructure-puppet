@@ -227,7 +227,7 @@ class JiraTicket:
                 if re.match("^([a-z0-9]+)$", self.asfuid):
                     try:
                         ldapdata = subprocess.check_output(['ldapsearch', '-xLLL', 'uid=%s' % self.asfuid, 'cn'])
-                        m = re.search(r"cn: ([^\r\n]+)", ldapdata)
+                        m = re.search(r"cn: ([^\r\n]+)", ldapdata.decode('ascii', 'replace'))
                         if m:
                             self.sender = m.group(1)
                             self.sendIt = True
