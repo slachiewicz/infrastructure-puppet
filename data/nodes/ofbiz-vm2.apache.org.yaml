@@ -132,6 +132,9 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /.well-known !
       ProxyPass / ajp://localhost:18009/
       ProxyPassReverse / ajp://localhost:18009/
+      Header set Access-Control-Allow-Origin "https://localhost:18009"
+      Header set Access-Control-Allow-Headers "Authorization"
+      Header set Access-Control-Allow-Credentials "true"
 
 #  settings for the demo against the release of latest -1 OFBiz release branch
   ofbiz-old-vm2-80:
@@ -168,6 +171,9 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass /.well-known !
       ProxyPass / ajp://localhost:28009/
       ProxyPassReverse / ajp://localhost:28009/
+      Header set Access-Control-Allow-Origin "https://localhost:28009"
+      Header set Access-Control-Allow-Headers "Authorization"
+      Header set Access-Control-Allow-Credentials "true"
 
 #  settings for the big files site
   ofbiz-vm-bigfiles-80:
