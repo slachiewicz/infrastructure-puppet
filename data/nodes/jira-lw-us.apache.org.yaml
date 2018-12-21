@@ -13,6 +13,7 @@ classes:
   - datadog_agent::integrations::apache
   - datadog_asf::integrations::network
   - jira_asf
+  - jira_slack_bridge
   - oraclejava::install
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
