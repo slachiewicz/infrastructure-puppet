@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+##############################################
+# Kludge JIRA changelog notifier for Slack,  #
+# for use until JIRA fixes itself or an      #
+# update for webhooks is released            #
+##############################################
+import os
+import time
+import json
+import requests
+
+# JIRA REST API URL to query
+CHGURL = "https://issues.apache.org/jira/rest/api/2/search?jql=project=INFRA%20AND%20updated%3E=-15m&expand=changelog&fields=changelog,summary,creator,description"
+JIRA_USER = '<%= @jirauser %>'
+JIRA_PASS = '<%= @jirapass %>'
+
+# Slack webhook URL
+HOOKURL = "<%= @webhook %>"
+
+
+
+
+def sendNotice(msg):
+    """ Quick shortcut to sending a payload to Slack """
+    requests.post(HOOKURL, json = msg)
+    
+def newTicket(issue):
+    """ Formatter for new tickets created """
+    author = issue['fields']['creator']['displayName']
+    key = issue['key']
+    title = issue['fields']['summary']
+    desc = issue['fields'].get('description')
+    if len(desc) > 200:
+        desc = desc[:199] + "..."
+    js = {
+        "attachments": [
+            {
+                "pretext": "*%s* created <https://issues.apache.org/jira/browse/%s|%s>: %s" % (author, key, key, title),
+                "title": "%s: %s" % (key, title),
+                "text": desc,
+                "mrkdwn_in": ["pretext"]
+            }
+        ]
+    }
+    sendNotice(js)
+    
+
+def parseChange(entry):
+    """ Parse changelog and format it for humans """
+    author = entry['change']['author']['displayName']
+    title = entry['summary']
+    key = entry['key']
+    
+    action = ""
+    
+    # Ideally, we'll only need one or two changelog items to determine what happened.
+    # The rest are sugar that we don't need (yet), so break early.
+    for item in entry['change']['items']:
+        
+        # Changing resolution
+        if item.get('field') == 'resolution':
+            if not item.get('fromString'): # If changing from no res to a res, assume closing as $X
+                res = item.get('toString', "Unresolved")
+                action = "closed <https://issues.apache.org/jira/browse/%s|%s> as _%s_." % (key, key, res)
+                break # Don't need the rest
+            else:
+                oldres = item.get('fromString')
+                newres = item.get('toString', "Unresolved")
+                action = "changed the resolution of <https://issues.apache.org/jira/browse/%s|%s> from _%s_ to _%s_." % (key, key, oldres, newres)
+                break # Don't need the rest
+        
+        # WFI/WFU
+        if item.get('field') == 'status':
+            newstatus = item.get('toString')
+            action = "changed the status of <https://issues.apache.org/jira/browse/%s|%s> to *%s*." % (key, key, newstatus)
+            break
+        
+        # Assignee change
+        if item.get('field') == 'assignee':
+            assignee = item.get('toString', "Unknown gnome")
+            action = "assigned *%s* to <https://issues.apache.org/jira/browse/%s|%s>." % (assignee, key, key)
+        
+    if action:        
+        js = {
+            'text': "*%s* %s" % (author, action),
+            'mrkdwn': True
+        }
+        sendNotice(js)
+
+def main():
+    # Keep track of the last change and ticket we saw, so we know what's new
+    # This is determined on first run.
+    lastChangeID = 0
+    lastJIRA = "INFRA-0"
+    firstRun = True
+    while True:
+        js = requests.get(CHGURL, auth = (JIRA_USER, JIRA_PASS)).json()
+        changesets = []
+        for issue in js['issues']:
+            
+            for entry in issue['changelog']['histories']:
+                chgid = int(entry['id'])
+                
+                # New changelog entry and not first run?
+                if not firstRun and chgid > lastChangeID:
+                    changesets.append({
+                        'key': issue['key'],
+                        'summary': issue['fields']['summary'],
+                        'change': entry
+                    })
+                if lastChangeID < chgid:
+                    lastChangeID = chgid
+                    
+            # Newly created issue?
+            if len(issue['changelog']['histories']) == 0 and issue['key'] > lastJIRA:
+                lastJIRA = issue['key'] 
+                if not firstRun:
+                    print("New JIRA ticket, %s, created!" % issue['key'])
+                    newTicket(issue)
+                
+        print("Found %u changesets at %u" % (len(changesets), time.time()))
+        for change in changesets:
+            print("%s changed!" % change['key'])
+            parseChange(change)
+        
+        firstRun = False
+        print("Set last change ID to: %u, latest ticket to: %s" % (lastChangeID, lastJIRA))
+        #except:
+         #   print("JIRA seems to have borked, ignoring...")
+        time.sleep(5)
+
+if __name__ == '__main__':
+    main()
