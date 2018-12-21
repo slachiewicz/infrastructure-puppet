@@ -12,6 +12,8 @@ import requests
 
 # JIRA REST API URL to query
 CHGURL = "https://issues.apache.org/jira/rest/api/2/search?jql=project=INFRA%20AND%20updated%3E=-15m&expand=changelog&fields=changelog,summary,creator,description"
+JIRA_USER = '<%= @jirauser %>'
+JIRA_PASS = '<%= @jirapass %>'
 
 # Slack webhook URL
 HOOKURL = "<%= @webhook %>"
@@ -93,7 +95,7 @@ def main():
     lastJIRA = "INFRA-0"
     firstRun = True
     while True:
-        js = requests.get(CHGURL, auth = ('<%= @jirauser %>', '<%= @jirapass %>')).json()
+        js = requests.get(CHGURL, auth = (JIRA_USER, JIRA_PASS)).json()
         changesets = []
         for issue in js['issues']:
             
