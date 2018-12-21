@@ -6,7 +6,9 @@ class jira_slack_bridge (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
-  $route          = ''
+  $webhook        = '',
+  $jirauser       = '',
+  $jirapass       = ''
 ) {
     # dir and py script
     file {
