@@ -81,10 +81,15 @@ def parseChange(entry):
             assignee = item.get('toString', "Unknown gnome")
             action = "assigned *%s* to <https://issues.apache.org/jira/browse/%s|%s>." % (assignee, key, key)
         
-    if action:        
+    if action:
         js = {
             'text': "*%s* %s" % (author, action),
-            'mrkdwn': True
+            'mrkdwn': True,
+            "attachments": [ # Leave a calling card for the ticket
+                {
+                    "title": "%s: %s" % (key, title)
+                }
+            ]
         }
         sendNotice(js)
 
