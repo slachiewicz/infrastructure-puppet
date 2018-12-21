@@ -24,15 +24,15 @@ class jira_slack_bridge (
         mode    => '0755',
         owner   => $username,
         group   => $group,
-        content => template('jira-slack-bridge/jira-slack-bridge.py.erb');
+        content => template('jira_slack_bridge/jira-slack-bridge.py.erb');
     }
     # Set up systemd on first init
     -> file {
-      '/lib/systemd/system/myservice.service':
+      '/lib/systemd/system/jira-slack-bridge.service':
         mode   => '0644',
         owner  => 'root',
         group  => 'root',
-        source => "puppet:///modules/jira-slack-bridge/jira-slack-bridge.${::asfosname}";
+        source => "puppet:///modules/jira_slack_bridge/jira-slack-bridge.${::asfosname}";
     }
     -> exec { 'jsb-systemd-reload':
       command     => 'systemctl daemon-reload',
