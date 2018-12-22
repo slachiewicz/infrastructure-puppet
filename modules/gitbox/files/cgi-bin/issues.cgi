@@ -206,7 +206,7 @@ def reviewComment(payload):
     fmt['filename'] = comment['path']
     return fmt
 
-def formatEmail(fmt):
+def formatMessage(fmt, template = 'template.ezt'):
     subjects = {
         'open':         "opened a new %(type)s",
         'close':        "closed %(type)s",
@@ -218,7 +218,7 @@ def formatEmail(fmt):
     }
     fmt['action'] = (subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']) % fmt
     fmt['subject'] = "%(user)s %(action)s #%(id)i: %(title)s" % fmt
-    template = ezt.Template('template.ezt')
+    template = ezt.Template(template)
     fp = StringIO.StringIO()
     output = template.generate(fp, fmt)
     body = fp.getvalue()
@@ -377,7 +377,7 @@ def main():
         # Indent comment
         fmt['text'] = "\n".join("   %s" % x for x in fmt['text'].split("\n"))
         # Go ahead and generate the template
-        email = formatEmail(fmt)
+        email = formatMessage(fmt)
     if email:
         sendEmail(mailto, email['subject'], email['message'])
 
@@ -385,6 +385,7 @@ def main():
     jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'worklog nocomment' # Default to no visible notification.
 
     if jiraopt and fmt:
+        jiramsg = formatMessage(fmt, template = 'template-jira.ezt')
         if 'title' in fmt:
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
             if m:
@@ -393,7 +394,7 @@ def main():
                 if not (jiraopt.find("nocomment") != -1 and isComment):
                     remoteLink(ticket, fmt['link'], fmt['id']) # Make link to PR
                     addLabel(ticket)
-                    return updateTicket(ticket, fmt['user'], email['message'], worklog)
+                    return updateTicket(ticket, fmt['user'], jiramsg['message'], worklog)
     # All done!
     return None
 
