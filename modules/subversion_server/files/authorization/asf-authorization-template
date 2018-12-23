@@ -1845,7 +1845,7 @@ svn-role = rw
 @tika = rw
 
 [/tiles]
-@tiles = rw
+@attic-pmc=rw
 
 [/tomcat]
 @tomcat = rw
