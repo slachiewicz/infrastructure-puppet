@@ -134,5 +134,5 @@ class SlackStatusPush(StatusReceiverMultiService):
             else:
                 payload['icon_url'] = self.icon
 
-        if builderName == 'infrastructure-puppet-deployment':
+        if builder_name == 'infrastructure-puppet-deployment':
             requests.post(self.weburl, data=json.dumps(payload))
