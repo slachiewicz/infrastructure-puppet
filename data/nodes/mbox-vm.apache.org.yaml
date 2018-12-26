@@ -1,11 +1,17 @@
 ---
 classes:
   - apache
-  - zmanda_asf::client
   - mboxer
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
+  - rsync_asf
+
+rsync_asf::cron_hour: 18
+rsync_asf::cron_minute: 37
+
+rsync_asf::fslist:
+  - /x1
 
 base::basepackages:
   - jed
