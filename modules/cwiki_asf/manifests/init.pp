@@ -154,7 +154,8 @@ class cwiki_asf (
       mode    => '0644';
     "${install_dir}/conf/server.xml":
       content => template('cwiki_asf/server.xml.erb'),
-      mode    => '0644';
+      mode    => '0644',
+      notify  => Service[$service_name];
     "${install_dir}/conf/Standalone":
       ensure => directory,
       owner  => 'confluence',
