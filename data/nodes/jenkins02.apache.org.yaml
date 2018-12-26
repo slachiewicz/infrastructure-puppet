@@ -188,6 +188,7 @@ rsync_asf::cron_hour: 20
 rsync_asf::cron_minute: 07
 
 rsync_asf::fslist:
+  - /x1/jenkins/jenkins-home/jobs
   - /x1/jenkins/jenkins-home/config-history
 
 snmp::snmpd_config:
