@@ -11,6 +11,15 @@ classes:
   - vhosts_asf::vhosts
   - oraclejava::install
   - vhosts_asf::modules
+  - rsync_asf
+
+rsync_asf::cron_hour: 18
+rsync_asf::cron_minute: 15
+
+rsync_asf::fslist:
+  - /var/www
+  - /var/lib/tomcat8
+
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true

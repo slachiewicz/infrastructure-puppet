@@ -14,7 +14,13 @@ classes:
   - nexus_asf
   - oraclejava::install
   - vhosts_asf::vhosts
-  - zmanda_asf::client
+  - rsync_asf
+
+rsync_asf::cron_hour: 13
+rsync_asf::cron_minute: 55
+
+rsync_asf::fslist:
+  - /x1/nexus-work
 
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'

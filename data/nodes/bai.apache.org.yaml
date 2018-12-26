@@ -272,6 +272,18 @@ rsync::server::module:
     auth_users: 'apb-tools-vm2'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  reviews-vm2:
+    path: '/x1/backups/reviews-vm2/./target/'
+    hosts_allow: '127.0.0.1 209.188.14.132'
+    auth_users: 'apb-reviews-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  roller-vm2:
+    path: '/x1/backups/roller-vm2/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.130'
+    auth_users: 'apb-roller-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 stunnel::tun:
   rsyncd:
