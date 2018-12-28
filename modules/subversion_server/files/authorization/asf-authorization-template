@@ -1730,6 +1730,10 @@ svn-site-role = rw
 
 [/sling]
 * = r
+# temp allow these to clean up tags
+rombert = rw
+bdelacretaz = rw
+olli = rw
 
 [/spamassassin]
 @spamassassin = rw
