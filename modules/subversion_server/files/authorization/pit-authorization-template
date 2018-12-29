@@ -1338,9 +1338,6 @@ buildbot = rw
 [/websites/production/ode]
 @ode = rw
 
-[/websites/production/odftoolkit]
-@incubator = rw
-
 [/websites/production/pdfbox]
 @pdfbox = rw
 

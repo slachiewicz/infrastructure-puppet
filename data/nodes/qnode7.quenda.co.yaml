@@ -24,5 +24,4 @@ python::python_pips:
     ensure: present
 
 buildbot_slave::rat::projects:
-  - 'odftoolkit'
   - 'trafficcontrol'
