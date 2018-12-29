@@ -73,6 +73,7 @@ class build_slaves::jenkins (
     'apache-maven-3.5.0',
     'apache-maven-3.5.2',
     'apache-maven-3.5.4',
+    'apache-maven-3.6.0',
     ],
   $java_jenkins = [
     'jdk1.5.0_17-32',
@@ -515,11 +516,11 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/maven/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
   file { "/home/${build_slaves::username}/tools/maven/latest3":
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
 
   # java symlinks - old java location, new java location, and latest symlinks

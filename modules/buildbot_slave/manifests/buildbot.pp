@@ -28,6 +28,7 @@ class buildbot_slave::buildbot (
     'apache-maven-3.5.0',
     'apache-maven-3.5.2',
     'apache-maven-3.5.4',
+    'apache-maven-3.6.0',
     ],
   $java_asfpackages = [
     'harmony-jdk-713673',
@@ -153,11 +154,11 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/maven/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
   file { '/home/buildslave/slave/tools/maven/latest3':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
 
   # java symlinks - old java location, new java location, and latest symlinks
