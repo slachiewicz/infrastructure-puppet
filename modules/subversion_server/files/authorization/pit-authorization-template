@@ -310,8 +310,6 @@ thrift={reuse:asf-authorization:thrift}
 thrift-pmc={ldap:cn=thrift,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tika={reuse:asf-authorization:tika}
 tika-pmc={ldap:cn=tika,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-tiles={reuse:asf-authorization:tiles}
-tiles-pmc={ldap:cn=tiles,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tinkerpop={reuse:asf-authorization:tinkerpop}
 tinkerpop-pmc={ldap:cn=tinkerpop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tomee={reuse:asf-authorization:tomee}
