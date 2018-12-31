@@ -71,5 +71,5 @@ postgresql::server::pg_hba_rule:
     type: 'host'
     database: 'puppet6db'
     user: 'puppet6db'
-    address: '207.244.88.154/32'
+    address: '10.10.3.230/32'
     auth_method: 'md5'
