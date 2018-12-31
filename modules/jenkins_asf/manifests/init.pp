@@ -121,7 +121,7 @@ class jenkins_asf (
       path        => ['/bin', '/usr/bin', '/usr/sbin'],
       cwd         => $catalina_base,
       user        => 'root',
-      onlyif      => ['test -f webapps/ROOT', 'test -f webapps/ROOT.war'],
+      onlyif      => ['test -f webapps/ROOT.war'],
       require     => Exec['extract-tomcat'],
       refreshonly => true;
   }
