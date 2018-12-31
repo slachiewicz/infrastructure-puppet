@@ -530,6 +530,10 @@ class build_slaves::jenkins (
     ensure => link,
     target => '/usr/local/asfpackages/java/ibm-java-x86_64-70',
   }
+  file { "/home/${build_slaves::username}/tools/java/ibm-1.8-64":
+    ensure => link,
+    target => '/usr/local/asfpackages/java/ibm-java-x86_64-80',
+  }
   file { "/home/${build_slaves::username}/tools/java/latest":
     ensure => link,
     target => '/usr/local/asfpackages/java/jdk1.8.0_191',
