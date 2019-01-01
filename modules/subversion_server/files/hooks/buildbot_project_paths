@@ -18,6 +18,7 @@
 ^(ofbiz/ofbiz-framework/branches/release18.12)/(.*)
 ^(ofbiz/ofbiz-plugins/trunk)/(.*)
 ^(ofbiz/ofbiz-plugins/branches/release17.12)/(.*)
+^(ofbiz/ofbiz-plugins/branches/release18.12)/(.*)
 ^(ofbiz/branches/release16.11)/(.*)
 ^(ofbiz/cmssite)/(.*)
 ^(logging/log4php/trunk)/(.*)
