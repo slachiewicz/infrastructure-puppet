@@ -95,6 +95,8 @@ vhosts_asf::vhosts::vhosts:
       Header set Access-Control-Allow-Origin "https://localhost:8443"
       Header set Access-Control-Allow-Headers "Authorization"
       Header set Access-Control-Allow-Credentials "true"
+      ProxyErrorOverride On
+      ErrorDocument 503 https://ofbiz-vm2.apache.org/errorPage/503.html
 
 
 #  settings for the demo against the release of latest OFBiz release branch
@@ -135,7 +137,9 @@ vhosts_asf::vhosts::vhosts:
       Header set Access-Control-Allow-Origin "https://localhost:18009"
       Header set Access-Control-Allow-Headers "Authorization"
       Header set Access-Control-Allow-Credentials "true"
-
+      ProxyErrorOverride On
+      ErrorDocument 503 https://ofbiz-vm2.apache.org/errorPage/503.html
+      
 #  settings for the demo against the release of latest -1 OFBiz release branch
   ofbiz-old-vm2-80:
     vhost_name: 'demo-old.ofbiz.apache.org'
@@ -174,7 +178,9 @@ vhosts_asf::vhosts::vhosts:
       Header set Access-Control-Allow-Origin "https://localhost:28009"
       Header set Access-Control-Allow-Headers "Authorization"
       Header set Access-Control-Allow-Credentials "true"
-
+      ProxyErrorOverride On
+      ErrorDocument 503 https://ofbiz-vm2.apache.org/errorPage/503.html
+      
 #  settings for the big files site
   ofbiz-vm-bigfiles-80:
     vhost_name: 'ofbiz-vm2.apache.org'
