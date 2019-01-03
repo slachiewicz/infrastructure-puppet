@@ -141,3 +141,30 @@ vhosts_asf::vhosts::vhosts:
         RequestHeader unset Authorization
       </Location>
 
+  helpwanted:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 80
+    servername: 'helpwanted.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'helpwanted.apache.org.http_access.log'
+    error_log_file: 'helpwanted.apache.org.error.log'
+    custom_fragment: |
+      Redirect permanent / https://helpwanted.apache.org/
+
+  helpwanted-ssl:
+    vhost_name: '*'
+    ensure: 'present'
+    port: 443
+    ssl: true
+    servername: 'helpwanted.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    docroot: '/var/www/html'
+    access_log_file: 'helpwanted.apache.org.ssl_access.log'
+    error_log_file: 'helpwanted.apache.org.error.log'
+    custom_fragment: |
+      ProxyPass / http://projects-vm2.apache.org/
+      ProxyPassReverse / http://projects-vm2.apache.org/
+      ProxyPreserveHost On
+
