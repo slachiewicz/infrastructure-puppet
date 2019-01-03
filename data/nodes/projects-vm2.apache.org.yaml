@@ -55,6 +55,8 @@ logrotate::rule:
 vhosts_asf::modules::modules:
   cgi:
     name: 'cgi'
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   projects:
