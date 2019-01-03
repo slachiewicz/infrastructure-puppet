@@ -9,8 +9,7 @@ class selfserve_portal (
 
   # Below contained in eyaml
 
-  $hc_token = '',
-  $hc_room  = '',
+  $slackUrl = '',
   $jira_un  = '',
   $jira_pw  = '',
 

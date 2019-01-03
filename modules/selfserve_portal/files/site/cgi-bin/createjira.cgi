@@ -90,7 +90,7 @@ Lead: %s
 
 
 """ % (requser, project, url, description, lead))
-    sscommon.hipchat("A new JIRA project, <kbd><a href='https://issues.apache.org/jira/browse/%s'>https://issues.apache.org/jira/browse/%s</a></kbd>, has been set up as requested by %s@apache.org." % (project, project, requser))
+    sscommon.slack("A new JIRA project, <https://issues.apache.org/jira/browse/%s>, has been set up as requested by %s@apache.org." % (project, requser))
     print("Status: 201 Created\r\n\r\n<h2>JIRA project created!</h2>Your project has been set up, and can be accessed at: <a href='https://issues.apache.org/jira/browse/%s'>https://issues.apache.org/jira/browse/%s</a>." % (project, project))
     
 except subprocess.CalledProcessError as err:

@@ -137,13 +137,15 @@ As requested by %s@apache.org, a new Confluence space has been set up at:
 https://cwiki.apache.org/confluence/display/%s
 
 """ % (requser, space))
-    sscommon.hipchat("A new Confluence space, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, has been set up as requested by %s@apache.org." % (space, space, requser))
+
+    sscommon.slack("A new Confluence space, <https://cwiki.apache.org/confluence/display/%s>, has been set up as requested by %s@apache.org." % (space, requser))
     print("Status: 201 Created\r\n\r\n<h2>CONFLUENCE Space created!</h2>Your wiki space has been set up, and can be accessed at: <a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a>." % (space, space))
-    
+
 except subprocess.CalledProcessError as err:
     uid = uuid.uuid4()
     with open("/tmp/%s.log" % uid, "w") as f:
         f.write(err.output)
         f.close()
-    sscommon.hipchat("A new Confluence space, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (space, space, requser, uid))
+
+    sscommon.slack("A new Confluence space, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (space, requser, uid))
     print("Status: 500 Creation failed\r\n\r\n<h2>Confluence Space creation failed!</h2><pre>Creation of the CONFLUENCE Space may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
