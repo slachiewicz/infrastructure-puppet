@@ -49,6 +49,13 @@ elasticsearch::version: '5.6.6'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
 
+elasticsearch::instances:
+  comdev:
+    datadir: '/x1/elastic/db/'
+    config:
+      node.name: 'comdev-es'
+      network.host: '127.0.0.1'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
