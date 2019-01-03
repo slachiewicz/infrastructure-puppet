@@ -99,38 +99,32 @@ vhosts_asf::modules::modules:
 
 vhosts_asf::vhosts::vhosts:
   status:
-    vhost_name: 'jira.status.apache.org'
+    vhost_name: '*'
     port: 80
-    docroot: '/x1/www/status'
+    docroot: '/var/www/uptime'
     default_vhost: true
     manage_docroot: false
     servername: 'status.apache.org'
     serveradmin: 'users@infra.apache.org'
-    directoryindex: 'index.html manage.cgi'
+    directoryindex: 'index.html'
     options:
       - Indexes
       - FollowSymLinks
       - MultiViews
-      - ExecCGI
-    custom_fragment: |
-      AddHandler cgi-script .cgi
 
   status-ssl:
-    vhost_name: 'jira.status.apache.org'
+    vhost_name: '*'
     port: 443
     ssl: true
-    docroot: '/x1/www/status'
+    docroot: '/var/www/uptime'
     manage_docroot: false
     servername: 'status.apache.org'
     serveradmin: 'users@infra.apache.org'
     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
-    directoryindex: 'index.html manage.cgi'
+    directoryindex: 'index.html'
     options:
       - Indexes
       - FollowSymLinks
       - MultiViews
-      - ExecCGI
-    custom_fragment: |
-      AddHandler cgi-script .cgi
