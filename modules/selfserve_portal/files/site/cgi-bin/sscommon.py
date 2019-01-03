@@ -60,16 +60,10 @@ For inquiries, please contact: users@infra.apache.org
 def buggo(msg):
     print("Status: 400 Bad Request\r\n\r\nBad request parameter: %s" % msg)
     sys.exit(0)
-    
-def hipchat(msg):
-    """Send notification to HipChat"""
+
+def slack(msg):
+    """Send notifications to Slack"""
     payload = {
-            'room_id': config['hipchat']['room'],
-            'auth_token': config['hipchat']['token'],
-            'from': "ASF Self-Serve",
-            'message_format': 'html',
-            'notify': '0',
-            'color':  'green',
-            'message': msg
+            'text': msg
         }
-    requests.post('https://api.hipchat.com/v1/rooms/message', data=payload)
+    requests.post(config['slack']['slackUrl'], json=payload)
