@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::status
   - apache::mod::headers
+  - elasticsearch
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - projects_pvm_asf
@@ -36,6 +37,16 @@ base::basepackages:
   - 'libcgi-pm-perl'
   - 'libjson-perl'
   - 'perl-doc'
+  
+elasticsearch::init_defaults:
+  DATA_DIR: '/x1/elastic/db/'
+elasticsearch::jvm_options:
+  - '-Xms512m'
+  - '-Xmx512m'
+elasticsearch::java_install: true
+elasticsearch::version: '5.6.6'
+elasticsearch::ensure: 'present'
+elasticsearch::status: 'enabled'
 
 logrotate::rule:
   apache2:
@@ -93,6 +104,33 @@ vhosts_asf::vhosts::vhosts:
         Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140 62.210.60.251
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
+
+  helpwanted:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/helpwanted.apache.org/site'
+    docroot_owner: "%{apache::user}"
+    docroot_group: "%{apache::group}" 
+    servername: 'helpwanted.apache.org'
+    serveraliases:
+      - 'hw.apache.org'
+    serveradmin: 'dev@community.apache.org'
+    directoryindex: 'index.html'
+    custom_fragment: |
+        AcceptPathInfo On
+        LuaScope thread
+        LuaCodeCache stat
+        AddHandler lua-script .lua
+        Header set Access-Control-Allow-Origin "*"
+        # Auth
+        <Location /admin/>
+            AuthType Basic
+            AuthName "Apache committers only"
+            AuthLDAPurl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+            AuthLDAPRemoteUserAttribute uid
+            AuthBasicProvider ldap
+            require valid-user
+        </Location>
 
 
 # Install ldap3 for use by python cron scripts
