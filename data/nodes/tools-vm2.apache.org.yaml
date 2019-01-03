@@ -112,7 +112,7 @@ vhosts_asf::vhosts::vhosts:
       - FollowSymLinks
       - MultiViews
       - ExecCGI
-     custom_fragment: |
+    custom_fragment: |
        AddHandler cgi-script .cgi
 
   status-ssl:
@@ -132,5 +132,5 @@ vhosts_asf::vhosts::vhosts:
       - FollowSymLinks
       - MultiViews
       - ExecCGI
-     custom_fragment: |
+    custom_fragment: |
        AddHandler cgi-script .cgi
