@@ -53,6 +53,12 @@ class svnqavm_pvm_asf (
       hour        => 4,
       minute      => 0,
       environment => 'SVNVERSION=/usr/local/svn-current/bin/svnversion';
+    'Update our Haxx-URL-to-Message-Id map':
+      command     => 'cd ~/src/svn/site && ${SVN} up -q && tools/generate-message-id-map.py',
+      user        => 'svnsvn',
+      hour        => 4,
+      minute      => 0,
+      environment => 'SVN=/usr/local/svn-current/bin/svn';
   }
 
 }
