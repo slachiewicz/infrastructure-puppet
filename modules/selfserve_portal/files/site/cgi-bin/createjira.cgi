@@ -98,6 +98,6 @@ except subprocess.CalledProcessError as err:
     with open("/tmp/%s.log" % uid, "w") as f:
         f.write(err.output)
         f.close()
-    sscommon.hipchat("A new JIRA project, <kbd><a href='https://issues.apache.org/jira/browse/%s'>https://issues.apache.org/jira/browse/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (project, project, requser, uid))
+    sscommon.slack("A new JIRA project, <kbd><a href='https://issues.apache.org/jira/browse/%s'>https://issues.apache.org/jira/browse/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (project, project, requser, uid))
     print("Status: 500 Creation failed\r\n\r\n<h2>JIRA creation failed!</h2><pre>Creation of the JIRA project may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
 
