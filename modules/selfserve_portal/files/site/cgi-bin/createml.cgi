@@ -143,5 +143,5 @@ for newlist in lists:
     %s
     This request will automatically be processed within 24 hours.
     """ % (requser, newlist, domain, add))
-    sscommon.hipchat("A new mailing list, <kbd>%s@%s</kbd>, has been queued for creation, as requested by %s@apache.org. %s" % (newlist, domain, requser, add))
+    sscommon.slack("A new mailing list, <kbd>%s@%s</kbd>, has been queued for creation, as requested by %s@apache.org. %s" % (newlist, domain, requser, add))
 print("Status: 201 Created\r\n\r\n<h2>Mailing List request received!</h2>Your request for a new mailing list has been received and will automatically be processed within 24 hours. We will notify your PMC when the list has been created.")
