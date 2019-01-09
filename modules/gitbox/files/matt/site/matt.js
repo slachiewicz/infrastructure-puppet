@@ -126,16 +126,16 @@ function renderRepos(json) {
             obj.innerHTML = "You do not seem to have access to any repositories. Please make sure you are in the correct LDAP groups!";
         }
         else {
+            var foo = [];
             for (var i in projects) {
                 var project = projects[i];
                 var list = json[project];
                 list.sort();
                 var li = "<li><b>" + project + ":\n<ul>";
                 if (list.length > 0) {
-                    var foo = [];
                     for (var r = 0; r < list.length; r++) {
                         var repo = list[r];
-                        if (repo in foo) {} else {
+                        if (foo.includes(repo)) {} else {
                          foo.push(repo);
                          li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
                         }
