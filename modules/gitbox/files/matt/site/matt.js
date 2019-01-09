@@ -132,9 +132,13 @@ function renderRepos(json) {
                 list.sort();
                 var li = "<li><b>" + project + ":\n<ul>";
                 if (list.length > 0) {
-                    for (var r in list) {
+                    var foo = [];
+                    for (var r = 0; r < list.length; r++) {
                         var repo = list[r];
-                        li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+                        if (repo in foo) {} else {
+                         foo.push(repo);
+                         li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+                        }
                     }
                 } else {
                     li += "<li><i>No repositories for the " + project + " project served from gitbox yet...</i></li>";
