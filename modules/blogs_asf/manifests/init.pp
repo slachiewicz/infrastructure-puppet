@@ -68,7 +68,7 @@ class blogs_asf (
   }
 
 # extract the download and move it to tomcat as ROOT.war
-# flag NOTICE.txt in the extracted download so we don't keep extracting 
+# flag NOTICE.txt in the extracted download so we don't keep extracting
 # if it's already there
 
   -> exec {
@@ -86,16 +86,18 @@ class blogs_asf (
 
   -> exec {
     'deploy-roller':
-      command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
-      cwd     => $install_dir,
-      user    => 'root',
-      creates => '/var/lib/tomcat8/webapps/ROOT.war',
-      timeout => 1200,
-      require => [Package['tomcat8'],File[$parent_dir]],
+      command     => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
+      cwd         => $install_dir,
+      user        => 'root',
+      creates     => '/var/lib/tomcat8/webapps/ROOT.war',
+      subscribe   => FILE["${install_dir}/NOTICE.txt"],
+      refreshonly => true,
+      timeout     => 1200,
+      require     => [Package['tomcat8'],File[$parent_dir]],
   }
 
 # file resources have multiple dependencies to ensure the existence
-# of the downloaded source and exploded war file before deploying 
+# of the downloaded source and exploded war file before deploying
 # template artifacts
 
   file {
@@ -196,15 +198,15 @@ class blogs_asf (
         Exec['deploy-roller'],
       ];
     '/var/www/html/preview':
-      ensure  => present,
-      owner   => 'www-data',
-      group   => 'www-data',
-      mode    => '0640';
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0640';
     '/var/www/html/preview/preview.cgi':
-      ensure  => present,
-      owner   => 'www-data',
-      group   => 'www-data',
-      mode    => '0755',
-      source  => 'puppet:///modules/blogs_asf/preview/preview.cgi';
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0755',
+      source => 'puppet:///modules/blogs_asf/preview/preview.cgi';
   }
 }
