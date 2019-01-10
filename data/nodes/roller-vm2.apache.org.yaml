@@ -19,6 +19,8 @@ rsync_asf::cron_minute: 15
 rsync_asf::fslist:
   - /var/www
   - /var/lib/tomcat8
+  - /usr/local/roller
+  - /usr/local/roller/roller_data
 
 
 oraclejava::install::version: '8'
