@@ -14,7 +14,7 @@ GITPATH = "/x1/repos/asf"
 PODLINGS_URL = "https://whimsy.apache.org/public/public_podlings.json"
 TLPS_URL = "https://whimsy.apache.org/public/committee-info.json"
 JSONFILE = "/x1/gitbox/htdocs/repositories.json"
-COUNTFILE = "/x1/gitbox/htdocs/repositories.json"
+COUNTFILE = "/x1/gitbox/htdocs/commits.json"
 
 #PODLINGS['podling'][project]['name']
 #TLPS['committees'][project]['display_name']
@@ -206,20 +206,16 @@ with open(JSONFILE, "w") as f:
 # COMMIT COUNTS AS JSON, PAST WHOLE HOUR
 cd = json.loads(open(COUNTFILE, "r").read())
 oldest = int(time.time() - (2*86400)) # Keep 48 hours
-
-repos = [x.replace('.git', '') for x in os.listdir(GITPATH) if
-                 os.path.isdir(os.path.join(GITPATH, x))
-            ]
-for repo in repos:
+for repo in cactivity:
     if repo not in cd:
         cd[repo] = {}
     tsa = [ts for ts in cd[repo]]
     for ts in tsa:
         if ts < oldest:
             del cd[repo][ts]
-    if repo in cactivity:
-        for ts in cactivity[repo]:
-            cd[repo][ts] = cactivity[repo][ts]
+    for ts in cactivity[repo]:
+        cd[repo][ts] = cactivity[repo][ts]
+
 with open(COUNTFILE, "w") as f:
     json.dump(cd, f)
     f.close()
