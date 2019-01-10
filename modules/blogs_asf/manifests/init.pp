@@ -87,13 +87,12 @@ class blogs_asf (
 
   -> exec {
     'deploy-roller':
-      command     => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
-      cwd         => $install_dir,
-      user        => 'root',
-      creates     => '/var/lib/tomcat8/webapps/ROOT.war',
-      refreshonly => true,
-      timeout     => 1200,
-      require     => [Package['tomcat8'],File[$parent_dir]],
+      command => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
+      cwd     => $install_dir,
+      user    => 'root',
+      creates => '/var/lib/tomcat8/webapps/ROOT.war',
+      timeout => 1200,
+      require => [Package['tomcat8'],File[$parent_dir]],
   }
 
 # file resources have multiple dependencies to ensure the existence
