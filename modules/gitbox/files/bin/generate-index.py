@@ -115,7 +115,7 @@ def getActivity():
         if len(repodesc) > 64:
             repodesc = repodesc[:61] + "..."
         gitrepos[repo] = [agotxt, repodesc, lcommit, lcount, zcount]
-        comcounts[repo] = {last_hour: zcount}
+        comcounts[repo] = {str(last_hour): zcount}
     
     html = ""
     a = 0
