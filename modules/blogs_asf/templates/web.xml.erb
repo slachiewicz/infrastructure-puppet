@@ -437,6 +437,11 @@
         <url-pattern>/roller-services/opensearch/*</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>WebjarsServlet</servlet-name>
+        <url-pattern>/webjars/*</url-pattern>
+    </servlet-mapping>
+
     <session-config>
       <session-timeout><%= @session_timeout -%></session-timeout>
     </session-config>
