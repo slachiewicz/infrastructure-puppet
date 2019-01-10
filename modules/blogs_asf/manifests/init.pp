@@ -90,7 +90,7 @@ class blogs_asf (
       cwd         => $install_dir,
       user        => 'root',
       creates     => '/var/lib/tomcat8/webapps/ROOT.war',
-      subscribe   => FILE["${install_dir}/NOTICE.txt"],
+      subscribe   => EXEC['extract-roller'],
       refreshonly => true,
       timeout     => 1200,
       require     => [Package['tomcat8'],File[$parent_dir]],
