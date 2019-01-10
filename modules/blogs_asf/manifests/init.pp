@@ -79,6 +79,7 @@ class blogs_asf (
       creates => "${install_dir}/NOTICE.txt",
       timeout => 1200,
       require => [Exec['download-roller'],File[$parent_dir]],
+      notify  => Exec['deploy-roller'],
   }
 
 # DEPLOY ROLLER
@@ -89,8 +90,7 @@ class blogs_asf (
       command     => "/bin/cp ${install_dir}/webapp/roller.war /var/lib/tomcat8/webapps/ROOT.war && sleep 10",
       cwd         => $install_dir,
       user        => 'root',
-      creates     => '/var/lib/tomcat8/webapps/ROOT.war',
-      subscribe   => EXEC['extract-roller'],
+      creates     => '/var/lib/tomcat8/webapps/ROOT.war',,
       refreshonly => true,
       timeout     => 1200,
       require     => [Package['tomcat8'],File[$parent_dir]],
