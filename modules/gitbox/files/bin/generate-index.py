@@ -13,6 +13,7 @@ import requests
 GITPATH = "/x1/repos/asf"
 PODLINGS_URL = "https://whimsy.apache.org/public/public_podlings.json"
 TLPS_URL = "https://whimsy.apache.org/public/committee-info.json"
+JSONFILE = "/x1/gitbox/htdocs/repositories.json"
 
 #PODLINGS['podling'][project]['name']
 #TLPS['committees'][project]['display_name']
@@ -31,6 +32,10 @@ def getActivity():
     
     projects = {}
     gitrepos = {}
+    outjson = {
+        'updated': int(time.time()),
+        'projects': {}
+    }
     
     for repo in repos:
         
@@ -50,7 +55,9 @@ def getActivity():
             
         # Get latest commit timestamp, default to none
         lcommit = 0
+        lcount = 0
         try:
+            lcount = int(subprocess.check_output(['/usr/bin/git', '-C', repopath, 'rev-list', '--all', '--count']))
             lcommit = int(subprocess.check_output(['/usr/bin/git', '-C', repopath, 'log', '-n', '1', '--pretty=format:%ct', '--all']))
         except:
             pass # if it failed (no commits etc), default to no commits
@@ -102,7 +109,7 @@ def getActivity():
         projects[project].append(repo)
         if len(repodesc) > 64:
             repodesc = repodesc[:61] + "..."
-        gitrepos[repo] = [agotxt, repodesc]
+        gitrepos[repo] = [agotxt, repodesc, lcommit, lcount]
     
     html = ""
     a = 0
@@ -114,6 +121,12 @@ def getActivity():
             pname = "Apache " + PODLINGS['podling'][project]['name'] + " (Incubating)"
         if project in TLPS['committees']:
             pname = "Apache " + TLPS['committees'][project]['display_name']
+        
+        outjson['projects'][project] = {
+            'domain': project,
+            'description': pname,
+            'repositories': {}
+        }
         
         table = """
 <table class="tbl%u">
@@ -131,6 +144,12 @@ def getActivity():
     </tr>
 """ % (a, pname)
         for repo in sorted(projects[project]):
+            outjson['projects'][project]['repositories'][repo] = {
+                'description': gitrepos[repo][1],
+                'last_update_txt': gitrepos[repo][0],
+                'last_update_int': gitrepos[repo][2],
+                'commits': gitrepos[repo][3]
+            }
             table += """
     <tr>
         <td><a href="/repos/asf/?p=%s.git">%s.git</a></td>
@@ -147,7 +166,7 @@ def getActivity():
     
         table += "</table>"
         html += table
-    return html
+    return html, outjson
 
 
 html = """
@@ -163,7 +182,7 @@ html = """
 <img src="/images/gitbox-logo.png" style="margin-left: 125px; width: 750px;"/><br/>
 """
 
-repohtml = getActivity()
+repohtml, asjson = getActivity()
 
 html += repohtml
 html += """
@@ -171,3 +190,9 @@ html += """
 </html>
 """
 print(html)
+try:
+    with open(JSONFILE, "w") as f:
+        json.dump(asjson, f)
+        f.close()
+except:
+    pass # don't fail visibly, it'll leak into the html. fix later
