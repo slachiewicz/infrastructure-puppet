@@ -8,13 +8,15 @@ class datadog_agent (
     ensure => 'directory',
   }
 
+  # download DD agent version 5.29.0
   download_file { 'Download datadog agent' :
-    url                   => 'https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-latest.msi',
+    url                   => 'https://s3.amazonaws.com/ddagent-windows-stable/ddagent-cli-5.29.0.msi',
     destination_directory => 'c:\temp',
   }
 
   package { 'ddagent-cli-latest.msi' :
-    source          => 'c:\temp\ddagent-cli-latest.msi',
+    ensure          => '5.29.0',
+    source          => 'c:\temp\ddagent-cli-5.29.0.msi',
     install_options => ["APIKEY=${api_key}"],
   }
 }
