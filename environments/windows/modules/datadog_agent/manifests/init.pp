@@ -15,7 +15,7 @@ class datadog_agent (
   }
 
   package { 'ddagent-cli-latest.msi' :
-    ensure          => '5.29.0',
+    ensure          => '5.29.0.1',
     source          => 'c:\temp\ddagent-cli-5.29.0.msi',
     install_options => ["APIKEY=${api_key}"],
   }
