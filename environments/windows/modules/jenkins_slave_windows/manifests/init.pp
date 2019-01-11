@@ -81,6 +81,16 @@ class jenkins_slave_windows (
     onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-60)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
+  exec { 'create symlink for JDK13':
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest13 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest13 F:\\jenkins\\tools\\java\\jdk13-ea+3",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-60)) { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
+  exec { 'create symlink for JDK12':
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest12 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest12 F:\\jenkins\\tools\\java\\jdk12-ea+27",# lint:ignore:140chars
+    onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-60)) { exit 1;}  else { exit 0; }",
+    provider => powershell,
+  }
   exec { 'create symlink for JDK11':
     command  => "cmd /c rmdir F:\\jenkins\\tools\\java\\latest11 \"&\" mklink /d F:\\jenkins\\tools\\java\\latest11 F:\\jenkins\\tools\\java\\jdk11-ea+28",# lint:ignore:140chars
     onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-60)) { exit 1;}  else { exit 0; }",
