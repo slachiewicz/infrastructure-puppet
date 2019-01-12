@@ -122,8 +122,10 @@ for d in *.git; do
   export GIT_DIR
   giturl="git://git.apache.org/$d"
   g=`git config remote.origin.url`
-  # If moved to gitbox, don't display it
+  # If moved to gitbox, don't display it, try to punt it away
   if test -f "/x1/git/mirrors.moved/$d"; then
+    echo "Punting $d to hidden dir.."
+    mv /x1/git/mirrors/$d /x1/git/mirrors-punted/
     continue
   fi
   if test -n "$g"; then
