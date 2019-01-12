@@ -73,7 +73,7 @@ cat <<EOT >index.new
       <div class="clear"></div> 
       <div id="content" class="grid_16"><div class="section-content">
     <p>
-      This is a collection of read-only Git mirrors of Apache codebases.
+      This is a collection of, primarily, read-only Git mirrors of Apache subversion codebases.
       The mirrors are automatically updated and contain full version
       histories (including branches and tags) from the respective source
       trees in the official Subversion repository at Apache.
@@ -81,18 +81,18 @@ cat <<EOT >index.new
       and the <a href="http://wiki.apache.org/general/GitAtApache">wiki page</a>
       for more information (including how to set up git svn dcommit support for
       Apache committers).
-      <br />
-      Many Apache projects now use Git as their primary SCM. Most are hosted
-      on <a href="https://git-wip-us.apache.org/">"Git WiP" system</a>. For 
-      more information and project listings for this, please see
-      <a href="https://git-wip-us.apache.org/">https://git-wip-us.apache.org</a>.
-      The rest use the still-in-development
-      <a href="https://gitbox.apache.org/">Github Dual Master</a>, for the
-      list of those projects and basic information, please see
-      <a href="https://gitbox.apache.org/">https://gitbox.apache.org</a>.
     </p>
     <p>
-      Note that these Git mirrors are missing Subversion features like
+      Many Apache projects now use Git as their primary SCM. Some are hosted
+      on the legacy <a href="https://git-wip-us.apache.org/">"Git WiP" system</a>,
+      while most are now hosted on our new dual-master service, 
+      <a href="https://gitbox.apache.org/">gitbox.apache.org</a>. While this
+      site contains copies of the git repositories foud on git-wip-us, they
+      are in the process of being migrated to the gitbox service, and should
+      not be considered canonical on this site.
+    </p>
+    <p>
+      Note that the svn-git mirrors are missing Subversion features like
       svn:ignore, svn:eol-style and svn:keywords settings and support for
       empty directories.
     </p>
