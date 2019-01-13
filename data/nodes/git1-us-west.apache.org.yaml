@@ -81,6 +81,21 @@ gitserver_asf::custom_fragment_443: |
       </Location>
 
       RewriteEngine On
+      
+      # Redirect https://git-wip-us.apache.org/repos/asf/$oldrepo.git
+      # to gitbox if no longer on git-wip.
+      RewriteCond %%{}{REQUEST_URI} ^/repos/asf/([^/]+?\.git)
+      RewriteCond "/x1/git/repos/old/%1" -d
+      RewriteRule .* https://gitbox.apache.org%%{}{REQUEST_URI}?%%{}{QUERY_STRING} [R=302,END]
+      
+      # Redirect https://git-wip-us.apache.org/repos/asf?p=$oldrepo.git...
+      # to gitbox if no longer on git-wip.
+      RewriteCond %%{}{REQUEST_URI} ^/repos/asf
+      RewriteCond %%{}{QUERY_STRING} p=([^/&]+?\.git)
+      RewriteCond "/x1/git/repos/old/%1" -d
+      RewriteRule .* https://gitbox.apache.org%%{}{REQUEST_URI}?%%{}{QUERY_STRING} [R=302,END]
+        
+        
 
       <LocationMatch "^/repos/">
         Require all denied
