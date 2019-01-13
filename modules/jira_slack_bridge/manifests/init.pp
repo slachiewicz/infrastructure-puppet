@@ -49,5 +49,9 @@ class jira_slack_bridge (
     # Ensure, after systemd set up, that JSB is running
     -> service { $service_name:
         ensure    => $service_ensure,
+        subscribe => [
+          File['/usr/local/etc/jira-slack-bridge/slackbridge.yaml'],
+          File['/usr/local/etc/jira-slack-bridge/jira-slack-bridge.py']
+        ]
     }
 }
