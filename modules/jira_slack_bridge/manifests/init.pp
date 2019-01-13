@@ -6,7 +6,7 @@ class jira_slack_bridge (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
-  $webhook        = '',
+  $slacktoken     = '',
   $jirauser       = '',
   $jirapass       = ''
 ) {
@@ -22,6 +22,11 @@ class jira_slack_bridge (
         mode   => '0755',
         owner  => $username,
         group  => $group;
+      '/usr/local/etc/jira-slack-bridge/slackbridge.yaml':
+        mode    => '0755',
+        owner   => $username,
+        group   => $group,
+        source => "puppet:///modules/jira_slack_bridge/slackbridge.yaml";
       '/usr/local/etc/jira-slack-bridge/jira-slack-bridge.py':
         mode    => '0755',
         owner   => $username,

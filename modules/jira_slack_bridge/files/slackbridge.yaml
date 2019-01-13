@@ -1,0 +1,7 @@
+subscriptions:
+    infra:
+        channel: "#asfinfra"
+        jira: INFRA
+    guacamole:
+        channel: "#guacamole"
+        jira: GUACAMOLE
