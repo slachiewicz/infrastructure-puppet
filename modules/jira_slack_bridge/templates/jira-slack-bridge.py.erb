@@ -128,7 +128,13 @@ def main():
             if 'cid' in entry: # Only if we found the channel in slack
                 jproject = entry.get('jira', 'NULL')
                 cid = entry.get('cid')
-                js = requests.get(CHGURL % jproject, auth = (JIRA_USER, JIRA_PASS)).json()
+                try:
+                    js = requests.get(CHGURL % jproject, auth = (JIRA_USER, JIRA_PASS)).json()
+                except:
+                    print("Could not contact JIRA, faking empty reply")
+                    js = {
+                        'issues': []
+                    }
                 changesets = []
                 for issue in js['issues']:
                     
