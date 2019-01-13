@@ -136,7 +136,7 @@ def main():
                         chgid = int(entry['id'])
                         
                         # New changelog entry and not first run?
-                        if not firstRun and chgid > last_changeid.get(k, 'A-000'):
+                        if not firstRun and chgid > last_changeid.get(k, 0):
                             changesets.append({
                                 'key': issue['key'],
                                 'summary': issue['fields']['summary'],
