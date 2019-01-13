@@ -381,7 +381,7 @@ def main():
     if email:
         sendEmail(mailto, email['subject'], email['message'])
     # PR Diff from fork to be sent to commit ML??
-    if fmt.get('prdiff_real'):
+    if fmt and fmt.get('prdiff_real'):
         sendEmail(commitml, "[%s] Diff for: %s" % (repo, email['subject']), fmt['prdiff_real'])
 
     # Now do JIRA if need be
