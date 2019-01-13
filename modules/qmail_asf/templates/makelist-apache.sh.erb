@@ -305,7 +305,7 @@ for arg in $lists; do
 
     ## Fixup new list dir perms
     echo "# Changing dir perms recurseively for new list."
-    $XCMD chmod -R 754 "."
+    $XCMD chmod -R a+rX "."
     echo "# Returning to whence we came..."
     popd >/dev/null
 
