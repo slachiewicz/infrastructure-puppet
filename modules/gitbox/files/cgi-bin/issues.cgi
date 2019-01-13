@@ -132,7 +132,7 @@ def issueOpened(payload):
     fmt['action'] = 'open'
     return fmt
 
-def issueClosed(payload):
+def issueClosed(payload, ml = "foo@bar"):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
     fmt['user'] = payload['sender']['login'] if 'sender' in payload else obj['user']['login']
@@ -162,11 +162,10 @@ def issueClosed(payload):
             if addendum:
                 txt += "\n\n  (%s...)\n" % addendum
             fmt['prdiff'] = """
-As this is a foreign pull request (from a fork), the diff is supplied
-below (as it won't show otherwise due to GitHub magic):
-
-%s
-""" % txt
+As this is a foreign pull request (from a fork), the diff has been
+sent to your commit mailing list, %s
+""" % ml
+            fmt['prdiff_real'] = txt
     return fmt
 
 
@@ -337,6 +336,7 @@ def main():
     if m:
         project = m.group(1)
     mailto = gconf.get('apache', 'dev') if gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
+    commitml = gconf.get('hooks.asfgit', 'recips') # commit ML for PR diffs    
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
@@ -351,7 +351,7 @@ def main():
             fmt = issueOpened(data)
         # Issue closed
         elif data['action'] == 'closed':
-            fmt = issueClosed(data)
+            fmt = issueClosed(data, commitml)
         # Comment on issue or specific code (WIP)
         elif 'comment' in data:
             isComment = True
@@ -380,9 +380,13 @@ def main():
         email = formatMessage(fmt)
     if email:
         sendEmail(mailto, email['subject'], email['message'])
+    # PR Diff from fork to be sent to commit ML??
+    if fmt and fmt.get('prdiff_real'):
+        sendEmail(commitml, "[%s] Diff for: %s" % (repo, email['subject']), fmt['prdiff_real'])
 
     # Now do JIRA if need be
     jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'worklog nocomment' # Default to no visible notification.
+    
 
     if jiraopt and fmt:
         jiramsg = formatMessage(fmt, template = 'template-jira.ezt')
