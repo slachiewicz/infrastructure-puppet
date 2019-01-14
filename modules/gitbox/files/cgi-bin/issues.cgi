@@ -93,30 +93,6 @@ Apache Git Services
 # Message formatting functions #
 ################################
 
-TMPL_NEW_TICKET = """
-GitHub user %(user)s opened a new %(type)s: %(title)s
-
-%(text)s
-
-You can view it online at: %(link)s
-"""
-
-TMPL_CLOSED_TICKET = """
-GitHub user %(user)s closed #%(id)i: %(title)s
-
-You can view it online at: %(link)s
-
-%(diff)s
-"""
-
-TMPL_GENERIC_COMMENT = """
-GitHub user %(user)s commented on %(type)s #%(id)i: %(title)s:
-
-%(text)s
-
-You can view it online at: %(link)s
-"""
-
 def issueOpened(payload):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
@@ -146,6 +122,8 @@ def issueClosed(payload, ml = "foo@bar"):
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
     fmt['prdiff'] = None
+    if obj.get('merged'):
+        fmt['action'] == 'merge'
     # If foreign diff, we have to pull it down here
     if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
         if not obj['head']['repo']['full_name'].startswith("apache/"):
@@ -209,6 +187,7 @@ def formatMessage(fmt, template = 'template.ezt'):
     subjects = {
         'open':         "opened a new %(type)s",
         'close':        "closed %(type)s",
+        'merge':        "merged %(type)s",
         'comment':      "commented on %(type)s",
         'created':      "commented on %(type)s",
         'edited':       "edited a comment on %(type)s",
@@ -387,8 +366,9 @@ def main():
     # Now do JIRA if need be
     jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'worklog nocomment' # Default to no visible notification.
     
-
     if jiraopt and fmt:
+        if 'nofollow' in jiraopt:
+            return None
         jiramsg = formatMessage(fmt, template = 'template-jira.ezt')
         if 'title' in fmt:
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
@@ -407,4 +387,7 @@ if __name__ == '__main__':
     print("Status: 204 Message received\r\n\r\n")   # Always return this
     # If error was returned, log it in issues.log
     if rv:
-        open("/x1/gitbox/issues.log", "a").write(rv + "\r\n")
+        try:
+            open("/x1/gitbox/issues.log", "a").write(rv + "\r\n")
+        except:
+            pass
