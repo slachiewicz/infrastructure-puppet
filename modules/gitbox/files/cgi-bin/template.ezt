@@ -11,6 +11,7 @@ URL: [link]
     Review comment:
 [end][if-any text][text][end]
 
+[if-any prdiff][prdiff][end]
 ----------------------------------------------------------------
 This is an automated message from the Apache Git Service.
 To respond to the message, please log on GitHub and use the
