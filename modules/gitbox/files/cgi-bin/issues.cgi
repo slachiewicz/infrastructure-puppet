@@ -122,8 +122,8 @@ def issueClosed(payload, ml = "foo@bar"):
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
     fmt['prdiff'] = None
-    if payload.get('merged'): # Merged or just closed?
-        fmt['action'] == 'merge'
+    if obj.get('merged'): # Merged or just closed?
+        fmt['action'] = 'merge'
     # If foreign diff, we have to pull it down here
     if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
         if not obj['head']['repo']['full_name'].startswith("apache/"):
