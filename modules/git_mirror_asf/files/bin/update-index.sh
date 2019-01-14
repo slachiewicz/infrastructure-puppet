@@ -87,7 +87,7 @@ cat <<EOT >index.new
       on the legacy <a href="https://git-wip-us.apache.org/">"Git WiP" system</a>,
       while most are now hosted on our new dual-master service, 
       <a href="https://gitbox.apache.org/">gitbox.apache.org</a>. While this
-      site contains copies of the git repositories foud on git-wip-us, they
+      site contains copies of the git repositories found on git-wip-us, they
       are in the process of being migrated to the gitbox service, and should
       not be considered canonical on this site.
     </p>
