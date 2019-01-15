@@ -50,7 +50,7 @@ class build_slaves::jenkins (
   $jbake = [
     'jbake-2.5.1',
     'jbake-2.6.1',
-    'jbake-3.6.3',
+    'jbake-2.6.3',
     ],
   #latest gradle version gets installed on line 229
   $gradle_versions = [
