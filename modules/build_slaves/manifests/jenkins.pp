@@ -50,6 +50,7 @@ class build_slaves::jenkins (
   $jbake = [
     'jbake-2.5.1',
     'jbake-2.6.1',
+    'jbake-3.6.3',
     ],
   #latest gradle version gets installed on line 229
   $gradle_versions = [
@@ -496,7 +497,7 @@ class build_slaves::jenkins (
   build_slaves::symlink_jbake      { $jbake: }
   file { "/home/${build_slaves::username}/tools/jbake/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/jbake/jbake-2.6.1',
+    target => '/usr/local/asfpackages/jbake/jbake-2.6.3',
   }
 
   # jiracli symlinks - populate array, make all symlinks, make latest symlink,
