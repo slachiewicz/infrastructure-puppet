@@ -3132,11 +3132,12 @@ class ConfigRefFilterEnvironmentMixin(
         return '|'.join(items)
 
     def __init__(self, config, **kw):
+        force_diff = '.*' if os.env.get('FORCE_DIFF', 'NO') == 'YES' else None
         super(ConfigRefFilterEnvironmentMixin, self).__init__(
             config=config,
             ref_filter_incl_regex=self._get_regex(config, 'refFilterInclusionRegex'),
             ref_filter_excl_regex=self._get_regex(config, 'refFilterExclusionRegex'),
-            ref_filter_do_send_regex=self._get_regex(config, 'refFilterDoSendRegex'),
+            ref_filter_do_send_regex=force_diff,
             ref_filter_dont_send_regex=self._get_regex(config, 'refFilterDontSendRegex'),
             **kw
             )
