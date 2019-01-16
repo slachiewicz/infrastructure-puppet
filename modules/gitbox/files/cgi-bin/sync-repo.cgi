@@ -317,7 +317,7 @@ elif 'repository' in data and 'name' in data['repository']:
                     'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
                     'WRITE_LOCK': '/x1/gitbox/write.lock',
                     'AUTH_FILE': '/x1/gitbox/conf/auth.cfg',
-                    'FORCE_DIFF': 'YES' if forced_diff else 'NO'
+                    'FORCE_DIFF': 'YES' if force_diff else 'NO'
                 },
                 update = "%s %s %s\n" % (before if before != after else EMPTY_HASH, after, ref)
 
