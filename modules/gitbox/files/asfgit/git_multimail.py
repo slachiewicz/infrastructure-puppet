@@ -2,11 +2,13 @@
 
 # ASF PART GOES HERE
 NO_DEFAULT = object()
+
 import asfgit.util as util
 import os
 import sys
 import subprocess as sp
 import asfgit.run as run
+FORCE_DIFF = True if os.environ.get('FORCE_DIFF', 'NO') == 'YES' else False
 
 def _repo_name():
     path = filter(None, os.environ["PATH_INFO"].split("/"))
@@ -3135,7 +3137,7 @@ class ConfigRefFilterEnvironmentMixin(
         force_diff = '.*' if os.environ.get('FORCE_DIFF', 'NO') == 'YES' else None
         super(ConfigRefFilterEnvironmentMixin, self).__init__(
             config=config,
-            ref_filter_incl_regex=self._get_regex(config, 'refFilterInclusionRegex'),
+            ref_filter_incl_regex=force_diff,
             ref_filter_excl_regex=self._get_regex(config, 'refFilterExclusionRegex'),
             ref_filter_do_send_regex=force_diff,
             ref_filter_dont_send_regex=self._get_regex(config, 'refFilterDontSendRegex'),
@@ -3527,6 +3529,8 @@ class Push(object):
             for change in self.changes
             if getattr(change, old_or_new).type in ['commit', 'tag']
             )
+        if FORCE_DIFF:
+            return []
         return ['^' + sha1 for sha1 in sorted(excl_revs)]
 
     def get_commits_spec(self, new_or_old, reference_change=None):
