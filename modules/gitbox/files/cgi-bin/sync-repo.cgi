@@ -149,6 +149,11 @@ elif 'repository' in data and 'name' in data['repository']:
     baseref = data['base_ref'] if 'base_ref' in data else data['master_branch'] if 'master_branch' in data else data['ref']
     before = data['before'] if 'before' in data else EMPTY_HASH
     after = data['after'] if 'after' in data else EMPTY_HASH
+    force_diff = True if 'head_commit' in data and data['head_commit'].get('distinct') else False
+    if 'commits' in data:
+        for commit in data['commits']:
+            if commit['distinct']:
+                force_diff = True
     repopath = "/x1/repos/asf/%s.git" % reponame
 
     # Make sure we know which section this repo belongs to.
@@ -311,8 +316,9 @@ elif 'repository' in data and 'name' in data['repository']:
                     'ASFGIT_ADMIN': '/x1/gitbox',
                     'SCRIPT_NAME': '/x1/gitbox/cgi-bin/sync-repo.cgi',
                     'WRITE_LOCK': '/x1/gitbox/write.lock',
-                    'AUTH_FILE': '/x1/gitbox/conf/auth.cfg'
-                }
+                    'AUTH_FILE': '/x1/gitbox/conf/auth.cfg',
+                    'FORCE_DIFF': 'YES' if forced_diff else 'NO'
+                },
                 update = "%s %s %s\n" % (before if before != after else EMPTY_HASH, after, ref)
 
                 try:
