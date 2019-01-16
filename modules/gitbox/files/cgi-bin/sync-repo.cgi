@@ -149,7 +149,7 @@ elif 'repository' in data and 'name' in data['repository']:
     baseref = data['base_ref'] if 'base_ref' in data else data['master_branch'] if 'master_branch' in data else data['ref']
     before = data['before'] if 'before' in data else EMPTY_HASH
     after = data['after'] if 'after' in data else EMPTY_HASH
-    force_diff = True if 'head_commit' in data and data['head_commit'].get('distinct') else False
+    force_diff = False
     if 'commits' in data:
         for commit in data['commits']:
             if commit['distinct']:
