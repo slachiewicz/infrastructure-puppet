@@ -152,7 +152,7 @@ elif 'repository' in data and 'name' in data['repository']:
     force_diff = False
     if 'commits' in data:
         for commit in data['commits']:
-            if commit['distinct']:
+            if commit['distinct'] and not ('Merge pull request' in commit['message'] and commit == data['commits'][-1]):
                 force_diff = True
     repopath = "/x1/repos/asf/%s.git" % reponame
 
