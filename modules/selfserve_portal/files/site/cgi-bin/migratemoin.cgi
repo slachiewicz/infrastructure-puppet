@@ -33,7 +33,7 @@ requser = os.environ['REMOTE_USER']
 form = cgi.FieldStorage();
 
 moinwiki = form.getvalue('moinwiki', None)
-if not moinwiki or not re.match(r"^[a-z0-9]+$"], moinwiki):
+if not moinwiki or not re.match(r"^[a-z0-9]+$", moinwiki):
     sscommn.buggo("Invalid Moin Wiki name!")
 
 space = form.getvalue('space', None)
@@ -90,7 +90,7 @@ try:
     # Convert exported pages to Confluence format ..
     # .. and then import the pages to the Confluence space.
     subprocess.check_output([
-        moinscript, '-c', 'conf/%s' % settingsconf, 'conf/%s' % converterconf,'%s/projects/%s/%s-pages-out' % (moinpath,moinwiki,moinwiki)
+        moinscript, '-c', 'conf/%s' % settingsconf, 'conf/%s' % converterconf,'%s/projects/%s/%s-pages-out' % (moinpath, moinwiki, moinwiki)
         ], stderr=subprocess.STDOUT)
     # Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 75%/numpages left
 
