@@ -13,10 +13,10 @@ relays:
         events: commit
         hook: https://builds.apache.org/github-webhook/
         format: formdata
-        enabled: false
+        enabled: true
     sling-jenkins-pr:
         repos: sling-*
         events: pr
         hook: https://builds.apache.org/github-pull-request-hook/
         format: formdata
-        enabled: false
+        enabled: true
