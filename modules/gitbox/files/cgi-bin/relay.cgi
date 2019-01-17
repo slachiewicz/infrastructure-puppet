@@ -36,6 +36,7 @@ for key, entry in YML['relays'].items():
                     requests.post(hook, data = payload_formdata, headers = HEADERS)
                 elif fmt == 'json':
                     requests.post(hook, json = payload, headers = HEADERS)
+                sys.stderr.write("Delivered %s payload for %s to %s\n" % (what, repo, hook))
         except:
             pass # fail silently if hook doesn't respond well
 
