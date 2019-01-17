@@ -3,6 +3,7 @@
 import requests
 import yaml
 import json
+import os
 import sys
 import fnmatch
 
@@ -38,10 +39,10 @@ for key, entry in YML['relays'].items():
         try:
             if enabled and hook and (wanted == 'all' or what in wanted):
                 if fmt == 'formdata':
-                    requests.post(hook, data = PAYLOAD_FORMDATA, headers = HEADERS)
+                    rv = requests.post(hook, data = PAYLOAD_FORMDATA, headers = HEADERS)
                 elif fmt == 'json':
-                    requests.post(hook, json = PAYLOAD, headers = HEADERS)
-                sys.stderr.write("Delivered %s payload for %s to %s\n" % (what, repo, hook))
+                    rv = requests.post(hook, json = PAYLOAD, headers = HEADERS)
+                sys.stderr.write("Delivered %s payload for %s to %s: %u\n" % (what, repo, hook, rv.status_code))
         except:
             pass # fail silently if hook doesn't respond well
 
