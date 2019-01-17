@@ -96,7 +96,7 @@ try:
 
     # All done!
 
-    sscommon.sendemail("%s@apache.org" % requser, "Moin wiki %s successfully migrated to Confluence space %s" % (moinwiki, space))
+    sscommon.sendemail("%s@apache.org" % requser, "Moin wiki %s successfully migrated to Confluence space %s" % (moinwiki, space),
 """
 Hi there,
 As requested by %s@apache.org, migration from moin wiki %s to Confluence space has been completed at:
