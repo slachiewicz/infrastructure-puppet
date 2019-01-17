@@ -25,7 +25,7 @@ elif 'issue' in PAYLOAD:
     what = 'issue'
 
 for key, entry in YML['relays'].items():
-    if fnmatch.fnmatch(entry['repos'], repo): # If yaml entry glob-matches the repo, then...
+    if fnmatch.fnmatch(repo, entry['repos']): # If yaml entry glob-matches the repo, then...
         hook = entry.get('hook') # Hook URL to post to
         fmt = entry.get('format', 'formdata') # www-formdata or raw json expected by hook?
         wanted = entry.get('events', 'all') # Which events to trigger on; all, pr, issue, commit or a mix.
@@ -33,9 +33,9 @@ for key, entry in YML['relays'].items():
         try:
             if enabled and hook and (wanted == 'all' or what in wanted):
                 if fmt == 'formdata':
-                    requests.post(hook, data = payload_formdata, headers = HEADERS)
+                    requests.post(hook, data = PAYLOAD_FORMDATA, headers = HEADERS)
                 elif fmt == 'json':
-                    requests.post(hook, json = payload, headers = HEADERS)
+                    requests.post(hook, json = PAYLOAD, headers = HEADERS)
                 sys.stderr.write("Delivered %s payload for %s to %s\n" % (what, repo, hook))
         except:
             pass # fail silently if hook doesn't respond well
