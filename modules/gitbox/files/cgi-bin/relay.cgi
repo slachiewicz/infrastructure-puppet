@@ -14,7 +14,12 @@ PAYLOAD_FORMDATA = {
     'payload': json.dumps(PAYLOAD)
 }
 
-HEADERS = {'User-Agent': 'GitBox Hook Relay/0.1'}
+HEADERS = {
+    'User-Agent': os.environ.get('HTTP_USER_AGENT', 'GitHub-Hookshot/abcd'),
+    'X-GitHub-Delivery': os.environ.get('HTTP_X_GITHUB_DELIVERY',""),
+    'X-GitHub-Event': os.environ.get('HTTP_X_GITHUB_EVENT', "push")
+  }
+
 
 # determine what and where
 repo = PAYLOAD['repository']['name']
