@@ -285,7 +285,7 @@ def addLabel(ticket):
     if rv.status_code == 200 or rv.status_code == 201:
         return "Added PR label to Ticket %s\n" % ticket
     else:
-        sys.stderr.write(rv.text)
+        #sys.stderr.write(rv.text)
         return rv.text
 
 # Main function
