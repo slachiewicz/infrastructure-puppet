@@ -73,26 +73,26 @@ os.chdir(moinpath)
 try:
 
     # Test auth to Confluence via uwc.
-    subprocess.check_output([
-        moinscript, '-t', 'conf/%s' % settingsconf
-        ], stderr=subprocess.STDOUT)
-    # Todo: At this point update the progress bar to a hard coded 5% for now and feedback that the auth test is complete.
+    subprocess.check_output(['%s -t conf/%s' % (moinscript, settingsconf)],shell=True, stderr=subprocess.STDOUT)
 
-    # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
+        # Todo: At this point update the progress bar to a hard coded 5% for now and feedback that the auth test is complete.
+
+        # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
+        #subprocess.check_output([
+        # ...
+        #    ], stderr=subprocess.STDOUT)
 
     # Export the moin pages to txt format before converting to Confluence format.
     # Save to a $moinwiki-pages-out directory for processing
-    subprocess.check_output([
-        moinscript, '-e', 'conf/%s' % exporterconf
-        ], stderr=subprocess.STDOUT)
+    subprocess.check_output(['%s -e conf/%s' % (moinscript, exporterconf)],shell=True, stderr=subprocess.STDOUT)
+
     # Todo: At this point update the progress bar to a hard codes 20% for now and inform that the initial export is complete.
 
     # Convert exported pages to Confluence format ..
     # .. and then import the pages to the Confluence space.
-    subprocess.check_output([
-        moinscript, '-c', 'conf/%s' % settingsconf, 'conf/%s' % converterconf,'%s/projects/%s/%s-pages-out' % (moinpath, moinwiki, moinwiki)
-        ], stderr=subprocess.STDOUT)
-    # Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 75%/numpages left
+    subprocess.check_output(['%s -c conf/%s conf/%s %s/projects/%s/%s-pages-out' % (moinscript, settingsconf, converterconf, moinpath, moinwiki, moinwiki)],shell=True, stderr=subprocess.STDOUT)
+
+    # Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 80%/numpages left
 
     # All done!
 
