@@ -1,0 +1,17 @@
+# This is the github webhook relay configuration
+# Example:
+# foo:
+#   repos: glob-match-for-repos
+#   events: all, pr, issue, commit or a mix
+#   hook: the hook url to post to
+#   format: json or formdata
+#   enabled: true or false, defaults to false if not specified
+
+relays:
+    sling:
+        repos: sling-*
+        events: all
+        hook: https://foo.bar
+        format: json
+        enabled: false
+
