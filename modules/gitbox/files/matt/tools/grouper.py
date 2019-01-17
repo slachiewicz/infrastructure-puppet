@@ -305,7 +305,7 @@ allrepos = filter(lambda repo: os.path.isdir(
 
 # turn that into a list of projects to run the manager for
 for repo in allrepos:
-    m = re.match(r"(?:incubator-)?([^-.]+|empire-db)(?:.*\.git)", repo)
+    m = re.match(r"(?:incubator-)?(empire-db|[^-.]+)(?:.*\.git)", repo)
     if m:  # don't see why this would fail, but best to be sure
         project = m.group(1)
         if not project in MATT_PROJECTS:
@@ -343,7 +343,7 @@ for project in sorted(MATT_PROJECTS):
     logging.info("Team is subbed to the following repos: " +
                  ", ".join(teamRepos))
     for repo in existingRepos:
-        m = re.match(r"^(?:incubator-)?([^-]+|empire-db)-?", repo)
+        m = re.match(r"^(?:incubator-)?(empire-db|[^-]+)-?", repo)
         p = m.group(1)
         if p == project and not repo in teamRepos and os.path.exists("/x1/repos/asf/%s.git" % repo):
             logging.info("Need to add " + repo + " repo to the team...")
