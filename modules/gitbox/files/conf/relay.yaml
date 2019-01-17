@@ -20,3 +20,9 @@ relays:
         hook: https://builds.apache.org/github-pull-request-hook/
         format: formdata
         enabled: true
+    airavata-read-the-docs:
+        repos: airavata-django-portal
+        events: commit
+        hook: https://readthedocs.org/api/v2/webhook/apache-airavata-django-portal/60376/
+        format: json
+        enabled: true
