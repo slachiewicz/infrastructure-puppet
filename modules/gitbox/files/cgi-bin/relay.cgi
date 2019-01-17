@@ -11,7 +11,7 @@ YML = yaml.load(open(YAML_PATH))
 
 PAYLOAD = json.load(sys.stdin)
 PAYLOAD_FORMDATA = {
-    'payload': json.dumps(payload)
+    'payload': json.dumps(PAYLOAD)
 }
 
 HEADERS = {'User-Agent': 'GitBox Hook Relay/0.1'}
