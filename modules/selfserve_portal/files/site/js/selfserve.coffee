@@ -237,6 +237,10 @@ verifyCONF = (name) ->
                         if name in preloaded["js/spacekeys.json"]
                                     return "#{name} is already in use!"
 
+spaceExists = (name) ->
+            if preloaded["js/spacekeys.json"]
+                        if name not in preloaded["js/spacekeys.json"]
+                                    return "#{name} needs to exist before we can migrate to it!"
 
 userExists = (name) ->
             request = new XMLHttpRequest()
