@@ -421,6 +421,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'selfserve.apache.org.ssl_access.log'
     error_log_file: 'selfserve.apache.org.ssl_error.log'
     custom_fragment: |
+      Timeout 3600
       AddHandler cgi-script .cgi
       AddHandler lua-script .lua
       <Directory /var/www/selfserve-portal/site/cgi-bin>
