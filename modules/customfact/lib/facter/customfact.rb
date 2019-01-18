@@ -148,7 +148,7 @@ Facter.add("noderole") do
     elsif hostname.include?("jenkins-cassandra")
       "jenkins-external"
     elsif hostname =~ /openwhisk-vm\d-he-de/ # OpenWhisk Jenkins boxes
-      "jenkins"
+      "jenkins-external"
     else
       "default"
     end
