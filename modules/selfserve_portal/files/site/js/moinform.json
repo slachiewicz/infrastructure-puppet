@@ -1,0 +1,25 @@
+{
+  "posturl": "cgi-bin/migratemoin.cgi",
+  "preload": [
+  ],
+   "pages": [{
+          "title": "Base data",
+          "fields": {
+              "moinwiki": {
+                  "desc": "Moin wiki name to migrate from",
+                  "placeholder": "agila,apachecon,commons etc - [a-z0-9] only",
+                  "type": "text",
+                  "filter": "^[a-z0-9]+$",
+                  "mandatory": true
+              },
+              "space": {
+                  "desc": "Confluence space to migrate to",
+                  "placeholder": "Space key of an existing Confluence space to migrate to",
+                  "type": "text",
+                  "filter": "^[A-Z0-9]+$",
+                  "mandatory": true
+              }
+          }
+      }
+  ]
+}
