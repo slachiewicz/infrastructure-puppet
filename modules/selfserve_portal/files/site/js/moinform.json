@@ -17,6 +17,8 @@
                   "placeholder": "Space key of an existing Confluence space to migrate to",
                   "type": "text",
                   "filter": "^[A-Z0-9]+$",
+                  "verifier": "spaceExists",
+                  "preload": "js/spacekeys.json",
                   "mandatory": true
               }
           }
