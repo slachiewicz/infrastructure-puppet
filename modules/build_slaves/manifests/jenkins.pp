@@ -133,6 +133,8 @@ class build_slaves::jenkins (
     'jdk-11.0.1',
     'openjdk-jdk-10.0.2',
     'openjdk-12-ea+18',
+    'openjdk-12-ea+28',
+    'openjdk-13-ea+4',
     ],
 ) {
 
@@ -573,7 +575,11 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/java/latest12":
     ensure => link,
-    target => '/usr/local/asfpackages/java/openjdk-12-ea+18',
+    target => '/usr/local/asfpackages/java/openjdk-12-ea+28',
+  }
+  file { "/home/${build_slaves::username}/tools/java/latest13":
+    ensure => link,
+    target => '/usr/local/asfpackages/java/openjdk-13-ea+4',
   }
 
   # install all the gradle versions, create symlinks
