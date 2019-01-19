@@ -52,3 +52,10 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       ProxyPass / http://127.0.0.1:8088/
       ProxyPassReverse / http://127.0.0.1:8088/
+      #websockets
+      RewriteEngine On
+      RewriteCond %%{}{HTTP:UPGRADE} websocket [NC]
+      RewriteCond %%{}{HTTP:CONNECTION} Upgrade$ [NC]
+      RewriteRule .* ws://127.0.0.1:8088%%{}{REQUEST_URI} [P]
+      ProxyPreserveHost On
+      
