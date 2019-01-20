@@ -35,7 +35,7 @@ letsencrypt::certonly:
     domains:
       - netbeans-vm.apache.org
       - bits.netbeans.org
-    plugin: webroot
+    plugin: apache
     webroot_paths:
       - /var/www/html
     manage_cron: true
