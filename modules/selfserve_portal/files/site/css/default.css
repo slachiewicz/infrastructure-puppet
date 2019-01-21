@@ -258,7 +258,8 @@ label {
 
 .ss-selector {
     margin: 10px;
-    width: 160px;
+    width: 140px;
+    height: 210px;
     float: left;
     background: #129D4E;
     border:  1px solid #FFF;
