@@ -20,7 +20,6 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
-  - zmanda_asf::client
 
 rsync_asf::cron_hour: 20
 rsync_asf::cron_minute: 49
