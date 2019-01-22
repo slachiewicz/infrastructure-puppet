@@ -32,7 +32,7 @@ rsync_asf::fslist:
 
 rsync::server::module:
   moin:
-    path: '/x1/moin/'
+    path: '/usr/local/etc/moin-to-cwiki/universal-wiki-converter/projects/'
     hosts_allow: '163.172.69.106'
     auth_users: 'apb-moin'
     secrets_file: '/etc/rsyncd.secrets'
