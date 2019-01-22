@@ -29,6 +29,10 @@ rsync_asf::fslist:
   - /var/www
   - /var/log
 
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
 rsync::server::module:
   moin:
     path: '/usr/local/etc/moin-to-cwiki/universal-wiki-converter/projects/'
@@ -38,6 +42,13 @@ rsync::server::module:
     incoming_chmod: false
     outgoing_chmod: false
     read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
