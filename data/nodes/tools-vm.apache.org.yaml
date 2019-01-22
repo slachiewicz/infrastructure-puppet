@@ -14,6 +14,7 @@ classes:
   - loggy
   - pad_asf
   - rsync_asf
+  - rsync::server
   - selfserve
   - selfserve_portal
   - ssl::name::wildcard_apache_org
@@ -28,6 +29,16 @@ rsync_asf::fslist:
   - /usr/local
   - /var/www
   - /var/log
+
+rsync::server::module:
+  moin:
+    path: '/x1/moin/'
+    hosts_allow: '163.172.69.106'
+    auth_users: 'apb-moin'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
