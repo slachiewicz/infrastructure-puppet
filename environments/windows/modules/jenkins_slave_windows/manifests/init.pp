@@ -67,7 +67,7 @@ class jenkins_slave_windows (
     provider => powershell,
   }
   exec { 'create symlink for Maven3':
-    command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest3 \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.5.4",# lint:ignore:140chars
+    command  => "cmd /c rmdir F:\\jenkins\\tools\\maven\\latest3 \"&\" mklink /d F:\\jenkins\\tools\\maven\\latest3 F:\\jenkins\\tools\\maven\\apache-maven-3.6.0",# lint:ignore:140chars
     onlyif   => "if ((Get-Item F:\\tools_zips).LastWriteTime -lt (Get-Date).AddMinutes(-60)) { exit 1;}  else { exit 0; }",
     provider => powershell,
   }
