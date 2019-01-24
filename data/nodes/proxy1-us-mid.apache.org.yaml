@@ -67,7 +67,7 @@ fail2ban_asf::config::filters:
       <HOST> spammed Aardvark
 
 httpd_rate_limiter::interval: 120
-httpd_rate_limiter::cpumax:   90
+httpd_rate_limiter::cpumax:   60
 
 vhosts_asf::modules::modules:
   lua:
