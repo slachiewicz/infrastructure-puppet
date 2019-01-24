@@ -63,7 +63,6 @@ apache::mpm_module:         'event'
 apache::serveradmin:        'users@infra.apache.org'
 
 base::basepackages:
-  - 'rsync'
   - 'libapache2-mod-wsgi'
 
 datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
