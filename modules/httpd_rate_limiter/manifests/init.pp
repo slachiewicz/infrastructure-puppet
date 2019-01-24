@@ -6,7 +6,7 @@
 # - 'lua5.2'
 # - 'mod-lua-asf'
 
-class httpd_rate_filter (){
+class httpd_rate_limiter (){
 
   $interval                 = '120'
   $cpumax                   = '90'
