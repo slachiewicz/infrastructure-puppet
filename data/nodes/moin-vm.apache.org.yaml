@@ -6,6 +6,7 @@ classes:
   - apache::mod::status
   - blocky
   - datadog_agent::integrations::apache
+  - httpd_rate_limiter
   - kif
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
@@ -29,12 +30,12 @@ apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '800'
 apache::mod::event::maxconnectionsperchild: '200000'
 apache::mod::event::maxrequestworkers: '800'
-apache::mod::event::maxsparethreads: '200'
+apache::mod::event::maxsparethreads: '250'
 apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '4'
+apache::mod::event::serverlimit: '3'
 apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '800'
-apache::mod::event::threadsperchild: '200'
+apache::mod::event::threadsperchild: '250'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'users@infra.apache.org'
@@ -45,6 +46,9 @@ base::basepackages:
 
 datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
 
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   60
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -53,6 +57,8 @@ postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 vhosts_asf::modules::modules:
   wsgi:
     name: 'wsgi'
+  lua:
+    name: 'lua'
 
 vhosts_asf::vhosts::vhosts:
   moin_http:
@@ -79,6 +85,10 @@ vhosts_asf::vhosts::vhosts:
       - Indexes
       - FollowSymLinks
     custom_fragment: |
+      # Rate limiter
+      LuaScope conn
+      LuaQuickHandler /var/www/rate-limit.lua before
+      LuaHookLog /var/www/rate-limit.lua after
       # WSGI
       WSGIDaemonProcess wiki processes=20 threads=1 maximum-requests=500 group=www-data display-name=moinwiki
       WSGIProcessGroup wiki
