@@ -18,6 +18,16 @@ rsync_asf::cron_minute: 45
 
 rsync_asf::fslist:
   - /www
+
+rsync::server::module:
+  moin:
+    path: '/www/wiki.apache.org/data/'
+    hosts_allow: '37.48.69.235'
+    auth_users: 'apb-moin'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
