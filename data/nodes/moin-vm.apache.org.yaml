@@ -19,6 +19,10 @@ rsync_asf::cron_minute: 45
 rsync_asf::fslist:
   - /www
 
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
 rsync::server::module:
   moin:
     path: '/www/wiki.apache.org/data/'
@@ -27,7 +31,14 @@ rsync::server::module:
     secrets_file: '/etc/rsyncd.secrets'
     incoming_chmod: false
     outgoing_chmod: false
-    read_only: 'no'
+    read_only: 'yes'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
