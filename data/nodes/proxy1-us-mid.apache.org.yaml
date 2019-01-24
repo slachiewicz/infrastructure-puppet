@@ -16,6 +16,7 @@ classes:
   - loggy
   - blocky
   - kif
+  - httpd_rate_limiter
 
 apache::default_vhost: false
 
@@ -65,6 +66,9 @@ fail2ban_asf::config::filters:
     filterfailregex: |
       <HOST> spammed Aardvark
 
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   90
+
 vhosts_asf::modules::modules:
   lua:
     name: 'lua'
@@ -101,7 +105,9 @@ vhosts_asf::vhosts::vhosts:
       RemoteIPHeader X-Forwarded-For
 
       # Spam filter
-      LuaScope thread
+      LuaScope conn
+      LuaQuickHandler /var/www/rate-limit.lua before
+      LuaHookLog /var/www/rate-limit.lua after
       LuaInputFilter AntiSpam /usr/local/etc/aardvark/filter.lua input_filter
       <Location />
         SetInputFilter AntiSpam
