@@ -12,6 +12,7 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - rsync_asf
+  - rsync::server
 
 rsync_asf::cron_hour: 23
 rsync_asf::cron_minute: 45
