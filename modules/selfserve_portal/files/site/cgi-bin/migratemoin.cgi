@@ -34,13 +34,16 @@ form = cgi.FieldStorage();
 
 moinwiki = form.getvalue('moinwiki', None)
 if not moinwiki or not re.match(r"^[a-z0-9]+$", moinwiki):
-    sscommn.buggo("Invalid Moin Wiki name!")
+    sscommon.buggo("Invalid Moin Wiki name!")
+
+moinpath = '/usr/local/etc/moin-to-cwiki/universal-wiki-converter'
+if not os.path.exists("%s/projects/%s" % (moinpath, moinwiki)):
+    sscommon.buggo("This wiki does not seem to exist, please check and try again!")
 
 space = form.getvalue('space', None)
 if not space or not re.match(r"^[A-Z0-9]+$", space):
     sscommon.buggo("Invalid Confluence Space name!")
 
-moinpath = '/usr/local/etc/moin-to-cwiki/universal-wiki-converter'
 moinscript = '%s/run_cmdline.sh' % moinpath
 settingsconf = 'confluenceSettings.properties'
 exporterconf = 'exporter.moinmoin.properties'
@@ -48,51 +51,30 @@ converterconf = 'converter.moinmoin.properties'
 
 os.chdir(moinpath)
 
-#try:
-
-    # Check that the moin wiki exists before we start
-    #subprocess.check_output([
-    # ...
-    #    ], stderr=subprocess.STDOUT)
-
-#except:
-#    print("Status: 500 Migration failed\r\n\r\n<h2>Moin to Confluence migration failed!</h2><pre>Invalid Moin wiki name: %s was not found!</pre>" % str(moinwiki))
-#    sys.exit(0)
-
-#try:
-
-    # Check that the Confluence Space exists before we start
-    #subprocess.check_output([
-    # ...
-    #    ], stderr=subprocess.STDOUT)
-
-#except:
-#    print("Status: 500 Migration failed\r\n\r\n<h2>Moin to Confluence migration failed!</h2><pre>Invalid Confluence Space name: %s was not found!</pre>" % str(space))
-#    sys.exit(0)
-
 try:
+
+    # copy settings files and append space name
+    subprocess.check_output(['%s/populate-properties.sh %s %s' % (moinpath, moinwiki, space)],shell=True, stderr=subprocess.STDOUT)
 
     # Test auth to Confluence via uwc.
     subprocess.check_output(['%s -t conf/%s' % (moinscript, settingsconf)],shell=True, stderr=subprocess.STDOUT)
 
-        # Todo: At this point update the progress bar to a hard coded 5% for now and feedback that the auth test is complete.
+    ## Todo: At this point update the progress bar to a hard coded 5% for now and feedback that the auth test is complete.
 
-        # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
-        #subprocess.check_output([
-        # ...
-        #    ], stderr=subprocess.STDOUT)
+    # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
+    subprocess.check_output(['/root/sync-moin-project.sh %s' % moinwiki],shell=True, stderr=subprocess.STDOUT)
 
     # Export the moin pages to txt format before converting to Confluence format.
     # Save to a $moinwiki-pages-out directory for processing
     subprocess.check_output(['%s -e conf/%s' % (moinscript, exporterconf)],shell=True, stderr=subprocess.STDOUT)
 
-    # Todo: At this point update the progress bar to a hard codes 20% for now and inform that the initial export is complete.
+    ## Todo: At this point update the progress bar to a hard codes 20% for now and inform that the initial export is complete.
 
     # Convert exported pages to Confluence format ..
     # .. and then import the pages to the Confluence space.
-    subprocess.check_output(['%s -c conf/%s conf/%s %s/projects/%s/%s-pages-out' % (moinscript, settingsconf, converterconf, moinpath, moinwiki, moinwiki)],shell=True, stderr=subprocess.STDOUT)
+    subprocess.check_output(['%s -c conf/%s conf/%s %s/projects/%s/data/%s-pages-out' % (moinscript, settingsconf, converterconf, moinpath, moinwiki, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
-    # Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 80%/numpages left
+    ## Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 80%/numpages left
 
     # All done!
 
@@ -113,5 +95,5 @@ except subprocess.CalledProcessError as err:
         f.write(err.output)
         f.close()
 
-    sscommon.slack("A moin wiki (%s) to Confluence migration, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, was attempted as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (moinwiki, space, requser, uid))
+    sscommon.slack("A moin wiki (%s) to Confluence migration, <https://cwiki.apache.org/confluence/display/%s>, was attempted as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (moinwiki, space, requser, uid))
     print("Status: 500 Creation failed\r\n\r\n<h2>Moin to Confluence migration failed!</h2><pre>Migration may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
