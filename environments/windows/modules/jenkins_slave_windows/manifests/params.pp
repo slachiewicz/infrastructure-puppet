@@ -5,7 +5,7 @@ class jenkins_slave_windows::params (
   $user_password    = '',
   $ant = ['apache-ant-1.9.9','apache-ant-1.9.7','apache-ant-1.9.4','apache-ant-1.8.4','apache-ant-1.10.1','apache-ant-1.10.3','apache-ant-1.9.11','apache-ant-1.10.5','apache-ant-1.9.13'], # lint:ignore:140chars
   $chromedriver = ['2.29'],
-  $geckodriver = ['0.16.1'],
+  $geckodriver = ['0.16.1','0.18.0','0.23.0'],
   $gradle = ['3.5','4.3','4.3.1'],
   $iedriver = ['2.53.1','3.4.0'],
   $jdk = ['jdk1.5.0_22-32','jdk1.5.0_22-64','jdk1.6.0_30','jdk1.7.0_79-unlimited-security','jdk1.8.0_92-unlimited-security','jdk1.8.0_121-unlimited-security','jdk1.8.0_121','jdk1.8.0_144-unlimited-security','jdk1.8.0_144','jdk1.8.0_152','jdk9.0','jdk9.0.1','jdk10-ea+37','jdk10_46','jdk11-ea+13','jdk11-ea+19','jdk11-ea+23','jdk11-ea+28','jdk12-ea+27','jdk13-ea+3'], # lint:ignore:140chars
