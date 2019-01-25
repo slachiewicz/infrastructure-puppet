@@ -10,6 +10,7 @@ class httpd_rate_limiter (){
 
   $interval                 = '120'
   $cpumax                   = '90'
+  $autoconf                 = false
 
   file {
     '/var/www/rate-limit.lua':
@@ -18,6 +19,15 @@ class httpd_rate_limiter (){
       group   => 'root',
       mode    => '0755',
       content => template('httpd_rate_limiter/rate-limit.lua.erb');
+  }
+  
+  if $autoconf {
+      apache::mod { 'lua': }
+      apache::custom_config {
+        ensure   => present,
+        filename => 'rate-limit.conf',
+        content  => template('httpd_rate_limiter/rate-limit.conf.erb');
+      }
   }
 
 }
