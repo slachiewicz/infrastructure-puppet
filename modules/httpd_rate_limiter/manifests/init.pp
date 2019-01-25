@@ -26,7 +26,7 @@ class httpd_rate_limiter (){
       apache::custom_config {
         ensure   => present,
         filename => 'rate-limit.conf',
-        content  => template('httpd_rate_limiter/rate-limit.conf.erb');
+        content  => template('httpd_rate_limiter/rate-limit.conf.erb'),
       }
   }
 
