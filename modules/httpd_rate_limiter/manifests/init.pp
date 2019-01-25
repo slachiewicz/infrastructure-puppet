@@ -6,11 +6,12 @@
 # - 'lua5.2'
 # - 'mod-lua-asf'
 
-class httpd_rate_limiter (){
+class httpd_rate_limiter (
+  $interval                 = '120',
+  $cpumax                   = '90',
+  $autoconf                 = false,
+){
 
-  $interval                 = '120'
-  $cpumax                   = '90'
-  $autoconf                 = false
 
   file {
     '/var/www/rate-limit.lua':
