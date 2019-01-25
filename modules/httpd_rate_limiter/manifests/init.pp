@@ -21,9 +21,11 @@ class httpd_rate_limiter (
       mode    => '0755',
       content => template('httpd_rate_limiter/rate-limit.lua.erb');
   }
-  
+
   if $autoconf {
-      apache::mod { 'lua': }
+      if !defined(Apache::Mod['lua']) {
+          apache::mod { 'lua': }
+      }
       apache::custom_config {
         'rate-limit':
           ensure   => present,
