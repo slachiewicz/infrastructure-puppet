@@ -67,10 +67,6 @@ base::basepackages:
 
 datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
 
-httpd_rate_limiter::interval: 120
-httpd_rate_limiter::cpumax:   60
-httpd_rate_limiter::autoconf: true
-
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -79,8 +75,11 @@ postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 vhosts_asf::modules::modules:
   wsgi:
     name: 'wsgi'
-  lua:
-    name: 'lua'
+
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   60
+httpd_rate_limiter::autoconf: true
+
 
 vhosts_asf::vhosts::vhosts:
   moin_http:
