@@ -18,6 +18,8 @@ class selfserve_portal (
   $deploy_dir    = '/var/www/selfserve-portal'
   $install_base  = '/usr/local/etc/'
   $atlassian_cli = "atlassian-cli-${cliversion}"
+  $moin_dir      = "${install_base}/moin-to-cwiki"
+  $uwc_dir       = "${moin_dir}/universal-wiki-converter"
 
 file {
     $deploy_dir:
@@ -26,7 +28,7 @@ file {
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      source  => 'puppet:///modules/selfserve_portal',
+      source  => 'puppet:///modules/selfserve_portal/www',
       require => Package['apache2'];
     "${install_base}/selfserve/":
       ensure => directory,
@@ -43,6 +45,22 @@ file {
       owner   => 'root',
       group   => 'root',
       mode    => '0644';
+    $moin_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    $uwc_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    "${uwc_dir}/populate-properties.sh":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/populate-properties.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755';
 
 # Required scripts for cronjobs
 
