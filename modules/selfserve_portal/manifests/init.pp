@@ -73,6 +73,12 @@ file {
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
+    "${uwc_dir}/exclude-list.txt":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/exclude-list.txt',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
 
 # Required scripts for cronjobs
 

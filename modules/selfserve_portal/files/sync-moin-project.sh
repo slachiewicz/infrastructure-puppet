@@ -16,12 +16,6 @@ cd $MOINDATA
   rsync -av --progress --password-file=/root/.pw-moin \
     --include data/pages         \
     --include data/user         \
-    --exclude data/event-log \
-    --exclude data/edit-log \
-    --exclude data/intermap.txt \
-    --exclude /\*\*/cache  \
-    --exclude .svn \
-    --exclude data/meta \
-    --exclude data/plugin \
+    --exclude-from 'exclude-list.txt' \
     rsync://apb-moin@moin-vm/moin/$PROJECT $MOINDATA
 
