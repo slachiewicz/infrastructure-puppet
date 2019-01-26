@@ -420,7 +420,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'selfserve.apache.org.ssl_access.log'
     error_log_file: 'selfserve.apache.org.ssl_error.log'
     custom_fragment: |
-      Timeout 3600
+      Timeout 14400
       AddHandler cgi-script .cgi
       AddHandler lua-script .lua
       <Directory /var/www/selfserve-portal/site/cgi-bin>
@@ -429,7 +429,7 @@ vhosts_asf::vhosts::vhosts:
         Require all granted
       </Directory>
       # Restrict access to jira,conf,mail to chairs + root.
-      <LocationMatch "^/(cgi-bin|mail|jira|confluence)">
+      <LocationMatch "^/(cgi-bin|mail|jira|confluence|moin)">
         Options +ExecCGI -MultiViews +FollowSymLinks
         AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthName "ASF Members or Project Chairs Only!"
