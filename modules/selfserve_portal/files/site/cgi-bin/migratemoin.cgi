@@ -44,6 +44,8 @@ space = form.getvalue('space', None)
 if not space or not re.match(r"^[A-Z0-9]+$", space):
     sscommon.buggo("Invalid Confluence Space name!")
 
+history = form.getvalue('history', 'false')
+
 moinscript = '%s/run_cmdline.sh' % moinpath
 settingsconf = 'confluenceSettings.properties'
 exporterconf = 'exporter.moinmoin.properties'
@@ -54,7 +56,7 @@ os.chdir(moinpath)
 try:
 
     # copy settings files and append space name
-    subprocess.check_output(['%s/populate-properties.sh %s %s' % (moinpath, moinwiki, space)],shell=True, stderr=subprocess.STDOUT)
+    subprocess.check_output(['%s/populate-properties.sh %s %s %s' % (moinpath, moinwiki, space, history)],shell=True, stderr=subprocess.STDOUT)
 
     # Test auth to Confluence via uwc.
     subprocess.check_output(['%s -t conf/%s' % (moinscript, settingsconf)],shell=True, stderr=subprocess.STDOUT)

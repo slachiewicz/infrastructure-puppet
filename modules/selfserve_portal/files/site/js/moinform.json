@@ -20,7 +20,11 @@
                   "verifier": "spaceExists",
                   "preload": "js/spacekeys.json",
                   "mandatory": true
-              }
+              },
+              "history": {
+                  "desc": "Import all revisions for all pages",
+                  "type": "checkbox"
+             }
           }
       }
   ]
