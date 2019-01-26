@@ -58,9 +58,9 @@ file {
     "${uwc_dir}/populate-properties.sh":
       ensure => present,
       source => 'puppet:///modules/selfserve_portal/populate-properties.sh',
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755';
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
 
 # Required scripts for cronjobs
 
