@@ -1,0 +1,7 @@
+data/event-log
+data/edit-log
+data/intermap.txt
+/\*\*/cache
+.svn
+data/meta
+data/plugin
