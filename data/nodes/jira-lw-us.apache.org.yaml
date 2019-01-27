@@ -31,15 +31,14 @@ apache::default_vhost: false
 apache::mpm_module: 'event'
 
 apache::mod::event::listenbacklog:           '1023'
-apache::mod::event::maxclients:              '750'
 apache::mod::event::maxconnectionsperchild:  '200000'
-apache::mod::event::maxrequestworkers:       '3750'
-apache::mod::event::maxsparethreads:         '750'
+apache::mod::event::maxrequestworkers:       '1250'
+apache::mod::event::maxsparethreads:         '500'
 apache::mod::event::minsparethreads:         '150'
-apache::mod::event::serverlimit:             '25'
-apache::mod::event::startservers:            '5'
+apache::mod::event::serverlimit:             '5'
+apache::mod::event::startservers:            '2'
 apache::mod::event::threadlimit:             '250'
-apache::mod::event::threadsperchild:         '150'
+apache::mod::event::threadsperchild:         '250'
 
 apache::mod::status::allow_from:
       - 'All'
