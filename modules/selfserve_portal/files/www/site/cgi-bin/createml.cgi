@@ -82,7 +82,7 @@ if "digest" in lists:
 # Get and validate mods
 mods = form.getvalue('moderators', "").split("\n")
 for mod in mods:
-    if not re.match(r"^\S+@\S+$", mod):
+    if not re.match(r"^[-_a-zA-Z0-9.]@[-_a-zA-Z0-9.]+$", mod):
         sscommon.buggo("Invalid moderator email (no spaces or commas, please!)")
 
 # Get and validate private option
