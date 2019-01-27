@@ -43,7 +43,7 @@ function get_block(ip)
     local chunks = {}
     local cidr = ''
     local n = 0
-    if ip:match(':') then -- IPv6, split into /64s
+    if ip:match(':') then -- IPv6, split into /64s (grab four first blocks)
         for chunk in ip:gmatch("([a-f0-9]+)") do
             n = n + 1
             if n > 4 then
@@ -52,7 +52,7 @@ function get_block(ip)
             table.insert(chunks, chunk)
         end
         cidr = table.concat(chunks, ':') .. '::/64'
-    elseif ip:match('%.') then -- IPv4, split into /16s
+    elseif ip:match('%.') then -- IPv4, split into /16s (grab two first blocks)
         for chunk in ip:gmatch("([0-9]+)") do
             n = n + 1
             if n > 2 then
@@ -65,11 +65,12 @@ function get_block(ip)
     return cidr
 end
 
--- extrapolate log ID based on time and CIDR
+-- extrapolate log ID based on time and CIDR and timestamp
+-- so that each $INTERVAL second interval has its own log ID per CIDR block.
 function get_log_id(r, cidr)
     local stamp = math.floor(r:clock() / 1000000)
     stamp = stamp - (stamp % INTERVAL) -- round to nearest INTERVAL seconds
-    local logid = cidr .. "-" .. stamp
+    local logid = cidr .. "-" .. stamp -- for instance, "1.2.0.0/16-123456789"
     return logid
 end
 
@@ -89,7 +90,7 @@ function before(r)
         _G.rtime = nil
         return apache2.DONE
     else
-        _G.rtime = r:clock()
+        _G.rtime = r:clock() -- set current timestamp here, fetch in logging phase to calc CPU time
         return apache2.DECLINED
     end
 end
