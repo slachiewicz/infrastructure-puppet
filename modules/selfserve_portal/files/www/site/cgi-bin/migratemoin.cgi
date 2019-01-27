@@ -64,7 +64,7 @@ try:
     ## Todo: At this point update the progress bar to a hard coded 5% for now and feedback that the auth test is complete.
 
     # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
-    subprocess.check_output(['/root/sync-moin-project.sh %s' % moinwiki],shell=True, stderr=subprocess.STDOUT)
+    subprocess.check_output(['%s/sync-moin-project.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
     # Export the moin pages to txt format before converting to Confluence format.
     # Save to a $moinwiki-pages-out directory for processing
