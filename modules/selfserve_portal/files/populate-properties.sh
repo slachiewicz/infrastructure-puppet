@@ -29,3 +29,12 @@ echo "src=$BASEDIR/projects/$PROJECT/data/pages" >> $CONFDIR/exporter.moinmoin.p
 echo "out=$BASEDIR/projects/$PROJECT/data/$PROJECT-pages-out" >> $CONFDIR/exporter.moinmoin.properties
 echo "history=$HISTORY" >> $CONFDIR/exporter.moinmoin.properties
 
+# If history is true then we need to uncomment a couple of converter lines.
+# but lets reset it back to template before deciding.
+/bin/cp $CONFDIR/converter.moinmoin.properties.template $CONFDIR/converter.moinmoin.properties
+
+if [ $HISTORY == true ]; then
+  /bin/sed -i s'|#MoinMoin.0002|MoinMoin.0002|' $CONFDIR/converter.moinmoin.properties
+  /bin/sed -i s'|#MoinMoin.0003|MoinMoin.0003|' $CONFDIR/converter.moinmoin.properties  
+fi
+
