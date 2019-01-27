@@ -32,8 +32,8 @@ Note that this is bound to the respective servers (processes) in httpd,
 so the ServerLimit should not be set high, 1 or 2 preferably.
 ------------------------------------------------------------------------
 ]]--
-local INTERVAL = <%= @interval %> -- Check against the last N seconds of activity
-local CPU_MAX =   <%= @cpumax %> -- Max CPU time allowed, in seconds, in the interval per CIDR block
+local INTERVAL = tonumber('<%= @interval %>') or 120 -- Check against the last N seconds of activity
+local CPU_MAX =  tonumber('<%= @cpumax %>') or 60    -- Max CPU time allowed, in seconds, in the interval per CIDR block
                      -- Note that this is cpu per core, so if INTERVAL is 120, and 8 cores,
                      -- full utilization of the box would be 960
 
