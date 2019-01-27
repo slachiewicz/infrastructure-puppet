@@ -20,6 +20,7 @@ classes:
   - vhosts_asf::vhosts
   - rsync_asf
   - kif
+  - httpd_rate_limiter
 
 rsync_asf::cron_hour: 10
 rsync_asf::cron_minute: 17
@@ -100,6 +101,10 @@ logrotate::rule:
     delaycompress: true
     ifempty: false
     rotate: 52
+
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   120
+httpd_rate_limiter::autoconf: true
 
 kif::httpd_connections: 800
 
