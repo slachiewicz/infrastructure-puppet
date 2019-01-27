@@ -55,7 +55,7 @@ file {
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
-    "{uwc_dir}/conf":
+    "${uwc_dir}/conf":
       ensure => directory,
       owner  => 'root',
       group  => 'www-data',
@@ -85,11 +85,11 @@ file {
       group  => 'root',
       mode   => '0644';
     "${uwc_dir}/conf/confluenceSettings.properties.template":
-      ensure => present,
+      ensure  => present,
       content => template('selfserve_portal/confluenceSettings.properties.template.erb'),
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644';
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644';
     "${uwc_dir}/conf/converter.moinmoin.properties.template":
       ensure => present,
       source => 'puppet:///modules/selfserve_portal/converter.moinmoin.properties.template',
