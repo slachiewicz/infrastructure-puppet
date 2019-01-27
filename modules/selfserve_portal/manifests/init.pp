@@ -1,6 +1,6 @@
 #/etc/puppet/modules/selfserve_portal/manifests/init.pp
 
-# selfserve class for the self service portal - jira,confluence,mail lists, git repo
+# selfserve class for the self service portal - jira,confluence,mail lists, git repo, moin
 class selfserve_portal (
 
   # Below is in tools yaml
@@ -55,6 +55,11 @@ file {
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
+    "{uwc_dir}/conf":
+      ensure => directory,
+      owner  => 'root',
+      group  => 'www-data',
+      mode   => '0775';
     "${uwc_dir}/populate-properties.sh":
       ensure => present,
       source => 'puppet:///modules/selfserve_portal/populate-properties.sh',
@@ -76,6 +81,24 @@ file {
     "${uwc_dir}/exclude-list.txt":
       ensure => present,
       source => 'puppet:///modules/selfserve_portal/exclude-list.txt',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
+    "${uwc_dir}/conf/confluenceSettings.properties.template":
+      ensure => present,
+      content => template('selfserve_portal/confluenceSettings.properties.template.erb'),
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
+    "${uwc_dir}/conf/converter.moinmoin.properties.template":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/converter.moinmoin.properties.template',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
+    "${uwc_dir}/conf/exporter.moinmoin.properties.template":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/exporter.moinmoin.properties.template',
       owner  => 'root',
       group  => 'root',
       mode   => '0644';
