@@ -7,7 +7,7 @@ module Puppet::Parser::Functions
     ldap = function_hiera(['ldapclient::ldapservers', false])
     ldap ||= function_hiera(['ldapserver::slapd_peers', {}]).values.
       map {|name| "#{name}:636"}.join(' ')
-    ldap = 'ldap1-us-west.apache.org:636' if ldap.empty?
+    ldap = 'ldap-us-ro.apache.org:636' if ldap.empty?
 
     vhosts.each do |vhost, config|
       vhosts[vhost] = ApacheVHostMacros.new(vhosts[vhost], ldap).result
