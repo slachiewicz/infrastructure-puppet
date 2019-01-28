@@ -10,6 +10,7 @@ classes:
   - blocky
   - loggy
   - datadog_agent::integrations::apache
+  - httpd_rate_limiter
   - oraclejava::install
   - rsync_asf
   - ssl::name::cwiki_apache_org 
@@ -22,6 +23,10 @@ rsync_asf::cron_minute: 02
 
 rsync_asf::fslist:
   - /x1/cwiki/confluence-data
+
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   60
+httpd_rate_limiter::autoconf: true
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
