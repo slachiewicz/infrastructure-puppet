@@ -22,15 +22,14 @@ apache::timeout: 600
 apache::mpm_module:         'event'
 
 apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
 apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '500'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '150'
-apache::mod::event::serverlimit: '10'
-apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
-apache::mod::event::threadsperchild: '50'
+apache::mod::event::maxrequestworkers: '1000'
+apache::mod::event::maxsparethreads: '500'
+apache::mod::event::minsparethreads: '250'
+apache::mod::event::serverlimit: '5'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '1250'
+apache::mod::event::threadsperchild: '250'
 
 # cwiki_asf class variables.
 cwiki_asf::confluence_version: '5.8.17'
