@@ -18,6 +18,11 @@ classes:
   - vhosts_asf::vhosts
   - zmanda_asf::client
 
+base::basepackages:
+ - 'lua5.2'
+ - 'liblua5.2-dev'
+ - 'mod-lua-asf'
+
 rsync_asf::cron_hour: 16
 rsync_asf::cron_minute: 02
 

@@ -10,6 +10,12 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
+
+base::basepackages:
+ - 'lua5.2'
+ - 'liblua5.2-dev'
+ - 'mod-lua-asf'
+ 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
 apache::timeout: 600
