@@ -6,6 +6,7 @@
 class httpd_rate_limiter (
   $interval                 = '120',
   $cpumax                   = '60',
+  $whitelist                = '',
   $autoconf                 = false,
 ){
 

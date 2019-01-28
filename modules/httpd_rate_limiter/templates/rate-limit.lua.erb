@@ -36,6 +36,7 @@ local INTERVAL = tonumber('<%= @interval %>') or 120 -- Check against the last N
 local CPU_MAX =  tonumber('<%= @cpumax %>') or 60    -- Max CPU time allowed, in seconds, in the interval per CIDR block
                      -- Note that this is cpu per core, so if INTERVAL is 120, and 8 cores,
                      -- full utilization of the box would be 960
+local whilelist = "<%= @whitelist %>"
 
 -- quick'n'dirty way of getting the base block,
 -- either /16 for IPv4 or /64 for IPv6
@@ -79,6 +80,15 @@ end
 function before(r)
     local cidr = get_block(r.useragent_ip)
     local logid = get_log_id(r, cidr)
+    
+    -- If the URI is whitelisted, ignore counting
+    for uri in whitelist:gmatch("%S+") do
+        if r.unparsed_uri:match(uri) then
+            _G.rtime = nil
+            return apache2.DECLINED
+        end
+    end
+    
     local cputime = r:ivm_get(logid)
     if cputime and cputime > (CPU_MAX * 1000000) then -- if abusive, BAIL
         if not r:ivm_get(logid .. "-error") then -- log once, only once
