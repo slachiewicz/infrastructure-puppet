@@ -30,6 +30,7 @@
                     "users": "users",
                     "issues": "issues",
                     "notifications": "notifications",
+                    "announce": "announce",
                     "security": "security (will be PRIVATE)"
                   },
                   "mandatory": false
