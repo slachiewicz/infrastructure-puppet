@@ -24,6 +24,14 @@ import requests
 import smtplib
 from email.mime.text import MIMEText
 
+try:
+    from email.utils import make_msgid
+    from email.utils import formatdate
+except ImportError:
+    # Prior to Python 2.5, the email module used different names:
+    from email.Utils import make_msgid
+    from email.Utils import formatdate
+
 # LDAP settings
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("/x1/gitbox/matt/tools/grouper.cfg")
@@ -248,6 +256,8 @@ def main():
                     if pmc == 'infrastructure':
                         pmc = 'infra' # hack hack hack
                     msg['To'] = "users@infra.apache.org, private@%s.apache.org" % pmc
+                    msg['Date'] = formatdate()
+                    msg['Message-ID'] = make_msgid()
 
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", ["private@infra.apache.org", "private@%s.apache.org" % pmc], msg.as_string())
@@ -268,6 +278,9 @@ def main():
                     msg['From'] = "git@apache.org"
                     msg['Reply-To'] = "private@infra.apache.org"
                     msg['To'] = "private@infra.apache.org"
+                    msg['Date'] = formatdate()
+                    msg['Message-ID'] = make_msgid()
+
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", "private@infra.apache.org", msg.as_string())
                     s.quit()
