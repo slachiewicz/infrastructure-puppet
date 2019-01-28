@@ -47,9 +47,10 @@ cwiki_asf::heap_min_size: '1512'
 cwiki_asf::heap_max_size: '2024'
 cwiki_asf::maxmetaspacesize: '512'
 
-httpd_rate_limiter::interval: 120
-httpd_rate_limiter::cpumax:   60
-httpd_rate_limiter::autoconf: true
+httpd_rate_limiter::interval:  120
+httpd_rate_limiter::cpumax:    60
+httpd_rate_limiter::autoconf:  true
+httpd_rate_limiter::whitelist: "^/confluence/synchrony-proxy/"
 
 logrotate::rule:
   apache2:
