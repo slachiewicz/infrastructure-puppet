@@ -8,6 +8,7 @@ class httpd_rate_limiter (
   $cpumax                   = '60',
   $whitelist                = '',
   $autoconf                 = false,
+  $asfilter                 = false,
 ){
 
   # Make sure we are using httpd here
@@ -28,11 +29,20 @@ class httpd_rate_limiter (
           apache::mod { 'lua': }
       }
       # Add global rate-limit conf
-      apache::custom_config {
-        'rate-limit':
-          ensure   => present,
-          filename => 'rate-limit.conf',
-          content  => template('httpd_rate_limiter/rate-limit.conf.erb'),
+      if $asfilter {
+        apache::custom_config {
+          'rate-limit':
+            ensure   => present,
+            filename => 'rate-limit.conf',
+            content  => template('httpd_rate_limiter/rate-limit-asfilter.conf.erb'),
+        }
+      } else {
+        apache::custom_config {
+          'rate-limit':
+            ensure   => present,
+            filename => 'rate-limit.conf',
+            content  => template('httpd_rate_limiter/rate-limit.conf.erb'),
+        }
       }
     }
   }
