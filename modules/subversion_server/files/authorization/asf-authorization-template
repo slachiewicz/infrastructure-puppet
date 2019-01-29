@@ -689,7 +689,7 @@ projects_role = rw
 @committers = rw
 
 # migrated to git
-[/commons/proper/]
+[/commons/proper]
 @commons-pmc = rw
 * = r
 
