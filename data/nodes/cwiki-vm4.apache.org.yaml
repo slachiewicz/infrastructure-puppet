@@ -30,7 +30,7 @@ rsync_asf::fslist:
   - /x1/cwiki/confluence-data
 
 httpd_rate_limiter::interval:  180
-httpd_rate_limiter::cpumax:    200
+httpd_rate_limiter::cpumax:    90
 httpd_rate_limiter::autoconf:  true
 httpd_rate_limiter::asfilter:  true
 httpd_rate_limiter::whitelist: "^/confluence/synchrony%-proxy/ ^/synchrony/"
