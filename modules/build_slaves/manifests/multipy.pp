@@ -14,7 +14,7 @@ class build_slaves::multipy (
   ~> package {
       $required_packages:
         ensure  => 'latest',
-        require => Class[[apt::update], [apt::ppa]],
+        require => Class[apt::update],
   }
 }
 
