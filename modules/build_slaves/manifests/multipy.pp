@@ -11,9 +11,10 @@ class build_slaves::multipy (
   apt::ppa { 'ppa:deadsnakes/ppa':
     ensure => present,
   }
-  -> package {
+  ~> package {
       $required_packages:
-        ensure => 'latest',
+        ensure  => 'latest',
+        require => Class[[apt::update], [apt::ppa]],
   }
 }
 
