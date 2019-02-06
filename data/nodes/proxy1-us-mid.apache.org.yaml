@@ -66,7 +66,7 @@ fail2ban_asf::config::filters:
     filterfailregex: |
       <HOST> spammed Aardvark
 
-httpd_rate_limiter::autoconfig: true
+httpd_rate_limiter::autoconf: true
 httpd_rate_limiter::asfilter: true
 httpd_rate_limiter::interval: 180
 httpd_rate_limiter::cpumax: 45
