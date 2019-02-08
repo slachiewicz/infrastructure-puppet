@@ -316,6 +316,7 @@ def main():
     if m:
         project = m.group(1)
     mailto = gconf.get('apache', 'dev') if gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
+    mailto = mailto.replace(".git", "") # mitigate migration bugs for now
     commitml = gconf.get('hooks.asfgit', 'recips') # commit ML for PR diffs    
     # Debug override if testing
     if DEBUG_MAIL_TO:
