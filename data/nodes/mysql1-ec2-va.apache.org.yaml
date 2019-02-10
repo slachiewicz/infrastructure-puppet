@@ -83,3 +83,7 @@ mysql::server::databases:
     ensure: 'present'
     charset: 'utf8'
     collate: 'utf8_bin'
+  crowd:
+    ensure: 'present'
+    charset: 'utf8'
+    collate: 'utf8_bin'
