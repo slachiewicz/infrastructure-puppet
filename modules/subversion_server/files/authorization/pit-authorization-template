@@ -646,6 +646,10 @@ whimsysvn = r
 @member = rw
 @pmc-chairs = rw
 
+# For reading badrcptto files (WHIMSY-236)
+[/infrastructure/trunk/qmail/control]
+whimsysvn = r
+
 [/infrastructure/trunk/tlpreq]
 mostarda = rw
 
