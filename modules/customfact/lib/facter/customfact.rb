@@ -88,17 +88,17 @@ Facter.add("dd_autotag_colo") do
     # make the call to ip-api to get 'org' for external_ip_api_url
     response = Net::HTTP.get(external_ip_api_url)
     json_response = JSON.parse(response)
-    dc_org = json_response["org"].downcase
+    dc_loc = json_response["isp"].downcase
     dc_country = json_response["country"].downcase
     #itterate through json_response and assign yaml from ../data/colo dir
     case
-      when dc_org.include?('amazon')
+      when dc_loc.include?('amazon')
         "aws"
-      when dc_org.include?('google')
+      when dc_loc.include?('google')
         "google"
-      when dc_org.include?('hetzner')
+      when dc_loc.include?('hetzner')
         "hetzner"
-      when dc_org.include?('leaseweb')
+      when dc_loc.include?('leaseweb')
         # split out hosts based on geolocation
         case
           when dc_country == "netherlands"
@@ -106,20 +106,20 @@ Facter.add("dd_autotag_colo") do
           when dc_country == "united states"
             "leaseweb_us"
           end
-      when dc_org.include?('microsoft azure')
+      when dc_loc.include?('microsoft azure')
         "azure"
-      when dc_org.include?('network for education')
+      when dc_loc.include?('network for education')
         "osu"
-      when dc_org.include?('online sas')
+      when dc_loc.include?('online sas')
         "online.net"
-      when dc_org.include?('rackspace')
+      when dc_loc.include?('rackspace')
         "rackspace"
-      when dc_org.include?('secured servers')
+      when dc_loc.include?('secured servers')
         "pnap"
-      when dc_org.include?('yahoo')
+      when dc_loc.include?('yahoo')
         "yahoo"
       else
-        "default"
+        dc_loc
     end
   end
 end
