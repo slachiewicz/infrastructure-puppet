@@ -48,10 +48,9 @@ asf999::create_user::keycontent: |
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
-#asf999_windows::create_user::user: 'asf999_windows'
-#asf999_windows::create_user::groups:
-#  - 'Users'
-#  - 'Administrators'
+datadog_agent::tags:
+  - 'puppet_version:%{puppetversion}'
+  - 'dc:%{dd_autotag_colo}'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
