@@ -39,6 +39,12 @@ rsync::server::module:
     auth_users: 'apb-bil'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  bugzilla:
+    path: '/x1/backups/bugzilla/./target/'
+    hosts_allow: '127.0.0.1 148.251.237.210'
+    auth_users: 'apb-bz'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   eir:
     path: '/x1/backups/eir/./target/'
     hosts_allow: '127.0.0.1 140.211.11.115'
