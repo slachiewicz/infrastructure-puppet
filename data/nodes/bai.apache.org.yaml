@@ -42,7 +42,7 @@ rsync::server::module:
   bz-he-de:
     path: '/x1/backups/bz-he-de/./target/'
     hosts_allow: '127.0.0.1 148.251.237.210'
-    auth_users: 'apb-bz'
+    auth_users: 'apb-bz-he-de'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
   eir:
