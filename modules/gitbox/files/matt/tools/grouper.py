@@ -308,7 +308,7 @@ for repo in allrepos:
     m = re.match(r"(?:incubator-)?(empire-db|[^-.]+)(?:.*\.git)", repo)
     if m:  # don't see why this would fail, but best to be sure
         project = m.group(1)
-        if not project in MATT_PROJECTS:
+        if not project in MATT_PROJECTS and not project in ['apache']: # disallow 'apache' et al as group name.
             MATT_PROJECTS[project] = "tlp" if not re.match(
                 r"incubator-", repo) else "podling"  # distinguish between tlp and podling
 
