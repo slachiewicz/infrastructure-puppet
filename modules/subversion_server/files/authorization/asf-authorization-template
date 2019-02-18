@@ -1568,6 +1568,8 @@ svn-site-role = rw
 
 [/openoffice]
 @openoffice = rw
+
+[/openoffice/pmc]
 * =
 
 [/openwebbeans]
