@@ -158,7 +158,7 @@ def getActivity():
             }
             table += """
     <tr>
-        <td><a href="/repos/asf/?p=%s.git">%s.git</a></td>
+        <td><a href="/repos/asf/%s.git">%s.git</a></td>
         <td>%s</td>
         <td>%s</td>
         <td>
