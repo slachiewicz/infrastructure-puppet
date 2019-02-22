@@ -1,5 +1,5 @@
 require 'ipaddr'
-require 'net/http'
+require 'open-uri'
 require 'json'
 
 Facter.add("asfosrelease") do
@@ -86,7 +86,7 @@ Facter.add("dd_autotag_colo") do
     # should get local external IP from ip-api.com, no need for fqdn
     external_ip_api_url = URI('http://ip-api.com/json/')
     # make the call to ip-api to get 'org' for external_ip_api_url
-    response = Net::HTTP.get(external_ip_api_url)
+    response = open(external_ip_api_url).read
     json_response = JSON.parse(response)
     dc_loc = json_response["isp"].downcase
     dc_country = json_response["country"].downcase
