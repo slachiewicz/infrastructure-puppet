@@ -47,7 +47,29 @@ apache::mod::geoip::db_file:
 apache::mod::ssl::ssl_cipher: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256'
 apache::mod::ssl::ssl_protocol: ['all', '-SSLv2', '-SSLv3', '-TLSv1', '-TLSv1.1']
 
-
+apache::log_formats:
+  combined: '<%%JSON:httpd_access%%> {
+    \"time\": \"%%{HIERA}{%Y-%m-%dT%H:%M:%S%z}t\",
+    \"clientip\": \"%a\",
+    \"duration\": %D,
+    \"status\": %>s,
+    \"request\": \"%U%q\",
+    \"uri\": \"%U\",
+    \"remote_user\": \"%u\",
+    \"query_string\": \"%q\",
+    \"document\": \"%f\",
+    \"bytes\": %B,
+    \"request_method\": \"%m\",
+    \"referer\": \"%%{HIERA}{Referer}i\",
+    \"useragent\": \"%%{HIERA}{User-agent}i\",
+    \"vhost\": \"%%{HIERA}{Host}i\",
+    \"geo_country\": \"%%{HIERA}{GEOIP_COUNTRY_CODE}n\",
+    \"geo_long\": \"%%{HIERA}{GEOIP_LONGITUDE}n\",
+    \"geo_lat\": \"%%{HIERA}{GEOIP_LATITUDE}n\",
+    \"geo_coords\": \"%%{HIERA}{GEOIP_LATITUDE}n,%%{HIERA}{GEOIP_LONGITUDE}n\",
+    \"geo_city\": \"%%{HIERA}{GEOIP_CITY}n\",
+    \"geo_combo\": \"%%{HIERA}{GEOIP_CITY}n, %%{HIERA}{GEOIP_COUNTRY_NAME}n\"
+    }'
 
 apache::trace_enable: Off
 
