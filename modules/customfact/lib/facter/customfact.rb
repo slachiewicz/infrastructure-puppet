@@ -106,11 +106,11 @@ Facter.add("dd_autotag_colo") do
           when dc_country == "united states"
             "leaseweb_us"
           end
-      when dc_loc.include?('microsoft azure')
+      when dc_loc.include?('microsoft_corporation')
         "azure"
-      when dc_loc.include?('network for education')
+      when dc_loc.include?('network_education_and_research_in_oregon_nero')
         "osu"
-      when dc_loc.include?('online sas')
+      when dc_loc.include?('online')
         "online.net"
       when dc_loc.include?('rackspace')
         "rackspace"
