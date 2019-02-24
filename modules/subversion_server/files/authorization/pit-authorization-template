@@ -964,6 +964,9 @@ openejb-tck = r
 [/pmc/juddi]
 @juddi-pmc = rw
 
+[/pmc/jspwiki]
+@jspwiki-pmc = rw
+
 [/pmc/kibble]
 @kibble-pmc = rw
 
