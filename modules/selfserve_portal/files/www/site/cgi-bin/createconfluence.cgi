@@ -147,5 +147,5 @@ except subprocess.CalledProcessError as err:
         f.write(err.output)
         f.close()
 
-    sscommon.slack("A new Confluence space, <kbd><a href='https://cwiki.apache.org/confluence/display/%s'>https://cwiki.apache.org/confluence/display/%s</a></kbd>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (space, requser, uid))
+    sscommon.slack("A new Confluence space, <https://cwiki.apache.org/confluence/display/%s>, was attempted created as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (space, requser, uid))
     print("Status: 500 Creation failed\r\n\r\n<h2>Confluence Space creation failed!</h2><pre>Creation of the CONFLUENCE Space may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
