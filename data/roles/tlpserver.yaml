@@ -54,7 +54,7 @@ apache::mod::dir::indexes:
 
 apache::mod::event::listenbacklog:           '1023'
 apache::mod::event::maxclients:              '2500'
-apache::mod::event::maxconnectionsperchild:  '500000'
+apache::mod::event::maxconnectionsperchild:  '2500000'
 apache::mod::event::maxrequestworkers:       '2500'
 apache::mod::event::maxsparethreads:         '1000'
 apache::mod::event::minsparethreads:         '500'
