@@ -40,7 +40,6 @@
 
 
                 <div id="searchAgain">
-                    <p>$text.get( "macro.weblog.searchdictionary", [$model.term, $model.term, $model.term] )</p>
                     <p>$text.get( "macro.weblog.searchhits", [$model.hits])</p>
                     <form method="get" action="$url.search" style="margin: 5px">
 
