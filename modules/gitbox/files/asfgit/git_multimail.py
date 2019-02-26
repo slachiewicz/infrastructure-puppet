@@ -1289,11 +1289,15 @@ class ReferenceChange(Change):
 
     def __init__(self, environment, refname, short_refname, old, new, rev):
         Change.__init__(self, environment)
-        self.change_type = {
-            (False, True): 'create',
-            (True, True): 'update',
-            (True, False): 'delete',
-            }[bool(old), bool(new)]
+        if old:
+            if new:
+                self.change_type = 'update'
+            else:
+                self.change_type = 'delete'
+        elif new:
+            self.change_type = 'create'
+        else:
+            self.change_type = 'UNKNOWN'
         self.refname = refname
         self.short_refname = short_refname
         self.old = old
