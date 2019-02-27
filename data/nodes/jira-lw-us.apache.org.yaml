@@ -103,7 +103,7 @@ logrotate::rule:
     rotate: 52
 
 httpd_rate_limiter::interval: 120
-httpd_rate_limiter::cpumax:   96
+httpd_rate_limiter::cpumax:   60
 httpd_rate_limiter::autoconf: true
 httpd_rate_limiter::asfilter: true
 
