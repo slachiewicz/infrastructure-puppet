@@ -67,6 +67,8 @@ apache::mod::event::threadsperchild:         '250'
 ## handshake: 5 seconds to do TLS shake (not available yet!)
 ## header: between 5 and 10 seconds for headers, adjust if data comes in
 ## body: 4-10 secs for body, though we generally don't use it on www.a.o
+## For all, each 500 bytes received adds one second of allowed time, up
+## to the max limit (10 seconds)
 apache::mod::reqtimeout::timeouts:            ['header=5-10,MinRate=500', 'body=4-10,MinRate=500']
 
 apache::mod::status::allow_from:
