@@ -53,15 +53,15 @@ apache::mod::dir::indexes:
   - 'index.xhtml'
 
 apache::mod::event::listenbacklog:           '1023'
-apache::mod::event::maxclients:              '2500'
+apache::mod::event::maxclients:              '5000'
 apache::mod::event::maxconnectionsperchild:  '2500000'
-apache::mod::event::maxrequestworkers:       '2500'
-apache::mod::event::maxsparethreads:         '1000'
+apache::mod::event::maxrequestworkers:       '5000'
+apache::mod::event::maxsparethreads:         '1500'
 apache::mod::event::minsparethreads:         '500'
-apache::mod::event::serverlimit:             '30'
+apache::mod::event::serverlimit:             '20'
 apache::mod::event::startservers:            '5'
-apache::mod::event::threadlimit:             '3000'
-apache::mod::event::threadsperchild:         '100'
+apache::mod::event::threadlimit:             '5000'
+apache::mod::event::threadsperchild:         '250'
 apache::mod::status::allow_from:
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
