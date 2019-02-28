@@ -62,6 +62,13 @@ apache::mod::event::serverlimit:             '20'
 apache::mod::event::startservers:            '5'
 apache::mod::event::threadlimit:             '5000'
 apache::mod::event::threadsperchild:         '250'
+
+# Request timeouts:
+## handshake: 5 seconds to do TLS shake (not available yet!)
+## header: between 5 and 10 seconds for headers, adjust if data comes in
+## body: 4-10 secs for body, though we generally don't use it on www.a.o
+apache::mod::reqtimeout::timeouts:            ['header=5-10,MinRate=500', 'body=4-10,MinRate=500']
+
 apache::mod::status::allow_from:
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
