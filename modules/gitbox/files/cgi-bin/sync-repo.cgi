@@ -154,6 +154,8 @@ elif 'repository' in data and 'name' in data['repository']:
         for commit in data['commits']:
             if commit['distinct'] and not ('Merge pull request' in commit['message'] and commit == data['commits'][-1]):
                 force_diff = True
+    if data.get('created'):
+        force_diff = False # disable forced diff on new branches
     repopath = "/x1/repos/asf/%s.git" % reponame
 
     # Make sure we know which section this repo belongs to.
