@@ -98,6 +98,8 @@ vhosts_asf::modules::modules:
     name: 'sed'
   cgi:
     name: 'cgi'
+  lua:
+    name: 'lua'
 
 gitbox::custom_fragment_80: |
       <Directory /x1/git/htdocs>
@@ -108,6 +110,9 @@ gitbox::custom_fragment_80: |
 gitbox::custom_fragment_443: |
       ServerName gitbox.apache.org
       Timeout 1200
+      LuaScope conn
+      LuaQuickHandler /var/www/rate-limit.lua before
+      LuaHookLog /var/www/rate-limit.lua after
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
       SetEnv ASFGIT_ADMIN /x1/gitbox/
       SetEnv WRITE_LOCK /etc/nocommit
