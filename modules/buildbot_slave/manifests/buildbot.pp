@@ -69,7 +69,9 @@ class buildbot_slave::buildbot (
     'openjdk-jdk-10.0.2',
     'openjdk-12-ea+18',
     'openjdk-12-ea+28',
+    'openjdk-12-ea+33',
     'openjdk-13-ea+4',
+    'openjdk-13-ea+9',
 ],
   $tools = [
     'ant',
@@ -199,10 +201,10 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest12':
     ensure => link,
-    target => '/usr/local/asfpackages/java/openjdk-12-ea+28',
+    target => '/usr/local/asfpackages/java/openjdk-12-ea+33',
   }
   file { '/home/buildslave/slave/tools/java/latest13':
     ensure => link,
-    target => '/usr/local/asfpackages/java/openjdk-13-ea+4',
+    target => '/usr/local/asfpackages/java/openjdk-13-ea+9',
   }
 }
