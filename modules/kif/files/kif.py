@@ -376,7 +376,7 @@ def run_actions(config, actions):
         email_actions = ""
         
         for action in actions:
-            triggered += 1
+            triggered_total += 1
             print("Following triggers were detected:")
             print("- %s" % action['trigger'])
             if action.get('notify', 'email') == 'email':
