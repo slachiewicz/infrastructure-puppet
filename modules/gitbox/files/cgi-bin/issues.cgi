@@ -351,7 +351,7 @@ def main():
 
     # Send email if applicable
     if fmt:
-      fmt['repo'] = repo
+        fmt['repo'] = repo
         # EZT needs these to be defined
         for el in ['filename','diff', 'prdiff']:
             if not el in fmt:
