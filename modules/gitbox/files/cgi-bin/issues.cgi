@@ -202,7 +202,7 @@ def formatMessage(fmt, template = 'template.ezt'):
     output = template.generate(fp, fmt)
     body = fp.getvalue()
     return {
-        'subject': "[GitHub] %s" % fmt['subject'], # Append [GitHub] for mail filters
+        'subject': "[GitHub] [%s] %s" % (fmt['repo'], fmt['subject']), # Append [GitHub] for mail filters
         'message': body
     }
 
@@ -351,6 +351,7 @@ def main():
 
     # Send email if applicable
     if fmt:
+      fmt['repo'] = repo
         # EZT needs these to be defined
         for el in ['filename','diff', 'prdiff']:
             if not el in fmt:
