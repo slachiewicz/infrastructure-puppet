@@ -172,6 +172,7 @@ gitbox::custom_fragment_443: |
       </Directory>
       # Perms for gitweb
       <Directory /usr/lib/cgi-bin>
+          AllowOverride FileInfo
           require all granted
           Options ExecCGI FollowSymlinks
           SetHandler perl-script
