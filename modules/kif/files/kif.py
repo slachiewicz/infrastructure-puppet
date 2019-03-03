@@ -420,7 +420,7 @@ def run_actions(config, actions):
         if 'notifications' in config and 'email' in config['notifications']:
             ecfg = config['notifications']['email']
             if 'rcpt' in ecfg and 'from' in ecfg:
-                subject = "[KIF] %s: triggered %u events" % (ME, len(action['runlist']) + len(action['kills'].items()))
+                subject = "[KIF] events triggered" % (ME, len(action['runlist']) + len(action['kills'].items()))
                 msg = TEMPLATE_EMAIL % (ME, email_triggers, email_actions)
                 notifyEmail(ecfg['from'], ecfg['rcpt'], subject, msg)
 
