@@ -58,7 +58,16 @@ rules:
             maxlocalconns:  <%= @httpd_connections %>
         runlist:
             - 'service apache2 restart'
-
+    gitwebzombies:
+        description:    'Any gitweb process caught in zombie mode'
+        procid:         '/usr/bin/git'
+        triggers:
+            # This can be any process state (zombie, sleeping, running, etc)
+            # Or a git process > 30 minutes old.
+            state:      'zombie'
+            maxage:      30m
+        kill:           true
+        killwith: 9
 notifications:
     hipchat:
         room:  '2651110'
