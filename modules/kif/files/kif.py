@@ -371,56 +371,66 @@ def run_actions(config, actions):
 
         goods = 0
         bads = 0
+        triggered_total = 0
         email_triggers = ""
         email_actions = ""
         
         for action in actions:
-
+            triggered += 1
             print("Following triggers were detected:")
             print("- %s" % action['trigger'])
-            email_triggers += "- %s\n" % action['trigger']
+            if action.get('notify', 'email') == 'email':
+                email_triggers += "- %s\n" % action['trigger']
             print("Running triggered commands:")
             rloutput = ""
             for item in action['runlist']:
                 print("- %s" % item)
                 rloutput += "- %s" % item
-                email_actions += "- %s" % item
+                if action.get('notify', 'email') == 'email':
+                    email_actions += "- %s" % item
                 try:
                     if not args.debug:
                         subprocess.check_output(item, shell = True, stderr=subprocess.STDOUT)
                         rloutput += " (success)"
-                        email_actions += " (success)"
+                        if action.get('notify', 'email') == 'email':
+                            email_actions += " (success)"
                     else:
                         print("(disabled due to --debug flag)")
                         rloutput += " (disabled due to --debug)"
-                        email_actions += " (disabled due to --debug)"
+                        if action.get('notify', 'email') == 'email':
+                            email_actions += " (disabled due to --debug)"
                     goods += 1
                 except subprocess.CalledProcessError as e:
                     print("command failed: %s" % e.output)
                     rloutput += " (failed!: %s)" % e.output
-                    email_actions += " (failed!: %s)" % e.output
+                    if action.get('notify', 'email') == 'email':
+                        email_actions += " (failed!: %s)" % e.output
                     bads += 1
                 rloutput += "\n"
-                email_actions += "\n"
+                if action.get('notify', 'email') == 'email':
+                    email_actions += "\n"
             for pid, sig in action['kills'].items():
                 print("- KILL PID %u with sig %u" % (pid, sig))
                 rloutput += "- KILL PID %u with sig %u" % (pid, sig)
-                email_actions += "- KILL PID %u with sig %u" % (pid, sig)
+                if action.get('notify', 'email') == 'email':
+                    email_actions += "- KILL PID %u with sig %u" % (pid, sig)
                 if not args.debug:
                     os.kill(pid, sig)
                 else:
                     print(" (disabled due to --debug flag)")
                     rloutput += " (disabled due to --debug flag)"
-                    email_actions += " (disabled due to --debug flag)"
+                    if action.get('notify', 'email') == 'email':
+                        email_actions += " (disabled due to --debug flag)"
                 rloutput += "\n"
-                email_actions += "\n"
+                if action.get('notify', 'email') == 'email':
+                    email_actions += "\n"
                 goods += 1
             print("%u calls succeeded, %u failed." % (goods, bads))
 
-        if 'notifications' in config and 'email' in config['notifications']:
+        if email_actions and 'notifications' in config and 'email' in config['notifications']:
             ecfg = config['notifications']['email']
             if 'rcpt' in ecfg and 'from' in ecfg:
-                subject = "[KIF] events triggered" 
+                subject = "[KIF] events triggered on %s"  % ME
                 msg = TEMPLATE_EMAIL % (ME, email_triggers, email_actions)
                 notifyEmail(ecfg['from'], ecfg['rcpt'], subject, msg)
 
