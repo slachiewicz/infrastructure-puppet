@@ -379,50 +379,50 @@ def run_actions(config, actions):
             triggered_total += 1
             print("Following triggers were detected:")
             print("- %s" % action['trigger'])
-            if action.get('notify', 'email') == 'email':
+            if action.get('notify', 'email') in [None, 'email']:
                 email_triggers += "- %s\n" % action['trigger']
             print("Running triggered commands:")
             rloutput = ""
             for item in action['runlist']:
                 print("- %s" % item)
                 rloutput += "- %s" % item
-                if action.get('notify', 'email') == 'email':
+                if action.get('notify', 'email') in [None, 'email']:
                     email_actions += "- %s" % item
                 try:
                     if not args.debug:
                         subprocess.check_output(item, shell = True, stderr=subprocess.STDOUT)
                         rloutput += " (success)"
-                        if action.get('notify', 'email') == 'email':
+                        if action.get('notify', 'email') in [None, 'email']:
                             email_actions += " (success)"
                     else:
                         print("(disabled due to --debug flag)")
                         rloutput += " (disabled due to --debug)"
-                        if action.get('notify', 'email') == 'email':
+                        if action.get('notify', 'email') in [None, 'email']:
                             email_actions += " (disabled due to --debug)"
                     goods += 1
                 except subprocess.CalledProcessError as e:
                     print("command failed: %s" % e.output)
                     rloutput += " (failed!: %s)" % e.output
-                    if action.get('notify', 'email') == 'email':
+                    if action.get('notify', 'email') in [None, 'email']:
                         email_actions += " (failed!: %s)" % e.output
                     bads += 1
                 rloutput += "\n"
-                if action.get('notify', 'email') == 'email':
+                if action.get('notify', 'email') in [None, 'email']:
                     email_actions += "\n"
             for pid, sig in action['kills'].items():
                 print("- KILL PID %u with sig %u" % (pid, sig))
                 rloutput += "- KILL PID %u with sig %u" % (pid, sig)
-                if action.get('notify', 'email') == 'email':
+                if action.get('notify', 'email') in [None, 'email']:
                     email_actions += "- KILL PID %u with sig %u" % (pid, sig)
                 if not args.debug:
                     os.kill(pid, sig)
                 else:
                     print(" (disabled due to --debug flag)")
                     rloutput += " (disabled due to --debug flag)"
-                    if action.get('notify', 'email') == 'email':
+                    if action.get('notify', 'email') in [None, 'email']:
                         email_actions += " (disabled due to --debug flag)"
                 rloutput += "\n"
-                if action.get('notify', 'email') == 'email':
+                if action.get('notify', 'email') in [None, 'email']:
                     email_actions += "\n"
                 goods += 1
             print("%u calls succeeded, %u failed." % (goods, bads))
