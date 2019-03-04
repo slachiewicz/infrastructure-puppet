@@ -26,6 +26,14 @@ postfix::dbfile:
   transport_maps:
     content: |
       testing10@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-accept-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-archive@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-digest-owner@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-digest-return-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-owner@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-reject-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      testing10-return-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
       localgnome@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025      
