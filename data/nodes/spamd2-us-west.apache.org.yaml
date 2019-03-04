@@ -35,6 +35,7 @@ postfix::dbfile:
       testing10-reject-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
       testing10-return-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
       localgnome@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
+      infratest.apache.org    smtp:[hermes-vm2.apache.org]:2025
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025    
       apachecon.com           smtp:[hermes.apache.org]:2025
