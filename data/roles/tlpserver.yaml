@@ -110,16 +110,14 @@ logrotate::rule:
     name: 'tlp_web_logs'
     path: '/x1/logs/*.log'
     ensure: 'present'
-    compress: true
-    compressoptions: '-9'
-    rotate: 7
+    compress: false
+    rotate: 2
     create_owner: 'root'
     create_group: 'adm'
     rotate_every: 'day'
     create_mode: '0644'
     missingok: true
     dateext: true
-    delaycompress: false
     ifempty: false
     create: true
     sharedscripts: true
