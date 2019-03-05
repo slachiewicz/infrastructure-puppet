@@ -10,16 +10,7 @@ import string
 import sys
 
 # include common path variables
-# File does not (yet) exist, so define APMAIL_HOME below
-# execfile("common.conf")
-
-# Location of apmail installation
-# Expected to contain the following directories:
-# lists/ - this contains the ezmlm lists
-# subreq/ - contains subscription requests in json files
-# unsubreq/ - contains unsubscription requests
-
-APMAIL_HOME = '/home/apmail'
+execfile("common.conf")
 
 from collections import namedtuple
 Entry = namedtuple('Entry', 'listkey availid listaddr')
