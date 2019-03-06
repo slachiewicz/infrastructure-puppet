@@ -18,31 +18,33 @@ Entry = namedtuple('Entry', 'listkey availid listaddr')
 PROGNAME = os.path.basename(sys.argv[0])
 logging.getLogger().name = sys.argv[0]
 
-SVN_CONFIG_DIR = 'APMAIL_HOME/.subversion2'
+SVN_CONFIG_DIR = os.path.join(APMAIL_HOME, '.subversion2')
 
-BASEDIR = 'APMAIL_HOME/lists'
+BASEDIR = os.path.join(APMAIL_HOME, 'lists')
 
 class Hooks:
     @staticmethod
-    def welcome(entry):
+    def welcome(entry, op):
         listkey, availid = entry.listkey, entry.availid
         if 'security' not in listkey and 'trademarks' not in listkey:
             return # DECLINED
         try:
             stdin = tempfile.SpooledTemporaryFile()
             if op == 'sub':
+                subject = "Welcome %s@!" % availid
                 stdin.write('Welcome %s@!\n'
                             '\n'
                             'You are now subscribed to the privately-archived %s@ mailing list!\n'
                             % (availid, listkey))
             else:
-                stdin.write('Welcome %s@!\n'
+                subject = "Goodbye to %s@!" % availid
+                stdin.write('Goodbye to %s@!\n'
                             '\n'
                             'You are now unsubscribed from the privately-archived %s@ mailing list!\n'
                             % (availid, listkey))
             stdin.flush()
             stdin.seek(0)
-            subprocess.check_call(['mail', '-s', "Welcome %s@!" % availid,
+            subprocess.check_call(['mail', '-s', subject,
                                    entry.listaddr],
                                   stdin=stdin)
         except Exception as e:
@@ -101,10 +103,10 @@ def process_entry(fn, op):
                open(os.path.join(listdir, 'outhost')).read().rstrip()
     return Entry(listkey=listkey, availid=availid, listaddr=listaddr)
 
-def run_hooks(entry, hooks):
+def run_hooks(entry, hooks, op):
     for hook in hooks:
         try:
-            hook(entry)
+            hook(entry, op)
         except Exception as e:
             # Violation of hook API.
             logging.error("Hook raised an exception: "
@@ -113,7 +115,7 @@ def run_hooks(entry, hooks):
                           type(e).__name__, e)
 
 def main(op):
-    os.chdir('APMAIL_HOME/' + op + 'req')
+    os.chdir(os.path.join(APMAIL_HOME, op + 'req'))
     success = set()
     for fn in sys.argv[1:] or glob.glob('*.json'):
         try:
@@ -124,7 +126,7 @@ def main(op):
             subprocess.check_call(['svn', 'rm', '--quiet', '--', fn])
             success.add(entry)
     for entry in success:
-        run_hooks(entry, HOOKS)
+        run_hooks(entry, HOOKS, op)
     mop = '+=' if op != 'unsub' else '-='
     subprocess.check_call([
         'svn', 'commit', '--quiet', '--config-dir', SVN_CONFIG_DIR,
