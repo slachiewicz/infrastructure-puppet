@@ -255,14 +255,15 @@ class Blocky(Thread):
             try:
                 js = json.loads(urllib.urlopen(config.get('aggregator','uri')).read())
                 for baddie in js:
-                    # Got a new one?? :)
-                    i = baddie['ip'].strip()
-                    ta = baddie['target']
-                    if not i in baddies and (ta == HOSTNAME or ta == '*') and not 'unban' in baddie:
-                        reason = baddie.get('reason', 'Unknown reason')
-                        ban(i, baddies, reason)
-                    elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == HOSTNAME or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
-                        unban(i, baddies)
+                    if ('ip' in baddie):
+                        # Got a new one?? :)
+                        i = baddie['ip'].strip()
+                        ta = baddie['target']
+                        if not i in baddies and (ta == HOSTNAME or ta == '*') and not 'unban' in baddie:
+                            reason = baddie.get('reason', 'Unknown reason')
+                            ban(i, baddies, reason)
+                        elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == HOSTNAME or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
+                            unban(i, baddies)
 
                 time.sleep(180)
             except Exception as err:
