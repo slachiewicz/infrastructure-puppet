@@ -19,8 +19,6 @@ class kif (
     'psutil' :
       ensure  => present,
       require => Package['python-yaml'];
-    'requests' :
-      ensure  => present;
   }
 
   -> file {
