@@ -172,11 +172,12 @@ class Blocky(Thread):
             try:
                 js = json.loads(urllib.urlopen(config.get('aggregator','uri')).read())
                 for baddie in js:
-            # Got a new one?? :)
+                    # Got a new one?? :)
                     i = baddie['ip']
                     ta = baddie['target']
                     if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
-                        r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
+                        reason = baddie.get('reason', 'Unknown reason')
+
                         try:
                             # Check if we already have such a ban in place using iptables -C
                             try:
@@ -201,14 +202,14 @@ class Blocky(Thread):
                                     "--comment",
                                     "Banned by Blocky"
                                     ])
-                                message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, r, i)
+                                message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, reason, i)
                                 syslog.syslog(syslog.LOG_INFO, message)
                         except Exception as err:
                             syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
                         baddies[i] = time.time()
                     elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
                         baddies[i] = time.time()
-                        r = baddie['reason'] if 'reason' in baddie else 'Unknown reason'
+
                         # Check if we already have such a ban in place using iptables -C
                         try:
                             subprocess.check_call([
