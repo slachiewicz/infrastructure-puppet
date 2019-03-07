@@ -164,6 +164,40 @@ class Daemonize:
         start() or restart()."""
 
 
+def ban(ip, baddies, reason):
+    "Ban a specific IP."
+
+    try:
+        # Check if we already have such a ban in place using iptables -C
+        try:
+            subprocess.check_call([
+                "iptables",
+                "-C", "INPUT",
+                "-s", ip,
+                "-j", "DROP",
+                "-m", "comment",
+                "--comment",
+                "Banned by Blocky"
+                ])
+            # If we reach this point, the rule exists, no need to re-add it
+        except subprocess.CalledProcessError as err:
+            # We're here which means the rule didn't exist, so let's add it!
+            subprocess.check_call([
+                "iptables",
+                "-A", "INPUT",
+                "-s", ip,
+                "-j", "DROP",
+                "-m", "comment",
+                "--comment",
+                "Banned by Blocky"
+                ])
+            message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, ip, reason, ip)
+            syslog.syslog(syslog.LOG_INFO, message)
+    except Exception as err:
+        syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
+    baddies[ip] = time.time()
+
+
 def unban(ip, baddies):
     "Unban a specific IP."
 
@@ -226,36 +260,7 @@ class Blocky(Thread):
                     ta = baddie['target']
                     if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
                         reason = baddie.get('reason', 'Unknown reason')
-
-                        try:
-                            # Check if we already have such a ban in place using iptables -C
-                            try:
-                                subprocess.check_call([
-                                    "iptables",
-                                    "-C", "INPUT",
-                                    "-s", i,
-                                    "-j", "DROP",
-                                    "-m", "comment",
-                                    "--comment",
-                                    "Banned by Blocky"
-                                    ])
-                                # If we reach this point, the rule exists, no need to re-add it
-                            except subprocess.CalledProcessError as err:
-                                # We're here which means the rule didn't exist, so let's add it!
-                                subprocess.check_call([
-                                    "iptables",
-                                    "-A", "INPUT",
-                                    "-s", i,
-                                    "-j", "DROP",
-                                    "-m", "comment",
-                                    "--comment",
-                                    "Banned by Blocky"
-                                    ])
-                                message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, i, reason, i)
-                                syslog.syslog(syslog.LOG_INFO, message)
-                        except Exception as err:
-                            syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
-                        baddies[i] = time.time()
+                        ban(i, baddies, reason)
                     elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
                         unban(i, baddies)
 
