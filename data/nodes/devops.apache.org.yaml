@@ -4,6 +4,14 @@ classes:
   - datadog_asf::integrations::snmp
   - dell
   - dell::openmanage
+  - rsync_asf
+
+rsync_asf::cron_hour: 03
+rsync_asf::cron_minute: 17
+
+rsync_asf::fslist:
+  - /etc/puppet
+  - /var/log
 
 datadog_agent::puppet_run_reports: true
 
@@ -11,10 +19,3 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
-base::hosts:
-  r1sw0.apache.org:
-    ip: '192.168.0.247'
-  r2sw0.apache.org:
-    ip: '192.168.0.248'
-  r3sw0.apache.org:
-    ip: '192.168.0.249'

@@ -11,14 +11,6 @@ import cgi
 def listRepos():
     """ Return a list of all git-wip and gitbox repos """
     repos = {}
-    
-    # Get git-wip repos
-    gitwip = requests.get('https://git-wip-us.apache.org/repos/asf?a=project_index').text
-    for line in gitwip.split("\n"):
-        if ' ' in line:
-            repo, _ = line.split()
-            repos[repo] = 'git-wip-us'
-    
     # Get local gitbox repos
     for repo in os.listdir("/x1/repos/asf"):
         if '.git' in repo:

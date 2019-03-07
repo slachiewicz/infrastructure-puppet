@@ -61,6 +61,7 @@ gitserver_asf::custom_fragment_80: |
       Redirect Permanent / https://git1-us-west.apache.org/
 
 gitserver_asf::custom_fragment_443: |
+      Timeout 600
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
       SetEnv ASFGIT_ADMIN /x1/git/asfgit-admin/asf/
       SetEnv WRITE_LOCK /etc/nocommit
@@ -80,6 +81,21 @@ gitserver_asf::custom_fragment_443: |
       </Location>
 
       RewriteEngine On
+      
+      # Redirect https://git-wip-us.apache.org/repos/asf/$oldrepo.git
+      # to gitbox if no longer on git-wip.
+      RewriteCond %%{}{REQUEST_URI} ^/repos/asf/([^/]+?\.git)
+      RewriteCond "/x1/git/repos/old/%1" -d
+      RewriteRule .* https://gitbox.apache.org%%{}{REQUEST_URI}?%%{}{QUERY_STRING} [R=302,END]
+      
+      # Redirect https://git-wip-us.apache.org/repos/asf?p=$oldrepo.git...
+      # to gitbox if no longer on git-wip.
+      RewriteCond %%{}{REQUEST_URI} ^/repos/asf
+      RewriteCond %%{}{QUERY_STRING} p=([^/&]+?\.git)
+      RewriteCond "/x1/git/repos/old/%1" -d
+      RewriteRule .* https://gitbox.apache.org%%{}{REQUEST_URI}?%%{}{QUERY_STRING} [R=302,END]
+        
+        
 
       <LocationMatch "^/repos/">
         Require all denied
@@ -117,6 +133,7 @@ gitserver_asf::custom_fragment_443: |
 
       # INFRA-4331: Handler for Github pull request notifications
       ScriptAliasMatch ^/github$ /x1/git/asfgit-admin/asf/cgi-bin/github.cgi
+      
 
 
       <Directory /usr/lib/cgi-bin>
@@ -153,6 +170,18 @@ gitserver_asf::custom_fragment_443: |
       RewriteRule ^/repos/asf/?$ /x1/git/asfgit-admin/asf/site/htdocs/repos.html [L,END]
 
       SetEnv GIT_HTTP_EXPORT_ALL
+      
+      <Location /gitbox>
+          AuthType Basic
+          AuthName "GitBox Area"
+          AuthBasicProvider ldap
+          AuthLDAPUrl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
+          Options ExecCGI FollowSymlinks
+          AddHandler cgi-script .cgi
+      </Location>
 
       <Location /repos/asf>
           SetEnv GIT_PROJECT_ROOT /x1/git/repos/asf/

@@ -199,6 +199,8 @@ mina={reuse:asf-authorization:mina}
 mina-pmc={ldap:cn=mina,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 myfaces={reuse:asf-authorization:myfaces}
 myfaces-pmc={ldap:cn=myfaces,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+# Note PPMC, not PMC here:
+nemo-ppmc={ldap:cn=nemo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nifi={reuse:asf-authorization:nifi}
 nifi-pmc={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nutch={reuse:asf-authorization:nutch}
@@ -238,6 +240,8 @@ perl={reuse:asf-authorization:perl}
 perl-pmc={ldap:cn=perl,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 phoenix={reuse:asf-authorization:phoenix}
 phoenix-pmc={ldap:cn=phoenix,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+# note PPMC, not PMC here:
+pinot-ppmc={ldap:cn=pinot,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 pivot={reuse:asf-authorization:pivot}
 pivot-pmc={ldap:cn=pivot,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 poi={reuse:asf-authorization:poi}
@@ -308,8 +312,6 @@ thrift={reuse:asf-authorization:thrift}
 thrift-pmc={ldap:cn=thrift,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tika={reuse:asf-authorization:tika}
 tika-pmc={ldap:cn=tika,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-tiles={reuse:asf-authorization:tiles}
-tiles-pmc={ldap:cn=tiles,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tinkerpop={reuse:asf-authorization:tinkerpop}
 tinkerpop-pmc={ldap:cn=tinkerpop,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 tomee={reuse:asf-authorization:tomee}
@@ -390,7 +392,7 @@ security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
-treasurer=uli,kmcgrail
+treasurer=uli,myrle
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev
 pres-commitee-vps={ldap:cn=pres-commitee-vps,ou=auth,ou=groups,dc=apache,dc=org}
@@ -486,6 +488,7 @@ apsecmail = rw
 @audit = rw
 @accounting = rw
 @svnadmins = rw
+@treasurer = rw
 @infrastructure-root = rw
 @virtualmgmt = rw
 * =
@@ -628,6 +631,8 @@ buildbot = r
 [/infrastructure/qpsmtpd]
 @infrastructure = rw
 @member = r
+# allow hermes-vm:apmail/smtpd checkout
+apezmlm = r
 
 [/infrastructure/trunk/acreq]
 acrequser = rw
@@ -640,6 +645,10 @@ acrequser = rw
 whimsysvn = r
 @member = rw
 @pmc-chairs = rw
+
+# For reading badrcptto files (WHIMSY-236)
+[/infrastructure/trunk/qmail/control]
+whimsysvn = r
 
 [/infrastructure/trunk/tlpreq]
 mostarda = rw
@@ -713,9 +722,6 @@ svn = r
 @infrastructure-interest = r
 @infrastructure = rw
 
-[/infrastructure/trunk/machines/root/bin]
-puppetsvn = r
-
 [/infrastructure/trunk/machines/vms/svn-qavm2.apache.org]
 @subversion = rw
 
@@ -742,9 +748,6 @@ whimsysvn = r
 @committers  = rw
 * = 
 
-[/infrastructure/trunk/puppet]
-puppetsvn = r
-
 [/infrastructure/trunk/qmail]
 smtpd = r
 @member = rw
@@ -754,10 +757,6 @@ apezmlm = rw
 [/infrastructure/trunk/roller]
 @infrastructure-interest = rw
 
-
-[/infrastructure/trunk/ssh_keys]
-puppetsvn = r
-
 [/infrastructure/trunk/ssh_keys/people]
 @committers  = rw
 @infrastructure = rw
@@ -765,7 +764,6 @@ puppetsvn = r
 @svnadmins = rw
 
 [/infrastructure/trunk/ssh_keys/services]
-puppetsvn = r
 @infrastructure = rw
 @infrastructure-interest = rw
 @svnadmins = rw
@@ -932,8 +930,14 @@ openejb-tck = r
 [/pmc/incubator/dubbo]
 @dubbo-ppmc = rw
 
+[/pmc/incubator/nemo]
+@nemo-ppmc = rw
+
 [/pmc/incubator/openwhisk]
 @openwhisk-ppmc = rw
+
+[/pmc/incubator/pinot]
+@pinot-ppmc = rw
 
 [/pmc/johnzon]
 @johnzon-pmc = rw
@@ -959,6 +963,9 @@ openejb-tck = r
 
 [/pmc/juddi]
 @juddi-pmc = rw
+
+[/pmc/jspwiki]
+@jspwiki-pmc = rw
 
 [/pmc/kibble]
 @kibble-pmc = rw
@@ -1340,9 +1347,6 @@ buildbot = rw
 
 [/websites/production/ode]
 @ode = rw
-
-[/websites/production/odftoolkit]
-@incubator = rw
 
 [/websites/production/pdfbox]
 @pdfbox = rw

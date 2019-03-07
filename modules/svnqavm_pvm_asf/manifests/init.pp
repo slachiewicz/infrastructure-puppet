@@ -2,7 +2,8 @@
 
 class svnqavm_pvm_asf (
 
-  $required_packages = ['libapr1-dev' , 'libaprutil1-dev'],
+  # libapr is a build dependency of svn; moreutils provides chronic(1).
+  $required_packages = ['libapr1-dev' , 'libaprutil1-dev', 'moreutils'],
 
 ){
 
@@ -38,6 +39,7 @@ class svnqavm_pvm_asf (
       user    => 'wayita',
       hour    => 14,
       minute  => 23;
+
     # Run backport merges
     'backport-cron':
       command     => 'for i in 1.6.x 1.7.x 1.8.x 1.9.x 1.10.x 1.11.x; do cd && cd src/svn/$i && $SVN up -q --non-interactive && YES=1 MAY_COMMIT=1 ../trunk/tools/dist/backport.pl; done', # lint:ignore:140chars
@@ -53,6 +55,21 @@ class svnqavm_pvm_asf (
       hour        => 4,
       minute      => 0,
       environment => 'SVNVERSION=/usr/local/svn-current/bin/svnversion';
+
+    'Update our Haxx-URL-to-Message-Id map':
+      command     => 'cd ~/src/svn/site && ${SVN} up -q && tools/generate-message-id-map.py',
+      user        => 'svnsvn',
+      hour        => 4,
+      minute      => 0,
+      environment => 'SVN=/usr/local/svn-current/bin/svn';
+
+    'Update our upcoming changes list':
+      command     => 'cd ~/src/svn/1.11.x && chronic ~/src/svn/site/tools/generate-upcoming-changes-log.sh',
+      user        => 'svnsvn',
+      hour        => 4,
+      minute      => 15,
+      environment => 'SVN=/usr/local/svn-current/bin/svn';
+
   }
 
 }

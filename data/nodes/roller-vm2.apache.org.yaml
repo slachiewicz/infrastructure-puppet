@@ -10,6 +10,18 @@ classes:
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - oraclejava::install
+  - vhosts_asf::modules
+  - rsync_asf
+
+rsync_asf::cron_hour: 18
+rsync_asf::cron_minute: 15
+
+rsync_asf::fslist:
+  - /var/www
+  - /var/lib/tomcat8
+  - /usr/local/roller
+  - /usr/local/roller/roller_data
+
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
@@ -30,7 +42,7 @@ apache::mod::event::threadlimit: '500'
 apache::mod::event::threadsperchild: '50'
 
 # blogs_asf class variables.
-blogs_asf::roller_version: '5.1'
+blogs_asf::roller_version: '5.2'
 blogs_asf::roller_revision_number: '2'
 blogs_asf::mysql_connector_version: '5.1.40'
 blogs_asf::parent_dir: '/usr/local/roller'
@@ -49,6 +61,12 @@ logrotate::rule:
   apache2:
     ensure: 'present'
 
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+  cgid:
+    name: 'cgid'
+
 vhosts_asf::vhosts::vhosts:
   roller-vm2-80:
     vhost_name: '*'
@@ -58,7 +76,7 @@ vhosts_asf::vhosts::vhosts:
       - 'blogs-test.apache.org'
     port: 80
     ssl: false
-    docroot: '/var/www'
+    docroot: '/var/www/html'
     error_log_file: 'blogs_error.log'
     custom_fragment: |
       RedirectMatch permanent ^/(.*)$ https://roller-vm2.apache.org/$1
@@ -69,13 +87,23 @@ vhosts_asf::vhosts::vhosts:
     serveraliases:
       - 'blogs-test.apache.org'
     port: 443
-    docroot: '/var/www'
+    docroot: '/var/www/html'
     error_log_file: 'blogs_error.log'
     ssl: true
     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
     custom_fragment: |
+      ProxyPreserveHost On
+      AddHandler cgi-script .cgi
+      ScriptAliasMatch ^/preview/?.* "/var/www/html/preview/preview.cgi"
       RewriteEngine On
+
+      ProxyPass /preview !
       ProxyPass / http://127.0.0.1:8080/
       ProxyPassReverse / http://127.0.0.1:8080/

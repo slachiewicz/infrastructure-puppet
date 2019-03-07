@@ -115,6 +115,17 @@ class jenkins_asf (
       require => [File[$downloaded_tarball],File[$tools_dir]],
   }
 
+  -> exec {
+    'remove-root-files':
+      command     => 'rm -f webapps/ROO*',
+      path        => ['/bin', '/usr/bin', '/usr/sbin'],
+      cwd         => $catalina_base,
+      user        => 'root',
+      onlyif      => ['test -f webapps/ROOT.war'],
+      require     => Exec['extract-tomcat'],
+      refreshonly => true;
+  }
+
   exec {
     'chown-tomcat-dirs':
       command => "/bin/chown -R ${username}:${username} ${catalina_base}/logs ${catalina_base}/temp ${catalina_base}/work ${catalina_base}/conf ${catalina_base}/webapps", # lint:ignore:140chars
@@ -202,10 +213,10 @@ file {
   # define winnodename dirs.
   define node_configs ($winnodename = $title) {
     file { "${jenkins_asf::jenkins_home}/nodes/${winnodename}/config.xml":
-    ensure => 'present',
-    owner  => $username,
-    group  => $groupname,
-    mode   => '0755',
+    ensure  => 'present',
+    owner   => $username,
+    group   => $groupname,
+    mode    => '0755',
     content => template('jenkins_asf/node-config.xml.erb'),
     }
   }

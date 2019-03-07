@@ -45,10 +45,7 @@ def processPodlings(xmlFile):
                 continue
             podling_id = row.getAttribute("name").strip()
             podling_id = podling_id.lower().replace(' ', '')
-            if podling_id == 'odftoolkit':
-                f.write("odf-dev@incubator.apache.org\n")
-                g.write("odf-private@incubator.apache.org\n")
-            elif podling_id in SPECIALS:
+            if podling_id in SPECIALS:
                 f.write("%s-dev@incubator.apache.org\n" % podling_id)
                 g.write("%s-private@incubator.apache.org\n" % podling_id)
             else:

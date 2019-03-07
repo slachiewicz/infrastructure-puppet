@@ -256,7 +256,7 @@ class Blocky(Thread):
                 js = json.loads(urllib.urlopen(config.get('aggregator','uri')).read())
                 for baddie in js:
                     # Got a new one?? :)
-                    i = baddie['ip']
+                    i = baddie['ip'].strip()
                     ta = baddie['target']
                     if not i in baddies and (ta == HOSTNAME or ta == '*') and not 'unban' in baddie:
                         reason = baddie.get('reason', 'Unknown reason')

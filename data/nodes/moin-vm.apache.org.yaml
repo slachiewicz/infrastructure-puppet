@@ -6,11 +6,40 @@ classes:
   - apache::mod::status
   - blocky
   - datadog_agent::integrations::apache
+  - httpd_rate_limiter
   - kif
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - vhosts_asf::modules
-  - zmanda_asf::client
+  - rsync_asf
+  - rsync::server
+
+rsync_asf::cron_hour: 23
+rsync_asf::cron_minute: 45
+
+rsync_asf::fslist:
+  - /www
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  moin:
+    path: '/www/wiki.apache.org/data/'
+    hosts_allow: '37.48.69.235'
+    auth_users: 'apb-moin'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'yes'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
   
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -23,18 +52,17 @@ apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '800'
 apache::mod::event::maxconnectionsperchild: '200000'
 apache::mod::event::maxrequestworkers: '800'
-apache::mod::event::maxsparethreads: '200'
+apache::mod::event::maxsparethreads: '250'
 apache::mod::event::minsparethreads: '50'
-apache::mod::event::serverlimit: '4'
+apache::mod::event::serverlimit: '3'
 apache::mod::event::startservers: '2'
 apache::mod::event::threadlimit: '800'
-apache::mod::event::threadsperchild: '200'
+apache::mod::event::threadsperchild: '250'
 
 apache::mpm_module:         'event'
 apache::serveradmin:        'users@infra.apache.org'
 
 base::basepackages:
-  - 'rsync'
   - 'libapache2-mod-wsgi'
 
 datadog_agent::integrations::apache::url: 'https://wiki.apache.org/server-status?auto'
@@ -47,6 +75,11 @@ postfix::server::relayhost: 'mailrelay1-us-west.apache.org'
 vhosts_asf::modules::modules:
   wsgi:
     name: 'wsgi'
+
+httpd_rate_limiter::interval: 120
+httpd_rate_limiter::cpumax:   60
+httpd_rate_limiter::autoconf: true
+
 
 vhosts_asf::vhosts::vhosts:
   moin_http:

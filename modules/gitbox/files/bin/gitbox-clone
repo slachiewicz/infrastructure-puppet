@@ -22,11 +22,31 @@ import sys
 import tempfile
 import textwrap
 import urlparse
-
+import urllib2
+import json
+import requests
+import ConfigParser
 
 __usage__ = "%prog [OPTIONS] GIT_URL GIT_DIR"
 
 REF_RE = re.compile("refs/remotes/([^@]+)")
+CONFIG_FILE = "/x1/gitbox/matt/tools/grouper.cfg" # config file with GH token in it
+
+CONFIG = ConfigParser.ConfigParser()
+CONFIG.read(CONFIG_FILE)
+ORG_TOKEN = CONFIG.get('github', 'token')
+
+def rmWebhooks(repo):
+    """Checks for and removes stale web hooks"""
+    url = "https://api.github.com/repos/apache/%s/hooks?access_token=%s" % (repo, ORG_TOKEN)
+    response = urllib2.urlopen(url)
+    data = json.load(response)
+    for hook in data:
+        # Is this an old git-wip hook?
+        if 'config' in hook and hook['config'].get('url'):
+            if 'git-wip' in hook['config']['url'] or 'git1-us-east' in hook['config']['url']:
+                print("Removing stale webhook %s (%s)" % (hook['url'], hook['config']['url']))
+                requests.delete("%s?access_token=%s" % (hook['url'], ORG_TOKEN))
 
 
 def options():
@@ -59,6 +79,10 @@ def main():
     clone_git(git_url, git_dir, opts.desc)
     cleanup_clone()
     configure_asfgit(git_dir, opts.commit)
+    
+    # Lastly, remove any stale webhooks from git-wip
+    ghrepo = os.path.basename(git_dir).replace('.git', '')
+    rmWebhooks(ghrepo)
 
 
 def clone_git(git_url, git_dir, desc):

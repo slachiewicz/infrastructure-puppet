@@ -1,5 +1,5 @@
 ---
-classes: 
+classes:
   - asf999::create_user
   - base
   - base::snmp::createv3users
@@ -26,16 +26,16 @@ amanda::client::server: 'ec2-54-191-28-247.us-west-2.compute.amazonaws.com'
 
 ## ASF999
 asf999::create_user::keycontent: |
-  
+
   # humbedooh
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKU0OarYDnMtEyneHtOAA/mpeJbXLCVA2yy8wl2fGQ/kzdRhBDCCjusV0D83cwKckJEGVInbYruLwq7Rk4e1k0hwHoVR28ps4B0IrsFlkQrfkS0plGq5VlbUU1lu9hdR+2o992NzK3BGJa6Bde493FaEnJf+s4dQM9kkb9keYXLdh9lC99xlxYg7P5gSlv+0tCAo3LisKM1vVfjLaXIv94KwRNjcrLH0rjrQt0UnkGTjoP+WonILz9CsFfJDncofFp4gyyioYDTqgyGbVauGAdfctrqc+c1x4sz+Hk2ocFjGZEGzHZ8E/ZRXpaa9QNeyc4vKAm9CSWyonLNr3+KyJfQP82w5IZIF8rMBjl3/m0zPUgXSitc6ebrLUFhrESyoFF0RfeqEYUzjf52uRVlPVSiSATmvccdHel/G6lUZrQScYUPOZT++C7TZNPzRNy/MzeLjF0jcrDYjCXEj1r9TkQtByoHKc0Cikokcmn15SPX9nBWScN0kQ9DCnQ1DRx0C2L/KJwiV8i/ziel8RFqg8n71v1H8Ve40F/m+03dZAUGzlE1wu+lXu/ZXjBgIu8vOmz3LK+k4UskiMiiktYq1N9RG+4l30JR/OlLIRhlKiernmWUFyGC4npbquaTKUsB6G6RKOC1WnLpuM5U1jIKVeOejoptJilaHvO0RiZxNP/ZQ== humbedooh-puppet-20130726
-  
+
   # gmcdonald
   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC71HP9YspO1SDZ/5qNJNGE3MW27XiYc5gx2kaCJ2ZT3unZVRU60p3/fbMG5XwOzvmbN3Gzp2l2/8jKmngnQO0oHY9E2ZcVh14TblbgSErVPMM5zZBg40PvDRk61eECnGkXYfVKU5RzcDq5yYr4FFFFRh3pWjjBDBWtSczAXYavWPHOpNpQ1onudiCev/KHADXZS8J/HwhHmkVmxSWX+9upQlPlokXulZpMFqx6FPbBLk45Miq5xSYS3mN8dW3OupDHiKavKoLuzqom+7ndLhFUMX468htnhfUvTs9ajh7xBTfhziPJh+PkjeQLWNLdMQe0L8Ptd4IAxqSkegTCNit/LZbK/Jo6z7sBSdk2N+f8UIlK2do/9KlN30sFbVAK3nsIekxR+xQldEOMaCr83IM/b0G/mefxFrCdSm3z9SW84WKVt+DNADVKUMTm9ngOp2cjxPeXQuL5vTABaeSrzeMTAWagWTRQQVT/6XMNNJRbpHj+Fp8rd4sIRnqv86hYL1aoE1THuxqT451ZRYHJoCiZ3PQPMEhAzR5F6Voji6RkyJL8S662Ai/FesEeNyc2hcErfnfFCsKWckUOg8YOIR+DSfuJ6LtZZB/+SAE/QzKzIvMWuLCiGFR2oSiY7MqeJCm5CeF06YGddnQhGoqM6ZC6/hFkWAJ0Uzc5DRlxyFovaQ== gav_mac
-  
+
   # markt
   ssh-dss AAAAB3NzaC1kc3MAAACAVaMrsS2AKvOFn4RZjBWxrwF3NxJ6jvy3ZJhbd+LH/JigL1J6o26Z5AV8HsfhOuVqj6kPaIAJ3bwaMjHrzl4nkFDS3QXDD3psrZbMtqIaugwzNOY7WDsHF0sfr6A/PoktNkoXF/BPqByx9DJ7UKq2+MP9LTj9r7Nzb5nS5L+dwDUAAAAVAI6xcksdw9IsgHW8LUeWSS+pGeXzAAAAgDhIVTB7UgFhX8Qjm/IdKVvR6hjYJ04HQnTqsnDzM2ju/Di4ATpogsUunnI7ZsBgOPF/moAzBlK+r+4621ggAW1xfRysvJYtqS0IYmyLPWryIb2xK4i6bagYhjtD2YAJbFuYmZHfyCUf82MVgqPeRRn9BWzCVzvA+7+K1rj5RlvUAAAAgBWbDECq37AFDQuMHRJiTAYJQLVBtfx3Fr/XbgkcX7DMPLXooDIAJWpqtyyfxYRHC4KRKmzDWE97Cw/03DpthAgpB+svxJghh895oAtoaCxhVzUrV0HUKQlNvg9a8s83w/iiHmoURB8kPZGyW1WJPS4ezsj/62WK1LXjmJK81pvf
-  
+
   # cml
   ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAn5MYIbWTJB6ni69vgMUJXqexctL5KTG9yAP6nfas2Akdu6GAO0fL1cCGq/TV/0LKWM/XeSkdZMo1LxqsmJZpp9BvcDYEmUhR31N+eQE1SPf8qrtFJFAN1GbmMxYwiYbAO+4zjJu+YLV0zUeSMZX56pCpbd4kaDLgY8rXzUbo934e2s5AdKHUKh65gzMwP9gzyeq02/jEfET2VSN7Xz0mqxbF47+81beQZuxySfO1M68mFLQavSt6J/E90M9ljy/oylGTTUnmZlmcxk4smuN2V8YzZsJHkGB9bh0bK5xHqci9QRmSA4nxprNL6bqpnUHtYtNQsvPrTlyEFD28qePQEQ== cml
 
@@ -48,10 +48,10 @@ asf999::create_user::keycontent: |
 asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
-#asf999_windows::create_user::user: 'asf999_windows'
-#asf999_windows::create_user::groups:
-#  - 'Users'
-#  - 'Administrators'
+datadog_agent::tags:
+  - 'puppet_version:%{puppetversion}'
+  - 'dc:%{dd_autotag_colo}'
+  - 'external_ip:%{external_ip}'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
@@ -71,7 +71,7 @@ fail2ban::source_dir: 'puppet:///modules/fail2ban_asf/fail2ban/conf'
 fail2ban::source_dir_purge: true
 
 # GITSERVER_ASF
-gitserver_asf::packages: 
+gitserver_asf::packages:
   - 'gitweb'
   - 'libjson-perl'
   - 'libdigest-hmac-perl'
@@ -337,7 +337,7 @@ spamassassin::spamd::whitelist_to:
   - '*-accept-*@*.apache.org'
   - 'planners@apachecon.com'
 
-spamassassin::spamc::spamd_peers: 
+spamassassin::spamc::spamd_peers:
   - 'spamd1-us-west 10.40.0.7'
   - 'spamd2-us-west 10.40.0.9'
   - 'spamd3-us-west 10.40.0.10'

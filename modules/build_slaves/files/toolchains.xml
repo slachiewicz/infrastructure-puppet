@@ -71,5 +71,25 @@
       <jdkHome>/home/jenkins/tools/java/latest11/</jdkHome>
     </configuration>
   </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>12</version>
+      <vendor>openjdk</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/home/jenkins/tools/java/latest12/</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>13</version>
+      <vendor>openjdk</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/home/jenkins/tools/java/latest13/</jdkHome>
+    </configuration>
+  </toolchain>
 </toolchains>
 

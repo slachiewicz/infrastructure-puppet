@@ -1,7 +1,7 @@
 #/etc/puppet/modules/blogs_asf/manifests/init.pp
 
 class blogs_asf (
-  $required_packages = ['tomcat8'],
+  $required_packages = ['tomcat8', 'libwww-perl', 'liblwp-protocol-https-perl', 'libcgi-pm-perl'],
 
 # override below in yaml
   $roller_version          = '',
@@ -68,7 +68,7 @@ class blogs_asf (
   }
 
 # extract the download and move it to tomcat as ROOT.war
-# flag NOTICE.txt in the extracted download so we don't keep extracting 
+# flag NOTICE.txt in the extracted download so we don't keep extracting
 # if it's already there
 
   -> exec {
@@ -79,6 +79,7 @@ class blogs_asf (
       creates => "${install_dir}/NOTICE.txt",
       timeout => 1200,
       require => [Exec['download-roller'],File[$parent_dir]],
+      notify  => Exec['deploy-roller'],
   }
 
 # DEPLOY ROLLER
@@ -95,7 +96,7 @@ class blogs_asf (
   }
 
 # file resources have multiple dependencies to ensure the existence
-# of the downloaded source and exploded war file before deploying 
+# of the downloaded source and exploded war file before deploying
 # template artifacts
 
   file {
@@ -195,5 +196,16 @@ class blogs_asf (
         Package['tomcat8'],
         Exec['deploy-roller'],
       ];
+    '/var/www/html/preview':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0640';
+    '/var/www/html/preview/preview.cgi':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0755',
+      source => 'puppet:///modules/blogs_asf/preview/preview.cgi';
   }
 }

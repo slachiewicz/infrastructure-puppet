@@ -1,6 +1,6 @@
 #/etc/puppet/modules/selfserve_portal/manifests/init.pp
 
-# selfserve class for the self service portal - jira,confluence,mail lists, git repo
+# selfserve class for the self service portal - jira,confluence,mail lists, git repo, moin
 class selfserve_portal (
 
   # Below is in tools yaml
@@ -9,8 +9,7 @@ class selfserve_portal (
 
   # Below contained in eyaml
 
-  $hc_token = '',
-  $hc_room  = '',
+  $slackUrl = '',
   $jira_un  = '',
   $jira_pw  = '',
 
@@ -19,6 +18,8 @@ class selfserve_portal (
   $deploy_dir    = '/var/www/selfserve-portal'
   $install_base  = '/usr/local/etc/'
   $atlassian_cli = "atlassian-cli-${cliversion}"
+  $moin_dir      = "${install_base}/moin-to-cwiki"
+  $uwc_dir       = "${moin_dir}/universal-wiki-converter"
 
 file {
     $deploy_dir:
@@ -27,7 +28,7 @@ file {
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      source  => 'puppet:///modules/selfserve_portal',
+      source  => 'puppet:///modules/selfserve_portal/www',
       require => Package['apache2'];
     "${install_base}/selfserve/":
       ensure => directory,
@@ -44,6 +45,63 @@ file {
       owner   => 'root',
       group   => 'root',
       mode    => '0644';
+    $moin_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    $uwc_dir:
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    "${uwc_dir}/conf":
+      ensure => directory,
+      owner  => 'root',
+      group  => 'www-data',
+      mode   => '0775';
+    "${uwc_dir}/populate-properties.sh":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/populate-properties.sh',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    "${uwc_dir}/sync-moin-project.sh":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/sync-moin-project.sh',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    "${uwc_dir}/sync-moin-all.sh":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/sync-moin-all.sh',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755';
+    "${uwc_dir}/exclude-list.txt":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/exclude-list.txt',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
+    "${uwc_dir}/conf/confluenceSettings.properties.template":
+      ensure  => present,
+      content => template('selfserve_portal/confluenceSettings.properties.template.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644';
+    "${uwc_dir}/conf/converter.moinmoin.properties.template":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/converter.moinmoin.properties.template',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
+    "${uwc_dir}/conf/exporter.moinmoin.properties.template":
+      ensure => present,
+      source => 'puppet:///modules/selfserve_portal/exporter.moinmoin.properties.template',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644';
 
 # Required scripts for cronjobs
 
@@ -104,6 +162,11 @@ file {
       user        => root,
       minute      => '36',
       command     => "${install_base}/${atlassian_cli}/confluence-get-spaces.sh > /dev/null 2>&1",
+      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
+'sync-moin-all':
+      user        => root,
+      minute      => '53',
+      command     => "${uwc_dir}/sync-moin-all.sh > /dev/null 2>&1",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
   }
 }

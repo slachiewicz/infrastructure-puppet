@@ -93,30 +93,6 @@ Apache Git Services
 # Message formatting functions #
 ################################
 
-TMPL_NEW_TICKET = """
-GitHub user %(user)s opened a new %(type)s: %(title)s
-
-%(text)s
-
-You can view it online at: %(link)s
-"""
-
-TMPL_CLOSED_TICKET = """
-GitHub user %(user)s closed #%(id)i: %(title)s
-
-You can view it online at: %(link)s
-
-%(diff)s
-"""
-
-TMPL_GENERIC_COMMENT = """
-GitHub user %(user)s commented on %(type)s #%(id)i: %(title)s:
-
-%(text)s
-
-You can view it online at: %(link)s
-"""
-
 def issueOpened(payload):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
@@ -132,7 +108,7 @@ def issueOpened(payload):
     fmt['action'] = 'open'
     return fmt
 
-def issueClosed(payload):
+def issueClosed(payload, ml = "foo@bar"):
     fmt = {}
     obj = payload['pull_request'] if 'pull_request' in payload else payload['issue']
     fmt['user'] = payload['sender']['login'] if 'sender' in payload else obj['user']['login']
@@ -146,8 +122,11 @@ def issueClosed(payload):
     fmt['link'] = obj['html_url']
     fmt['action'] = 'close'
     fmt['prdiff'] = None
+    if obj.get('merged'): # Merged or just closed?
+        fmt['action'] = 'merge'
     # If foreign diff, we have to pull it down here
-    if obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
+    # TEMPORARILY DISABLED
+    if False and obj.get('head') and obj['head'].get('repo') and obj['head']['repo'].get('full_name') and obj.get('diff_url'):
         if not obj['head']['repo']['full_name'].startswith("apache/"):
             txt = requests.get(obj['diff_url']).text
             addendum = None
@@ -162,11 +141,10 @@ def issueClosed(payload):
             if addendum:
                 txt += "\n\n  (%s...)\n" % addendum
             fmt['prdiff'] = """
-As this is a foreign pull request (from a fork), the diff is supplied
-below (as it won't show otherwise due to GitHub magic):
-
-%s
-""" % txt
+As this is a foreign pull request (from a fork), the diff has been
+sent to your commit mailing list, %s
+""" % ml
+            fmt['prdiff_real'] = txt
     return fmt
 
 
@@ -206,10 +184,11 @@ def reviewComment(payload):
     fmt['filename'] = comment['path']
     return fmt
 
-def formatEmail(fmt):
+def formatMessage(fmt, template = 'template.ezt'):
     subjects = {
         'open':         "opened a new %(type)s",
         'close':        "closed %(type)s",
+        'merge':        "merged %(type)s",
         'comment':      "commented on %(type)s",
         'created':      "commented on %(type)s",
         'edited':       "edited a comment on %(type)s",
@@ -218,12 +197,12 @@ def formatEmail(fmt):
     }
     fmt['action'] = (subjects[fmt['action']] if fmt['action'] in subjects else subjects['comment']) % fmt
     fmt['subject'] = "%(user)s %(action)s #%(id)i: %(title)s" % fmt
-    template = ezt.Template('template.ezt')
+    template = ezt.Template(template)
     fp = StringIO.StringIO()
     output = template.generate(fp, fmt)
     body = fp.getvalue()
     return {
-        'subject': "[GitHub] %s" % fmt['subject'], # Append [GitHub] for mail filters
+        'subject': "[GitHub] [%s] %s" % (fmt['repo'], fmt['subject']), # Append [GitHub] for mail filters
         'message': body
     }
 
@@ -306,7 +285,7 @@ def addLabel(ticket):
     if rv.status_code == 200 or rv.status_code == 201:
         return "Added PR label to Ticket %s\n" % ticket
     else:
-        sys.stderr.write(rv.text)
+        #sys.stderr.write(rv.text)
         return rv.text
 
 # Main function
@@ -337,6 +316,8 @@ def main():
     if m:
         project = m.group(1)
     mailto = gconf.get('apache', 'dev') if gconf.has_option('apache', 'dev') else "dev@%s.apache.org" % project
+    mailto = mailto.replace(".git", "") # mitigate migration bugs for now
+    commitml = gconf.get('hooks.asfgit', 'recips') # commit ML for PR diffs    
     # Debug override if testing
     if DEBUG_MAIL_TO:
         mailto = DEBUG_MAIL_TO
@@ -351,7 +332,7 @@ def main():
             fmt = issueOpened(data)
         # Issue closed
         elif data['action'] == 'closed':
-            fmt = issueClosed(data)
+            fmt = issueClosed(data, commitml)
         # Comment on issue or specific code (WIP)
         elif 'comment' in data:
             isComment = True
@@ -370,6 +351,7 @@ def main():
 
     # Send email if applicable
     if fmt:
+        fmt['repo'] = repo
         # EZT needs these to be defined
         for el in ['filename','diff', 'prdiff']:
             if not el in fmt:
@@ -377,14 +359,20 @@ def main():
         # Indent comment
         fmt['text'] = "\n".join("   %s" % x for x in fmt['text'].split("\n"))
         # Go ahead and generate the template
-        email = formatEmail(fmt)
+        email = formatMessage(fmt)
     if email:
         sendEmail(mailto, email['subject'], email['message'])
+    # PR Diff from fork to be sent to commit ML??
+    if fmt and fmt.get('prdiff_real'):
+        sendEmail(commitml, "[%s] Diff for: %s" % (repo, email['subject']), fmt['prdiff_real'])
 
     # Now do JIRA if need be
-    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'default'
-
+    jiraopt = gconf.get('apache', 'jira') if gconf.has_option('apache', 'jira') else 'worklog nocomment' # Default to no visible notification.
+    
     if jiraopt and fmt:
+        if 'nofollow' in jiraopt:
+            return None
+        jiramsg = formatMessage(fmt, template = 'template-jira.ezt')
         if 'title' in fmt:
             m = re.search(r"\b([A-Z0-9]+-\d+)\b", fmt['title'])
             if m:
@@ -393,7 +381,7 @@ def main():
                 if not (jiraopt.find("nocomment") != -1 and isComment):
                     remoteLink(ticket, fmt['link'], fmt['id']) # Make link to PR
                     addLabel(ticket)
-                    return updateTicket(ticket, fmt['user'], email['message'], worklog)
+                    return updateTicket(ticket, fmt['user'], jiramsg['message'], worklog)
     # All done!
     return None
 
@@ -402,4 +390,7 @@ if __name__ == '__main__':
     print("Status: 204 Message received\r\n\r\n")   # Always return this
     # If error was returned, log it in issues.log
     if rv:
-        open("/x1/gitbox/issues.log", "a").write(rv + "\r\n")
+        try:
+            open("/x1/gitbox/issues.log", "a").write(rv + "\r\n")
+        except:
+            pass

@@ -23,6 +23,7 @@ import cgi, sqlite3, hashlib, Cookie, urllib, urllib2, ConfigParser
 import requests
 import smtplib
 from email.mime.text import MIMEText
+import email.utils
 
 # LDAP settings
 CONFIG = ConfigParser.ConfigParser()
@@ -248,6 +249,8 @@ def main():
                     if pmc == 'infrastructure':
                         pmc = 'infra' # hack hack hack
                     msg['To'] = "users@infra.apache.org, private@%s.apache.org" % pmc
+                    msg['Date'] = email.utils.formatdate()
+                    msg['Message-ID'] = email.utils.make_msgid()
 
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", ["private@infra.apache.org", "private@%s.apache.org" % pmc], msg.as_string())
@@ -268,6 +271,9 @@ def main():
                     msg['From'] = "git@apache.org"
                     msg['Reply-To'] = "private@infra.apache.org"
                     msg['To'] = "private@infra.apache.org"
+                    msg['Date'] = email.utils.formatdate()
+                    msg['Message-ID'] = email.utils.make_msgid()
+
                     s = smtplib.SMTP(host='mail.apache.org', port=2025)
                     s.sendmail("git@apache.org", "private@infra.apache.org", msg.as_string())
                     s.quit()

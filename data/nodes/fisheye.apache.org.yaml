@@ -9,9 +9,16 @@ classes:
   - mysql_asf::backup
   - mysql::server
   - oraclejava::install
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
-  - zmanda_asf::client
+
+rsync_asf::cron_hour: 22
+rsync_asf::cron_minute: 19
+
+rsync_asf::fslist:
+  - /x1/db_dump
+  - /usr/local/fisheye/fisheye-data
 
 puppet_asf::environment: 'test'
 

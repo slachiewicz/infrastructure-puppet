@@ -219,70 +219,29 @@ class JiraTicket:
             self.auth = str(base64.encodestring(bytes('%s:%s' % (jira_user, jira_pass)))).replace('\n', '')
         self.sender = author
         try:
-            # Try to fetch JIRA username by searching for the email
-            if self.email != None:
-                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
-                obj = requests.get(url,
-                    headers = {'Authorization': 'Basic %s' % self.auth},
-                    params = { 'username': self.email, 'maxResults': 3}
-                    ).json()
-                if len(obj) > 0 and "name" in obj[0]:
-                    logging.info("Found matching email record in JIRA user database")
-                    self.sender = "[~%s]" % obj[0]['name']
-                    self.sendIt = True
-
-            # If that failed, try to find a user using ldap's alt email
+            # Try to find a user's name via LDAP (try to guess ASF uid if not svn)
+            if not self.asfuid and '@apache.org' in self.email:
+                self.asfuid = self.email.replace('@apache.org', '')
             if self.sendIt == False and self.asfuid:
                 # Only run this stuff if the uid is actually an Apache uid
                 if re.match("^([a-z0-9]+)$", self.asfuid):
                     try:
-                        ldapdata = subprocess.check_output(['ldapsearch', '-xLLL', 'uid=%s' % self.asfuid, 'mail', 'asf-altEmail'])
-                        print(ldapdata)
-                        for match in re.finditer(r"([^@\s]+@[^@\s]+)", ldapdata):
-                            altemail = match.group(0)
-                            logging.info("Trying to look up user via alternate email (%s)", altemail)
-
-                            url = "https://issues.apache.org/jira/rest/api/latest/user/search"
-                            obj = requests.get(url,
-                                headers = {'Authorization': 'Basic %s' % self.auth},
-                                params = { 'username': altemail, 'maxResults': 3}
-                                ).json()
-                            if len(obj) > 0 and "name" in obj[0]:
-                                logging.info("Found matching email record in JIRA user database")
-                                self.sender = "[~%s]" % obj[0]['name']
-                                self.sendIt = True
-                                break
-
+                        ldapdata = subprocess.check_output(['ldapsearch', '-xLLL', 'uid=%s' % self.asfuid, 'cn'])
+                        m = re.search(r"cn: ([^\r\n]+)", ldapdata.decode('ascii', 'replace'))
+                        if m:
+                            self.sender = m.group(1)
+                            self.sendIt = True
                     except Exception as info:
                         logging.warning("LDAP error: %s", info)
 
-            #If still not found, try searching for full name instead
-            if self.sendIt == False and self.author:
-                url = "https://issues.apache.org/jira/rest/api/latest/user/search"
-                obj = requests.get(url,
-                    headers = {'Authorization': 'Basic %s' % self.auth},
-                    params = { 'username': self.author, 'maxResults': 3}
-                    ).json()
-                if len(obj) > 0 and "name" in obj[0]:
-                    if "displayName" in obj[0] and obj[0]['displayName'] == self.author:
-                        logging.info("Found matching full name in JIRA user database")
-                        self.sender = "[~%s]" % obj[0]['name']
-#                   else:
-#                       logging.info("Found a username in JIRA user database")
-#                       self.sender = "[~%s]" % obj[0]['name']
-                    self.sendIt = True
-                else:
-                    self.sender = author if author else email
-                    self.sendIt = True
-
             # Fall back to raw email/author if no username was found
-            if not self.sender:
+            if not self.sendIt:
                 self.sender = author if author else email
                 self.sendIt = True
 
             logging.info("Set sender to: %s" % self.sender)
         except Exception as info:
-            logging.info("urllib error: %s", info)
+            logging.info("lookup error: %s", info)
             # We're still gonna send it, even if stoopid unicode gets in our way.
             self.sender = author if author else email
             self.sendIt = True

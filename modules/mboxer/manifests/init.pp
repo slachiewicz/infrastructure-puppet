@@ -117,6 +117,12 @@ class mboxer (
       provider  => aliases,
       notify    => Exec['newaliases'],
       recipient => "|python3 ${install_base}/tools/archive.py --lid zztest@infra.apache.org";
+    'probe':
+      ensure    => present,
+      name      => 'probe',
+      provider  => aliases,
+      notify    => Exec['newaliases'],
+      recipient => "|python3 ${install_base}/tools/probe.cgi check";
 }
 
   exec {'newaliases' :

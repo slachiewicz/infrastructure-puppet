@@ -18,7 +18,7 @@
 
     <filter>
         <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
     </filter>
 
     <filter>
@@ -175,7 +175,7 @@
     <listener>
         <listener-class>org.apache.roller.weblogger.ui.core.RollerContext</listener-class>
     </listener>
-    
+
     <listener>
         <listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
     </listener>
@@ -297,6 +297,12 @@
         </init-param>
     </servlet>
 
+    <servlet>
+        <servlet-name>WebjarsServlet</servlet-name>
+        <servlet-class>org.webjars.servlet.WebjarsServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
     <!-- BEGIN OAUTH -->
 
     <servlet>
@@ -308,7 +314,7 @@
         <servlet-name>AuthorizationServlet</servlet-name>
         <servlet-class>org.apache.roller.weblogger.webservices.oauth.AuthorizationServlet</servlet-class>
     </servlet>
-    
+
     <servlet>
         <servlet-name>AccessTokenServlet</servlet-name>
         <servlet-class>org.apache.roller.weblogger.webservices.oauth.AccessTokenServlet</servlet-class>
@@ -351,7 +357,7 @@
         <servlet-name>MediaResourceServlet</servlet-name>
         <url-pattern>/roller-ui/rendering/media-resources/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet-mapping>
         <servlet-name>CommentServlet</servlet-name>
         <url-pattern>/roller-ui/rendering/comment/*</url-pattern>
@@ -431,6 +437,11 @@
         <url-pattern>/roller-services/opensearch/*</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>WebjarsServlet</servlet-name>
+        <url-pattern>/webjars/*</url-pattern>
+    </servlet-mapping>
+
     <session-config>
       <session-timeout><%= @session_timeout -%></session-timeout>
     </session-config>
@@ -460,7 +471,7 @@
     <resource-ref>
         <res-ref-name>jdbc/rollerdb</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>      
+        <res-auth>Container</res-auth>
         <mapped-name>jdbc/roller</mapped-name>
     </resource-ref>
 
@@ -470,6 +481,13 @@
         <res-auth>Container</res-auth>
         <mapped-name>Session</mapped-name>
     </resource-ref>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 
     <!--
          Uncomment below to use SSL on sensitive pages.  Alternatively,

@@ -398,8 +398,6 @@ thrift={ldap:cn=thrift,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 thrift-pmc={reuse:pit-authorization:thrift-pmc}
 tika={ldap:cn=tika,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tika-pmc={reuse:pit-authorization:tika-pmc}
-tiles={ldap:cn=tiles,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-tiles-pmc={reuse:pit-authorization:tiles-pmc}
 tinkerpop={ldap:cn=tinkerpop,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 tinkerpop-pmc={reuse:pit-authorization:tinkerpop-pmc}
 tomee={ldap:cn=tomee,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -529,6 +527,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 @archiva = rw
 
 [/archiva/attic]
+* = r
+
+[/archiva/site-content]
 * = r
 
 [/archiva/sandbox]
@@ -688,6 +689,11 @@ projects_role = rw
 @committers = rw
 
 # migrated to git
+[/commons/proper]
+@commons-pmc = rw
+* = r
+
+# migrated to git
 [/commons/proper/csv]
 @commons-pmc = rw
 * = r
@@ -732,6 +738,9 @@ projects_role = rw
 
 [/creadur]
 @creadur = rw
+
+[/creadur/rat]
+* = r
 
 [/crunch]
 @crunch = rw
@@ -1543,8 +1552,7 @@ svn-site-role = rw
 @oozie = rw
 
 [/openjpa]
-@openjpa=rw
-@openjpa-pmc=rw
+*=r
 
 [/openmeetings]
 * = r
@@ -1560,6 +1568,9 @@ svn-site-role = rw
 
 [/openoffice]
 @openoffice = rw
+
+[/openoffice/pmc]
+* =
 
 [/openwebbeans]
 @openwebbeans = rw
@@ -1725,6 +1736,10 @@ svn-site-role = rw
 
 [/sling]
 * = r
+# temp allow these to clean up tags
+rombert = rw
+bdelacretaz = rw
+olli = rw
 
 [/spamassassin]
 @spamassassin = rw
@@ -1840,7 +1855,7 @@ svn-role = rw
 @tika = rw
 
 [/tiles]
-@tiles = rw
+@attic-pmc=rw
 
 [/tomcat]
 @tomcat = rw

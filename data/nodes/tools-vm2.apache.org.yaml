@@ -11,11 +11,17 @@ classes:
   - jenkins_node_monitor
   - loggy
   - rootbin_asf
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - svnwcsub
   - vhosts_asf::vhosts
   - vhosts_asf::modules
-  - zmanda_asf::client
+
+rsync_asf::cron_hour: 21
+rsync_asf::cron_minute: 07
+
+rsync_asf::fslist:
+  - /x1
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
@@ -93,38 +99,38 @@ vhosts_asf::modules::modules:
 
 vhosts_asf::vhosts::vhosts:
   status:
-    vhost_name: 'jira.status.apache.org'
+    vhost_name: '*'
     port: 80
-    docroot: '/x1/www/status'
+    docroot: '/var/www/uptime'
     default_vhost: true
     manage_docroot: false
     servername: 'status.apache.org'
     serveradmin: 'users@infra.apache.org'
-    directoryindex: 'index.html manage.cgi'
+    directoryindex: 'index.html'
     options:
       - Indexes
       - FollowSymLinks
       - MultiViews
       - ExecCGI
     custom_fragment: |
-      AddHandler cgi-script .cgi
+       AddHandler cgi-script .cgi
 
   status-ssl:
-    vhost_name: 'jira.status.apache.org'
+    vhost_name: '*'
     port: 443
     ssl: true
-    docroot: '/x1/www/status'
+    docroot: '/var/www/uptime'
     manage_docroot: false
     servername: 'status.apache.org'
     serveradmin: 'users@infra.apache.org'
     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
-    directoryindex: 'index.html manage.cgi'
+    directoryindex: 'index.html'
     options:
       - Indexes
       - FollowSymLinks
       - MultiViews
       - ExecCGI
     custom_fragment: |
-      AddHandler cgi-script .cgi
+       AddHandler cgi-script .cgi

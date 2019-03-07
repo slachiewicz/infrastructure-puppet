@@ -53,15 +53,24 @@ apache::mod::dir::indexes:
   - 'index.xhtml'
 
 apache::mod::event::listenbacklog:           '1023'
-apache::mod::event::maxclients:              '2500'
-apache::mod::event::maxconnectionsperchild:  '200000'
-apache::mod::event::maxrequestworkers:       '2500'
-apache::mod::event::maxsparethreads:         '800'
+apache::mod::event::maxclients:              '5000'
+apache::mod::event::maxconnectionsperchild:  '2500000'
+apache::mod::event::maxrequestworkers:       '5000'
+apache::mod::event::maxsparethreads:         '1500'
 apache::mod::event::minsparethreads:         '500'
-apache::mod::event::serverlimit:             '25'
+apache::mod::event::serverlimit:             '20'
 apache::mod::event::startservers:            '5'
-apache::mod::event::threadlimit:             '2500'
-apache::mod::event::threadsperchild:         '100'
+apache::mod::event::threadlimit:             '5000'
+apache::mod::event::threadsperchild:         '250'
+
+# Request timeouts:
+## handshake: 5 seconds to do TLS shake (not available yet!)
+## header: between 5 and 10 seconds for headers, adjust if data comes in
+## body: 4-10 secs for body, though we generally don't use it on www.a.o
+## For all, each 500 bytes received adds one second of allowed time, up
+## to the max limit (10 seconds)
+apache::mod::reqtimeout::timeouts:            ['header=5-10,MinRate=500', 'body=4-10,MinRate=500']
+
 apache::mod::status::allow_from:
   - 'All'
 apache::mod::status::apache_version:         '2.3' # Force module to use Allow from syntax and actually allow anyone to check
@@ -101,16 +110,14 @@ logrotate::rule:
     name: 'tlp_web_logs'
     path: '/x1/logs/*.log'
     ensure: 'present'
-    compress: true
-    compressoptions: '-9'
-    rotate: 7
+    compress: false
+    rotate: 2
     create_owner: 'root'
     create_group: 'adm'
     rotate_every: 'day'
     create_mode: '0644'
     missingok: true
     dateext: true
-    delaycompress: false
     ifempty: false
     create: true
     sharedscripts: true
@@ -639,6 +646,10 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       Redirect permanent /c http://archive.apachecon.com/c
+      <Directory /var/www/apachecon.com>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
 
   apachecon-ssl:
     vhost_name: '*'
@@ -657,6 +668,10 @@ vhosts_asf::vhosts::vhosts:
     ssl_key: '/etc/ssl/private/apachecon.com.key'
     custom_fragment: |
       Redirect permanent /c http://archive.apachecon.com/c
+      <Directory /var/www/apachecon.com>
+        Options +Includes
+        AddOutputFilter INCLUDES .html
+      </Directory>
 
   apachecon-archive:
     vhost_name: '*'

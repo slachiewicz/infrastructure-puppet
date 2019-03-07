@@ -13,12 +13,20 @@ classes:
   - kif
   - loggy
   - pad_asf
+  - rsync_asf
   - selfserve
   - selfserve_portal
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
   - vhosts_asf::vhosts
-  - zmanda_asf::client
+
+rsync_asf::cron_hour: 20
+rsync_asf::cron_minute: 49
+
+rsync_asf::fslist:
+  - /usr/local
+  - /var/www
+  - /var/log
 
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
@@ -412,6 +420,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: 'selfserve.apache.org.ssl_access.log'
     error_log_file: 'selfserve.apache.org.ssl_error.log'
     custom_fragment: |
+      Timeout 14400
       AddHandler cgi-script .cgi
       AddHandler lua-script .lua
       <Directory /var/www/selfserve-portal/site/cgi-bin>
@@ -419,8 +428,8 @@ vhosts_asf::vhosts::vhosts:
         AllowOverride None
         Require all granted
       </Directory>
-      # Restrict access to jira,conf,mail,git to chairs + root.
-      <LocationMatch "^/(cgi-bin|mail|jira|confluence|git)">
+      # Restrict access to jira,conf,mail to chairs + root.
+      <LocationMatch "^/(cgi-bin|mail|jira|confluence|moin)">
         Options +ExecCGI -MultiViews +FollowSymLinks
         AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
         AuthName "ASF Members or Project Chairs Only!"
@@ -436,5 +445,6 @@ vhosts_asf::vhosts::vhosts:
         LuaHookAuthChecker /var/www/selfserve-portal/tools/authz.lua handler
       </LocationMatch>
       Alias /cgi-bin/ss.lua /var/www/git-setup/ss.lua
+      Redirect permanent /git.html https://gitbox.apache.org/setup/newrepo.html
       ErrorDocument 401 /401.html
       ErrorDocument 403 /401.html

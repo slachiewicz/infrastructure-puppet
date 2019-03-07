@@ -2,8 +2,8 @@
 
 use Net::LDAP;
 
-my $LDAP_SERVER="ldap1-us-west.apache.org";
-my $LDAP_CAFILE="/usr/local/etc/openldap/clients/us/cacerts/cacert.pem";
+my $LDAP_SERVER="ldap-us-ro.apache.org";
+my $LDAP_CAFILE="/etc/ldap/cacerts/ldap-client.pem";
 my $LDAP_BASE="ou=people,dc=apache,dc=org";
 
 my $ldap = Net::LDAP->new(

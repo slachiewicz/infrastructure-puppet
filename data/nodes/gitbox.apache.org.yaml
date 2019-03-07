@@ -7,11 +7,18 @@ classes:
   - gitbox
   - gitbox::roleaccount
   - blocky
+  - kif
   - loggy
   - rootbin_asf
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::modules
-  - zmanda_asf::client
+
+rsync_asf::cron_hour: 20
+rsync_asf::cron_minute: 07
+
+rsync_asf::fslist:
+  - /x1
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '30'
@@ -24,7 +31,7 @@ apache::serveradmin:        'users@infra.apache.org'
 apache::mpm_module:         'event'
 apache::mod::event::listenbacklog: '511'
 apache::mod::event::maxclients: '250'
-apache::mod::event::maxconnectionsperchild: '20000'
+apache::mod::event::maxconnectionsperchild: '250000'
 apache::mod::event::maxrequestworkers: '500'
 apache::mod::event::maxsparethreads: '250'
 apache::mod::event::minsparethreads: '150'
@@ -40,19 +47,19 @@ cron:
   # MFA: Collate MFA status for org members
   mfa:
     user: 'root'
-    minute: [5,35]
+    minute: [15]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python mfa.py'
   # Grouper: invite gitbox members to their repos/teams
   grouper:
     user: 'root'
-    minute: [10,40]
+    minute: [30]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python grouper.py'
   # GHAdd: Invite people to ASF GH Org based on LDAP
   ghadd:
     user: 'root'
-    minute: [0,30]
+    minute: [0]
     hour: '*'
     command: 'cd /x1/gitbox/matt/tools/ && python ghadd.py'
   # JSONStats: collect traffic stats from GH
@@ -91,6 +98,8 @@ vhosts_asf::modules::modules:
     name: 'sed'
   cgi:
     name: 'cgi'
+  lua:
+    name: 'lua'
 
 gitbox::custom_fragment_80: |
       <Directory /x1/git/htdocs>
@@ -100,6 +109,10 @@ gitbox::custom_fragment_80: |
 
 gitbox::custom_fragment_443: |
       ServerName gitbox.apache.org
+      Timeout 1200
+      LuaScope conn
+      LuaQuickHandler /var/www/rate-limit.lua before
+      LuaHookLog /var/www/rate-limit.lua after
       SetEnv PATH /bin:/usr/bin:/usr/local/bin
       SetEnv ASFGIT_ADMIN /x1/gitbox/
       SetEnv WRITE_LOCK /etc/nocommit
@@ -159,6 +172,7 @@ gitbox::custom_fragment_443: |
       </Directory>
       # Perms for gitweb
       <Directory /usr/lib/cgi-bin>
+          AllowOverride FileInfo
           require all granted
           Options ExecCGI FollowSymlinks
           SetHandler perl-script
@@ -176,7 +190,7 @@ gitbox::custom_fragment_443: |
                   pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
                   git-(upload|receive)-pack))$" \
           /usr/lib/git-core/git-http-backend/$2
-      ScriptAliasMatch /repos/([^/]+) /usr/lib/cgi-bin/gitweb.cgi
+      AliasMatch /repos/([^/]+) /usr/lib/cgi-bin/gitweb.cgi
       RewriteRule ^/repos/([^/]+)/$ /repos/$1 [R]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?$ /repos/$1?p=$2.git [R]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/commit/(.*)$ /repos/$1?p=$2.git;a=commit;h=$3 [R,NE]

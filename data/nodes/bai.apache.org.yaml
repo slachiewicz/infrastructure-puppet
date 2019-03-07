@@ -4,11 +4,9 @@ classes:
   - rootbin_asf
   - rsync::server
   - rsync_bai_asf
-  - s3fs
   - ssl::name::bai_stunnel
   - ssl::name::wildcard_apache_org
   - stunnel
-  - zmanda_asf::server
   - zfs_on_ubuntu
   - unattended_upgrades
 
@@ -39,6 +37,12 @@ rsync::server::module:
     path: '/x1/backups/bil/./target/'
     hosts_allow: '127.0.0.1 140.211.11.118'
     auth_users: 'apb-bil'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  bz-he-de:
+    path: '/x1/backups/bz-he-de/./target/'
+    hosts_allow: '127.0.0.1 148.251.237.210'
+    auth_users: 'apb-bz-he-de'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
   eir:
@@ -143,7 +147,7 @@ rsync::server::module:
   mysql3-us-west:
     path: '/x1/backups/mysql3-us-west/./target/'
     hosts_allow: '127.0.0.1 209.188.14.131'
-    auth_users: 'apb-mysql'
+    auth_users: 'apb-mysql3-us-west'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
   mysql1-il-eu:
@@ -198,6 +202,90 @@ rsync::server::module:
     path: '/x1/backups/git1-us-west/./target/'
     hosts_allow: '127.0.0.1 140.211.11.23'
     auth_users: 'apb-git1-us-west'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  gitbox:
+    path: '/x1/backups/gitbox/./target/'
+    hosts_allow: '127.0.0.1 52.202.80.70'
+    auth_users: 'apb-gitbox'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  home:
+    path: '/x1/backups/home/./target/'
+    hosts_allow: '127.0.0.1 163.172.16.173'
+    auth_users: 'apb-home'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  jira-lw-us:
+    path: '/x1/backups/jira-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.139'
+    auth_users: 'apb-jira-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  mbox-vm:
+    path: '/x1/backups/mbox-vm/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.138'
+    auth_users: 'apb-mbox-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  moin-vm:
+    path: '/x1/backups/moin-vm/./target/'
+    hosts_allow: '127.0.0.1 163.172.69.106'
+    auth_users: 'apb-moin-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  psql01-lw-us:
+    path: '/x1/backups/psql01-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.141'
+    auth_users: 'apb-psql01-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  repository-vm2:
+    path: '/x1/backups/repository-vm2/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.140'
+    auth_users: 'apb-repository-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  devops:
+    path: '/x1/backups/devops/./target/'
+    hosts_allow: '127.0.0.1 140.211.11.135'
+    auth_users: 'apb-devops'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  cwiki-vm4:
+    path: '/x1/backups/cwiki-vm4/./target/'
+    hosts_allow: '127.0.0.1 209.188.14.145'
+    auth_users: 'apb-cwiki-vm4'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  fisheye:
+    path: '/x1/backups/fisheye/./target/'
+    hosts_allow: '127.0.0.1 138.201.63.136'
+    auth_users: 'apb-fisheye'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  tools-vm:
+    path: '/x1/backups/tools-vm/./target/'
+    hosts_allow: '127.0.0.1 37.48.69.235'
+    auth_users: 'apb-tools-vm'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  tools-vm2:
+    path: '/x1/backups/tools-vm2/./target/'
+    hosts_allow: '127.0.0.1 62.210.60.242'
+    auth_users: 'apb-tools-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  reviews-vm2:
+    path: '/x1/backups/reviews-vm2/./target/'
+    hosts_allow: '127.0.0.1 209.188.14.132'
+    auth_users: 'apb-reviews-vm2'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
+  roller-vm2:
+    path: '/x1/backups/roller-vm2/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.130'
+    auth_users: 'apb-roller-vm2'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
 

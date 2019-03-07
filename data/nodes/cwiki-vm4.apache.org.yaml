@@ -10,11 +10,30 @@ classes:
   - blocky
   - loggy
   - datadog_agent::integrations::apache
+  - httpd_rate_limiter
   - oraclejava::install
+  - rsync_asf
   - ssl::name::cwiki_apache_org 
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
+
+base::basepackages:
+ - 'lua5.2'
+ - 'liblua5.2-dev'
+ - 'mod-lua-asf'
+
+rsync_asf::cron_hour: 16
+rsync_asf::cron_minute: 02
+
+rsync_asf::fslist:
+  - /x1/cwiki/confluence-data
+
+httpd_rate_limiter::interval:  180
+httpd_rate_limiter::cpumax:    90
+httpd_rate_limiter::autoconf:  true
+httpd_rate_limiter::asfilter:  true
+httpd_rate_limiter::whitelist: "^/confluence/synchrony%-proxy/ ^/synchrony/"
 
 apache::keepalive:          'On'
 apache::keepalive_timeout:  '15'
@@ -22,15 +41,14 @@ apache::timeout: 600
 apache::mpm_module:         'event'
 
 apache::mod::event::listenbacklog: '511'
-apache::mod::event::maxclients: '500'
 apache::mod::event::maxconnectionsperchild: '200000'
-apache::mod::event::maxrequestworkers: '500'
-apache::mod::event::maxsparethreads: '250'
-apache::mod::event::minsparethreads: '150'
-apache::mod::event::serverlimit: '10'
-apache::mod::event::startservers: '5'
-apache::mod::event::threadlimit: '500'
-apache::mod::event::threadsperchild: '50'
+apache::mod::event::maxrequestworkers: '1000'
+apache::mod::event::maxsparethreads: '500'
+apache::mod::event::minsparethreads: '250'
+apache::mod::event::serverlimit: '5'
+apache::mod::event::startservers: '2'
+apache::mod::event::threadlimit: '1250'
+apache::mod::event::threadsperchild: '250'
 
 # cwiki_asf class variables.
 cwiki_asf::confluence_version: '6.9.0'

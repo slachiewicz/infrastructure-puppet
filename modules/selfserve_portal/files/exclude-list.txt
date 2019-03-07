@@ -1,0 +1,53 @@
+# General files/dirs to exclude
+
+data/event-log
+data/edit-log
+data/intermap.txt
+data/meta
+data/plugin
+.svn**
+cache**
+
+# Below are common pages provided by Moin, we dont need them.
+# AdminGroup and ContributorsGroup are ASF created auth pages.
+
+data/pages/[Bb]ad[Cc]ontent
+data/pages/[Cc]ategory[Cc]ategory*
+data/pages/WikiSandBox
+data/pages/AdminGroup
+data/pages/ContributorsGroup
+data/pages/PermissionDenied*
+data/pages/SystemInfo*
+data/pages/[Rr]andom[Pp]age
+data/pages/WikiSandBox
+data/pages/WikiWikiWeb
+data/pages/WikiHomePage
+data/pages/SpecialWikiPages
+data/pages/SiteNavigation
+data/pages/FindPage
+data/pages/TitleIndex
+data/pages/WordIndex
+data/pages/WantedPages
+data/pages/OrphanedPages
+data/pages/PageSize
+data/pages/EventStats**
+data/pages/WikiName
+data/pages/HelpOn*
+data/pages/HelpMisc*
+data/pages/HelpFor*
+data/pages/[Hh]elp[Ii]ndex
+data/pages/HelpTemplate
+data/pages/HelpContents
+data/pages/InterWiki
+data/pages/AbandonedPages
+data/pages/XsltVersion
+data/pages/LocalBadContent
+data/pages/LocalSiteMap
+data/pages/MoinMoin(2f)InstallDocs
+data/pages/MoinMoin
+
+# spam pages
+data/pages/wow(2b)power(2b)leveling
+data/pages/ringtones
+data/pages/Britney(2d)Spears*
+

@@ -1,8 +1,17 @@
 ---
 classes:
-  - zmanda_asf::client
+  - apache
   - mboxer
   - ssl::name::wildcard_apache_org
+  - vhosts_asf::vhosts
+  - vhosts_asf::modules
+  - rsync_asf
+
+rsync_asf::cron_hour: 18
+rsync_asf::cron_minute: 37
+
+rsync_asf::fslist:
+  - /x1
 
 base::basepackages:
   - jed
@@ -28,3 +37,33 @@ ssh_asf::server_options:
     X11Forwarding: 'no'
     AllowTCPForwarding: 'no'
     PermitTunnel: 'no'
+
+vhosts_asf::modules::modules:
+  cgi:
+    name: 'cgi'
+
+vhosts_asf::vhosts::vhosts:
+  status:
+    vhost_name: '*'
+    port: 80
+    docroot: '/var/www/html'
+    default_vhost: true
+    manage_docroot: false
+    servername: 'mbox-vm.apache.org'
+    serveradmin: 'users@infra.apache.org'
+    directoryindex: 'index.html'
+    options:
+      - Indexes
+      - FollowSymLinks
+      - MultiViews
+      - ExecCGI
+    custom_fragment: |
+      AddHandler cgi-script .cgi
+
+cron:
+  # Roundtrip checks every 5 minutes
+  probe:
+    user: 'root'
+    minute: '*/5'
+    hour: '*'
+    command: 'python3 /usr/local/etc/mboxer/tools/probe.cgi probe'

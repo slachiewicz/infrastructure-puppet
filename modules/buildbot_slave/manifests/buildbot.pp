@@ -28,6 +28,7 @@ class buildbot_slave::buildbot (
     'apache-maven-3.5.0',
     'apache-maven-3.5.2',
     'apache-maven-3.5.4',
+    'apache-maven-3.6.0',
     ],
   $java_asfpackages = [
     'harmony-jdk-713673',
@@ -43,6 +44,7 @@ class buildbot_slave::buildbot (
     'jdk1.8.0_144-unlimited-security',
     'jdk1.8.0_152',
     'jdk1.8.0_172',
+    'jdk1.8.0_191',
     'jdk-9-ea-b132',
     'jdk-9-ea-b139',
     'jigsaw-jdk-9-ea-b156',
@@ -63,7 +65,13 @@ class buildbot_slave::buildbot (
     'jdk-11-ea+19',
     'jdk-11-ea+22',
     'jdk-11-ea+28',
+    'jdk-11.0.1',
     'openjdk-jdk-10.0.2',
+    'openjdk-12-ea+18',
+    'openjdk-12-ea+28',
+    'openjdk-12-ea+33',
+    'openjdk-13-ea+4',
+    'openjdk-13-ea+9',
 ],
   $tools = [
     'ant',
@@ -150,18 +158,18 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/maven/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
   file { '/home/buildslave/slave/tools/maven/latest3':
     ensure => link,
-    target => '/usr/local/asfpackages/maven/apache-maven-3.5.4',
+    target => '/usr/local/asfpackages/maven/apache-maven-3.6.0',
   }
 
   # java symlinks - old java location, new java location, and latest symlinks
   buildbot_slave::symlink_asfpackages  { $java_asfpackages: }
   file { '/home/buildslave/slave/tools/java/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_191',
   }
   file { '/home/buildslave/slave/tools/java/latest1.5':
     ensure => link,
@@ -177,7 +185,7 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest1.8':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk1.8.0_172',
+    target => '/usr/local/asfpackages/java/jdk1.8.0_191',
   }
   file { '/home/buildslave/slave/tools/java/latest1.9':
     ensure => link,
@@ -189,7 +197,14 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest11':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk-11-ea+28',
+    target => '/usr/local/asfpackages/java/jdk-11.0.1',
   }
-
+  file { '/home/buildslave/slave/tools/java/latest12':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/openjdk-12-ea+33',
+  }
+  file { '/home/buildslave/slave/tools/java/latest13':
+    ensure => link,
+    target => '/usr/local/asfpackages/java/openjdk-13-ea+9',
+  }
 }

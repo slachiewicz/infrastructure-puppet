@@ -126,15 +126,19 @@ function renderRepos(json) {
             obj.innerHTML = "You do not seem to have access to any repositories. Please make sure you are in the correct LDAP groups!";
         }
         else {
+            var foo = [];
             for (var i in projects) {
                 var project = projects[i];
                 var list = json[project];
                 list.sort();
                 var li = "<li><b>" + project + ":\n<ul>";
                 if (list.length > 0) {
-                    for (var r in list) {
+                    for (var r = 0; r < list.length; r++) {
                         var repo = list[r];
-                        li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+                        if (foo.includes(repo)) {} else {
+                         foo.push(repo);
+                         li += "<li><a href='https://github.com/apache/" + repo + "'>" + repo + "</a></li>";
+                        }
                     }
                 } else {
                     li += "<li><i>No repositories for the " + project + " project served from gitbox yet...</i></li>";
@@ -197,7 +201,7 @@ function renderPage(json) {
             obj.setAttribute("class", "tc_good tc");
             wa = true;
         } else if (mfa === false) {
-            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org. Please allow 15 minutes for your MFA status to propagate.";
+            s = "Write access suspended. Please make sure you are a part of the ASF Organisation on GitHub and have 2FA enabled. Visit <a href='https://id.apache.org/'>id.apache.org</a> and set your GitHub ID to be invited to the org. Please allow up to an hour for your MFA status to propagate (refreshes at *:15:00).";
             t = "<b style='color: red;'>MFA DISABLED</b>";
             obj.setAttribute("class", "tc_bad tc");
         }

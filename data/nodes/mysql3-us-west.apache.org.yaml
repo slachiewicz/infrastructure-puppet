@@ -6,6 +6,8 @@ classes:
   - zmanda_asf::client
 
 mysql_asf::backup::rsync_offsite: 'true'
+mysql_asf::backup::rsync_user: 'apb-mysql3-us-west'
+
 
 datadog_agent::integrations::mysql::host: "%{::ipaddress_eth1}"
 datadog_agent::integrations::mysql::user: 'datadog'

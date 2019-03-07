@@ -1,5 +1,5 @@
 require 'ipaddr'
-require 'net/http'
+require 'open-uri'
 require 'json'
 
 Facter.add("asfosrelease") do
@@ -81,24 +81,34 @@ Facter.add("asfcolo") do
   end
 end
 
+Facter.add("external_ip") do
+  setcode do
+    external_ip_api_url = URI('http://ip-api.com/json/')
+    # make the call to ip-api to get 'org' for external_ip_api_url
+    response = open(external_ip_api_url).read
+    json_response = JSON.parse(response)
+    external_ip = json_response["query"]
+  end
+end
+
 Facter.add("dd_autotag_colo") do
   setcode do
     # should get local external IP from ip-api.com, no need for fqdn
     external_ip_api_url = URI('http://ip-api.com/json/')
     # make the call to ip-api to get 'org' for external_ip_api_url
-    response = Net::HTTP.get(external_ip_api_url)
+    response = open(external_ip_api_url).read
     json_response = JSON.parse(response)
-    dc_org = json_response["org"].downcase
+    dc_loc = json_response["isp"].downcase
     dc_country = json_response["country"].downcase
     #itterate through json_response and assign yaml from ../data/colo dir
     case
-      when dc_org.include?('amazon')
+      when dc_loc.include?('amazon')
         "aws"
-      when dc_org.include?('google')
+      when dc_loc.include?('google')
         "google"
-      when dc_org.include?('hetzner')
+      when dc_loc.include?('hetzner')
         "hetzner"
-      when dc_org.include?('leaseweb')
+      when dc_loc.include?('leaseweb')
         # split out hosts based on geolocation
         case
           when dc_country == "netherlands"
@@ -106,20 +116,20 @@ Facter.add("dd_autotag_colo") do
           when dc_country == "united states"
             "leaseweb_us"
           end
-      when dc_org.include?('microsoft azure')
+      when dc_loc.include?('microsoft_corporation')
         "azure"
-      when dc_org.include?('network for education')
+      when dc_loc.include?('network_education_and_research_in_oregon_nero')
         "osu"
-      when dc_org.include?('online sas')
+      when dc_loc.include?('online')
         "online.net"
-      when dc_org.include?('rackspace')
+      when dc_loc.include?('rackspace')
         "rackspace"
-      when dc_org.include?('secured servers')
+      when dc_loc.include?('secured servers')
         "pnap"
-      when dc_org.include?('yahoo')
+      when dc_loc.include?('yahoo')
         "yahoo"
       else
-        "default"
+        dc_loc
     end
   end
 end
@@ -143,12 +153,12 @@ Facter.add("noderole") do
       "jenkins"
     elsif hostname.include? "jenkins-win" # include all Windows nodes
       "jenkins-win"
-    elsif hostname.include?("jenkins-beam") || hostname.include?("beam-jenkins") # beam is infra mangaged
-      "jenkins"
-    elsif hostname.include?("jenkins-cassandra") 
+    elsif hostname.include?("jenkins-beam") || hostname.include?("beam-jenkins")
+      "jenkins-external"
+    elsif hostname.include?("jenkins-cassandra")
       "jenkins-external"
     elsif hostname =~ /openwhisk-vm\d-he-de/ # OpenWhisk Jenkins boxes
-      "jenkins"
+      "jenkins-external"
     else
       "default"
     end
