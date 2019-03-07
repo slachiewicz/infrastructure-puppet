@@ -6,9 +6,21 @@ class blocky (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
-){
+)
+{
 
   require python
+  
+  python::pip {
+    'netaddr' :
+      ensure => present;
+    'asfpy' :
+      ensure  => present,
+    'requests' :
+      ensure => present,
+    'pyyaml' :
+      ensure  => present;
+    }
 
   cron {
     'restart_blocky':
