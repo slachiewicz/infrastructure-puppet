@@ -45,11 +45,11 @@ class blocky (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/blocky/blocky.py';
-    '/usr/local/etc/blocky/blocky.cfg':
+    '/usr/local/etc/blocky/blocky.yaml':
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => 'puppet:///modules/blocky/blocky.cfg';
+      source => 'puppet:///modules/blocky/blocky.yaml';
     }
 
     -> service { $service_name:
@@ -58,7 +58,7 @@ class blocky (
         hasstatus => true,
         subscribe => [
           File['/usr/local/etc/blocky/blocky.py'],
-          File['/usr/local/etc/blocky/blocky.cfg']
+          File['/usr/local/etc/blocky/blocky.yaml']
         ]
     }
 }
