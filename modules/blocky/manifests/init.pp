@@ -22,6 +22,12 @@ class blocky (
       ensure  => present;
     }
 
+  exec { 'pkill -F /var/run/blocky.pid && rm /var/run/blocky.pid':
+    cwd     => '/var/tmp',
+    path    => ['/usr/bin', '/usr/sbin',],
+    onlyif  => 'test -f /var/run/blocky.pid'
+  }
+
   cron {
     'restart_blocky':
       ensure  => absent, 
