@@ -22,12 +22,6 @@ class blocky (
       ensure  => present;
     }
 
-  cron {
-    'restart_blocky':
-    user    => root,
-    command => '/usr/sbin/service blocky restart',
-    minute  => '5';
-    }
 
   file {
     '/usr/local/etc/blocky':
