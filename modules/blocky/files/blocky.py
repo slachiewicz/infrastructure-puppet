@@ -122,6 +122,8 @@ def inlist(banlist, ip):
    """ Check if an IP or CIDR is listed in iptables,
    either by itself or contained within a block (or the reverse) """
    lines = []
+   if '/0' in ip: # DO NOT WANT
+      return lines
    # First, check verbatim
    for entry in banlist:
       if entry['source'] == ip:
@@ -140,7 +142,7 @@ def inlist(banlist, ip):
    else:
       me = netaddr.IPAddress(ip)
       for entry in banlist:
-         if '/' in entry['source']:
+         if '/' in entry['source'] and '/0' not in entry['source']:
             them = netaddr.IPNetwork(entry['source'])
             if me in them:
                lines.append(entry)
