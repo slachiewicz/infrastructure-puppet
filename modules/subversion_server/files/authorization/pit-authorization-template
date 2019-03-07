@@ -498,6 +498,7 @@ apsecmail = rw
 @exec-officers = rw
 @legal = r
 @audit = r
+@treasurer = rw
 @accounting = rw
 @svnadmins = rw
 @pmc-chairs = rw
