@@ -24,7 +24,7 @@ class blocky (
 
   exec { 'pkill -F /var/run/blocky.pid && rm /var/run/blocky.pid':
     cwd     => '/var/tmp',
-    path    => ['/usr/bin', '/usr/sbin',],
+    path    => ['/usr/bin', '/usr/sbin','/bin/',],
     onlyif  => 'test -f /var/run/blocky.pid'
   }
 
