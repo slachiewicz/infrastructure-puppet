@@ -40,10 +40,10 @@ syslog.openlog('blocky', logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)
 config = ConfigParser.ConfigParser()
 
 es = None
-hostname = socket.gethostname()
-if hostname.find(".apache.org") == -1:
-    hostname = hostname + ".apache.org"
-syslog.syslog(syslog.LOG_INFO, "Starting blocky on %s" % hostname)
+HOSTNAME = socket.gethostname()
+if HOSTNAME.find(".apache.org") == -1:
+    HOSTNAME = HOSTNAME + ".apache.org"
+syslog.syslog(syslog.LOG_INFO, "Starting blocky on %s" % HOSTNAME)
 
 class Daemonize:
     """A generic daemon class.
@@ -191,7 +191,7 @@ def ban(ip, baddies, reason):
                 "--comment",
                 "Banned by Blocky"
                 ])
-            message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (hostname, ip, reason, ip)
+            message = """%s banned %s (%s) - Unban with: sudo iptables -D INPUT -s %s -j DROP -m comment --comment "Banned by Blocky"\n""" % (HOSTNAME, ip, reason, ip)
             syslog.syslog(syslog.LOG_INFO, message)
     except Exception as err:
         syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
@@ -236,10 +236,10 @@ from the Blocky master server.
 
 With regards,
 Blocky.
-    """ % (ip, hostname, hostname, ip)
+    """ % (ip, HOSTNAME, HOSTNAME, ip)
 
         smtpObj = smtplib.SMTP('localhost')
-        smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
+        smtpObj.sendmail("blocky@" + HOSTNAME, ['root@apache.org'], message)
 
     except Exception as err:
         pass
@@ -258,10 +258,10 @@ class Blocky(Thread):
                     # Got a new one?? :)
                     i = baddie['ip']
                     ta = baddie['target']
-                    if not i in baddies and (ta == hostname or ta == '*') and not 'unban' in baddie:
+                    if not i in baddies and (ta == HOSTNAME or ta == '*') and not 'unban' in baddie:
                         reason = baddie.get('reason', 'Unknown reason')
                         ban(i, baddies, reason)
-                    elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
+                    elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == HOSTNAME or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
                         unban(i, baddies)
 
                 time.sleep(180)
