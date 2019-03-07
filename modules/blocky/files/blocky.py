@@ -171,7 +171,7 @@ def ban(ip, baddies, reason):
         # Check if we already have such a ban in place using iptables -C
         try:
             subprocess.check_call([
-                "iptables",
+                "/sbin/iptables",
                 "-C", "INPUT",
                 "-s", ip,
                 "-j", "DROP",
@@ -183,7 +183,7 @@ def ban(ip, baddies, reason):
         except subprocess.CalledProcessError as err:
             # We're here which means the rule didn't exist, so let's add it!
             subprocess.check_call([
-                "iptables",
+                "/sbin/iptables",
                 "-A", "INPUT",
                 "-s", ip,
                 "-j", "DROP",
@@ -206,7 +206,7 @@ def unban(ip, baddies):
     # Check if we already have such a ban in place using iptables -C
     try:
         subprocess.check_call([
-            "iptables",
+            "/sbin/iptables",
             "-C", "INPUT",
             "-s", ip,
             "-j", "DROP",
@@ -218,7 +218,7 @@ def unban(ip, baddies):
         # If we reach this point, the rule exists, and we can remove it
         syslog.syslog(syslog.LOG_INFO, "Unbanning %s" % ip)
         subprocess.check_call([
-            "iptables",
+            "/sbin/iptables",
             "-D", "INPUT",
             "-s", ip,
             "-j", "DROP",
