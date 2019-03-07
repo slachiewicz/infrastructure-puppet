@@ -13,11 +13,11 @@ class blocky (
   
   python::pip {
     'netaddr' :
-      ensure => present,
+      ensure => present;
     'asfpy' :
-      ensure  => present,
+      ensure  => present;
     'requests' :
-      ensure => present,
+      ensure => present;
     'pyyaml' :
       ensure  => present;
     }
