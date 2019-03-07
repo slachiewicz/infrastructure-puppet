@@ -164,6 +164,55 @@ class Daemonize:
         start() or restart()."""
 
 
+def unban(ip, baddies):
+    "Unban a specific IP."
+
+    baddies[ip] = time.time()
+
+    # Check if we already have such a ban in place using iptables -C
+    try:
+        subprocess.check_call([
+            "iptables",
+            "-C", "INPUT",
+            "-s", ip,
+            "-j", "DROP",
+            "-m", "comment",
+            "--comment",
+            "Banned by Blocky"
+            ])
+
+        # If we reach this point, the rule exists, and we can remove it
+        syslog.syslog(syslog.LOG_INFO, "Unbanning %s" % ip)
+        subprocess.check_call([
+            "iptables",
+            "-D", "INPUT",
+            "-s", ip,
+            "-j", "DROP",
+            "-m", "comment",
+            "--comment", "Banned by Blocky"
+            ])
+        message = """From: Blocky <blocky@no-reply@apache.org>
+To: Apache Infrastructure Root <root@apache.org>
+Reply-To: root@apache.org
+Subject: [Blocky] Unbanned %s on %s.
+
+Hi, this is %s.
+I have just unbanned %s on this machine due to leniency
+from the Blocky master server.
+
+With regards,
+Blocky.
+    """ % (ip, hostname, hostname, ip)
+
+        smtpObj = smtplib.SMTP('localhost')
+        smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
+
+    except Exception as err:
+        pass
+
+    if ip in baddies:
+        del baddies[ip]
+
 
 class Blocky(Thread):
     def run(self):
@@ -208,48 +257,8 @@ class Blocky(Thread):
                             syslog.syslog(syslog.LOG_INFO, "Blocky encountered an error: " + str(err))
                         baddies[i] = time.time()
                     elif (not i in baddies or (i in baddies and (time.time() - baddies[i]) > 1800)) and (ta == hostname or ta == '*') and 'unban' in baddie and baddie['unban'] == True:
-                        baddies[i] = time.time()
+                        unban(i, baddies)
 
-                        # Check if we already have such a ban in place using iptables -C
-                        try:
-                            subprocess.check_call([
-                                "iptables",
-                                "-C", "INPUT",
-                                "-s", i,
-                                "-j", "DROP",
-                                "-m", "comment",
-                                "--comment",
-                                "Banned by Blocky"
-                                ])
-                            # If we reach this point, the rule exists, and we can remove it
-                            syslog.syslog(syslog.LOG_INFO, "Unbanning %s" % i)
-                            subprocess.check_call([
-                                "iptables",
-                                "-D", "INPUT",
-                                "-s", i,
-                                "-j", "DROP",
-                                "-m", "comment",
-                                "--comment", "Banned by Blocky"
-                                ])
-                            message = """From: Blocky <blocky@no-reply@apache.org>
-To: Apache Infrastructure Root <root@apache.org>
-Reply-To: root@apache.org
-Subject: [Blocky] Unbanned %s on %s.
-
-Hi, this is %s.
-I have just unbanned %s on this machine due to leniency
-from the Blocky master server.
-
-With regards,
-Blocky.
-    """ % (i, hostname, hostname, i)
-                            smtpObj = smtplib.SMTP('localhost')
-                            smtpObj.sendmail("blocky@" + hostname, ['root@apache.org'], message)
-
-                        except Exception as err:
-                            pass
-                        if i in baddies:
-                            del baddies[i]
                 time.sleep(180)
             except Exception as err:
                 syslog.syslog(syslog.LOG_INFO, "Error while running ban check: %s" % err)
