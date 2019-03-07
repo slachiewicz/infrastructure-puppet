@@ -27,7 +27,7 @@ vhosts_asf::modules::modules:
     name: 'allowmethods'
   lua:
     name: 'lua'
-    
+
 datadog_agent::integrations::elasticsearch::url: 'http://localhost:9200'
 
 dnsclient::nameservers:
@@ -88,6 +88,8 @@ cron:
     minute: [0]
     hour: '2'
     command: 'cd /root/ && python3 curator.py'
+
+loggy::service_ensure: 'stopped'
 
 logrotate::rule:
   apache2:

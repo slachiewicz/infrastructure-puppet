@@ -50,7 +50,7 @@ elasticsearch::instances:
         - 95.216.25.231
         - 95.216.25.232
 
-        
+
 apache::default_vhost: false
 apache::default_ssl_cert:                    '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain:                   '/etc/ssl/certs/wildcard.apache.org.chain'
@@ -68,6 +68,8 @@ apache::mod::event::serverlimit: '6'
 apache::mod::event::startservers: '3'
 apache::mod::event::threadlimit: '300'
 apache::mod::event::threadsperchild: '50'
+
+loggy::service_ensure: 'stopped'
 
 logrotate::rule:
   apache2:
