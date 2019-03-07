@@ -22,7 +22,14 @@ class blocky (
       ensure  => present;
     }
 
-
+  cron {
+    'restart_blocky':
+    ensure  => absent, 
+    user    => root,
+    command => '/usr/sbin/service blocky restart',
+    minute  => '5';
+  }
+    
   file {
     '/usr/local/etc/blocky':
       ensure => directory,
