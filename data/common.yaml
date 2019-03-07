@@ -52,6 +52,7 @@ datadog_agent::tags:
   - 'puppet_version:%{puppetversion}'
   - 'dc:%{dd_autotag_colo}'
   - 'external_ip:%{external_ip}'
+  - 'ubuntu_version:%{asfosrelease}'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
