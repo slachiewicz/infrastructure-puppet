@@ -204,8 +204,8 @@ def note_ban(me, entry):
          'ip': entry['source'],
          'reason': entry.get('reason', "No reason specified")
       })
-   except:
-      pass # If it fails, it fails - we'll continue anyway
+   except request.RequestException:
+      pass # If it fails with a http error, it fails - we'll continue anyway
            # Not sure if we should even syslog that..
 
 def note_unban(me, entry):
@@ -217,7 +217,7 @@ def note_unban(me, entry):
          'ip': entry['source'],
          'reason': entry.get('reason', "No reason specified")
       })
-   except:
+   except requests.RequestException:
       pass # If it fails, it fails - we'll continue anyway
            # Not sure if we should even syslog that..
 
