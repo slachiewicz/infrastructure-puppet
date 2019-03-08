@@ -192,9 +192,9 @@ def run_legacy_checks():
 
       # Unban request
       target = action.get('target', '*')
-      if 'unban' in action:
+      if 'unban' in action and 'ip' in action:
          if target == '*' or target == CONFIG['client']['hostname']:
-            ip = action.get('ip')
+            ip = action.get('ip').strip()
             block = None
             if '/' in ip:
                block = netaddr.IPNetwork(ip)
@@ -217,7 +217,7 @@ def run_legacy_checks():
       # Ban request?
       elif 'ip' in action:
          if target == '*' or target == CONFIG['client']['hostname']:
-            ip = action.get('ip')
+            ip = action.get('ip').strip()
             if ip:
                banit = True
                block = None
