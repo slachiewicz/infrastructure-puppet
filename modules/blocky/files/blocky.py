@@ -63,7 +63,7 @@ def getbans(chain = 'INPUT'):
                   'option': option,
                   'source': source,
                   'destination': destination,
-                  'extensions': extensions
+                  'extensions': extensions,
                }
                
                banlist.append(entry)
@@ -101,7 +101,7 @@ def getbans(chain = 'INPUT'):
                   'option': '---',
                   'source': source,
                   'destination': destination,
-                  'extensions': extensions
+                  'extensions': extensions,
                }
                
                banlist.append(entry)
