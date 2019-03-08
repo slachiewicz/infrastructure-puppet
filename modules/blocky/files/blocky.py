@@ -36,6 +36,8 @@ SYSLOG = None
 def getbans(chain = 'INPUT'):
    """ Gets a list of all bans in a chain """
    banlist = []
+   
+   # Get IPv4 list
    tries = 0
    while tries < 10:
       tries += 1
@@ -65,19 +67,61 @@ def getbans(chain = 'INPUT'):
                }
                
                banlist.append(entry)
-         return banlist
+         break
       except subprocess.CalledProcessError as err:
          if 'you must be root' in err.output:
             print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
             sys.exit(-1)
          time.sleep(1) # write lock, probably
+   # Get IPv6 list
+   tries = 0
+   if not os.path.exists("/sbin/ip6tables"):
+      return banlist
+   while tries < 10:
+      tries += 1
+      try:
+         out = subprocess.check_output(['/sbin/ip6tables', '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
+         bans = 0
+         for line in out.split("\n"):
+            # Unlike ipv4 iptables, the 'option' thing is blank here, so omit it
+            m = re.match(r"^(\d+)\s+([A-Z]+)\s+(all|tcp|udp)\s+([0-9a-f.:/]+)\s+([0-9a-f.:/]+)\s*(.*?)$", line)
+            if m:
+               ln = m.group(1)
+               action = m.group(2)
+               protocol = m.group(3)
+               source = m.group(4)
+               destination = m.group(5)
+               extensions = m.group(6)
+               
+               entry = {
+                  'chain': chain,
+                  'linenumber': ln,
+                  'action': action,
+                  'protocol': protocol,
+                  'option': '---',
+                  'source': source,
+                  'destination': destination,
+                  'extensions': extensions
+               }
+               
+               banlist.append(entry)
+         break
+      except subprocess.CalledProcessError as err:
+         if 'you must be root' in err.output:
+            print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
+            sys.exit(-1)
+         time.sleep(1) # write lock, probably
+   return banlist
       
 def iptables(ip, action):
     """ Runs an iptables action on an IP (-A, -C or -D), returns true if
         succeeded, false otherwise """
     try:
+        exe = "/sbin/iptables"
+        if ':' in ip:
+            exe = "/sbin/ip6tables"
         subprocess.check_call([
-            "/sbin/iptables",
+            exe,
             action, "INPUT",
             "-s", ip,
             "-j", "DROP",
@@ -91,7 +135,7 @@ def iptables(ip, action):
         print("/sbin/iptables not found or inaccessible: %s" % err)
         return False
     return True
-
+   
 
 def ban(ip):
    """ Bans an IP or CIDR block generically """
@@ -99,22 +143,25 @@ def ban(ip):
       return True
    return False
 
-def unban_line(linenumber, chain = 'INPUT'):
+def unban_line(ip, linenumber, chain = 'INPUT'):
     """ Unbans an IP or block by line number """
     if not linenumber:
       return
+    exe = "/sbin/iptables"
+    if ':' in ip:
+      exe = "/sbin/ip6tables"
     if DEBUG:
       print("Would have removed line %s from %s chain in iptables here..." % (linenumber, chain))
       return True
     try:
         subprocess.check_call([
-            "/sbin/iptables",
+            exe,
             '-D', chain, linenumber
         ], stderr=open(os.devnull, 'wb'))
     except subprocess.CalledProcessError as err: # iptables error, expected result variant
         return False
     except OSError as err:
-        print("/sbin/iptables not found or inaccessible: %s" % err)
+        print("%s not found or inaccessible: %s" % (exe, err))
         return False
     return True
 
@@ -142,7 +189,7 @@ def inlist(banlist, ip):
    else:
       me = netaddr.IPAddress(ip)
       for entry in banlist:
-         if '/' in entry['source'] and '/0' not in entry['source']:
+         if '/' in entry['source'] and '/0' not in entry['source']: # blocks, but not /0
             them = netaddr.IPNetwork(entry['source'])
             if me in them:
                lines.append(entry)
@@ -209,7 +256,7 @@ def run_legacy_checks():
                if found:
                   entry = found[0]
                   syslog.syslog(syslog.LOG_INFO, "Removing %s from block list (found at line %s as %s)" % (ip, entry['linenumber'], entry['source']))
-                  if not unban_line(found[0]['linenumber']):
+                  if not unban_line(ip, found[0]['linenumber']):
                      syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
                   else:
                      mylist = getbans() # Refresh after action succeeded
@@ -293,7 +340,7 @@ def run_new_checks():
                if found:
                   entry = found[0]
                   syslog.syslog(syslog.LOG_INFO, "Removing %s from block list (found at line %s as %s)" % (ip, entry['linenumber'], entry['source']))
-                  if not unban_line(found[0]['linenumber']):
+                  if not unban_line(ip, found[0]['linenumber']):
                      syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
                   else:
                      note_unban(CONFIG['client']['hostname'], found[0]['linenumber'])
@@ -335,7 +382,6 @@ def run_new_checks():
 
 def psyslog(a,b):
    """ nasty hack for copying syslog calls to stdout """
-   global SYSLOG
    SYSLOG(a, b)
    print("- " + b)
    
@@ -431,5 +477,4 @@ def start_client():
 
 if __name__ == '__main__':
    start_client()
-
 
