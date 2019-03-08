@@ -14,14 +14,14 @@
 
 blocky_user=${blocky_user-"root"}
 blocky_group=${blocky_group-"root"}
-blocky_pidfile=${blocky_pidfile-"/var/run/blocky.pid"}
+blocky_pidfile=${blocky_pidfile-"/var/run/blocky.py.pid"}
 blocky_config=${blocky_config-"/usr/local/etc/blocky/blocky.conf"}
 blocky_logfile=${blocky_logfile-"/var/log/blocky.log"}
 blocky_appdir=${blocky_appdir-"/usr/local/etc/blocky"}
 pidfile="${blocky_pidfile}"
 
 RETVAL=0
- 
+
 start() {
     if [ -f $blocky_pidfile ]; then
         # pid file exists, check is proc is running
@@ -43,7 +43,7 @@ start() {
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
 }
- 
+
 stop() {
     echo "Stopping blocky daemon: "
     cd $blocky_appdir
