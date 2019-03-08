@@ -52,7 +52,7 @@ def getbans(chain = 'INPUT'):
                source = m.group(5)
                destination = m.group(6)
                extensions = m.group(7)
-               
+
                entry = {
                   'chain': chain,
                   'linenumber': ln,
@@ -63,7 +63,7 @@ def getbans(chain = 'INPUT'):
                   'destination': destination,
                   'extensions': extensions
                }
-               
+
                banlist.append(entry)
          return banlist
       except subprocess.CalledProcessError as err:
@@ -71,7 +71,7 @@ def getbans(chain = 'INPUT'):
             print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
             sys.exit(-1)
          time.sleep(1) # write lock, probably
-      
+
 def iptables(ip, action):
     """ Runs an iptables action on an IP (-A, -C or -D), returns true if
         succeeded, false otherwise """
@@ -137,7 +137,7 @@ def inlist(banlist, ip):
             them = netaddr.IPAddress(source)
             if them in me:
                lines.append(entry)
-   
+
    # Then the reverse; IP found within blocks?
    else:
       me = netaddr.IPAddress(ip)
@@ -184,17 +184,17 @@ def run_legacy_checks():
       syslog.syslog(syslog.LOG_INFO, "Fetched a total of %u firewall actions from %s" % (len(actions), apiurl))
    except:
       syslog.syslog(syslog.LOG_WARNING, "Could not retrieve blocky actions list from %s - server down??!" % apiurl)
-   
+
    whitelist = [] # Things we are unbanning, and thus shouldn't just ban right again
-   
+
    # For each action element, find out what to do, and who to do it to.
    for action in actions:
-      
+
       # Unban request
       target = action.get('target', '*')
       if 'unban' in action:
          if target == '*' or target == CONFIG['client']['hostname']:
-            ip = action.get('ip').strip()
+            ip = action.get('ip')
             block = None
             if '/' in ip:
                block = netaddr.IPNetwork(ip)
@@ -213,11 +213,11 @@ def run_legacy_checks():
                      syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
                   else:
                      mylist = getbans() # Refresh after action succeeded
-                     
+
       # Ban request?
       elif 'ip' in action:
          if target == '*' or target == CONFIG['client']['hostname']:
-            ip = action.get('ip').strip()
+            ip = action.get('ip')
             if ip:
                banit = True
                block = None
@@ -241,10 +241,10 @@ def run_legacy_checks():
                         syslog.syslog(syslog.LOG_WARNING, "Could not add ban for %s in iptables!" % ip)
                      else:
                         mylist = getbans() # Refresh after action succeeded
-                        
+
 def run_new_checks():
    """ Runs the blocky process using the modern UI server """
-   
+
    # First, get our rules and post 'em to the server
    mylist = getbans()
    try:
@@ -272,7 +272,7 @@ def run_new_checks():
       banlist = requests.get(banurl).json()
    except:
       syslog.syslog(syslog.LOG_WARNING, "Could not fetch whitelist entries at %s - server down?" % banurl)
-   
+
    # First, check if we've banned someone on the whitelist
    for entry in whitelist:
       ip = entry.get('ip')
@@ -298,7 +298,7 @@ def run_new_checks():
                   else:
                      note_unban(CONFIG['client']['hostname'], found[0]['linenumber'])
                      mylist = getbans() # Refresh after action succeeded
-   
+
    # Then process bans
    for entry in banlist:
       ip = entry.get('ip')
@@ -338,7 +338,7 @@ def psyslog(a,b):
    global SYSLOG
    SYSLOG(a, b)
    print("- " + b)
-   
+
 def run_daemon(stdout = False):
    global SYSLOG, CONFIG
    if stdout:
@@ -377,19 +377,19 @@ def start_client():
    me = socket.gethostname()
    if 'apache.org' not in me:
       me += '.apache.org'
-   
+
    # Load YAML
    CONFIG = yaml.load(open('./blocky.yaml').read())
    if 'client' not in CONFIG:
       CONFIG['client'] = {}
    if 'hostname' not in CONFIG['client']:
       CONFIG['client']['hostname'] = me
-   
+
    # Get current list of bans in iptables, upload it to blocky server
    l = getbans()
-   
+
    args = base_parser().parse_args()
-   
+
    # CLI unban?
    if args.unban:
       ip = args.unban
@@ -403,7 +403,7 @@ def start_client():
       else:
          print("%s wasn't found in iptables, nothing to do" % ip)
       return
-   
+
    # CLI ban?
    if args.ban:
       ip = args.ban
@@ -416,10 +416,10 @@ def start_client():
          else:
             print("Could not ban %s, bummer" % ip)
       return
-   
+
    # Daemon stuff?
    d = asfpy.daemon(run_daemon)
-   
+
    # Start daemon?
    if args.daemonize:
       d.start()
@@ -431,5 +431,3 @@ def start_client():
 
 if __name__ == '__main__':
    start_client()
-
-
