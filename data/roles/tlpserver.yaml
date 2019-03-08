@@ -649,6 +649,7 @@ vhosts_asf::vhosts::vhosts:
       <Directory /var/www/apachecon.com>
         Options +Includes
         AddOutputFilter INCLUDES .html
+        AllowOverride FileInfo Indexes
       </Directory>
 
   apachecon-ssl:
@@ -671,6 +672,7 @@ vhosts_asf::vhosts::vhosts:
       <Directory /var/www/apachecon.com>
         Options +Includes
         AddOutputFilter INCLUDES .html
+        AllowOverride FileInfo Indexes
       </Directory>
 
   apachecon-archive:
