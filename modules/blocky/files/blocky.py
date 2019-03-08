@@ -32,18 +32,24 @@ import syslog
 DEBUG = False
 CONFIG = None
 SYSLOG = None
+MAX_IPTABLES_TRIES = 10
+IPTABLES_EXEC = '/sbin/iptables'
+IP6TABLES_EXEC = '/sbin/ip6tables'
 
 def getbans(chain = 'INPUT'):
    """ Gets a list of all bans in a chain """
    banlist = []
    
    # Get IPv4 list
-   tries = 0
-   while tries < 10:
-      tries += 1
+   for i in range(0,MAX_IPTABLES_TRIES):
       try:
-         out = subprocess.check_output(['/sbin/iptables', '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
-         bans = 0
+         out = subprocess.check_output([IPTABLES_EXEC, '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
+      except subprocess.CalledProcessError as err:
+         if 'you must be root' in err.output:
+            print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
+            sys.exit(-1)
+         time.sleep(1) # write lock, probably
+      if out:
          for line in out.split("\n"):
             m = re.match(r"^(\d+)\s+([A-Z]+)\s+(all|tcp|udp)\s+(\S+)\s+([0-9a-f.:/]+)\s+([0-9a-f.:/]+)\s*(.*?)$", line)
             if m:
@@ -68,20 +74,18 @@ def getbans(chain = 'INPUT'):
                
                banlist.append(entry)
          break
+   # Get IPv6 list
+   if not os.path.exists(IP6TABLES_EXEC):
+      return banlist
+   for i in range(0,MAX_IPTABLES_TRIES):
+      try:
+         out = subprocess.check_output([IP6TABLES_EXEC, '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
       except subprocess.CalledProcessError as err:
          if 'you must be root' in err.output:
             print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
             sys.exit(-1)
          time.sleep(1) # write lock, probably
-   # Get IPv6 list
-   tries = 0
-   if not os.path.exists("/sbin/ip6tables"):
-      return banlist
-   while tries < 10:
-      tries += 1
-      try:
-         out = subprocess.check_output(['/sbin/ip6tables', '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
-         bans = 0
+      if out:
          for line in out.split("\n"):
             # Unlike ipv4 iptables, the 'option' thing is blank here, so omit it
             m = re.match(r"^(\d+)\s+([A-Z]+)\s+(all|tcp|udp)\s+([0-9a-f.:/]+)\s+([0-9a-f.:/]+)\s*(.*?)$", line)
@@ -106,20 +110,15 @@ def getbans(chain = 'INPUT'):
                
                banlist.append(entry)
          break
-      except subprocess.CalledProcessError as err:
-         if 'you must be root' in err.output:
-            print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
-            sys.exit(-1)
-         time.sleep(1) # write lock, probably
    return banlist
       
 def iptables(ip, action):
     """ Runs an iptables action on an IP (-A, -C or -D), returns true if
         succeeded, false otherwise """
     try:
-        exe = "/sbin/iptables"
+        exe = IPTABLES_EXEC
         if ':' in ip:
-            exe = "/sbin/ip6tables"
+            exe = IP6TABLES_EXEC
         subprocess.check_call([
             exe,
             action, "INPUT",
@@ -132,7 +131,7 @@ def iptables(ip, action):
     except subprocess.CalledProcessError as err: # iptables error, expected result variant
         return False
     except OSError as err:
-        print("/sbin/iptables not found or inaccessible: %s" % err)
+        print("%s not found or inaccessible: %s" % (exe, err))
         return False
     return True
    
@@ -147,9 +146,9 @@ def unban_line(ip, linenumber, chain = 'INPUT'):
     """ Unbans an IP or block by line number """
     if not linenumber:
       return
-    exe = "/sbin/iptables"
+    exe = IPTABLES_EXEC
     if ':' in ip:
-      exe = "/sbin/ip6tables"
+      exe = IP6TABLES_EXEC
     if DEBUG:
       print("Would have removed line %s from %s chain in iptables here..." % (linenumber, chain))
       return True
