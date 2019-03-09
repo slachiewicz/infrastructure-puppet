@@ -25,7 +25,8 @@ def main():
         exit(1)
     HOOKS_DIR = os.path.join(ADMIN_DIR, "hooks", "post-receive.d")
     stdin = sys.stdin.read()
-    for hook in os.listdir(HOOKS_DIR):
+    # Hooks must be processed in alpha order
+    for hook in sorted(os.listdir(HOOKS_DIR)):
         hook = os.path.join(HOOKS_DIR, hook)
         if not is_executable(hook):
             continue
