@@ -141,6 +141,7 @@ vhosts_asf::vhosts::vhosts:
       AddHandler lua-script .lua
       RewriteEngine On
       RewriteRule ^/?blocky.json /blocky/api/blocklist.lua
+      ProxyPass /blocky2/api/ http://localhost:8000/api/
       <Location /blocky/>
           AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
@@ -150,6 +151,16 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
           AcceptPathInfo On
+          DirectoryIndex index.html
+      </Location>
+      <Location /blocky2/>
+          AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPRemoteUserAttribute member
+          AuthName "ASF Infrastructure-root Only"
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthLDAPGroupAttributeIsDN on
+          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
           DirectoryIndex index.html
       </Location>
       <LocationMatch ^/((app|ui|bundles|api|plugins|es_admin|elasticsearch)/.*)$>
