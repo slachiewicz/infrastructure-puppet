@@ -162,8 +162,8 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
           DirectoryIndex index.html
-          RewriteRule .* - [E=PROXY_USER:%{LA-U:REMOTE_USER}]
-          RequestHeader set Proxy-User %{PROXY_USER}e
+          RewriteRule .* - [E=PROXY_USER:%%{HIERA}{LA-U:REMOTE_USER}]
+          RequestHeader set Proxy-User %%{HIERA}{PROXY_USER}e
       </Location>
       <LocationMatch ^/((app|ui|bundles|api|plugins|es_admin|elasticsearch)/.*)$>
           AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
