@@ -367,7 +367,7 @@ def run_new_checks():
                if not unban_line(ip, found[0]['linenumber']):
                   syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
                else:
-                  note_unban(CONFIG['client']['hostname'], found[0]['linenumber'])
+                  note_unban(CONFIG['client']['hostname'], found[0])
                   mylist = getbans() # Refresh after action succeeded
    
    # Then process bans
