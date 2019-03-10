@@ -200,6 +200,7 @@ def inlist(banlist, ip):
                lines.append(entry)
    return lines
 
+
 def note_ban(me, entry):
    apiurl = "%s/note" % CONFIG['server']['apiurl']
    try:
@@ -358,16 +359,16 @@ def run_new_checks():
                   block = netaddr.IPNetwork("%s/128" % ip) # IPv6
                else:
                   block = netaddr.IPNetwork("%s/32" % ip)  # IPv4
-               whiteblocks.append(block)
-               found = inlist(mylist, ip)
-               if found:
-                  entry = found[0]
-                  syslog.syslog(syslog.LOG_INFO, "Removing %s from block list (found at line %s as %s)" % (ip, entry['linenumber'], entry['source']))
-                  if not unban_line(ip, found[0]['linenumber']):
-                     syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
-                  else:
-                     note_unban(CONFIG['client']['hostname'], found[0]['linenumber'])
-                     mylist = getbans() # Refresh after action succeeded
+            whiteblocks.append(block)
+            found = inlist(mylist, ip)
+            if found:
+               entry = found[0]
+               syslog.syslog(syslog.LOG_INFO, "Removing %s from block list (found at line %s as %s)" % (ip, entry['linenumber'], entry['source']))
+               if not unban_line(ip, found[0]['linenumber']):
+                  syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
+               else:
+                  note_unban(CONFIG['client']['hostname'], found[0]['linenumber'])
+                  mylist = getbans() # Refresh after action succeeded
    
    # Then process bans
    for entry in banlist:
