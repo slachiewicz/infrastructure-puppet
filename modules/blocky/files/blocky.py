@@ -35,6 +35,7 @@ SYSLOG = None
 MAX_IPTABLES_TRIES = 10
 IPTABLES_EXEC = '/sbin/iptables'
 IP6TABLES_EXEC = '/sbin/ip6tables'
+LAST_UPLOAD = 0
 
 def getbans(chain = 'INPUT'):
    """ Gets a list of all bans in a chain """
@@ -42,12 +43,15 @@ def getbans(chain = 'INPUT'):
    
    # Get IPv4 list
    for i in range(0,MAX_IPTABLES_TRIES):
+      out = None
       try:
          out = subprocess.check_output([IPTABLES_EXEC, '--list', chain, '-n', '--line-numbers'], stderr = subprocess.STDOUT)
       except subprocess.CalledProcessError as err:
          if 'you must be root' in err.output:
             print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
             sys.exit(-1)
+         if 'No chain/target/match' in err.output:
+            continue
          time.sleep(1) # write lock, probably
       if out:
          for line in out.split("\n"):
@@ -84,6 +88,8 @@ def getbans(chain = 'INPUT'):
          if 'you must be root' in err.output:
             print("Looks like blocky doesn't have permission to access iptables, giving up completely! (are you running as root?)")
             sys.exit(-1)
+         if 'No chain/target/match' in err.output:
+            continue
          time.sleep(1) # write lock, probably
       if out:
          for line in out.split("\n"):
@@ -224,7 +230,13 @@ def run_legacy_checks():
    """ Runs checks using the legacy blocky UI server (mod_lua) """
    apiurl = CONFIG['server']['legacyurl']
    actions = []
-   mylist = getbans()
+   mylist = []
+   ychains = CONFIG.get('iptables', {}).get('chains')
+   chains = ychains if ychains else ['INPUT']
+   for chain in chains:
+      mylist += getbans(chain)
+   print("Found %u bans in iptables" % len(mylist))
+   
    try:
       actions = requests.get(apiurl).json()
       syslog.syslog(syslog.LOG_INFO, "Fetched a total of %u firewall actions from %s" % (len(actions), apiurl))
@@ -292,20 +304,29 @@ def run_legacy_checks():
                         
 def run_new_checks():
    """ Runs the blocky process using the modern UI server """
+   global LAST_UPLOAD
    
    # First, get our rules and post 'em to the server
-   mylist = getbans()
-   try:
-      js = {
-         'hostname': CONFIG['client']['hostname'],
-         'iptables': mylist
-      }
-      apiurl = "%s/myrules" % CONFIG['server']['apiurl']
-      rv = requests.put(apiurl, json = js)
-      assert(rv.status_code == 200)
-   except:
-      print(rv.text)
-      syslog.syslog(syslog.LOG_WARNING, "Could not send my iptables list to server at %s - server down?" % apiurl)
+   mylist = []
+   ychains = CONFIG.get('iptables', {}).get('chains')
+   chains = ychains if ychains else ['INPUT']
+   for chain in chains:
+      mylist += getbans(chain)
+   print("Found %u bans in iptables" % len(mylist))
+   
+   if LAST_UPLOAD < (time.time() - 600):
+      try:
+         js = {
+            'hostname': CONFIG['client']['hostname'],
+            'iptables': mylist
+         }
+         apiurl = "%s/myrules" % CONFIG['server']['apiurl']
+         rv = requests.put(apiurl, json = js)
+         assert(rv.status_code == 200)
+         LAST_UPLOAD = time.time()
+      except:
+         print(rv.text)
+         syslog.syslog(syslog.LOG_WARNING, "Could not send my iptables list to server at %s - server down?" % apiurl)
 
    # Then, get applicable actions from the server
    whitelist = []
