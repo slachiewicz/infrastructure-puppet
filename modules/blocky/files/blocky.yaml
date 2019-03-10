@@ -2,9 +2,7 @@ client:
     interval:     60
 
 server:
-    apiurl:        https://blocky.apache.org/blocky/api/
-    # Remove legacy URL once we switch to new UI
-    legacyurl:     https://blocky.apache.org/blocky.json
+    apiurl:        https://blocky.apache.org/blocky-public
 
 iptables:
     chains:
