@@ -1134,9 +1134,6 @@ buildbot = rw
 [/incubator/tsik]
 * = r
 
-[/incubator/unomi]
-@committers= rw
-
 [/incubator/wadi]
 * = r
 
