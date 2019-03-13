@@ -326,6 +326,8 @@ twill={reuse:asf-authorization:twill}
 twill-pmc={ldap:cn=twill,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 uima={reuse:asf-authorization:uima}
 uima-pmc={ldap:cn=uima,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+unomi={reuse:asf-authorization:unomi}
+unomi-pmc={ldap:cn=unomi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 usergrid={reuse:asf-authorization:usergrid}
 usergrid-pmc={ldap:cn=usergrid,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 vcl={reuse:asf-authorization:vcl}
