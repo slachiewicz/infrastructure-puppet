@@ -36,6 +36,7 @@ MAX_IPTABLES_TRIES = 10
 IPTABLES_EXEC = '/sbin/iptables'
 IP6TABLES_EXEC = '/sbin/ip6tables'
 LAST_UPLOAD = 0
+UPLOAD_FREQUENCY = 180 # Upload iptables every 3 minutes
 
 def getbans(chain = 'INPUT'):
    """ Gets a list of all bans in a chain """
@@ -315,7 +316,7 @@ def run_new_checks():
       mylist += getbans(chain)
    print("Found %u bans in iptables" % len(mylist))
    
-   if LAST_UPLOAD < (time.time() - 600):
+   if LAST_UPLOAD < (time.time() - UPLOAD_FREQUENCY):
       try:
          js = {
             'hostname': CONFIG['client']['hostname'],
