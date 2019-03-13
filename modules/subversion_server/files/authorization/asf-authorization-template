@@ -413,6 +413,8 @@ twill={ldap:cn=twill,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 twill-pmc={reuse:pit-authorization:twill-pmc}
 uima={ldap:cn=uima,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 uima-pmc={reuse:pit-authorization:uima-pmc}
+unomi={ldap:cn=unomi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+unomi-pmc={reuse:pit-authorization:unomi-pmc}
 usergrid={ldap:cn=usergrid,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 usergrid-pmc={reuse:pit-authorization:usergrid-pmc}
 vcl={ldap:cn=vcl,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1891,6 +1893,9 @@ svn-role = rw
 
 [/uima/uv3/uimafit-v3]
 * = r
+
+[/unomi]
+@unomi = rw
 
 [/usergrid]
 @usergrid = rw
