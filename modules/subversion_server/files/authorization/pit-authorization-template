@@ -390,7 +390,6 @@ legal=
 member={ldap:cn=member,ou=groups,dc=apache,dc=org}
 pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
 security={ldap:cn=security,ou=groups,dc=apache,dc=org}
-security-pmc={ldap:cn=security,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
