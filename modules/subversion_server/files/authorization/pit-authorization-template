@@ -392,7 +392,7 @@ pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
 security={ldap:cn=security,ou=groups,dc=apache,dc=org}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
-tac-pmc={ldap:cn=tac,ou=pmc,ou=committees,ou=groups,dc=apache,dc=org}
+tac-pmc={ldap:cn=tac,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 treasurer=uli,myrle
 virtualmgmt={ldap:cn=virtualmgmt,ou=groups,ou=services,dc=apache,dc=org}
 # vp-brand, vp-marketing, vp-fundraising, vp-tac, vp-comdev
