@@ -537,8 +537,9 @@ svnadmins={reuse:pit-authorization:svnadmins}
 [/archiva/sandbox]
 @committers  = rw
 
+#migrated to gitbox
 [/aries]
-@aries = rw
+* = r
 
 [/attic]
 @attic-pmc = rw
