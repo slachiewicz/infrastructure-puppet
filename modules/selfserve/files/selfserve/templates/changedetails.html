@@ -44,7 +44,7 @@ function addattr(attr, v) {
                         <form action="?session=[session]" method="POST" autocomplete="off" id="form">
 [for attributes]
     [for attributes.values]
-                                <p><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="[attributes.values]" [attributes.editable] tabindex="1" /></p>
+    <p><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="[attributes.values]" [attributes.editable] tabindex="1" onfocus="if(this.value=='<not present>') this.value='';" /></p>
     [end]
     [if-any attributes.multivalue]
                                 <p id='[attributes.key]'><label>[attributes.name]:&nbsp;</label><input type="text" size="54" name="[attributes.key]_attr" value="" onchange="addattr('[attributes.key]', this.value)" tabindex="1" /></p>
