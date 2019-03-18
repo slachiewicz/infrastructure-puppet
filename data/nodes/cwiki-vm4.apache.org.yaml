@@ -13,7 +13,7 @@ classes:
   - httpd_rate_limiter
   - oraclejava::install
   - rsync_asf
-  - ssl::name::cwiki_apache_org 
+  - ssl::name::cwiki_apache_org
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
   - zmanda_asf::client
@@ -74,7 +74,7 @@ datadog_agent::integrations::apache::url: 'http://localhost/server-status?auto'
 
 postfix::server::relayhost: '[mail-relay.apache.org]:587'
 postfix::server::smtp_use_tls: true
- 
+
 vhosts_asf::vhosts::vhosts:
   cwiki-vm4-80:
     vhost_name: '*'
@@ -97,7 +97,7 @@ vhosts_asf::vhosts::vhosts:
       vhost_name: '*'
       default_vhost: true
       servername: 'cwiki-vm4.apache.org'
-      serveraliases:  
+      serveraliases:
         - 'cwiki.apache.org'
       port: 443
       docroot: '/var/www'
@@ -120,7 +120,7 @@ vhosts_asf::vhosts::vhosts:
         # cwiki
         ProxyPass /intermediates !
         ProxyPass /confluence//spaces/viewdefaultdecorator.action !
-        ProxyPass /confluence/ http://127.0.0.1:8888/confluence/ disablereuse=On timeout=500
+        ProxyPass /confluence/ http://127.0.0.1:8888/confluence/ disablereuse=On timeout=500 retry=0 max=400
         ProxyPass /server-status !
         ProxyPassReverse /confluence/ http://127.0.0.1:8888/confluence/
         RewriteCond $1 !(confluence|intermediates|server-status)

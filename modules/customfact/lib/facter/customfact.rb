@@ -81,6 +81,16 @@ Facter.add("asfcolo") do
   end
 end
 
+Facter.add("external_ip") do
+  setcode do
+    external_ip_api_url = URI('http://ip-api.com/json/')
+    # make the call to ip-api to get 'org' for external_ip_api_url
+    response = open(external_ip_api_url).read
+    json_response = JSON.parse(response)
+    external_ip = json_response["query"]
+  end
+end
+
 Facter.add("dd_autotag_colo") do
   setcode do
     # should get local external IP from ip-api.com, no need for fqdn

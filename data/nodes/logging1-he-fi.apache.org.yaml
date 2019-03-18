@@ -8,6 +8,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - blocky_server
   - datadog_agent::integrations::elasticsearch
   - oraclejava::install
   - ssl::name::wildcard_apache_org
@@ -27,7 +28,7 @@ vhosts_asf::modules::modules:
     name: 'allowmethods'
   lua:
     name: 'lua'
-    
+
 datadog_agent::integrations::elasticsearch::url: 'http://localhost:9200'
 
 dnsclient::nameservers:
@@ -89,6 +90,8 @@ cron:
     hour: '2'
     command: 'cd /root/ && python3 curator.py'
 
+loggy::service_ensure: 'stopped'
+
 logrotate::rule:
   apache2:
     ensure: 'present'
@@ -109,6 +112,7 @@ vhosts_asf::vhosts::vhosts:
       <Location /logstash/%{hiera('loggy::route')}/>
           AllowMethods POST PUT HEAD
           <If "%%{HIERA}{REQUEST_METHOD} in { 'GET', 'DELETE' }">
+            Require ip 80.62.116.202
             Require all denied
           </If>
           ProxyPass http://localhost:9200/
@@ -137,7 +141,17 @@ vhosts_asf::vhosts::vhosts:
       LuaCodeCache stat
       AddHandler lua-script .lua
       RewriteEngine On
-      RewriteRule ^/?blocky.json /blocky/api/blocklist.lua
+      RewriteRule ^/?blocky.json /var/www/snappy/blocky/api/blocklist.lua
+      ProxyPass /blocky/api/ http://localhost:8000/api/
+      Alias /blocky/ /blocky/blocky2/server/site/
+      
+      # Clients can get bans and post rules
+      RewriteCond %%{HIERA}{REQUEST_METHOD} GET
+      RewriteRule ^/blocky-public/(bans|whitelist) http://localhost:8000/api/$1 [P]
+      RewriteCond %%{HIERA}{REQUEST_METHOD} PUT
+      RewriteRule ^/blocky-public/myrules http://localhost:8000/api/myrules [P]
+      
+      # Everything else is authed off
       <Location /blocky/>
           AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
@@ -146,8 +160,9 @@ vhosts_asf::vhosts::vhosts:
           AuthBasicProvider ldap
           AuthLDAPGroupAttributeIsDN on
           Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-          AcceptPathInfo On
           DirectoryIndex index.html
+          RewriteRule .* - [E=PROXY_USER:%%{HIERA}{LA-U:REMOTE_USER}]
+          RequestHeader set Proxy-User %%{HIERA}{PROXY_USER}e
       </Location>
       <LocationMatch ^/((app|ui|bundles|api|plugins|es_admin|elasticsearch)/.*)$>
           AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"

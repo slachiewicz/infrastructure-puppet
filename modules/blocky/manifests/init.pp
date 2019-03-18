@@ -6,17 +6,36 @@ class blocky (
   $service_ensure = 'running',
   $username       = 'root',
   $group          = 'root',
-){
+)
+{
 
   require python
+  
+  python::pip {
+    'netaddr' :
+      ensure => present;
+    'asfpy' :
+      ensure  => present;
+    'requests' :
+      ensure => present;
+    'pyyaml' :
+      ensure  => present;
+    }
+
+  exec { 'pkill -F /var/run/blocky.pid && rm /var/run/blocky.pid':
+    cwd     => '/var/tmp',
+    path    => ['/usr/bin', '/usr/sbin','/bin/',],
+    onlyif  => 'test -f /var/run/blocky.pid'
+  }
 
   cron {
     'restart_blocky':
-    user    => root,
-    command => '/usr/sbin/service blocky restart',
-    minute  => '5';
+      ensure  => absent, 
+      user    => root,
+      command => '/usr/sbin/service blocky restart',
+      minute  => '5';
     }
-
+    
   file {
     '/usr/local/etc/blocky':
       ensure => directory,
@@ -33,11 +52,11 @@ class blocky (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/blocky/blocky.py';
-    '/usr/local/etc/blocky/blocky.cfg':
+    '/usr/local/etc/blocky/blocky.yaml':
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => 'puppet:///modules/blocky/blocky.cfg';
+      source => 'puppet:///modules/blocky/blocky.yaml';
     }
 
     -> service { $service_name:
@@ -46,7 +65,7 @@ class blocky (
         hasstatus => true,
         subscribe => [
           File['/usr/local/etc/blocky/blocky.py'],
-          File['/usr/local/etc/blocky/blocky.cfg']
+          File['/usr/local/etc/blocky/blocky.yaml']
         ]
     }
 }

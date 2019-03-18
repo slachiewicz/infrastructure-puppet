@@ -175,6 +175,17 @@ apt::sources:
     include:
       deb: true
       src: false
+  'certbot':
+    ensure: 'present'
+    location: 'http://ppa.launchpad.net/certbot/certbot/ubuntu'
+    release: 'trusty'
+    repos: 'main'
+    key:
+        id: '7BF576066ADA65728FC7E70A8C47BE8E75BCA694'
+        server: 'hkp://keyserver.ubuntu.com:80'
+    include:
+        src: false
+        deb: true
 
 apt::force:
   'orthrus':
