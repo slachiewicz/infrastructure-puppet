@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # various constants
-SVNADMINS="gmcdonald,humbedooh,cml,christ"
+SVNADMINS="gmcdonald,humbedooh,cml,christ,johna,dfoulks"
 
 PBASE="ou=project,ou=groups,dc=apache,dc=org"
 LDAPSEARCH="ldapsearch"

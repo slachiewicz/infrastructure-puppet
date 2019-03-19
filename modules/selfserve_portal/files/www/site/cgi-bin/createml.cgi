@@ -29,7 +29,7 @@ import sscommon
 import fcntl
 
 requser = os.environ['REMOTE_USER']
-staffers = ['humbedooh','gmcdonald','cml','christ','gstein']
+staffers = ['humbedooh','gmcdonald','cml','christ','gstein','johna','dfoulks']
 
 def checkDomain(dom):
     """Check if an apache.org ML domain exists or not"""
