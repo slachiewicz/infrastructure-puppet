@@ -10,9 +10,10 @@ XARGS="xargs"
 SED="sed"
 TR="tr"
 
-projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' | $SED -e '/^tac$/d' | sort`
+projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' -e '/^tac$/d' | sort -u`
 
-committers_may_release=":couchdb: , :lucene: , :commons: , :abdera: , :bookkeeper: , :camel: , :zookeeper: , :trafficcontrol:"
+# ensure names match in full by using delimiters at each end
+committers_may_release=":couchdb: :lucene: :commons: :abdera: :bookkeeper: :camel: :zookeeper: :trafficcontrol:"
 
 # preamble
 cat <<EOF
@@ -38,18 +39,18 @@ EOF
 
 
 # fill in new style [groups] 
+# drop the trailing stuff before matching on member/owner because we only want those lines; convert to comma-separated list
 for pmc in $projects incubator; do
-  mem=$($LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' member | $SED -ne 's/^member: //p' | cut -d, -f1 | cut -d= -f2 | sort | $XARGS | $SED -e 's/ /,/g')
+  mem=$($LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' member | $SED -n -e 's/,.*//' -e 's/^member: uid=//p' | sort | $XARGS | $SED -e 's/ /,/g')
   echo "$pmc=$mem"
-  own=$($LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' owner | $SED -ne 's/^owner: //p' | cut -d, -f1 | cut -d= -f2 | sort | $XARGS | $SED -e 's/ /,/g')
+  own=$($LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' owner  | $SED -n -e 's/,.*//' -e 's/^owner: uid=//p'  | sort | $XARGS | $SED -e 's/ /,/g')
   echo "${pmc}-pmc=$own"
 done
 
 echo
 
 # fill in per-PMC sections
-all_projects=`echo "$projects" | $TR ' ' '\n' | sort | uniq | $XARGS`
-for pmc in $all_projects; do
+for pmc in $projects; do
   echo
   echo "# $pmc"
   for path in "/dev/$pmc" "/release/$pmc"; do
@@ -63,17 +64,22 @@ for pmc in $all_projects; do
     if echo "$committers_may_release" | grep ":$pmc:" > /dev/null; then
       echo "@$pmc = rw"
     fi
-    if [ x"$pmc" = x"esme" ]; then
-      echo "@attic-pmc = rw"
-    fi
   done
   echo
 done
 
 # postamble
-echo
-echo "# incubator"
-echo
-printf "[/dev/incubator]\n@svnadmins = rw \n@incubator-pmc = rw\n@incubator = rw\n"
-printf "[/release/incubator]\n@svnadmins = rw \n@incubator-pmc = rw\n@incubator = rw\n"
-echo
+cat <<EOD
+
+# incubator
+
+[/dev/incubator]
+@svnadmins = rw 
+@incubator-pmc = rw
+@incubator = rw
+[/release/incubator]
+@svnadmins = rw 
+@incubator-pmc = rw
+@incubator = rw
+
+EOD
