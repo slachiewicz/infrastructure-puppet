@@ -38,7 +38,7 @@ svnadmins=$SVNADMINS
 EOF
 
 
-# fill in new style [groups] 
+# fill in new style [groups]
 # drop the trailing stuff before matching on member/owner because we only want those lines; convert to comma-separated list
 for pmc in $projects incubator; do
   mem=$($LDAPSEARCH -x -LLL -b "cn=$pmc,$PBASE" 'cn=*' member | $SED -n -e 's/,.*//' -e 's/^member: uid=//p' | sort | $XARGS | $SED -e 's/ /,/g')
@@ -76,11 +76,11 @@ cat <<EOD
 # incubator
 
 [/dev/incubator]
-@svnadmins = rw 
+@svnadmins = rw
 @incubator-pmc = rw
 @incubator = rw
 [/release/incubator]
-@svnadmins = rw 
+@svnadmins = rw
 @incubator-pmc = rw
 @incubator = rw
 
