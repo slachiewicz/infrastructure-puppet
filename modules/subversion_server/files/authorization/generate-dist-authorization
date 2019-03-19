@@ -56,7 +56,6 @@ for pmc in $projects; do
   for path in "/dev/$pmc" "/release/$pmc"; do
     echo
     echo "[$path]"
-    echo "@svnadmins = rw"
     echo "@$pmc-pmc = rw"
     if echo "$path" | grep "/dev/" > /dev/null; then
       echo "@$pmc = rw"
@@ -76,11 +75,10 @@ cat <<EOD
 # incubator
 
 [/dev/incubator]
-@svnadmins = rw
 @incubator-pmc = rw
 @incubator = rw
+
 [/release/incubator]
-@svnadmins = rw
 @incubator-pmc = rw
 @incubator = rw
 
