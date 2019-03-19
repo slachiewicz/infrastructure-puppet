@@ -60,9 +60,11 @@ for pmc in $projects; do
     echo "@$pmc-pmc = rw"
     if echo "$path" | grep "/dev/" > /dev/null; then
       echo "@$pmc = rw"
-    fi
-    if echo "$committers_may_release" | grep ":$pmc:" > /dev/null; then
-      echo "@$pmc = rw"
+    else
+      # don't duplicate committer karma
+      if echo "$committers_may_release" | grep ":$pmc:" > /dev/null; then
+        echo "@$pmc = rw"
+      fi
     fi
   done
   echo
