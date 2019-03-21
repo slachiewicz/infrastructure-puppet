@@ -1,14 +1,29 @@
 ---
 classes:
   - dovecot
+  - fail2ban_asf::config
   - mail_relay
   - postfix_asf
   - ssl::name::wildcard_apache_org
+  - loggy
 
 dovecot::dovecot_packages:
   - dovecot-core
   - dovecot-ldap
 
+fail2ban::service_autorestart: true
+fail2ban::disable: false
+fail2ban::service_status: true
+
+fail2ban_asf::config::jails:
+  postfix-sasl:
+    filter: postfix-sasl
+    action:
+      - iptables-allports
+    logpath: /var/log/mail.log
+    findtime: 600
+    maxretry: 5
+    enable: true
 
 postfix::dbfile:
   transport_maps:
