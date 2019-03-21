@@ -1,5 +1,5 @@
 ---
-classes: 
+classes:
   - dovecot
   - fail2ban_asf::config
   - mail_relay
@@ -38,7 +38,7 @@ postfix::server::virtual_transport:      'dovecot'
 postfix::server::smtpd_sender_restrictions:
   -  'permit_mynetworks'
   -  'reject_unknown_sender_domain'
-postfix::server::smtpd_recipient_restrictions:    
+postfix::server::smtpd_recipient_restrictions:
   -  'permit_sasl_authenticated'
   -  'permit_mynetworks'
   -  'reject_unauth_destination'
