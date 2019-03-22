@@ -1016,7 +1016,7 @@ buildbot = rw
 [/johnzon]
 @johnzon = rw
 
-[/incubator/joshua]
+[/joshua]
 @joshua = rw
 
 [/incubator/juice]
