@@ -7,6 +7,7 @@ class httpd_rate_limiter (
   $interval                 = '120',
   $cpumax                   = '60',
   $whitelist                = '',
+  $whiteips                 = '',
   $autoconf                 = false,
   $asfilter                 = false,
 ){
