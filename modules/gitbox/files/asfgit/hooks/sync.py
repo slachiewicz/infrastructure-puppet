@@ -22,5 +22,5 @@ def main():
              print("Syncing %s..." % ref.name)
              subprocess.check_call(["git", "push", ghurl, "%s:%s" % (ref.newsha, ref.name)])
     except subprocess.CalledProcessError as err:
-        util.abort("Could not sync with GitHub: %s" % err.output)
+        util.abort("Could not sync with GitHub: %s" % err.output.decode('utf-8'))
 
