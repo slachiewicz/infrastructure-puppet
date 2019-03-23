@@ -84,7 +84,7 @@ function before(r)
     
     -- if IP is whitelisted, ignore counting
     for xip in WHITEIPS:gmatch("%S+") do
-        if r.useragent_ip == xip then
+        if r.useragent_ip == xip or cidr == xip then
             _G.rtime = nil
             return apache2.DECLINED
         end
