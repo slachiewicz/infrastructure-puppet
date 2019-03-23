@@ -37,6 +37,7 @@ local CPU_MAX =  tonumber('<%= @cpumax %>') or 60    -- Max CPU time allowed, in
                      -- Note that this is cpu per core, so if INTERVAL is 120, and 8 cores,
                      -- full utilization of the box would be 960
 local WHITELIST = "<%= @whitelist %>"
+local WHITEIPS = "<%= @whiteips %>"
 
 -- quick'n'dirty way of getting the base block,
 -- either /16 for IPv4 or /64 for IPv6
@@ -80,6 +81,14 @@ end
 function before(r)
     local cidr = get_block(r.useragent_ip)
     local logid = get_log_id(r, cidr)
+    
+    -- if IP is whitelisted, ignore counting
+    for xip in WHITEIPS:gmatch("%S+") do
+        if r.useragent_ip == xip then
+            _G.rtime = nil
+            return apache2.DECLINED
+        end
+    end
     
     -- If the URI is whitelisted, ignore counting
     for uri in WHITELIST:gmatch("%S+") do
