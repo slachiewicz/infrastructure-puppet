@@ -425,9 +425,6 @@ This is an automated email from the ASF dual-hosted git repository.
 %(pusher)s pushed a commit to %(refname_type)s %(short_refname)s
 in repository https://gitbox.apache.org/repos/asf/%(repo_shortname)s.git
 
-You can view the commit's diff online at 
-https://gitbox.apache.org/repos/asf?p=%(repo_shortname)s.git;a=commitdiff;h=%(rev)s
-
 
 """
 
