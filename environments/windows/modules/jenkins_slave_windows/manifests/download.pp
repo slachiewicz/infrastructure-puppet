@@ -5,6 +5,7 @@ class jenkins_slave_windows::download (
   $ant = $jenkins_slave_windows::params::ant,
   $chromedriver = $jenkins_slave_windows::params::chromedriver,
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
+  $gpg4win  = $jenkins_slave_windows::params::gpg4win,
   $gradle = $jenkins_slave_windows::params::gradle,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
@@ -75,6 +76,13 @@ class jenkins_slave_windows::download (
         destination_directory => 'F:\tools_zips',
       }
     }
+    #### Download gpg4win ####
+  define download_gpg4win($gpg4win_version = $title){
+      download_file { "Download asf-build-gpg4win-${gpg4win_version} zip from bintray" :
+        url                   => "http://apache.bintray.com/WindowsPackages/asf-build-gpg4win-${gpg4win_version}.zip",
+        destination_directory => 'F:\tools_zips',
+      }
+    }
   #### Download Gradle ####
   define download_gradle($gradle_version = $title){
         download_file { "Download asf-build-gradle-${gradle_version} zip from bintray" :
@@ -121,6 +129,7 @@ class jenkins_slave_windows::download (
   download_ant { $ant:}
   download_chromedriver { $chromedriver:}
   download_geckodriver { $geckodriver:}
+  download_gpg4win { $gpg4win:}
   download_gradle { $gradle:}
   download_iedriver { $iedriver:}
   download_jdk { $jdk:}
