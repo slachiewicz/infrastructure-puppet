@@ -610,7 +610,7 @@ buildbot = rw
 * = r
 
 [/calcite]
-@calcite = rw
+* = r
 
 [/camel/website]
 @camel = rw
