@@ -51,3 +51,5 @@ data/pages/wow(2b)power(2b)leveling
 data/pages/ringtones
 data/pages/Britney(2d)Spears*
 
+# Other common pages 
+# (2f) used instead of / as that seems to be the convention
