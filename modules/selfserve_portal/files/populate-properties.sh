@@ -34,7 +34,8 @@ fi
 
 # check project dir exists
 if [ ! -d "$BASEDIR/projects/$PROJECT" ]; then
-    echo "This project doesnt seem to exist: exiting."
+    echo "This project doesnt seem to exist: removing lockfile and exiting."
+    rm -f ${LOCKFILE}
 exit 1;
 fi
 
