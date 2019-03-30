@@ -24,7 +24,7 @@ if [ -f ${LOCKFILE} ]; then
 }
 
 # acquire lock
-echo "${PROJECT} > ${LOCKFILE}
+echo "${PROJECT}" > ${LOCKFILE}
 
 # clean the output directory from any previous runs
 if [ -d "$BASEDIR/output/output" ];then
