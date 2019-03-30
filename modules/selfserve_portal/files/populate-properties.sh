@@ -21,7 +21,6 @@ if [ -f ${LOCKFILE} ]; then
     echo "Please try the migration tool again later.";
     exit 1;
   fi
-}
 
 # acquire lock
 echo "${PROJECT}" > ${LOCKFILE}
