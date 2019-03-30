@@ -16,13 +16,15 @@ LOCKFILE="/tmp/migratemoin.lock"
 
 # check we arent already running a migration
 if [ -f ${LOCKFILE} ]; then
-    echo "A lockfile ${LOCKFILE} already exists. Please try the migration tool again later.";
+    RUNNING=`cat ${LOCKFILE}`
+    echo "A lockfile ${LOCKFILE} already exists. Seems that ${RUNNING} migration is under way";
+    echo "Please try the migration tool again later.";
     exit 1;
   fi
 }
 
 # acquire lock
-touch ${LOCKFILE}
+echo "${PROJECT} > ${LOCKFILE}
 
 # clean the output directory from any previous runs
 if [ -d "$BASEDIR/output/output" ];then
