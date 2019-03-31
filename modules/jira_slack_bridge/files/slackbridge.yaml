@@ -5,3 +5,6 @@ subscriptions:
     guacamole:
         channel: "#guacamole"
         jira: GUACAMOLE
+    nemo:
+        channel: "#nemo-notifications"
+        jira: NEMO

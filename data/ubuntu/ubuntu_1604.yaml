@@ -452,6 +452,7 @@ build_slaves::distro_packages:
   - gcc-multilib
   - ghc
   - git-core
+  - graphviz
   - groovy
   - groovy2
   - lib32ncurses5

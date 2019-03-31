@@ -33,7 +33,7 @@ requser = os.environ['REMOTE_USER']
 form = cgi.FieldStorage();
 
 moinwiki = form.getvalue('moinwiki', None)
-if not moinwiki or not re.match(r"^[a-z0-9]+$", moinwiki):
+if not moinwiki or not re.match(r"^[-a-z0-9]+$", moinwiki):
     sscommon.buggo("Invalid Moin Wiki name!")
 
 moinpath = '/usr/local/etc/moin-to-cwiki/universal-wiki-converter'
@@ -98,4 +98,4 @@ except subprocess.CalledProcessError as err:
         f.close()
 
     sscommon.slack("A moin wiki (%s) to Confluence migration, <https://cwiki.apache.org/confluence/display/%s>, was attempted as requested by %s@apache.org, however one of more components of the setup failed. /tmp/%s.log may have more information" % (moinwiki, space, requser, uid))
-    print("Status: 500 Creation failed\r\n\r\n<h2>Moin to Confluence migration failed!</h2><pre>Migration may have failed. Contact an administrator for more information. Error ID: %s</pre>" % uid)
+    print("Status: 500 Creation failed\r\n\r\n<h2>Moin to Confluence migration failed!</h2><pre>Migration may have failed. Contact an administrator for more information.\nError ID: %s</pre>" % uid)

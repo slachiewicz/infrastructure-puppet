@@ -342,7 +342,7 @@ s2graph={ldap:cn=s2graph,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samoa={ldap:cn=samoa,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samza={ldap:cn=samza,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 samza-pmc={reuse:pit-authorization:samza-pmc}
-senssoft={ldap:cn=senssoft,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+flagon={ldap:cn=flagon,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 santuario={ldap:cn=santuario,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 santuario-pmc={reuse:pit-authorization:santuario-pmc}
 sentry={ldap:cn=sentry,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -610,7 +610,7 @@ buildbot = rw
 * = r
 
 [/calcite]
-@calcite = rw
+* = r
 
 [/camel/website]
 @camel = rw
@@ -1016,7 +1016,7 @@ buildbot = rw
 [/johnzon]
 @johnzon = rw
 
-[/incubator/joshua]
+[/joshua]
 @joshua = rw
 
 [/incubator/juice]
@@ -1092,8 +1092,8 @@ buildbot = rw
 [/incubator/samoa]
 @samoa = rw
 
-[/incubator/senssoft]
-@senssoft = rw
+[/incubator/flagon]
+@flagon = rw
 
 [/incubator/singa]
 @singa = rw

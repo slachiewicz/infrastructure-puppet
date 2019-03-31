@@ -12,10 +12,29 @@ PROJECT=$1
 SPACE=$2
 HISTORY=$3
 
-# check project dir exists
+LOCKFILE="/tmp/migratemoin.lock"
 
+# check we arent already running a migration
+if [ -f ${LOCKFILE} ]; then
+    RUNNING=`cat ${LOCKFILE}`
+    echo "A lockfile ${LOCKFILE} already exists. Seems that ${RUNNING} migration is under way";
+    echo "Please try the migration tool again later.";
+    exit 1;
+  fi
+
+# acquire lock
+echo "${PROJECT}" > ${LOCKFILE}
+
+# clean the output directory from any previous runs
+if [ -d "$BASEDIR/output/output" ];then
+  echo "Cleaning out output directory from previous runs..."
+  rm -rf $BASEDIR/output/output
+fi
+
+# check project dir exists
 if [ ! -d "$BASEDIR/projects/$PROJECT" ]; then
-    echo "This project doesnt seem to exist: exiting."
+    echo "This project doesnt seem to exist: removing lockfile and exiting."
+    rm -f ${LOCKFILE}
 exit 1;
 fi
 
@@ -38,3 +57,7 @@ if [ $HISTORY == true ]; then
   /bin/sed -i s'|#MoinMoin.0003|MoinMoin.0003|' $CONFDIR/converter.moinmoin.properties  
 fi
 
+# release lock
+rm -f ${LOCKFILE}
+
+exit 0;

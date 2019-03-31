@@ -254,6 +254,8 @@ def render_edit_details(tdata, lookup, form, pathinfo):
                 if editable:
                     editword = ''
                 else:
+                    editword = 'readonly'
+                if key not in values:
                     editword = 'disabled'
                 attrs.append(Attribute(key, name, editword,
                                        ezt.boolean(multivalue),

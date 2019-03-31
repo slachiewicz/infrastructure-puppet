@@ -11,6 +11,9 @@ classes:
   - rsync_mirror
   - svnwcsub
 
+base::basepackages:
+- traceroute
+
 cron:
   mirmon:
     user: 'svnwc'

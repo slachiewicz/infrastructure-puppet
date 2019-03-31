@@ -20,8 +20,6 @@ rsync_asf::fslist:
   - /x1/db_dump
   - /usr/local/fisheye/fisheye-data
 
-puppet_asf::environment: 'test'
-
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
@@ -88,7 +86,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: 'fisheye_error.log'
     custom_fragment: |
       RedirectMatch permanent ^/(.*)$ https://fisheye.apache.org/$1
-    
+
   fisheye-443:
     vhost_name: '*'
     default_vhost: true

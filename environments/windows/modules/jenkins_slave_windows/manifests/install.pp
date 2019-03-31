@@ -5,6 +5,7 @@ class jenkins_slave_windows::install (
   $ant = $jenkins_slave_windows::params::ant,
   $chromedriver = $jenkins_slave_windows::params::chromedriver,
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
+  $gpg4win  = $jenkins_slave_windows::params::gpg4win,
   $gradle = $jenkins_slave_windows::params::gradle,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
@@ -91,6 +92,19 @@ class jenkins_slave_windows::install (
     }
 
 extract_geckodriver { $geckodriver:}
+
+#################################################################
+
+###################### Setup gpg4win #############################
+  define extract_gpg4win($gpg4win_version = $title){
+      exec { "extract ${gpg4win_version}" :
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-gpg4win-${gpg4win_version}.zip -DestinationPath F:\\jenkins\\tools\\gpg4win\\${gpg4win_version}", # lint:ignore:140chars
+        provider => powershell,
+        creates  => "F:\\jenkins\\tools\\gpg4win\\${gpg4win_version}\\bin\\gpg.exe",
+      }
+    }
+
+extract_gpg4win { $gpg4win:}
 
 #################################################################
 

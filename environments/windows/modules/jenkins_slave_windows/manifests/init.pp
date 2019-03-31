@@ -6,6 +6,7 @@ class jenkins_slave_windows (
   $ant = [],
   $chromedriver = [],
   $geckodriver = [],
+  $gpg4win = [],
   $gradle = [],
   $iedriver = [],
   $jdk = [],
@@ -26,7 +27,22 @@ class jenkins_slave_windows (
   }
 
   #### create directories for Jenkins, tools, and such
-  file { ['F:\Program Files','C:\Program Files (x86)\Adobe','F:\jenkins','F:\jenkins\tools','F:\jenkins\tools\ant','F:\jenkins\tools\ant\zips','F:\jenkins\tools\chromedriver','F:\jenkins\tools\chromedriver\zips','F:\jenkins\tools\geckodriver','F:\jenkins\tools\geckodriver\zips','F:\jenkins\tools\gradle','F:\jenkins\tools\gradle\zips','F:\jenkins\tools\iedriver','F:\jenkins\tools\iedriver\zips','F:\jenkins\tools\java','F:\jenkins\tools\java\zips','F:\jenkins\tools\maven','F:\jenkins\tools\maven\zips','F:\jenkins\tools\nant','F:\jenkins\tools\nant\zips' , 'F:\jenkins\tools\forrest', 'F:\jenkins\tools\forrest\zips','F:\tmp','F:\tools_zips']: # lint:ignore:140chars
+  file { ['C:\Program Files (x86)\Adobe',
+          'F:\Program Files',
+          'F:\jenkins',
+          'F:\jenkins\tools',
+          'F:\jenkins\tools\ant',
+          'F:\jenkins\tools\chromedriver',
+          'F:\jenkins\tools\geckodriver',
+          'F:\jenkins\tools\gpg4win',
+          'F:\jenkins\tools\gradle',
+          'F:\jenkins\tools\iedriver',
+          'F:\jenkins\tools\java',
+          'F:\jenkins\tools\maven',
+          'F:\jenkins\tools\nant',
+          'F:\jenkins\tools\forrest',
+          'F:\tmp',
+          'F:\tools_zips']:
     ensure => directory
   }
 

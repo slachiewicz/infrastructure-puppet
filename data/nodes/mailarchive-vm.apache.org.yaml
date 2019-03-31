@@ -55,6 +55,8 @@ apache::custom_config:
       </Macro>
 
       # group all the renames together
+      # keep in synch with renames in mailprivate-vm.a.o.yaml
+      # (once new files have been indexed)
       <Macro Renames>
         Use RenameProject "amber"        "oltu"
         Use RenameProject "argus"        "ranger"
@@ -69,6 +71,7 @@ apache::custom_config:
         Use RenameProject "oscar"        "felix"
         Use RenameProject "quarks"       "edgent"
         Use RenameProject "rat "         "creadur"
+        Use RenameProject "senssoft"     "flagon"
         Use RenameProject "stratosphere" "flink"
         Use RenameProject "zest"         "polygene"
 
