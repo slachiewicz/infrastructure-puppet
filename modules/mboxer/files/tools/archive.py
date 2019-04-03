@@ -18,8 +18,10 @@
 """ 
 
 This script determines the intended ASF recipient of an email and
-archives the email in the correct mbox file. Does NOT differentiate
-between public and private email.
+archives the email in the correct mbox file. Does not use the
+list name to differentiate between public and private email. That
+distinction is controlled by the optional security realm argument.
+
 
 Arguments (optional):
     --lid abcd@xyz.apache.org - use this instead of parsing list-post
@@ -30,6 +32,21 @@ Arguments (optional):
     - anything else, file it under the directory defined by the 'archivedir' config item
 
    The above can be combined if required.
+
+Usage:
+
+The script is normally installed as a mail alias file.
+Examples:
+
+archiver:
+|python3 ${install_base}/tools/archive.py
+
+private:
+|python3 ${install_base}/tools/archive.py private
+
+president:
+|python3 ${install_base}/tools/archive.py --lid president@apache.org private
+
 """
 
 import email.parser
@@ -47,11 +64,12 @@ import argparse
 # Fetch config yaml
 cpath = os.path.dirname(os.path.realpath(__file__))
 try:
-    config = yaml.load(open("%s/settings.yml" % cpath))
+    config = yaml.safe_load(open("%s/settings.yml" % cpath))
 except:
     print("Can't find config, using defaults (/x1/archives/)")
     config = {
         'archivedir': '/x1/archives',
+        'privatedir': '/x1/private',
         'restricteddir': '/x1/restricted',
         'dumpfile': '/x1/archives/bademails.txt'
     }
@@ -137,6 +155,7 @@ def main():
             print("Dirty listname or FQDN in '%s', dumping in %s!" % (recipient, config['dumpfile']))
             dumpbad(msgstring)
             sys.exit(0) # Bail quietly
+        fqdn = fqdn.replace('.incubator.', '.') # INFRA-18153 - remove .incubator path segment
         YM = time.strftime("%Y%m", time.gmtime()) # Use UTC
         adir = config['archivedir']
         dochmod = True
