@@ -89,8 +89,8 @@ jira_asf::connector_port_http: ''
 jira_asf::connector_address_ajp: '127.0.0.1'
 jira_asf::context_path: '/jira'
 jira_asf::docroot: '/var/www'
-jira_asf::jvm_min_size: '6144m'
-jira_asf::jvm_max_size: '6144m'
+jira_asf::jvm_min_size: '16384m'
+jira_asf::jvm_max_size: '16384m'
 
 apache::logroot: '/x1/log'
 
