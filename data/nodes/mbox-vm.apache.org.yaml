@@ -6,12 +6,34 @@ classes:
   - vhosts_asf::vhosts
   - vhosts_asf::modules
   - rsync_asf
+  - rsync::server
 
 rsync_asf::cron_hour: 18
 rsync_asf::cron_minute: 37
 
 rsync_asf::fslist:
   - /x1
+
+rsync::package_ensure:        'latest'
+rsync::server::use_xinetd:    false
+rsync::server::gid:           'nogroup'
+
+rsync::server::module:
+  minotaur:
+    path: '/x1/minotaur/'
+    hosts_allow: '140.211.11.9'
+    auth_users: 'apb-minombox'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'no'
+
+file:
+  '/etc/rsyncd.secrets':
+    content: "%{base::rsync_secrets}"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
 
 base::basepackages:
   - jed
