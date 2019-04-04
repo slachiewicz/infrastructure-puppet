@@ -232,6 +232,10 @@ vhosts_asf::vhosts::vhosts:
 
       # project renames
 
+      # Make sure the new directory structure has been set up before adding a redirect
+
+      #      ** remember to update mailarchive-vm.apache.org.yaml as well **
+
       # Use Redirect here so auth works and user sees updated URL
       <Macro RenameProject $old $new>
         RedirectMatch Permanent "^/(pmc|members)/private-arch/$old-(.*)" "/$1/private-arch/$new-$2"
@@ -251,11 +255,15 @@ vhosts_asf::vhosts::vhosts:
       Use RenameProject "oscar"        "felix"
       Use RenameProject "quarks"       "edgent"
       Use RenameProject "rat "         "creadur"
+      Use RenameProject "senssoft"     "flagon"
       Use RenameProject "stratosphere" "flink"
       Use RenameProject "zest"         "polygene"
 
       #sub-project renames
       Use RenameProject "lucene-lucene-net" "lucenenet"
+
+      # Originally private; now public (INFRA-12769)
+      RedirectMatch Permanent "^/(pmc|members)/private-arch/metamodel-issues/" "http://mail-archives.apache.org/mod_mbox/metamodel-issues/"
 
       # Conditional incubator renames
 
