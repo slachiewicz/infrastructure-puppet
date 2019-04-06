@@ -379,19 +379,14 @@ access to dn.subtree="ou=sandbox,dc=apache,dc=org"
   by * read
   by anonymous auth
 
-## Allow crowd to write to ldap
-
-access to *
-  by dn="cn=crowd_ldap,ou=users,ou=services,dc=apache,dc=org" write
-  by * read
-  by anonymous none
-
 ## DO NOT MODIFY THIS LAST 'CATCH ALL' RULE.  IT COVERS EVERTHING THAT
 ## IS NOT EXPLICITLY COVERED AVOVE.
 
 ## Catch all, explicitly allow anything not covered above.
+## includes crowd write access
 access to *
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by dn="cn=crowd_ldap,ou=users,ou=services,dc=apache,dc=org" write
   by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
   by dn="cn=nss_p6,ou=users,ou=services,dc=apache,dc=org" read
