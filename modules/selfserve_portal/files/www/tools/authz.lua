@@ -32,7 +32,7 @@ end
 
 function handler(r)
  -- Allow hermes
-    if r.useragent_ip == "140.211.11.3" then
+    if r.useragent_ip == "140.211.11.3" or r.useragent_ip == '207.244.88.153' then
         return apache2.OK
     end
     
