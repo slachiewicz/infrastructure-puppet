@@ -439,7 +439,7 @@ vhosts_asf::vhosts::vhosts:
         AuthLDAPGroupAttributeIsDN off
         <RequireAny>
           # Hermes or valid chair/root
-          Require ip 140.211.11.3
+          Require ip 140.211.11.3 207.244.88.153
           Require valid-user
         </RequireAny>
         LuaHookAuthChecker /var/www/selfserve-portal/tools/authz.lua handler
