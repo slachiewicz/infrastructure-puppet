@@ -27,6 +27,22 @@ rsync::server::module:
     incoming_chmod: false
     outgoing_chmod: false
     read_only: 'no'
+  public:
+    path: '/x1/archives/'
+    hosts_allow: '10.10.3.25'
+    auth_users: 'apb-mailarchive'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'yes'
+  private:
+    path: '/x1'
+    hosts_allow: '10.10.3.60'
+    auth_users: 'apb-mailprivate'
+    secrets_file: '/etc/rsyncd.secrets'
+    incoming_chmod: false
+    outgoing_chmod: false
+    read_only: 'yes'
 
 file:
   '/etc/rsyncd.secrets':
