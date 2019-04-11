@@ -2,22 +2,32 @@
 
 class blocky_server (
 ){
+
+# Install apache
+# stolen from wiki_asf
+  apache::custom_config {
+    'blocky.apache.org':
+      ensure   => present,
+      source   => 'puppet:///modules/blocky_server/files/blocky-ssl.conf',
+      confdir  => '/etc/apache2/sites-available',
+      priority => '10',
+      require  => Class['apache'],
+  }
+
+  # include apache::mod::cache
+  # include apache::mod::expires
+  # include apache::mod::rewrite
+  # include apache::mod::ssl
+  # include apache::mod::status
+  # include apache::mod::wsgi
+  
   # Checkout latest blocky code from git
   vcsrepo { '/blocky/blocky2':
     ensure   => latest,
     provider => git,
     source   => 'https://github.com/apache/infrastructure-blocky',
   }
-  # Copy the httpd config file for the blocky site.
-  # This is a template in case it needs modification
-  # not because it currently does.
-  file { '/etc/apache2/sites-available/25-blocky-ssl.conf':
-    ensure   => file,
-    content  => template('25-blocky-ssl.conf.erb'),
-    user     => 'root',
-    owner    => 'root',
-    mode     => 0644,
-  }  
+
   # Gunicorn for blocky server
   # Run this command unless gunicorn is already running.
   # -w 10 == 10 workers, we can up that if need be.
