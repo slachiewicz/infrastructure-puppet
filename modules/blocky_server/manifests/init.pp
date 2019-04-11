@@ -4,9 +4,7 @@ class blocky_server (
 ){
 
 # Install apache
-# stolen from wiki_asf
-  apache::custom_config {
-    'blocky.apache.org':
+  apache::custom_config { 'blocky.apache.org':
       ensure   => present,
       source   => 'puppet:///modules/blocky_server/files/blocky-ssl.conf',
       confdir  => '/etc/apache2/sites-available',
@@ -14,12 +12,12 @@ class blocky_server (
       require  => Class['apache'],
   }
 
-  # include apache::mod::cache
-  # include apache::mod::expires
-  # include apache::mod::rewrite
-  # include apache::mod::ssl
-  # include apache::mod::status
-  # include apache::mod::wsgi
+  include apache::mod::cache
+  include apache::mod::expires
+  include apache::mod::rewrite
+  include apache::mod::ssl
+  include apache::mod::status
+  include apache::mod::wsgi
   
   # Checkout latest blocky code from git
   vcsrepo { '/blocky/blocky2':
