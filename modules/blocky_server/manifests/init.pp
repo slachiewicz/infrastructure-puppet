@@ -21,15 +21,6 @@ class blocky_server (
       priority => '25',
       require  => Class['apache'],
   }
-
-  apache::custom_config { 'uls-ssl':
-      ensure   => present,
-      source   => 'puppet:///modules/blocky_server/files/uls-ssl.conf',
-      confdir  => '/etc/apache2/sites-available',
-      priority => '25',
-      require  => Class['apache'],
-  }
-
   # Apache webserver module inclusions
   include apache::mod::cache
   include apache::mod::expires
@@ -45,15 +36,6 @@ class blocky_server (
       unless  => '/usr/bin/test -f /etc/apache2/sites-enabled/25-blocky-ssl',
       creates => '/etc/apache2/sites-enabled/25-blocky-ssl',
   }
-  
-  # Enable the blocky website in Apache webserver
-  exec {
-    'enable-uls-site':
-      command => '/usr/sbin/a2ensite 25-uls-ssl',
-      unless  => '/usr/bin/test -f /etc/apache2/sites-enabled/25-uls-ssl',
-      creates => '/etc/apache2/sites-enabled/25-uls-ssl',
-  }
-
   # Gunicorn for blocky server
   # Run this command unless gunicorn is already running.
   # -w 10 == 10 workers, we can up that if need be.
