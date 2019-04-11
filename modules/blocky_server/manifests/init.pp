@@ -10,10 +10,21 @@ class blocky_server (
     source   => 'https://github.com/apache/infrastructure-blocky',
   }
 
-  # Install Apache webserver
-  apache::custom_config { 'blocky.apache.org':
+  # Install and configure Apache webserver
+  # sites:
+  #  - blocky
+  #  - uls
+  apache::custom_config { 'blocky-ssl':
       ensure   => present,
       source   => 'puppet:///modules/blocky_server/files/blocky-ssl.conf',
+      confdir  => '/etc/apache2/sites-available',
+      priority => '25',
+      require  => Class['apache'],
+  }
+
+  apache::custom_config { 'uls-ssl':
+      ensure   => present,
+      source   => 'puppet:///modules/blocky_server/files/uls-ssl.conf',
       confdir  => '/etc/apache2/sites-available',
       priority => '25',
       require  => Class['apache'],
@@ -27,12 +38,20 @@ class blocky_server (
   include apache::mod::status
   include apache::mod::wsgi
   
-  # Enable the website in Apache webserver
+  # Enable the blocky website in Apache webserver
   exec {
     'enable-blocky-site':
       command => '/usr/sbin/a2ensite 25-blocky-ssl',
       unless  => '/usr/bin/test -f /etc/apache2/sites-enabled/25-blocky-ssl',
       creates => '/etc/apache2/sites-enabled/25-blocky-ssl',
+  }
+  
+  # Enable the blocky website in Apache webserver
+  exec {
+    'enable-uls-site':
+      command => '/usr/sbin/a2ensite 25-uls-ssl',
+      unless  => '/usr/bin/test -f /etc/apache2/sites-enabled/25-uls-ssl',
+      creates => '/etc/apache2/sites-enabled/25-uls-ssl',
   }
 
   # Gunicorn for blocky server

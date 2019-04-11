@@ -8,7 +8,6 @@ classes:
   - apache::mod::headers
   - apache::mod::proxy
   - apache::mod::proxy_http
-  - blocky_server
   - datadog_agent::integrations::elasticsearch
   - ssl::name::wildcard_apache_org
   - oraclejava::install
