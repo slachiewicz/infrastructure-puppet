@@ -84,9 +84,9 @@ vhosts_asf::vhosts::vhosts:
     ensure: 'present'
     port: 443
     ssl: true
-    ssl_cert: /etc/letsencrypt/live/community-vm.apache.org/cert.pem
-    ssl_key: /etc/letsencrypt/live/community-vm.apache.org/privkey.pem
-    ssl_chain: /etc/letsencrypt/live/community-vm.apache.org/chain.pem
+    ssl_cert: /etc/letsencrypt/live/community.zones.apache.org/cert.pem
+    ssl_key: /etc/letsencrypt/live/community.zones.apache.org/privkey.pem
+    ssl_chain: /etc/letsencrypt/live/community.zones.apache.org/chain.pem
     servername: 'community-vm.apache.org'
     serveradmin: 'dev@community.apache.org'
     docroot: '/var/www/community-vm/'
