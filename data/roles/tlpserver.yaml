@@ -2694,5 +2694,33 @@ vhosts_asf::vhosts::vhosts:
       # INFRA-16502
       Redirect / https://www.apache.org/foundation/sponsorship.html
 
+  netbeans:
+    vhost_name: '*'
+    port: 80
+    servername: 'netbeans.org'
+    docroot: '/www/netbeans.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'www.netbeans.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://netbeans.apache.org/
+
+  netbeans-ssl:
+    vhost_name: '*'
+    port: 443
+    servername: 'netbeans.org'
+    docroot: '/www/netbeans.apache.org'
+    manage_docroot: false
+    serveraliases:
+      - 'www.netbeans.org'
+    serveradmin: 'users@infra.apache.org'
+    access_log_file: '/x1/logs/weblog.log'
+    error_log_file: '/x1/logs/errorlog.log'
+    custom_fragment: |
+      Redirect permanent / https://netbeans.apache.org/
+
 httpd_modules::dev_package:
   - apache2-dev
