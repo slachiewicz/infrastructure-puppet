@@ -608,6 +608,10 @@ apezmlm = r
 # Allow hermes:apmail to commit .archives
 apezmlm = rw
 
+# allow apmail to update netqmail patched source
+[/infrastructure/netqmail-asf]
+apezmlm = rw
+
 [/infrastructure/bugzilla]
 @infrastructure-interest = rw
 @infrastructure = rw
