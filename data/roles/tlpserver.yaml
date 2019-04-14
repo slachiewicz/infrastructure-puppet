@@ -2721,9 +2721,6 @@ vhosts_asf::vhosts::vhosts:
     serveradmin: 'users@infra.apache.org'
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
-    ssl_cert: '/etc/ssl/certs/netbeans.org.crt'
-    ssl_chain: '/etc/ssl/certs/netbeans.org.chain'
-    ssl_key: '/etc/ssl/private/netbeans.org.key'
     custom_fragment: |
       Redirect permanent / https://netbeans.apache.org/
 
