@@ -2723,7 +2723,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     ssl_cert: '/etc/ssl/certs/netbeans.org.crt'
     ssl_chain: '/etc/ssl/certs/netbeans.org.chain'
-    ssl_key: '/etc/ssl/private/nebeans.org.key'
+    ssl_key: '/etc/ssl/private/netbeans.org.key'
     custom_fragment: |
       Redirect permanent / https://netbeans.apache.org/
 
