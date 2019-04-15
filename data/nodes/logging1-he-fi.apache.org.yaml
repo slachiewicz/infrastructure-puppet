@@ -117,16 +117,16 @@ vhosts_asf::vhosts::vhosts:
           </If>
           ProxyPass http://localhost:9200/
       </Location>
-  blocky-ssl:
+  uls-ssl:
     vhost_name: '*'
     ensure: 'present'
     port: 443
     ssl: true
-    servername: 'blocky.apache.org'
+    servername: 'uls.apache.org'
     serveradmin: 'webmaster@apache.org'
     docroot: '/var/www/snappy/'
-    access_log_file: 'logsearch.apache.org.ssl_access.log'
-    error_log_file: 'logsearch.apache.org.error.log'
+    access_log_file: 'uls.apache.org.ssl_access.log'
+    error_log_file: 'uls.apache.org.error.log'
     custom_fragment: |
       Header set Access-Control-Allow-Origin "*"
       Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
@@ -140,30 +140,8 @@ vhosts_asf::vhosts::vhosts:
       LuaScope thread
       LuaCodeCache stat
       AddHandler lua-script .lua
-      RewriteEngine On
-      RewriteRule ^/?blocky.json /var/www/snappy/blocky/api/blocklist.lua
-      ProxyPass /blocky/api/ http://localhost:8000/api/
-      Alias /blocky/ /blocky/blocky2/server/site/
-      
-      # Clients can get bans and post rules
-      RewriteCond %%{HIERA}{REQUEST_METHOD} GET
-      RewriteRule ^/blocky-public/(bans|whitelist) http://localhost:8000/api/$1 [P]
-      RewriteCond %%{HIERA}{REQUEST_METHOD} PUT
-      RewriteRule ^/blocky-public/myrules http://localhost:8000/api/myrules [P]
       
       # Everything else is authed off
-      <Location /blocky/>
-          AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-          AuthLDAPRemoteUserAttribute member
-          AuthName "ASF Infrastructure-root Only"
-          AuthType Basic
-          AuthBasicProvider ldap
-          AuthLDAPGroupAttributeIsDN on
-          Require ldap-group cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org
-          DirectoryIndex index.html
-          RewriteRule .* - [E=PROXY_USER:%%{HIERA}{LA-U:REMOTE_USER}]
-          RequestHeader set Proxy-User %%{HIERA}{PROXY_USER}e
-      </Location>
       <LocationMatch ^/((app|ui|bundles|api|plugins|es_admin|elasticsearch)/.*)$>
           AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPRemoteUserAttribute member
