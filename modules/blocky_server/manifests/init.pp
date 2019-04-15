@@ -16,7 +16,7 @@ class blocky_server (
   #  - uls
   apache::custom_config { 'blocky-ssl':
       ensure   => present,
-      source   => 'puppet:///modules/blocky_server/files/blocky-ssl.conf',
+      source   => 'puppet:///modules/blocky_server/blocky-ssl.conf',
       confdir  => '/etc/apache2/sites-available',
       priority => '25',
       require  => Class['apache'],
