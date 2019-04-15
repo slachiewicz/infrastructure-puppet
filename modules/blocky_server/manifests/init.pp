@@ -16,8 +16,7 @@ class blocky_server (
   #  - uls
   apache::custom_config { 'blocky-ssl':
       ensure   => present,
-      source   => 'puppet:///modules/blocky_server/blocky-ssl.conf',
-      confdir  => '/etc/apache2/sites-available',
+      source   => 'puppet:///modules/blocky_server/blocky-ssl',
       priority => '25',
       require  => Class['apache'],
   }
@@ -34,7 +33,7 @@ class blocky_server (
     'enable-blocky-site':
       command => '/usr/sbin/a2ensite 25-blocky-ssl',
       unless  => '/usr/bin/test -f /etc/apache2/sites-enabled/25-blocky-ssl',
-      creates => '/etc/apache2/sites-enabled/25-blocky-ssl',
+      creates => '/etc/apache2/sites-enabled/25-blocky-ssl.conf',
   }
   # Gunicorn for blocky server
   # Run this command unless gunicorn is already running.
