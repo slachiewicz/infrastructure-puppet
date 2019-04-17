@@ -1,5 +1,5 @@
 client:
-    interval:     60
+    interval:     45
 
 server:
     apiurl:        https://blocky.apache.org/blocky-public
