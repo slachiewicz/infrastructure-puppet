@@ -295,6 +295,17 @@ rsync::server::module:
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
 
+logrotate::rule:
+  rsync:
+    ensure: 'present'
+    path: '/var/log/rsync/rsync'
+    copytruncate: true
+    compress: true
+    ifempty: true
+    rotate: 3
+    missingok: true
+    rotate_every: 'day'
+
 stunnel::tun:
   rsyncd:
     certificate:  '/etc/ssl/certs/bai.apache.org.crt'
