@@ -76,7 +76,8 @@ try:
         '--issueTypeScheme', issuescheme,
         '--url', url,
         '--workflowScheme',  workflowscheme,
-        '--notificationScheme', "Empty Scheme"
+        '--notificationScheme', "Empty Scheme",
+        '--permissionScheme', "_Default Permission Scheme_"
         ], stderr=subprocess.STDOUT)
     sscommon.sendemail("%s@apache.org" % requser, "New JIRA project created: %s" % project,
 """
