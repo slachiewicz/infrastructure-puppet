@@ -65,7 +65,7 @@ class whimsy_server (
   ############################################################
 
   -> class { 'rvm::passenger::apache':
-    version            => '5.1.12',
+    version            => '6.0.2',
     ruby_version       => "ruby-${ruby_version}",
     mininstances       => '3',
     maxinstancesperapp => '0',
