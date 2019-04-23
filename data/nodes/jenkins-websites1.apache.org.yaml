@@ -13,3 +13,5 @@ python::python_pips:
 base::basepackages:
   - 'python-seqdiag'
   - 'python-nwdiag'
+  - 'gulp'
+  - 'hugo'
