@@ -15,3 +15,4 @@ base::basepackages:
   - 'python-nwdiag'
   - 'gulp'
   - 'hugo'
+  - 'doxygen'
