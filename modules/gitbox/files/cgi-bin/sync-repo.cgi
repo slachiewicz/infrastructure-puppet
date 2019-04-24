@@ -192,14 +192,16 @@ elif 'repository' in data and 'name' in data['repository']:
         # Didn't find it, time to notify!!
         else:
             asfid = "(unknown)"
-            # Send an email to users@infra.a.o with the bork
-            msg = MIMEText(tmpl_unknown_user % locals(), _charset = "utf-8")
-            msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
-            msg['To'] = "<team@infra.apache.org>"
-            msg['From'] = "<gitbox@gitbox.apache.org>"
-            s = smtplib.SMTP('localhost')
-            s.sendmail(msg['From'], msg['To'], msg.as_string())
-
+            if '[bot]' not in pusher: # If not internal GitHub bot, complain!
+                # Send an email to users@infra.a.o with the bork
+                msg = MIMEText(tmpl_unknown_user % locals(), _charset = "utf-8")
+                msg['Subject'] = "gitbox repository %s: push from unknown github user!" % reponame
+                msg['To'] = "<team@infra.apache.org>"
+                msg['From'] = "<gitbox@gitbox.apache.org>"
+                s = smtplib.SMTP('localhost')
+                s.sendmail(msg['From'], msg['To'], msg.as_string())
+            else:
+                asfid = pusher # Set to the pusher ID for internal recording in case of github bots
 
         #######################################
         # Check that we haven't missed a push #
