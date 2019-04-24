@@ -60,7 +60,7 @@ workflowscheme = form.getvalue('workflow')
 if not workflowscheme or len(workflowscheme) == 0:
     sscommon.buggo("Invalid workflow scheme!")
 
-os.chdir('/usr/local/etc/atlassian-cli-5.7.0/')
+os.chdir('/usr/local/etc/atlassian-cli-8.4.0/')
 try:
     subprocess.check_output([
         '/usr/bin/java', '-jar', sscommon.jirajar,

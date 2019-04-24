@@ -26,9 +26,9 @@ import time
 
 config = yaml.load(open(YAML_FILE))
 
-clipath = '/usr/local/etc/atlassian-cli-5.7.0'
-cwikijar = '%s/lib/confluence-cli-5.7.0.jar' % clipath
-jirajar = '%s/lib/jira-cli-5.7.0.jar' % clipath
+clipath = '/usr/local/etc/atlassian-cli-8.4.0'
+cwikijar = '%s/lib/confluence-cli-8.4.0.jar' % clipath
+jirajar = '%s/lib/jira-cli-8.4.0.jar' % clipath
 
 def sendemail(rcpt, subject, message):
     sender = "ASF Self-Service Platform <selfserve@apache.org>"
