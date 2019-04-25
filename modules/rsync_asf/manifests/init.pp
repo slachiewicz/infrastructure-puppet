@@ -15,6 +15,10 @@ class rsync_asf (
   $rsync_passwd = '',
 ){
 
+  python::pip {
+    'datadog' :
+      ensure => present;
+      }
   # needed for join function
   include stdlib
 
