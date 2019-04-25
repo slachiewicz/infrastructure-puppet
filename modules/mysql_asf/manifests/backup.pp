@@ -16,6 +16,9 @@ class mysql_asf::backup (
   require stunnel_asf
   require mysql::server
 
+  # pull in datadog api key from eyaml
+  include datadog_agent
+
   file {
     'dbsave.sh':
       path    => "${script_path}/${script_name}",
@@ -51,6 +54,6 @@ class mysql_asf::backup (
   cron { 'mysql-dump-rsync-to-abi':
     hour    => $hour,
     minute  => $minute,
-    command => "${script_path}/${script_name}",
+    command => "/usr/local/bin/dogwrap -n \"Running rsync backup\" -k ${datadog_agent::api_key} --submit_mode all \"${script_path}/${script_name}\"", # lint:ignore:140chars
   }
 }

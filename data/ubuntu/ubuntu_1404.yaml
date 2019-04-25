@@ -319,6 +319,9 @@ puppet::puppetconf:                      '/etc/puppet/puppet.conf'
 python::dev: true
 python::pip: 'latest'
 python::virtualenv: true
+python::python_pips:
+  datadog:
+    ensure: present
 
 snmp:snmpd_options: '-LS0-5d -Lf /dev/null -u snmp -g snmp -p /var/run/snmpd.pid'
 
