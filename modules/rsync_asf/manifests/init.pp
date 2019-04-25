@@ -21,6 +21,9 @@ class rsync_asf (
   # stunnel dependency
   include stunnel_asf
 
+  # pull in datadog api key from eyaml
+  include datadog_agent
+
   file {
     'rsync-offsite.sh':
       ensure  => present,
@@ -46,7 +49,7 @@ class rsync_asf (
 
   cron {
     'rsync offsite':
-      command => $scriptpath,
+      command => "/usr/local/bin/dogwrap -n \"Running rsync backup\" -k ${datadog_agent::api_key} --submit_mode all \"${scriptpath}\"",
       user    => 'root',
       hour    => $cron_hour,
       minute  => $cron_minute,
