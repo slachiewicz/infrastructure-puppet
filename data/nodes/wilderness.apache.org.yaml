@@ -62,7 +62,7 @@ cron:
     minute: '0'
     hour: '0'
     weekday: '3'
-    command: '/usr/bin/certbot-auto renew > /var/logs/letsencrypt.log 2>&1'
+    command: '/usr/bin/certbot-auto renew > /var/log/letsencrypt.log 2>&1'
     
 base::hosts:
   svn.us.apache.org:
