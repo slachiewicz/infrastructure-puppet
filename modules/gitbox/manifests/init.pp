@@ -87,6 +87,11 @@ $pbcsPwd  = ''
       owner  => 'www-data',
       group  => 'www-data',
       mode   => '0750';
+    '/x1/gitbox/logs':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0750';
   }
 
   file {
