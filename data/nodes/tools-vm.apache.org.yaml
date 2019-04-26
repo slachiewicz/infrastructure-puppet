@@ -71,7 +71,6 @@ cron:
 
 elasticsearch::init_defaults:
   ES_HEAP_SIZE: '2g'
-elasticsearch::java_install: true
 elasticsearch::version: '1.7.1'
 elasticsearch::ensure: 'present'
 elasticsearch::status: 'enabled'
