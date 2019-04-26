@@ -34,7 +34,6 @@ LDAP_USER = CONFIG.get('ldap', 'user')
 LDAP_PASSWORD = CONFIG.get('ldap', 'password')
 UID_RE = re.compile("uid=([^,]+),ou=people,dc=apache,dc=org")
 ORG_READ_TOKEN = CONFIG.get('github', 'token')
-HIPCHAT_TOKEN = CONFIG.get('hipchat', 'token')
 
 # Figure out which PMCs/Podlings are allowed
 gitdir = '/x1/repos/asf'
@@ -169,18 +168,6 @@ def createRepo(repo, title, pmc):
         }))
         return False
 
-def hipchat(msg):
-    payload = {
-            'room_id': "669587",
-            'auth_token': HIPCHAT_TOKEN,
-            'from': "GitBox RepoReq",
-            'message_format': 'html',
-            'notify': '0',
-            'color':'green',
-            'message': msg
-        }
-    requests.post('https://api.hipchat.com/v1/rooms/message', data = payload)
-
 def main():
     action = xform.getvalue("action")
     if action and action == "create":
@@ -241,7 +228,6 @@ def main():
                     subprocess.check_output("cd /x1/repos/asf/%s.git/ && git config apache.dev \"%s\"" % (reponame, ghmail), shell = True)
 
                     # Notify infra@ and private@$pmc that the repo has been set up
-                    hipchat("New repository request for %s.git by %s succeeded!" % (reponame, os.environ['REMOTE_USER']))
                     msg = MIMEText("New repository %s.git was created, as requested by %s.\nYou may view it at: https://gitbox.apache.org/repos/asf/%s.git\n\nWith regards,\nApache Infrastructure." % (reponame, os.environ['REMOTE_USER'], reponame))
                     msg['Subject'] = 'New gitbox/github repository created: %s.git' % reponame
                     msg['From'] = "git@apache.org"
@@ -278,7 +264,6 @@ def main():
                     s.sendmail("git@apache.org", "private@infra.apache.org", msg.as_string())
                     s.quit()
 
-                    hipchat("New repository request for %s.git by %s failed! Check yer inbox for details." % (reponame, os.environ['REMOTE_USER']))
                     return
             else:
                 return
