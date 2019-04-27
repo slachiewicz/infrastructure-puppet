@@ -8,6 +8,7 @@ class subversion_server (
   $s3_gpg_passphrase    = '',
   $s3_secret_key        = '',
   $svn_master_hostname  = 'svn-master.apache.org',
+  $fecru_token          = '',
 
 ) {
 
