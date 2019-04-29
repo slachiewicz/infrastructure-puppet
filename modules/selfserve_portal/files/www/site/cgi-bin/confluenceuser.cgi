@@ -38,7 +38,9 @@ def userExists(username):
         ], stderr=subprocess.STDOUT
         )
         return True
-    except:
+    except subprocess.CalledProcessError as e:
+        sys.stderr.write(e.output + "\n")
+        sys.stderr.flush()
         return False
     
 # CGI interface
