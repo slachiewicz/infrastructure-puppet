@@ -127,7 +127,22 @@ vhosts_asf::vhosts::vhosts:
       </LocationMatch>
       </Macro>
 
-       ## We dont provide search any more, however ...
+      # Allow committers access to certain 'private' lists (see gen-httpdconfig.sh)
+      <Macro MacroMboxCommitters $dir>
+      <LocationMatch ^/pmc/private-arch/$dir(.*)>
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Committers (/pmc/)"
+          AuthLDAPurl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute memberUid
+          AuthLDAPGroupAttributeIsDN off
+          Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+        </RequireAll>
+      </LocationMatch>
+      </Macro>
+
+      ## We dont provide search any more, however ...
       <Location /search>
         # Lets add some redirect to lists.a.o here maybe ?
       </Location>
