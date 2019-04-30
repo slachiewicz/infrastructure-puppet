@@ -12,6 +12,7 @@ import json
 import requests
 import slackclient
 import yaml
+import re
 
 CONFIG_FILE = "slackbridge.yaml"
 CONFIG = yaml.load(open(CONFIG_FILE))
@@ -144,7 +145,7 @@ def main():
                         text = event['text']
                         m = re.search(r"\b([A-Z]+-\d+)\b", event['text'])
                         if m and event.get('sub_type') != 'bot_message':
-                            url = "https://issues.apache.org/jira/rest/api/latest/issue/%s" % m.grup(1)
+                            url = "https://issues.apache.org/jira/rest/api/latest/issue/%s" % m.group(1)
                             try:
                                 rv = requests.get(url).json()
                                 showTicket(rv, event['channel'])
