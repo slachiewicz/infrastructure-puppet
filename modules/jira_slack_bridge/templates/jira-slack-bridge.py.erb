@@ -147,7 +147,7 @@ def main():
                             url = "https://issues.apache.org/jira/rest/api/latest/issue/%s" % m.grup(1)
                             try:
                                 rv = requests.get(url).json()
-                                showTicket(rv, js['event']['channel'])
+                                showTicket(rv, event['channel'])
                             except:
                                 pass
             
