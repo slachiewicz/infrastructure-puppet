@@ -144,7 +144,7 @@ def main():
                         channel = event['channel']
                         text = event['text']
                         m = re.search(r"\b([A-Z]+-\d+)\b", event['text'])
-                        if m and event.get('sub_type') != 'bot_message':
+                        if m and not event.get('bot_id'):
                             url = "https://issues.apache.org/jira/rest/api/latest/issue/%s" % m.group(1)
                             try:
                                 rv = requests.get(url).json()
