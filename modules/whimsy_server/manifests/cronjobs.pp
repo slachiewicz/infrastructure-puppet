@@ -122,4 +122,13 @@ class whimsy_server::cronjobs (
     hour    => 5,
     minute  => 57
   }
+
+  cron { 'monthly_tidy':
+    ensure   => present,
+    command  => "(cd /srv/whimsy/tools; ${ruby} monthly_tidy.rb > ../www/logs/monthly_tidy 2>&1)",
+    user     => $apache::user,
+    monthday => 2,
+    hour     => 15,
+    minute   => 27
+  }
 }
