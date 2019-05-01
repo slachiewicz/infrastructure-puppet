@@ -155,7 +155,7 @@ elif 'repository' in data and 'name' in data['repository']:
     after = data['after'] if 'after' in data else EMPTY_HASH
     force_diff = False
     merge_from_fork = False
-    if 'commits' in data:
+    if 'commits' in data and data['commits']:
         # Check if this is a merge from a fork
         m = re.match(r"Merge pull request #\d+ from ([^/]+)", data['commits'][-1]['message'])
         if m and m.group(1) != 'apache':
