@@ -17,6 +17,7 @@
 #
 import hashlib, json, random, os, sys, time, subprocess
 import cgi, netaddr, smtplib, sqlite3
+import re
 from email.mime.text import MIMEText
 
 repo_dirs = ['asf', 'private'] # The sub-sections we have, asf and private
@@ -153,9 +154,16 @@ elif 'repository' in data and 'name' in data['repository']:
     before = data['before'] if 'before' in data else EMPTY_HASH
     after = data['after'] if 'after' in data else EMPTY_HASH
     force_diff = False
+    merge_from_fork = False
     if 'commits' in data:
+        # Check if this is a merge from a fork
+        m = re.match(r"Merge pull request #\d+ from ([^/]+)", data['commits'][-1]['message'])
+        if m and m.group(1) != 'apache':
+            merge_from_fork = True
+        # For each commit, check if distinct or not
         for commit in data['commits']:
-            if commit['distinct'] and not ('Merge pull request' in commit['message'] and commit == data['commits'][-1]):
+            # IF merging from a fork, force a diff - otherwise, bizniz as usual
+            if commit['distinct'] and not ('Merge pull request' in commit['message'] and commit == data['commits'][-1]) and merge_from_fork:
                 force_diff = True
     if data.get('created'):
         force_diff = False # disable forced diff on new branches
