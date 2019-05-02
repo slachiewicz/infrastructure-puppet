@@ -1554,6 +1554,9 @@ svn-site-role = rw
 [/openjpa]
 *=r
 
+[/openjpa/site]
+@openjpa = rw
+
 [/openmeetings]
 * = r
 
