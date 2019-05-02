@@ -134,6 +134,7 @@ def main():
     last_ticket = {}
     last_changeid = {}
     firstRun = True
+    counter = 0
     
     if SC.rtm_connect():
         while True:
@@ -153,46 +154,48 @@ def main():
                                 pass
             
             # Then JIRA events
-            for k, entry in CONFIG['subscriptions'].items():
-                if 'cid' in entry: # Only if we found the channel in slack
-                    jproject = entry.get('jira', 'NULL')
-                    cid = entry.get('cid')
-                    try:
-                        js = requests.get(CHGURL % jproject, auth = (JIRA_USER, JIRA_PASS)).json()
-                    except:
-                        print("Could not contact JIRA, faking empty reply")
-                        js = {
-                            'issues': []
-                        }
-                    changesets = []
-                    for issue in js['issues']:
-
-                        for entry in issue['changelog']['histories']:
-                            chgid = int(entry['id'])
-
-                            # New changelog entry and not first run?
-                            if not firstRun and chgid > last_changeid.get(k, 0):
-                                changesets.append({
-                                    'key': issue['key'],
-                                    'summary': issue['fields']['summary'],
-                                    'change': entry
-                                })
-                            if last_changeid.get(k, 0) < chgid:
-                                last_changeid[k] = chgid
-
-                        # Newly created issue?
-                        if len(issue['changelog']['histories']) == 0 and issue['key'] > last_ticket.get(k, 'A-000'):
-                            last_ticket[k] = issue['key'] 
-                            if not firstRun:
-                                print("New JIRA ticket, %s, created!" % issue['key'])
-                                newTicket(issue, cid)
-
-                    print("Found %u changesets at %u" % (len(changesets), time.time()))
-                    for change in changesets:
-                        print("%s changed!" % change['key'])
-                        parseChange(change, cid)
+            if (counter % 2 == 0):
+                for k, entry in CONFIG['subscriptions'].items():
+                    if 'cid' in entry: # Only if we found the channel in slack
+                        jproject = entry.get('jira', 'NULL')
+                        cid = entry.get('cid')
+                        try:
+                            js = requests.get(CHGURL % jproject, auth = (JIRA_USER, JIRA_PASS)).json()
+                        except:
+                            print("Could not contact JIRA, faking empty reply")
+                            js = {
+                                'issues': []
+                            }
+                        changesets = []
+                        for issue in js['issues']:
+    
+                            for entry in issue['changelog']['histories']:
+                                chgid = int(entry['id'])
+    
+                                # New changelog entry and not first run?
+                                if not firstRun and chgid > last_changeid.get(k, 0):
+                                    changesets.append({
+                                        'key': issue['key'],
+                                        'summary': issue['fields']['summary'],
+                                        'change': entry
+                                    })
+                                if last_changeid.get(k, 0) < chgid:
+                                    last_changeid[k] = chgid
+    
+                            # Newly created issue?
+                            if len(issue['changelog']['histories']) == 0 and issue['key'] > last_ticket.get(k, 'A-000'):
+                                last_ticket[k] = issue['key'] 
+                                if not firstRun:
+                                    print("New JIRA ticket, %s, created!" % issue['key'])
+                                    newTicket(issue, cid)
+    
+                        print("Found %u changesets at %u" % (len(changesets), time.time()))
+                        for change in changesets:
+                            print("%s changed!" % change['key'])
+                            parseChange(change, cid)
 
             firstRun = False
+            counter += 1
             time.sleep(2)
 
 if __name__ == '__main__':
