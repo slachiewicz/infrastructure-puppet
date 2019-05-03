@@ -11,8 +11,9 @@ python::python_pips:
     ensure: present
 
 base::basepackages:
-  - 'python-seqdiag'
+  - 'python3-pip'
   - 'python-nwdiag'
+  - 'python-seqdiag'
   - 'gulp'
   - 'hugo'
   - 'doxygen'
