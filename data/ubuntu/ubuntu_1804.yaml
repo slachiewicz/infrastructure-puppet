@@ -420,6 +420,7 @@ build_slaves::distro_packages:
   - asciidoc
   - autoconf
   - automake
+  - binfmt-support
   - bison
   - build-essential
   - cabal-install
@@ -507,6 +508,7 @@ build_slaves::distro_packages:
   - python-boto
   - python-setuptools
   - python3-dev
+  - qemu-user-static
   - re2c
   - ruby
   - ruby-dev
