@@ -26,6 +26,15 @@
                   "type": "checkbox"
              }
           }
-      }
+      }, {
+         "title": "options",
+         "fields": {
+           "Home Page": {
+             "desc": "Rename FrontPage to Home",
+             "type": "checkbox"
+    }
+  },
+  "footer": "<div style='float: left; width: 100%; margin-top: 20px; background: #FFD; border: 1px dotted #666;'><p>If ticked, the moin FrontPage will be renamed to the default confluence Home page.</p></div>"
+}
   ]
 }
