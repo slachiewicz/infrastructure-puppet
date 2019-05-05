@@ -66,6 +66,10 @@ try:
     # Fetch Moin wiki data subdirs 'pages' and 'user' from moin-vm
     subprocess.check_output(['%s/sync-moin-project.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
+    # rename FrontPage to Home only if checked
+    if renametohome:
+        subprocess.check_output(['%s/mv-FrontPage-to-Home.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
+
     # Export the moin pages to txt format before converting to Confluence format.
     # Save to a $moinwiki-pages-out directory for processing
     subprocess.check_output(['%s -e conf/%s' % (moinscript, exporterconf)],shell=True, stderr=subprocess.STDOUT)
