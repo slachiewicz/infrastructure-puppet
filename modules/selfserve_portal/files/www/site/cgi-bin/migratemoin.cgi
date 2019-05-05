@@ -45,6 +45,7 @@ if not space or not re.match(r"^[A-Z0-9]+$", space):
     sscommon.buggo("Invalid Confluence Space name!")
 
 history = form.getvalue('history', 'false')
+renametohome = form.getvalue('Home Page', 'false')
 
 moinscript = '%s/run_cmdline.sh' % moinpath
 settingsconf = 'confluenceSettings.properties'
