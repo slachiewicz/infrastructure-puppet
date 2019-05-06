@@ -131,8 +131,8 @@ vhosts_whimsy::vhosts::vhosts:
 
     authldap:
     - name: ASF Committers
-      group: cn=committers,ou=groups,dc=apache,dc=org
-      attribute: memberUid
+      group: cn=committers,ou=role,ou=groups,dc=apache,dc=org
+      attribute: member
       locations:
       - /board/subscriptions
       - /committers/
@@ -141,15 +141,15 @@ vhosts_whimsy::vhosts::vhosts:
       - /test/roster/
 
     - name: ASF Members and Incubator PMC
-      group: cn=committers,ou=groups,dc=apache,dc=org
-      attribute: memberUid
+      group: cn=committers,ou=role,ou=groups,dc=apache,dc=org
+      attribute: member
       locations:
       - /incubator/moderators
       - /incubator/signoff
 
     - name: ASF Members and Officers
-      group: cn=committers,ou=groups,dc=apache,dc=org
-      attribute: memberUid
+      group: cn=committers,ou=role,ou=groups,dc=apache,dc=org
+      attribute: member
       locations:
       - /fundraising/
       - /officers/
