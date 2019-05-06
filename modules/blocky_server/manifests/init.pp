@@ -27,7 +27,7 @@ class blocky_server (
   include apache::mod::ssl
   include apache::mod::status
   include apache::mod::wsgi
-  
+
   # Gunicorn for blocky server
   # Run this command unless gunicorn is already running.
   # -w 10 == 10 workers, we can up that if need be.
@@ -39,4 +39,3 @@ class blocky_server (
     unless => '/bin/ps ax | /bin/grep -q [g]unicorn',
   }
 }
-
