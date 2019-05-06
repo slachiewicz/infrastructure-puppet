@@ -11,6 +11,15 @@ class postgresql_asf::backup (
   $group       = 'postgres',
 ) {
 
+  # install the datadog python package
+  python::pip {
+    'datadog' :
+      ensure => present;
+      }
+
+  # pull in datadog api key from eyaml
+  include datadog_agent
+
   exec {'check_pgdumproot':
     command => "/bin/mkdir -p ${dumproot}",
     onlyif  => "/usr/bin/test ! -e ${dumproot}",
@@ -38,7 +47,7 @@ class postgresql_asf::backup (
     user    => 'root',
     hour    => $hour,
     minute  => $minute,
-    command => "${script_path}/${script_name}",
+    command => "/usr/local/bin/dogwrap -n \"Running rsync backup\" -k ${datadog_agent::api_key} --submit_mode all \"${script_path}/${script_name}\"", # lint:ignore:140chars
   }
 
 }
