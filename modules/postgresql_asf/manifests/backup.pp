@@ -11,12 +11,6 @@ class postgresql_asf::backup (
   $group       = 'postgres',
 ) {
 
-  # install the datadog python package
-  python::pip {
-    'datadog' :
-      ensure => present;
-      }
-
   # pull in datadog api key from eyaml
   include datadog_agent
 
