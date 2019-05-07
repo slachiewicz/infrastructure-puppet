@@ -72,8 +72,8 @@ module](https://forge.puppetlabs.com/puppetlabs/apache#custom_fragment-1).
 
         authldap:
         - name: ASF Committers
-          group: cn=committers,ou=groups,dc=apache,dc=org
-          attribute: memberUid
+          group: cn=committers,ou=role,ou=groups,dc=apache,dc=org
+          attribute: member
           locations:
             - /board/agenda/
             - /board/publish_minutes
@@ -108,18 +108,18 @@ authldap
       AuthType Basic
       AuthName "ASF Committers"
       AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-      AuthLDAPGroupAttribute memberUid
-      AuthLDAPGroupAttributeIsDN off
-      Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+      AuthLDAPGroupAttribute member
+      AuthLDAPGroupAttributeIsDN on
+      Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
     </Directory>
 
     <LocationMatch ^/www/board/publish_minutes>
       AuthType Basic
       AuthName "ASF Committers"
       AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
-      AuthLDAPGroupAttribute memberUid
-      AuthLDAPGroupAttributeIsDN off
-      Require ldap-group cn=committers,ou=groups,dc=apache,dc=org
+      AuthLDAPGroupAttribute member
+      AuthLDAPGroupAttributeIsDN on
+      Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
     </LocationMatch>
 
 Test scaffolding
