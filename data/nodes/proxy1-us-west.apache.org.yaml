@@ -50,7 +50,7 @@ logrotate::rule:
     path: '/x1/apache2/*.log'
     delaycompress: true
     ifempty: false
-    rotate: 52
+    rotate: 3
 
 vhosts_asf::modules::modules:
   substitute:

@@ -21,7 +21,7 @@ logrotate::rule:
     delaycompress: true
     ifempty: true
     missingok: true
-    rotate: 365
+    rotate: 3
     rotate_every: 'day'
     create: true
     create_mode: 0644

@@ -28,7 +28,7 @@ logrotate::rule:
     path: '/x1/log/*.log'
     delaycompress: true
     ifempty: false
-    rotate: 52
+    rotate: 3
 
 apache::default_vhost: false
 

@@ -49,7 +49,7 @@ logrotate::rule:
     path: '/var/log/apache/*.log'
     delaycompress: true
     ifempty: false
-    rotate: 52
+    rotate: 3
 
 memcached::max_memory: '10%'
 memcached::listen_ip: '127.0.0.1'

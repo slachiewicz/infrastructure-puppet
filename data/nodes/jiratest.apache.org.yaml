@@ -72,7 +72,7 @@ logrotate::rule:
     path: '/x1/log/*.log'
     delaycompress: true
     ifempty: false
-    rotate: 52
+    rotate: 3
 
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
