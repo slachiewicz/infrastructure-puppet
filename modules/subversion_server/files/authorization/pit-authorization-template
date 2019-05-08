@@ -201,6 +201,7 @@ myfaces={reuse:asf-authorization:myfaces}
 myfaces-pmc={ldap:cn=myfaces,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 # Note PPMC, not PMC here:
 nemo-ppmc={ldap:cn=nemo,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
+netbeans-pmc={ldap:cn=netbeans,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nifi={reuse:asf-authorization:nifi}
 nifi-pmc={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nutch={reuse:asf-authorization:nutch}
@@ -953,6 +954,9 @@ openejb-tck = r
 
 [/pmc/jmeter]
 @jmeter-pmc = rw
+
+[/pmc/netbeans]
+@netbeans-pmc = rw
 
 [/pmc/openoffice]
 @openoffice-pmc = rw
