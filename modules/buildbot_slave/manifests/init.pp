@@ -9,7 +9,7 @@ class buildbot_slave (
   $user_present      = 'present',
   $username          = 'buildslave',
   $service_name      = 'buildslave',
-  $gradle_versions   = ['4.6', '4.7', '4.8.1','4.9','4.10','4.10.3'],
+  $gradle_versions   = ['4.6', '4.7', '4.8.1','4.10','4.10.3'],
 
   # override below in eyaml
 
