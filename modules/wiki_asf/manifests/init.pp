@@ -1,6 +1,13 @@
 #/etc/puppet/modules/wiki_asf/manifests/init.pp
 
-class wiki_asf {
+class wiki_asf (
+
+# below in eyaml
+
+$moin_user = '',
+$moin_pw = '',
+
+){
 
   apache::custom_config {
     'wiki.apache.org':
@@ -61,6 +68,32 @@ class wiki_asf {
       ensure => present,
       mode   => '0755',
       source => 'puppet:///modules/wiki_asf/tools/wiki-users.py';
+  }
+  file {
+    "/root/.subversion":
+      ensure => directory,
+      owner  => root,
+      group  => root,
+      mode   => '0750';
+    "/root/.subversion/auth":
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => '0750',
+      require => File["/root/.subversion"];
+    "/root/.subversion/auth/svn.simple":
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => '0750',
+      require => File["/root/.subversion/auth"];
+    "/root/.subversion/auth/svn.simple/a46d7dd31d883fd4c3e388e6496a6ae5":
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0640',
+      content => template('wiki_asf/svn-credentials.erb'),
+      require => File["/root/.subversion/auth/svn.simple"];
   }
 }
 
