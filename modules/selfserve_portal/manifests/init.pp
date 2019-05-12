@@ -12,6 +12,8 @@ class selfserve_portal (
   $slackUrl = '',
   $jira_un  = '',
   $jira_pw  = '',
+  $moin_user = '',
+  $moin_pw = '',
 
 ){
 
@@ -141,6 +143,33 @@ file {
       owner   => 'root',
       group   => 'root',
       mode    => '0755';
+  }
+
+  file {
+    "/root/.subversion":
+      ensure => directory,
+      owner  => root,
+      group  => root,
+      mode   => '0750';
+    "/root/.subversion/auth":
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => '0750',
+      require => File["/root/.subversion"];
+    "/root/.subversion/auth/svn.simple":
+      ensure  => directory,
+      owner   => root,
+      group   => root,
+      mode    => '0750',
+      require => File["/root/.subversion/auth"];
+    "/root/.subversion/auth/svn.simple/a46d7dd31d883fd4c3e388e6496a6ae5":
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0640',
+      content => template('wiki_asf/svn-credentials.erb'),
+      require => File["/root/.subversion/auth/svn.simple"];
   }
 
 # cronjobs
