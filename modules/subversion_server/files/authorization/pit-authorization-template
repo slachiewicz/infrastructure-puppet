@@ -609,6 +609,12 @@ apezmlm = r
 # Allow hermes:apmail to commit .archives
 apezmlm = rw
 
+[/infrastructure/apwiki]
+@infrastructure = rw
+moin-role = rw
+@member = r
+* =
+
 # allow apmail to update netqmail patched source
 [/infrastructure/netqmail-asf]
 apezmlm = rw
