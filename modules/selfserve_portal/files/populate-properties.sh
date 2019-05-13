@@ -41,6 +41,7 @@ fi
 # copy confluence.properties.template and append space variables
 /bin/cp $CONFDIR/confluenceSettings.properties.template $CONFDIR/confluenceSettings.properties
 echo "space=$SPACE" >> $CONFDIR/confluenceSettings.properties
+echo "attachments=$BASEDIR/projects/$PROJECT/data/pages" >> $CONFDIR/confluenceSettings.properties
 
 # copy exporter template and append space variables
 /bin/cp $CONFDIR/exporter.moinmoin.properties.template $CONFDIR/exporter.moinmoin.properties
