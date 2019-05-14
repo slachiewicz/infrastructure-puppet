@@ -36,6 +36,7 @@ class build_slaves::jenkins (
     'apache-ant-1.10.1',
     'apache-ant-1.10.3',
     'apache-ant-1.10.5',
+    'apache-ant-1.10.6',
     ],
   $clover = ['clover-ant-4.1.2'],
   $findbugs = [
@@ -475,11 +476,11 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/ant/latest1.10":
     ensure => link,
-    target => '/usr/local/asfpackages/ant/apache-ant-1.10.5',
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.6',
   }
   file { "/home/${build_slaves::username}/tools/ant/latest":
     ensure => link,
-    target => '/usr/local/asfpackages/ant/apache-ant-1.10.5',
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.6',
   }
 
   # findbugs symlinks - populate array, make all symlinks, make latest symlink

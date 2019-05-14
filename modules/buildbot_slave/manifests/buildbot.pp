@@ -15,6 +15,7 @@ class buildbot_slave::buildbot (
     'apache-ant-1.10.1',
     'apache-ant-1.10.3',
     'apache-ant-1.10.5',
+    'apache-ant-1.10.6',
     ],
   $maven = [
     'apache-maven-2.2.1',
@@ -143,11 +144,11 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/ant/latest1.10':
     ensure => link,
-    target => '/usr/local/asfpackages/ant/apache-ant-1.10.5',
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.6',
   }
   file { '/home/buildslave/slave/tools/ant/latest':
     ensure => link,
-    target => '/usr/local/asfpackages/ant/apache-ant-1.10.5',
+    target => '/usr/local/asfpackages/ant/apache-ant-1.10.6',
   }
 
   # maven symlinks - populate array, make all symlinks, make latest symlink
