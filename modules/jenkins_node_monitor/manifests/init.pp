@@ -8,11 +8,6 @@ class jenkins_node_monitor (
 ){
   require python
 
-  python::pip {
-    'datadog' :
-      ensure  => present;
-  }
-
   file {
     '/usr/local/etc/jenkins_node_monitor':
       ensure => directory,
