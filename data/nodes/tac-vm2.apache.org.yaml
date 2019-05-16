@@ -26,6 +26,8 @@ python::python_pips:
     ensure: '1.6.11'
   psycopg2:
     ensure: present
+  gunicorn:
+    ensure: present
 
 postfix::server::relayhost: '[mailrelay1-lw-us.apache.org]:25'
 
@@ -75,29 +77,25 @@ vhosts_asf::vhosts::vhosts:
   tac-vm2-80:
     vhost_name: '*'
     priority: '12'
-    servername: 'tac-vm2.apache.org'
+    servername: 'tac-apply.apache.org'
     port: 80
     ssl: false
     docroot: '/var/www'
     error_log_file: 'tac-vm2_error.log'
     custom_fragment: |
-      RedirectMatch permanent ^/(.*)$ https://tac-vm2.apache.org/$1
+      RedirectMatch permanent ^/(.*)$ https://tac-apply.apache.org/$1
     
   tac-vm2-443:
     vhost_name: '*'
     default_vhost: true
-    servername: 'tac-vm2.apache.org'
+    servername: 'tac-apply.apache.org'
     port: 443
-    docroot: '/var/www'
+    docroot: '/tac/site/'
     error_log_file: 'tac-vm2_error.log'
     ssl: true
     ssl_cert: '/etc/ssl/certs/wildcard.apache.org.crt'
     ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
     ssl_key: '/etc/ssl/private/wildcard.apache.org.key'
     custom_fragment: |
-      WSGIScriptAlias / /usr/local/tac/tac_app.wsgi
-      Alias /static/ /usr/local/tac/tac_app/static/
-      <Location "/static/">
-        SetHandler None
-      </Location>
+      ProxyPass /api/ http://localhost:8000/api/
 
