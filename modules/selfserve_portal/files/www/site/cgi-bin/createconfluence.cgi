@@ -129,6 +129,11 @@ try:
         '--userId', 'infrabot',
         ], stderr=subprocess.STDOUT)
 
+    # Update the spaces list right away for anyone wanting to migrate from moin
+    subprocess.check_output([
+        '/usr/local/etc//atlassian-cli-8.4.0/confluence-get-spaces.sh',
+        ], stderr=subprocess.STDOUT)
+
     # All done!
     sscommon.sendemail("%s@apache.org" % requser, "New Confluence space created: %s" % space,
 """

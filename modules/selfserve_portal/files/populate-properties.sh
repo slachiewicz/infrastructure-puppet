@@ -38,11 +38,6 @@ if [ ! -d "$BASEDIR/projects/$PROJECT" ]; then
 exit 1;
 fi
 
-# fetch the latest cwiki space list - in case a space was just created before migration
-# This adds around 20 seconds processing time but could save up to an hour of waiting.
-/usr/local/etc//atlassian-cli-8.4.0/confluence-get-spaces.sh
-echo "Latest list of cwiki spaces fetched"
-
 # copy confluence.properties.template and append space variables
 /bin/cp $CONFDIR/confluenceSettings.properties.template $CONFDIR/confluenceSettings.properties
 echo "space=$SPACE" >> $CONFDIR/confluenceSettings.properties
