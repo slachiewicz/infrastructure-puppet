@@ -92,7 +92,7 @@ class jenkins_slave_windows::download (
         }
       }
   #### Download Graphviz ####
-  define download_gradle($gradle_version = $title){
+  define download_graphviz($graphviz_version = $title){
         download_file { "Download asf-build-graphviz-${graphviz_version} zip from bintray" :
           url                   => "http://apache.bintray.com/WindowsPackages/asf-build-graphviz-${graphviz_version}.zip",
           destination_directory => 'F:\tools_zips',
