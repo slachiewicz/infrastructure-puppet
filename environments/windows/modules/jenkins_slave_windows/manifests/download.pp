@@ -7,6 +7,7 @@ class jenkins_slave_windows::download (
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
   $gpg4win  = $jenkins_slave_windows::params::gpg4win,
   $gradle = $jenkins_slave_windows::params::gradle,
+  $graphviz = $jenkins_slave_windows::params::graphviz,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
@@ -90,6 +91,13 @@ class jenkins_slave_windows::download (
           destination_directory => 'F:\tools_zips',
         }
       }
+  #### Download Graphviz ####
+  define download_gradle($gradle_version = $title){
+        download_file { "Download asf-build-graphviz-${graphviz_version} zip from bintray" :
+          url                   => "http://apache.bintray.com/WindowsPackages/asf-build-graphviz-${graphviz_version}.zip",
+          destination_directory => 'F:\tools_zips',
+        }
+      }
   #### Download ieDriver ####
   define download_iedriver($iedriver_version = $title){
       download_file { "Download asf-build-iedriver-${iedriver_version} zip from bintray" :
@@ -131,6 +139,7 @@ class jenkins_slave_windows::download (
   download_geckodriver { $geckodriver:}
   download_gpg4win { $gpg4win:}
   download_gradle { $gradle:}
+  download_graphviz { $graphviz:}
   download_iedriver { $iedriver:}
   download_jdk { $jdk:}
   download_maven { $maven:}
