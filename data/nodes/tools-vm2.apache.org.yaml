@@ -37,6 +37,11 @@ cron:
     minute: '*/10'
     hour: '*'
     command: 'cd /usr/local/etc/jenkins_node_monitor/ && python jnm.py > /dev/null 2>&1'
+  uptime:
+    user: 'root'
+    minute: '0'
+    hour: '*'
+    command: 'cd /var/www/uptime && python3 uptime.py > /dev/null 2>&1'
 
 elasticsearch::jvm_options:
   - '-Xms2g'
