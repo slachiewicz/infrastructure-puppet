@@ -7,6 +7,7 @@ class jenkins_slave_windows::install (
   $geckodriver = $jenkins_slave_windows::params::geckodriver,
   $gpg4win  = $jenkins_slave_windows::params::gpg4win,
   $gradle = $jenkins_slave_windows::params::gradle,
+  $graphviz = $jenkins_slave_windows::params::graphviz,
   $iedriver = $jenkins_slave_windows::params::iedriver,
   $jdk = $jenkins_slave_windows::params::jdk,
   $maven = $jenkins_slave_windows::params::maven,
@@ -118,6 +119,18 @@ extract_gpg4win { $gpg4win:}
     }
 
 extract_gradle { $gradle:}
+
+###################### Setup Graphviz #############################
+  define extract_graphviz($graphviz_version = $title){
+      exec { "extract ${graphviz_version}" :
+        command  => "powershell.exe Expand-Archive -Force F:\\tools_zips\\asf-build-graphviz-${graphviz_version}.zip -DestinationPath F:\\jenkins\\tools\\graphviz\\${graphviz_version}", # lint:ignore:140chars
+        provider => powershell,
+        creates  => "F:\\jenkins\\tools\\graphviz\\${graphviz_version}\\bin\\gc.exe",
+      }
+    }
+
+extract_graphviz { $graphviz:}
+
 
 #################################################################
 
