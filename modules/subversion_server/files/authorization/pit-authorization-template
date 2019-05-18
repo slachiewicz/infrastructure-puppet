@@ -411,17 +411,9 @@ staff=
 # Let the SVN admins have r/w access for now
 @svnadmins = rw
 
-[/apachecon]
-@apachecon = rw
-@svnadmins = rw
-@concom = rw
-* = 
-
 # REPOS_NAME:PATH, where REPOS_NAME comes from the URL component
 [infra:/apachecon]
 @apachecon = rw
-@svnadmins = rw
-@concom = rw
 * = r
 
 # used by nagios
