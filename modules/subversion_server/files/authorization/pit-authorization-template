@@ -424,17 +424,6 @@ staff=
 [private:/financials/Monthly]
 @pres-commitee-vps = r
 
-# svnwc needs access
-[/apachecon/archive.apachecon.com]
-@apachecon = rw
-@concom = rw
-@member = rw
-* = r
-
-[/apachecon/site]
-@member = rw
-@concom = rw
-
 [/axis-tck]
 @jcp = rw
 @jcp-axis-nda = rw
