@@ -411,17 +411,9 @@ staff=
 # Let the SVN admins have r/w access for now
 @svnadmins = rw
 
-[/apachecon]
-@apachecon = rw
-@svnadmins = rw
-@concom = rw
-* = 
-
 # REPOS_NAME:PATH, where REPOS_NAME comes from the URL component
 [infra:/apachecon]
 @apachecon = rw
-@svnadmins = rw
-@concom = rw
 * = r
 
 # used by nagios
@@ -431,17 +423,6 @@ staff=
 # INFRA-9270 requested
 [private:/financials/Monthly]
 @pres-commitee-vps = r
-
-# svnwc needs access
-[/apachecon/archive.apachecon.com]
-@apachecon = rw
-@concom = rw
-@member = rw
-* = r
-
-[/apachecon/site]
-@member = rw
-@concom = rw
 
 [/axis-tck]
 @jcp = rw
