@@ -32,12 +32,12 @@ file {
       mode    => '0755',
       source  => 'puppet:///modules/selfserve_portal/www',
       require => Package['apache2'];
-    "${deploy_dir}/site/js/keys.json"
+    "${deploy_dir}/site/js/keys.json":
       ensure => file,
       owner  => 'root',
       group  => 'www-data',
       mode   => '0775';
-    "${deploy_dir}/site/js/spacekeys.json"
+    "${deploy_dir}/site/js/spacekeys.json":
       ensure => file,
       owner  => 'root',
       group  => 'www-data',
