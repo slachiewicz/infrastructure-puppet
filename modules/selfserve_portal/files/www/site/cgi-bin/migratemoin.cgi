@@ -45,7 +45,7 @@ if not space or not re.match(r"^[A-Z0-9]+$", space):
     sscommon.buggo("Invalid Confluence Space name!")
 
 history = form.getvalue('history', 'false')
-renametohome = form.getvalue('Home Page', 'false')
+renametohome = form.getvalue('homepage', 'false')
 
 moinscript = '%s/run_cmdline.sh' % moinpath
 settingsconf = 'confluenceSettings.properties'
@@ -68,7 +68,7 @@ try:
     subprocess.check_output(['%s/sync-moin-project.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
     # rename FrontPage to Home only if checked
-    if renametohome is True:
+    if renametohome == 'true':
         subprocess.check_output(['%s/mv-FrontPage-to-Home.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
     # Export the moin pages to txt format before converting to Confluence format.

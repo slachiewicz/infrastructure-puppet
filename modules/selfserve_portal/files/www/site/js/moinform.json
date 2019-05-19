@@ -29,7 +29,7 @@
       }, {
          "title": "options",
          "fields": {
-           "Home Page": {
+           "homepage": {
              "desc": "Rename FrontPage to Home",
              "type": "checkbox"
     }
