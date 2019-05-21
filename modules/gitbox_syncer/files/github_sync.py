@@ -229,12 +229,22 @@ def run(config, data):
             ##################################
             # Write Push log, text + sqlite3 #
             ##################################
-            cursor.execute("""INSERT INTO pushlog
-                      (repository, asfid, githubid, baseref, ref, old, new, date)
-                      VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
-            
-            # commit and close sqlite, no need for it below
-            conn.commit()
+            try:
+                cursor.execute("""INSERT INTO pushlog
+                          (repository, asfid, githubid, baseref, ref, old, new, date)
+                          VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
+                
+                # commit and close sqlite, no need for it below
+                conn.commit()
+            # If sqlite borks, let infra know...but keep syncing
+            except sqlite3.Error as e:
+                txt = e.args[0]
+                asfpy.messaging.mail(
+                        recipient = '<team@infra.apache.org>',
+                        subject = "gitbox repository %s: sqlite operational error!" % reponame,
+                        sender = '<gitbox@apache.org>',
+                        message = "gitbox.db could not be written to: %s" % txt,
+                        )
             conn.close()
             
             open(os.path.join(config['pushlogs'], "%s.txt" % reponame), "a").write(
