@@ -29,7 +29,7 @@ RSYNC_OFFSITE="<%= @rsync_offsite %>"
 backup_db() {
   echo "Dumping ${DBNAME} DB..."
   time ${DUMP} -h ${DBHOST} -u ${DBUSER} --password=${PASS} -P ${PORT} ${DBNAME} | gzip --rsyncable -9 > ${DUMPFILE}
-  if [ $? -eq 1 ]
+  if [ $? -ne 0 ]
     then
       ERROR_FOUND=1
   fi
@@ -54,7 +54,7 @@ create_dumpdir() {
   if [ ! -d ${DUMPDIR} ]; then
     echo "Creating new directory structure ( ${DUMPDIR} ) for new DB ${DBNAME}"
     mkdir -p ${DUMPDIR};
-    if [ $? -eq 1 ]
+    if [ $? -ne 0 ]
       then
         ERROR_FOUND=1
     fi
@@ -82,7 +82,7 @@ rsync_offsite() {
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
   ${DUMPFILE} rsync://<%= @rsync_user %>@localhost:1873/<%= @hostname %>/
-  if [ $? -eq 1 ]
+  if [ $? -ne 0 ]
   then
     ERROR_FOUND=1
   fi

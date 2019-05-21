@@ -26,7 +26,7 @@ backup_db() {
   echo ""
   echo "Dumping ${DBNAME} DB..."
   time su - <%= @user %> -c "${DUMP} ${DUMPOPTS} ${DBNAME}" | gzip --rsyncable -9 > ${DUMPFILE}
-  if [ $? -eq 1 ]
+  if [ $? -ne 0 ]
     then
       ERROR_FOUND=1
   fi
@@ -71,7 +71,7 @@ rsync_offsite() {
   --log-file=/root/rsynclogs/abi/backups-titan-postgres-$TODAY.log \
   --password-file=/root/.pw-abi \
   ${DUMPFILE} rsync://apb-titan@localhost:1873/titan/
-  if [ $? -eq 1 ]
+  if [ $? -ne 0 ]
     then
       ERROR_FOUND=1
   fi

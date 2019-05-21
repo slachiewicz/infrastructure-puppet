@@ -23,7 +23,7 @@ rsync_offsite() {
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
   ${FSNAME} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/
-  if [ $? -eq 1 ]
+  if [ $? -ne 0 ]
     then
       ERROR_FOUND=1
   fi
