@@ -49,6 +49,11 @@ class gitbox_syncer (
       mode   => '0755',
       owner  => $username,
       group  => $group;
+    '/var/run/gitbox-syncer':
+      ensure => directory,
+      mode   => '0755',
+      owner  => $username,
+      group  => $group;
     '/etc/init.d/gitbox-syncer':
       mode   => '0755',
       owner  => $username,

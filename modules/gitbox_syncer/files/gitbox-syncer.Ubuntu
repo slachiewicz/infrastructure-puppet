@@ -14,7 +14,7 @@
 
 syncer_user=${syncer_user-"www-data"}
 syncer_group=${syncer_group-"www-data"}
-syncer_pidfile=${syncer_pidfile-"/var/run/gitbox-syncer.py.pid"}
+syncer_pidfile=${syncer_pidfile-"/var/run/gitbox-syncer/server.pid"}
 syncer_config=${syncer_config-"/usr/local/etc/gitbox-syncer/gitbox-syncer.yaml"}
 syncer_logfile=${syncer_logfile-"/var/log/gitbox-syncer.log"}
 syncer_appdir=${syncer_appdir-"/usr/local/etc/gitbox-syncer"}
