@@ -18,7 +18,7 @@ mod 'awscli',
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
-  :tag => '1.2.4'
+  :tag => '1.2.5'
 
 
 mod 'concat-native',
