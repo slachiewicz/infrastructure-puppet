@@ -26,7 +26,7 @@ backup_db() {
   echo ""
   echo "Dumping ${DBNAME} DB..."
   time su - <%= @user %> -c "${DUMP} ${DUMPOPTS} ${DBNAME}" | gzip --rsyncable -9 > ${DUMPFILE}
-  if [ $? -ne 0 ]
+  if [ ${PIPESTATUS[0]} -ne 0 ]
     then
       ERROR_FOUND=1
   fi
