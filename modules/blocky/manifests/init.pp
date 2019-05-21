@@ -11,17 +11,31 @@ class blocky (
 
   require python
   
-  python::pip {
-    'netaddr' :
-      ensure => present;
-    'asfpy' :
-      ensure  => present;
-    'requests' :
-      ensure => present;
-    'pyyaml' :
-      ensure  => present;
+  if !defined(Python::Pip['netaddr']) {
+    python::pip {
+      'netaddr' :
+        ensure => present;
     }
-
+  }
+  if !defined(Python::Pip['asfpy']) {
+    python::pip {
+      'asfpy' :
+        ensure => present;
+    }
+  }
+  if !defined(Python::Pip['requests']) {
+    python::pip {
+      'requests' :
+        ensure => present;
+    }
+  }
+  if !defined(Python::Pip['pyyaml']) {
+    python::pip {
+      'pyyaml' :
+        ensure => present;
+    }
+  }
+  
   exec { 'pkill -F /var/run/blocky.pid && rm /var/run/blocky.pid':
     cwd     => '/var/tmp',
     path    => ['/usr/bin', '/usr/sbin','/bin/',],
