@@ -162,6 +162,12 @@ rsync::server::module:
     auth_users: 'apb-mysql'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  mysql2-ec2-va:
+    path: '/x1/backups/mysql2-ec2-va/./target/'
+    hosts_allow: '127.0.0.1 3.210.148.126'
+    auth_users: 'apb-mysql'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   mysql1-lw-us:
     path: '/x1/backups/mysql1-lw-us/./target/'
     hosts_allow: '127.0.0.1 207.244.88.145'
