@@ -93,7 +93,7 @@ fi
 # Fisheye Specific
 if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
 then
-    /usr/bin/curl -v -X PUT -H "X-Api-Key: <%= @fecru_token %>" -H "Content-Type: application/json" https://fisheye.apache.org/rest-service-fecru/admin/repositories/"$REPOS"/incremental-index >>/var/log/svn_fisheye.log 2>&1 &
+    /usr/bin/curl -X PUT -H "X-Api-Key: <%= @fecru_token %>" -H "Content-Type: application/json" https://fisheye.apache.org/rest-service-fecru/admin/repositories/"$REPOS"/incremental-index >>/var/log/svn_fisheye.log 2>&1 &
 fi
 
 # look for a corruption or two
