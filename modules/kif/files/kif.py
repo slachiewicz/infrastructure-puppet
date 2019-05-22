@@ -415,7 +415,10 @@ def run_actions(config, actions):
                 if action.get('notify', 'email') in [None, 'email']:
                     email_actions += "- KILL PID %u with sig %u" % (pid, sig)
                 if not args.debug:
-                    os.kill(pid, sig)
+                    try:
+                        os.kill(pid, sig)
+                     except OSError:
+                        email_actions += "(failed, no such process!)"
                 else:
                     print(" (disabled due to --debug flag)")
                     rloutput += " (disabled due to --debug flag)"
