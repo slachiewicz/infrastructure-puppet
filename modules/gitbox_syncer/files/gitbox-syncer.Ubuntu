@@ -38,7 +38,7 @@ start() {
 
     echo "Starting gitbox syncer (gunicorn): "
     cd $syncer_appdir
-    gunicorn --pid $syncer_pidfile --bind 0.0.0.0:8081 -w 8 -D --user=$syncer_user --group=$syncer_group gitbox-syncer:application
+    gunicorn --pid $syncer_pidfile --bind 0.0.0.0:8081 -w 12 -D --user=$syncer_user --group=$syncer_group gitbox-syncer:application
     RETVAL=$?
     [ $RETVAL -eq 0 ] && echo "ok" || echo "failed"
     return $RETVAL
