@@ -29,7 +29,7 @@ RSYNC_OFFSITE="<%= @rsync_offsite %>"
 backup_db() {
   echo "Dumping ${DBNAME} DB..."
   time ${DUMP} -h ${DBHOST} -u ${DBUSER} --password=${PASS} -P ${PORT} ${DBNAME} | gzip --rsyncable -9 > ${DUMPFILE}
-  if [ ${PIPESTATUS[0]} -ne 0 ]
+  if [[ ${PIPESTATUS[@]} != "0 0" ]]
     then
       ERROR_FOUND=1
   fi
