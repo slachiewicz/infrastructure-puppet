@@ -54,6 +54,11 @@ class gitbox_syncer (
       mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data';
+    '/x1/gitbox/sync-log.txt':
+      ensure => file,
+      mode   => '0755',
+      owner  => 'www-data',
+      group  => 'www-data';
     '/etc/init.d/gitbox-syncer':
       mode   => '0755',
       owner  => $username,
