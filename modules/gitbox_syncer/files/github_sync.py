@@ -26,9 +26,10 @@ import re
 import sqlite3
 import time
 import asfpy.messaging
+import threading
 
 # GitHub -> GitBox code sync    
-def run(config, data):
+def threaded_run(config, data):
     repo_dirs = config['paths']
     
     tmpl_missed_webhook = """
@@ -343,5 +344,10 @@ def run(config, data):
                     except Exception as err:
                         log += "[%s] [%s.git]: Multimail hook failed: %s\n" % (time.strftime("%c"), reponame, err)
                 open(config['logfile'], "a").write(log)
-    return {'okay': True, 'message': 'Push notification handled!'}
     
+
+# Spawn thread, detach and return
+def run(config, data):
+    t = threading.Thread(target=threaded_run, args=(config,data))
+    t.start()
+    return {'okay': True, 'message': 'Payload queued for operation!'}
