@@ -106,6 +106,9 @@ vhosts_asf::vhosts::vhosts:
       - Indexes
       - FollowSymLinks
     custom_fragment: |
+      # httpd wiki redirect
+      Redirect permanent /httpd/ https://cwiki.apache.org/confluence/display/HTTPD/
+      
       # WSGI
       WSGIDaemonProcess wiki processes=20 threads=1 maximum-requests=500 group=www-data display-name=moinwiki
       WSGIProcessGroup wiki
