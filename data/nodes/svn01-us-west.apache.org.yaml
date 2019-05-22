@@ -13,6 +13,7 @@ classes:
   - datadog_agent::integrations::apache
   - httpd_modules
   - httpd_modules::mod_svn_check_path
+  - httpd_rate_limiter
   - blocky
   - kif
   - loggy
@@ -89,6 +90,12 @@ httpd_modules::mod_svn_check_path::required_packages:
   - libsvn-dev
   - libapreq2-dev
 httpd_modules::mod_svn_check_path::command: 'apxs2 -DFILTERING -I /usr/include/subversion-1 -i -a -c mod_svn_check_path.c'
+
+httpd_rate_limiter::interval:  180
+httpd_rate_limiter::cpumax:    60
+httpd_rate_limiter::autoconf:  true
+httpd_rate_limiter::asfilter:  true
+httpd_rate_limiter::whitelist: "^/repos/"
 
 ldapclient::ldapservers: 'ldaps://ldap-us-ro.apache.org:636  ldaps://ldap-eu-ro.apache.org:636'
 
