@@ -132,9 +132,4 @@ done
 stop_lock
 date
 
-if [ ERROR_FOUND -eq 1 ]
-  then
-    exit 1
-  else
-    exit 0
-fi
+exit $ERROR_FOUND
