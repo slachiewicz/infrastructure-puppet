@@ -48,6 +48,7 @@ HOSTNAME=`/bin/hostname -f`
 #
 REPOS="$1"
 REV="$2"
+PROJECT=`$SVNLOOK dirs-changed "$REPOS" -r "$REV" | /usr/bin/head -n1 | /usr/bin/cut -d "/" -f1`
 shard=`expr $REV / 1000`
 
 # Deltify predecessors of things changed in this revision.
@@ -93,7 +94,7 @@ fi
 # Fisheye Specific
 if [ "$HOSTNAME" = "$MASTER_HOSTNAME" ]
 then
-    /usr/bin/curl -X PUT -H "X-Api-Key: <%= @fecru_token %>" -H "Content-Type: application/json" https://fisheye.apache.org/rest-service-fecru/admin/repositories/"$REPOS"/incremental-index >>/var/log/svn_fisheye.log 2>&1 &
+    /usr/bin/curl -X PUT -H "X-Api-Key: <%= @fecru_token %>" -H "Content-Type: application/json" https://fisheye.apache.org/rest-service-fecru/admin/repositories/"$PROJECT"/incremental-index >>/var/log/svn_fisheye.log 2>&1 &
 fi
 
 # look for a corruption or two
