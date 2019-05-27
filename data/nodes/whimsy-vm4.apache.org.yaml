@@ -41,6 +41,9 @@ postfix::server::mailbox_command: '/usr/bin/procmail -a "$EXTENSION"'
 postfix::server::smtpd_tls_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
 postfix::server::smtpd_tls_cert_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
 
+# ensure server also accepts mail to the generic host name
+postfix::server::mydestination: "whimsy.apache.org, %{::fqdn}, localhost.%{::domain}, localhost"
+
 logrotate::rule:
   apache2:
     ensure: 'present'
