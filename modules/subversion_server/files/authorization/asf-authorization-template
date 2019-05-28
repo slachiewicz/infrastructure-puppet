@@ -1,62 +1,12 @@
 # This file is in the Git infrastructure-puppet repo at:
 # modules/subversion_server/files/authorization/asf-authorization-template
 
-# In the infrastructure-puppet repo, make a pull request against the repo on
-# github https://github.com/apache/infrastructure-puppet/ with your intended
-# changes and then ping Infra in Hipchat to get someone to look at it.
 # INFRA have a workflow document:
 
 # https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
 
 # Note that it can take up to 40 minutes or so for the live file to be updated
 # after Infra have merged the change
-
-# LDAP groups have two forms:
-# ==========================
-# Unix/Posix groups and Committee groups.
-#
-# The following commands can be used with the LDAP groups:
-#
-# list_unix_group.pl [<group>|--user=<uid>] [--help]
-# modify_unix_group.pl <group> (--add=<list>|--rm=<list>|--help)
-#
-# list_committee.pl [<committee>|--user=<uid>] [--help]
-# modify_committee.pl <committee> (--add=<list>|--rm=<list>|--help)
-#
-# To add an existing committer "oldhand" as a committer for "tlp", use:
-#     modify_unix_group.pl tlp -add=oldhand
-#
-# To add oldhand to the PMC, use:
-#     modify_committee.pl tlp -add=oldhand
-#
-# Except in these two cases, you would never need to run modify_* yourself.
-#
-# Note that some groups are not defined in LDAP, notably incubating podlings.
-# Setup for new podlings requires that a new group be added to this
-# file, e.g.
-# newpodling=mntr1,mntr2,cmtr1,cmtr2
-# ...
-# [/incubator/newpodling]
-# @newpodling = rw
-
-# Adding new podling committers
-# =============================
-# Podlings currently don't use LDAP to define the list of committers.
-# To grant access to the podling's SVN tree, add the user to the appropriate podling
-# group definition (keep it alphabetical), e.g.
-#
-# podling=alice,bill,charles,newuser,thomas
-#
-# If an existing ASF committer becomes a podling member for the first time, they need to be added to the 'Incubator' UNIX group.
-# This has to be done by someone with PMC chair karma. Login to people (minotaur) and run:
-#
-# $ modify_unix_group.pl incubator -add=newuser
-#
-# N.B. The current list of incubator group members can be found at:
-# http://people.apache.org/committers-by-project.html#incubator
-# (updated several times a day), or any committer can login to poeple and run:
-# $ list_unix_group.pl incubator | grep newuser
-# to see if newuser is in the list
 
 [groups]
 committers={ldap:cn=committers,ou=groups,dc=apache,dc=org;attr=memberUid}

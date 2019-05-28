@@ -1,4 +1,12 @@
-### *** DO *NOT* CHANGE THE LIVE FILE.  Change it in SVN, and update.
+# This file is in the Git infrastructure-puppet repo at:
+# modules/subversion_server/files/authorization/pit-authorization-template
+
+# INFRA have a workflow document:
+
+# https://cwiki.apache.org/confluence/display/INFRA/Git+workflow+for+infrastructure-puppet+repo
+
+# Note that it can take up to 40 minutes or so for the live file to be updated
+# after Infra have merged the change
 
 [groups]
 committers={reuse:asf-authorization:committers}
