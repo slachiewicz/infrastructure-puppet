@@ -38,7 +38,7 @@
                "type": "checkbox"
     }
   },
-  "footer": "<div style='float: left; width: 100%; margin-top: 20px; background: #FFD; border: 1px dotted #666;'><p>If ticked, the moin FrontPage will be renamed to the default confluence Home page.</p></div>"
+  "footer": "<div style='float: left; width: 100%; margin-top: 20px; background: #FFD; border: 1px dotted #666;'><p>If Rename FronPage to Home is ticked, the moin FrontPage will be renamed to the default confluence Home page.</p><p>If Make moin wiki read only is ticked, the moin wiki will be marked as read only - if you need to make it writable again, please file an INFRA ticket.</p></div>"
 }
   ]
 }
