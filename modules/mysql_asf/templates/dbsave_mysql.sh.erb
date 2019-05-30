@@ -13,6 +13,7 @@ OLDDUMPDATE=`${DATE} +%Y%m%d%H%M --date='last month'`
 DUMPOPTS='--lock-tables --master-data=1'
 DUMPROOT='/x1/db_dump/mysql'
 DUMPROOT=<%= @dumproot %>
+EXIT_STATUS=0
 LOCKFILE='/tmp/mysql.dump.lock'
 MYSQL=$(which mysql)
 PASS=$(cd /root/ ; cat .my.cnf | grep -i -m 1 pa | sed 's/password=//g' | sed "s/'//g")
@@ -31,7 +32,7 @@ backup_db() {
   time ${DUMP} -h ${DBHOST} -u ${DBUSER} --password=${PASS} -P ${PORT} ${DBNAME} | gzip --rsyncable -9 > ${DUMPFILE}
   if [[ ${PIPESTATUS[@]} != "0 0" ]]
     then
-      ERROR_FOUND=1
+      EXIT_STATUS=1
   fi
   echo -e "\n\n"
 }
@@ -56,7 +57,7 @@ create_dumpdir() {
     mkdir -p ${DUMPDIR};
     if [ $? -ne 0 ]
       then
-        ERROR_FOUND=1
+        EXIT_STATUS=1
     fi
     echo -e "\n\n"
   fi
@@ -84,7 +85,7 @@ rsync_offsite() {
   ${DUMPFILE} rsync://<%= @rsync_user %>@localhost:1873/<%= @hostname %>/
   if [ $? -ne 0 ]
   then
-    ERROR_FOUND=1
+    EXIT_STATUS=1
   fi
 
   /etc/init.d/stunnel4 stop
@@ -132,4 +133,4 @@ done
 stop_lock
 date
 
-exit $ERROR_FOUND
+exit $EXIT_STATUS

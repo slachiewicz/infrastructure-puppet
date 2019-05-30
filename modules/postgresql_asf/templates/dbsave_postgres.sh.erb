@@ -11,7 +11,7 @@ DUMP='/usr/bin/pg_dump'
 DUMPDATE=`${DATE} +%Y%m%d%H%M`
 DUMPOPTS="-F p -d"
 DUMPROOT='<%= @dumproot %>'
-ERROR_FOUND=0
+EXIT_STATUS=0
 LOCKFILE='/tmp/postgres.dump.lock'
 PSQL='/usr/bin/psql'
 ALLDBS=`su - <%= @user %> -c "psql -lqtA -F \"\t\" -R \"\n\""`;
@@ -28,7 +28,7 @@ backup_db() {
   time su - <%= @user %> -c "${DUMP} ${DUMPOPTS} ${DBNAME}" | gzip --rsyncable -9 > ${DUMPFILE}
   if [[ ${PIPESTATUS[@]} != "0 0" ]]
     then
-      ERROR_FOUND=1
+      EXIT_STATUS=1
   fi
 }
 
@@ -73,7 +73,7 @@ rsync_offsite() {
   ${DUMPFILE} rsync://apb-titan@localhost:1873/titan/
   if [ $? -ne 0 ]
     then
-      ERROR_FOUND=1
+      EXIT_STATUS=1
   fi
 
   /etc/init.d/stunnel4 stop
@@ -117,4 +117,4 @@ done
 stop_lock
 date
 
-exit $ERROR_FOUND
+exit $EXIT_STATUS
