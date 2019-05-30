@@ -228,22 +228,22 @@ def threaded_run(config, data):
             ##################################
             # Write Push log, text + sqlite3 #
             ##################################
-                try:
-                    with contextlib.closing(sqlite3.connect(config['database'], timeout = 15)) as conn:
-                        cursor = conn.cursor()
-                        cursor.execute("""INSERT INTO pushlog
-                                  (repository, asfid, githubid, baseref, ref, old, new, date)
-                                  VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
-                        conn.commit()
-                # If sqlite borks, let infra know...but keep syncing
-                except sqlite3.Error as e:
-                    txt = e.args[0]
-                    asfpy.messaging.mail(
-                            recipient = '<team@infra.apache.org>',
-                            subject = "gitbox repository %s: sqlite operational error!" % reponame,
-                            sender = '<gitbox@apache.org>',
-                            message = "gitbox.db could not be written to: %s" % txt,
-                            )
+            try:
+                with contextlib.closing(sqlite3.connect(config['database'], timeout = 15)) as conn:
+                    cursor = conn.cursor()
+                    cursor.execute("""INSERT INTO pushlog
+                              (repository, asfid, githubid, baseref, ref, old, new, date)
+                              VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
+                    conn.commit()
+            # If sqlite borks, let infra know...but keep syncing
+            except sqlite3.Error as e:
+                txt = e.args[0]
+                asfpy.messaging.mail(
+                        recipient = '<team@infra.apache.org>',
+                        subject = "gitbox repository %s: sqlite operational error!" % reponame,
+                        sender = '<gitbox@apache.org>',
+                        message = "gitbox.db could not be written to: %s" % txt,
+                        )
             
             open(os.path.join(config['pushlogs'], "%s.txt" % reponame), "a").write(
                 "[%s] %s -> %s (%s@apache.org / %s)\n" % (
