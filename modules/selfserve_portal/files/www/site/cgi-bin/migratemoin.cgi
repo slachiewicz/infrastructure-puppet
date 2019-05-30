@@ -46,6 +46,7 @@ if not space or not re.match(r"^[A-Z0-9]+$", space):
 
 history = form.getvalue('history', 'false')
 renametohome = form.getvalue('homepage', 'false')
+moinro = form.getvalue('moinreadonly', 'false')
 
 moinscript = '%s/run_cmdline.sh' % moinpath
 settingsconf = 'confluenceSettings.properties'
@@ -80,6 +81,10 @@ try:
     # Convert exported pages to Confluence format ..
     # .. and then import the pages to the Confluence space.
     subprocess.check_output(['%s -c conf/%s conf/%s %s/projects/%s/data/%s-pages-out' % (moinscript, settingsconf, converterconf, moinpath, moinwiki, moinwiki)],shell=True, stderr=subprocess.STDOUT)
+
+    # mark the moin wiki as read only
+    if moinro == 'true':
+      subprocess.check_output(['%s/moin-ro.sh %s' % (moinpath, moinwiki)],shell=True, stderr=subprocess.STDOUT)
 
     ## Todo: Somewhere here we could count total pages exported in the previous step and update the progress bar as a percentage of 80%/numpages left
 
