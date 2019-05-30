@@ -23,7 +23,7 @@ cat >> $WIKI << EOL
     acl_enabled = 1
     acl_rights_default = "All:read"
 EOL
-  svn ci -m "mark $WIKI read only, requested as part of moin -> cwiki migration."
+  /usr/bin/svn ci -m "mark $WIKI read only, requested as part of moin -> cwiki migration."
 else
   echo "wiki is already read only, doing nothing."
 fi
