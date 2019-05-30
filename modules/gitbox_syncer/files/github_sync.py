@@ -27,6 +27,8 @@ import sqlite3
 import time
 import asfpy.messaging
 import threading
+import contextlib
+
 
 # GitHub -> GitBox code sync    
 def threaded_run(config, data):
@@ -165,22 +167,16 @@ def threaded_run(config, data):
     
         # Unless asfgit is the pusher, we need to act on this.
         if pusher != 'asfgit' and repopath and os.path.exists(repopath):
-    
-            ##################
-            # Open SQLite DB #
-            ##################
-            conn = sqlite3.connect(config['database'])
-            cursor = conn.cursor()
-    
-    
-            ########################
-            # Get ASF ID of pusher #
-            ########################
-            cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
-            row = cursor.fetchone()
-            # Found it, yay!
+
+            # Figure out who pushed:
+            with contextlib.closing(sqlite3.connect(config['database'])) as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT asfid FROM ids WHERE githubid=? COLLATE NOCASE", (pusher, ))
+                row = cursor.fetchone()
+
+
             if row:
-                asfid = row[0]
+                asfid = row[0]                
             # Didn't find it, time to notify!!
             else:
                 asfid = "(unknown)"
@@ -201,17 +197,19 @@ def threaded_run(config, data):
             #######################################
             if before and before != EMPTY_HASH:
                 try:
-                    # First, check the db for pushes we have
-                    cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
-                    foundOld = cursor.fetchone()
-                    if not foundOld:
-                        # See if we've ever gotten any push logs for this repo, or if this is a first
-                        tcursor = conn.cursor() # make a temp cursor, try fetching one row
-                        tcursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
-                        foundAny = tcursor.fetchone()
-                        if foundAny:
-                            raise Exception("Could not find previous push (??->%s) in push log!" % before)
-                    # Then, be doubly sure by doing cat-file on the old rev
+                    with contextlib.closing(sqlite3.connect(config['database'])) as conn:
+                        cursor = conn.cursor()
+                        # First, check the db for pushes we have
+                        cursor.execute("SELECT id FROM pushlog WHERE new=?", (before, ))
+                        foundOld = cursor.fetchone()
+                        if not foundOld:
+                            # See if we've ever gotten any push logs for this repo, or if this is a first
+                            tcursor = conn.cursor() # make a temp cursor, try fetching one row
+                            tcursor.execute("SELECT id FROM pushlog WHERE repository=?", (reponame, ))
+                            foundAny = tcursor.fetchone()
+                            if foundAny:
+                                raise Exception("Could not find previous push (??->%s) in push log!" % before)
+                    # Then, be doubly sure by doing cat-file on the old rev (AFTER sqlite is closed)
                     os.chdir(repopath)
                     subprocess.check_call(['git','cat-file','-e', before])
                 except Exception as errmsg:
@@ -230,23 +228,21 @@ def threaded_run(config, data):
             ##################################
             # Write Push log, text + sqlite3 #
             ##################################
-            try:
-                cursor.execute("""INSERT INTO pushlog
-                          (repository, asfid, githubid, baseref, ref, old, new, date)
-                          VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
-                
-                # commit and close sqlite, no need for it below
-                conn.commit()
-            # If sqlite borks, let infra know...but keep syncing
-            except sqlite3.Error as e:
-                txt = e.args[0]
-                asfpy.messaging.mail(
-                        recipient = '<team@infra.apache.org>',
-                        subject = "gitbox repository %s: sqlite operational error!" % reponame,
-                        sender = '<gitbox@apache.org>',
-                        message = "gitbox.db could not be written to: %s" % txt,
-                        )
-            conn.close()
+                try:
+                    with contextlib.closing(sqlite3.connect(config['database'], timeout = 15)) as conn:
+                        cursor.execute("""INSERT INTO pushlog
+                                  (repository, asfid, githubid, baseref, ref, old, new, date)
+                                  VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
+                        conn.commit()
+                # If sqlite borks, let infra know...but keep syncing
+                except sqlite3.Error as e:
+                    txt = e.args[0]
+                    asfpy.messaging.mail(
+                            recipient = '<team@infra.apache.org>',
+                            subject = "gitbox repository %s: sqlite operational error!" % reponame,
+                            sender = '<gitbox@apache.org>',
+                            message = "gitbox.db could not be written to: %s" % txt,
+                            )
             
             open(os.path.join(config['pushlogs'], "%s.txt" % reponame), "a").write(
                 "[%s] %s -> %s (%s@apache.org / %s)\n" % (
