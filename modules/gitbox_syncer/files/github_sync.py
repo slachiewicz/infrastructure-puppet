@@ -230,6 +230,7 @@ def threaded_run(config, data):
             ##################################
                 try:
                     with contextlib.closing(sqlite3.connect(config['database'], timeout = 15)) as conn:
+                        cursor = conn.cursor()
                         cursor.execute("""INSERT INTO pushlog
                                   (repository, asfid, githubid, baseref, ref, old, new, date)
                                   VALUES (?,?,?,?,?,?,?,DATETIME('now'))""", (reponame, asfid, pusher, baseref, ref, before, after, ))
