@@ -1,7 +1,4 @@
 subscriptions:
-    cassandra:
-        channel: "#cassandra"
-        jira: CASSANDRA
     cassandra-dev:
         channel: "#cassandra-dev"
         jira: CASSANDRA
