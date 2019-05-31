@@ -4,6 +4,7 @@ classes:
   - apache::mod::proxy
   - apache::mod::proxy_http
   - apache::mod::rewrite
+  - blocky
   - buildbot_asf
   - mysql_asf::backup
   - mysql::server
