@@ -27,7 +27,6 @@ for(sort keys %$asfdefs) {
 	if ($asfdefs->{$_} eq 'LIST') {
         push @unusedlist,$_;
 	} else {
-        next if  m!-pmc$!;
         push @unusedldap,$_;
 	}
 }
@@ -36,16 +35,15 @@ for(sort keys %$pitdefs) {
     if ($pitdefs->{$_} eq 'LIST') {
         push @unusedlist,$_;
     } else {
-        next if  m!-pmc$!;
         push @unusedldap,$_;
     }
 }
 if (scalar @unusedlist) {
-    print "The following local lists don't appear to be used in the asf or pit auth files: ",join(' ', @unusedlist),"\n";
+    print "The following local lists don't appear to be used in either the asf or pit auth files: ",join(' ', @unusedlist),"\n";
 }
 
 if (scalar @unusedldap) {
-    print "The following LDAP groups don't appear to be used in the asf or pit auth files:\n",join(' ', @unusedldap),"\n";
+    print "The following LDAP groups don't appear to be used in either the asf or pit auth files:\n",join(' ', @unusedldap),"\n";
 }
 
 print "Completed scans\n";
@@ -56,6 +54,7 @@ sub process_file{
     print "Scanning $file\n";
     my %groups=();
     my %refs=();
+    my %used=(); # used locally
     open IN,"<$file" or die "Cannot open $file $!";
     while(<IN>) {
     	last if m!^\[groups\]!;
@@ -68,7 +67,7 @@ sub process_file{
         next if m!^\[!; # directory header
         # committers={ldap:cn=committers,ou=groups,dc=apache,dc=org}
         # ace-pmc={ldap:cn=ace,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-        if (m!^([^=]+)={ldap:cn=([^,]+),!) {
+        if (m!^([^=]+)=\{ldap:cn=([^,]+),!) {
             my ($group, $cn)=($1,$2);
             my $error=0;
             if ($group =~ m!-pmc$!) {
@@ -85,7 +84,7 @@ sub process_file{
             next unless $error;
         }
         # abdera-pmc={reuse:pit-authorization:abdera-pmc}
-        if (m!^([^=]+)={reuse:(asf|pit)-authorization:([^}]+)!) {
+        if (m!^([^=]+)=\{reuse:(asf|pit)-authorization:([^}]+)!) {
             my ($group, $type, $alias)=($1,$2,$3);
             my $error=($group ne $alias); # names must agree
             $error=1 if $type eq $name; # Must refer to other file
@@ -116,6 +115,7 @@ sub process_file{
             $error=1, print "Group $groupref not defined\n" unless 
                 defined $groups{$groupref} or defined $refs{$groupref};
             $groupused{$groupref}++;
+            $used{$groupref}=1;
             next unless $error;
         }
         # user = rw
@@ -129,5 +129,20 @@ sub process_file{
         print "??: Line: $. $_";
     }
     close IN;
+    # Check which groups are defined/referenced and not used
+    my @tmp=();
+    for(sort keys %groups) {
+        push @tmp,$_ unless defined $used{$_};
+    }
+    if (scalar(@tmp)) {
+        print "Defined in $name but not used:\n",join(' ',@tmp),"\n";
+    }
+    @tmp=();
+    for(sort keys %refs) {
+        push @tmp,$_ unless defined $used{$_};
+    }
+    if (scalar(@tmp)) {
+        print "Referenced in $name but not used:\n",join(' ',@tmp),"\n";
+    }
     return \%refs, \%groups;
 }
