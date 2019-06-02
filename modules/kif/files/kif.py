@@ -417,7 +417,7 @@ def run_actions(config, actions):
                 if not args.debug:
                     try:
                         os.kill(pid, sig)
-                     except OSError:
+                    except OSError:
                         email_actions += "(failed, no such process!)"
                 else:
                     print(" (disabled due to --debug flag)")
