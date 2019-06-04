@@ -50,7 +50,7 @@ class rsync_asf (
       owner   => 'root',
       group   => 'root',
       content => join($fslist,"\n");
-    $excludelist
+    $excludelist:
       ensure  => present,
       path    => $excludelist,
       mode    => '0755',
