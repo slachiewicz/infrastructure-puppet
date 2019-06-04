@@ -9,6 +9,7 @@ classes:
   - mysql_asf::backup
   - mysql::server
   - rsync::server
+  - rsync_asf
   - ssl::name::wildcard_apache_org
   - vhosts_asf::vhosts
 
@@ -36,7 +37,7 @@ apt::source:
     repos: 'universe'
     ensure: present
 
-mysql_asf::backup::rsync_offsite: 'true'
+mysql_asf::backup::rsync_offsite: 'false'
 mysql_asf::backup::rsync_user: 'apb-buildbot-vm2'
 
 mysql::server::package_name: 'mysql-server-5.6'
