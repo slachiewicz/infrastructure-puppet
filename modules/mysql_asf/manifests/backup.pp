@@ -16,10 +16,12 @@ class mysql_asf::backup (
   require stunnel_asf
   require mysql::server
 
-  python::pip {
-    'datadog' :
-      ensure => present;
-      }
+  if !defined(Python::Pip['datadog']) {
+    python::pip {
+      'datadog' :
+        ensure => present;
+    }
+  }
 
   # pull in datadog api key from eyaml
   include datadog_agent
