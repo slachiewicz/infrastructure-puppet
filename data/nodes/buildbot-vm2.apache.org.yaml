@@ -85,6 +85,7 @@ rsync_asf::cron_minute: 10
 
 rsync_asf::fslist:
   - /x1/buildmaster/master1/public_html
+  - /x1/db_dump
 
 file:
   '/etc/rsyncd.secrets':
