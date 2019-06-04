@@ -3,6 +3,7 @@
 DUMPLISTFILE="<%= @dumplist %>"
 EXCLUDELISTFILE="<%= @excludefile %>"
 EXIT_STATUS=0
+EXCLUDE=""
 
 rsync_offsite() {
   DATE_BIN=/bin/date
@@ -23,6 +24,7 @@ rsync_offsite() {
   /usr/bin/rsync -rlRptz --delete \
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
+  ${EXCLUDE} \
   ${FSNAME} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/
   if [ $? -ne 0 ]
     then
@@ -34,11 +36,13 @@ rsync_offsite() {
   $RM_BIN -f $OLD_LOG
 }
 
-for EXDIR in `cat $EXCLUDELISTFILE`; do
-  EXCLUDE="$EXCLUDE --exclude $EXDIR "
-done
-
-echo "PROPOSED EXCLUDE LIST: $EXCLUDES"
+if [ -f $EXCLUDELISTFILE ]
+then
+  for EXDIR in `cat $EXCLUDELISTFILE`; do
+    EXCLUDE="$EXCLUDE --exclude $EXDIR "
+  done
+  echo "Using exclude list: $EXCLUDE"
+fi
 
 for FSNAME in `cat "$DUMPLISTFILE"` ; do
   date
