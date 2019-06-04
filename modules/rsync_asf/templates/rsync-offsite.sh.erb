@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DUMPLISTFILE="<%= @dumplist %>"
+EXCLUDELISTFILE="<%= @excludelist %>"
 EXIT_STATUS=0
 
 rsync_offsite() {
@@ -32,6 +33,12 @@ rsync_offsite() {
 
   $RM_BIN -f $OLD_LOG
 }
+
+for EXDIR in `cat $EXCLUDELISTFILE`; do
+  EXCLUDE="$EXCLUDE --exclude $EXDIR "
+done
+
+echo "PROPOSED EXCLUDE LIST: $EXCLUDES"
 
 for FSNAME in `cat "$DUMPLISTFILE"` ; do
   date

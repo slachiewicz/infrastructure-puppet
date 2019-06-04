@@ -3,9 +3,13 @@
 class rsync_asf (
   $scriptpath   = '/root/rsync-offsite.sh',
   $dumplist     = '/root/dumplist',
+  $excludelist  = '/root/excludelist',
 
   # override fslist with array in yaml
   $fslist       = [ '/x1','/x2' ],
+
+  # override excludelist with array in yaml
+  $excludelist  = [], # example ['/jira-data/export','/jira-data/tmp']
 
   # when to fire the rsync job
   $cron_hour    = '22',
@@ -46,6 +50,13 @@ class rsync_asf (
       owner   => 'root',
       group   => 'root',
       content => join($fslist,"\n");
+    $excludelist
+      ensure  => present,
+      path    => $excludelist,
+      mode    => '0755',
+      owner   => 'root',
+      group   => 'root',
+      content => join($excludelist,"\n");
     '/root/.pw-abi':
       ensure  => present,
       owner   => 'root',

@@ -22,6 +22,11 @@ rsync_asf::cron_minute: 55
 rsync_asf::fslist:
   - /x1/nexus-work
 
+rsync_asf::excludelist:
+  - /indexer
+  - /tmp
+  - /cache
+
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
 apache::default_ssl_key:   '/etc/ssl/private/wildcard.apache.org.key'
