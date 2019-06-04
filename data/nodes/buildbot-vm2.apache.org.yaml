@@ -37,6 +37,7 @@ apt::source:
     ensure: present
 
 mysql_asf::backup::rsync_offsite: 'true'
+mysql_asf::backup::rsync_user: 'apb-buildbot-vm2'
 
 mysql::server::package_name: 'mysql-server-5.6'
 
