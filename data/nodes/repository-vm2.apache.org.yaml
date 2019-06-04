@@ -24,8 +24,11 @@ rsync_asf::fslist:
 
 rsync_asf::excludelist:
   - /indexer
+  - /indexer-pro
+  - /newrelic-old
+  - /timeline-bak
   - /tmp
-  - /cache
+  - /trash
 
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
