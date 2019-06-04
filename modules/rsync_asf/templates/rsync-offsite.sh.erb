@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DUMPLISTFILE="<%= @dumplist %>"
+EXIT_STATUS=0
 
 rsync_offsite() {
   DATE_BIN=/bin/date
@@ -22,6 +23,11 @@ rsync_offsite() {
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
   ${FSNAME} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/
+  if [ $? -ne 0 ]
+    then
+      EXIT_STATUS=1
+  fi
+  
   /etc/init.d/stunnel4 stop
 
   $RM_BIN -f $OLD_LOG
@@ -32,3 +38,5 @@ for FSNAME in `cat "$DUMPLISTFILE"` ; do
   rsync_offsite
   sleep 5 
 done
+
+exit $EXIT_STATUS
