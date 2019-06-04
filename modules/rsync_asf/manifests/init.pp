@@ -3,7 +3,7 @@
 class rsync_asf (
   $scriptpath   = '/root/rsync-offsite.sh',
   $dumplist     = '/root/dumplist',
-  $excludelist  = '/root/excludelist',
+  $excludefile  = '/root/excludelist',
 
   # override fslist with array in yaml
   $fslist       = [ '/x1','/x2' ],
@@ -50,9 +50,9 @@ class rsync_asf (
       owner   => 'root',
       group   => 'root',
       content => join($fslist,"\n");
-    $excludelist:
+    $excludefile
       ensure  => present,
-      path    => $excludelist,
+      path    => $excludefile,
       mode    => '0755',
       owner   => 'root',
       group   => 'root',
