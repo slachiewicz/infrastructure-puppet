@@ -35,7 +35,7 @@ mysql::server::override_options:
     query_cache_size: '32M'
     query_cache_limit: '4M'
   mysqldump:
-    max_allowed_packet: '64M'
+    max_allowed_packet: '128M'
 
 mysql::server::databases:
   cwiki_test:
