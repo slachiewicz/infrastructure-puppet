@@ -28,6 +28,9 @@ rsync_asf::cron_minute: 17
 rsync_asf::fslist:
   - /x1/jira/jira-data
 
+rsync_asf::excludelist:
+  - /caches
+
 apache::default_vhost: false
 apache::mpm_module: 'event'
 
