@@ -30,7 +30,7 @@ rsync_asf::fslist:
 
 rsync_asf::excludelist:
   - /caches
-  - /x1/jira/jira-data/caches
+  - /jira-data/caches
 
 apache::default_vhost: false
 apache::mpm_module: 'event'
