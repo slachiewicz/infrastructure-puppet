@@ -246,6 +246,12 @@ rsync::server::module:
     auth_users: 'apb-psql01-lw-us'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  psql03-lw-us:
+    path: '/x1/backups/psql03-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.134'
+    auth_users: 'apb-psql03-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
   repository-vm2:
     path: '/x1/backups/repository-vm2/./target/'
     hosts_allow: '127.0.0.1 207.244.88.140'
