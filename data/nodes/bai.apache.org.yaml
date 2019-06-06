@@ -306,6 +306,12 @@ rsync::server::module:
     auth_users: 'apb-roller-vm2'
     secrets_file: '/etc/rsyncd.secrets'
     read_only: 'no'
+  pm01-lw-us:
+    path: '/x1/backups/pm01-lw-us/./target/'
+    hosts_allow: '127.0.0.1 207.244.88.154'
+    auth_users: 'apb-pm01-lw-us'
+    secrets_file: '/etc/rsyncd.secrets'
+    read_only: 'no'
 
 logrotate::rule:
   rsync:
