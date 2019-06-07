@@ -29,6 +29,7 @@ rsync_asf::excludelist:
   - x1/nexus-work/timeline-bak
   - x1/nexus-work/tmp
   - x1/nexus-work/trash
+  - x1/nexus-work/timeline/index
 
 apache::default_ssl_cert:  '/etc/ssl/certs/wildcard.apache.org.crt'
 apache::default_ssl_chain: '/etc/ssl/certs/wildcard.apache.org.chain'
