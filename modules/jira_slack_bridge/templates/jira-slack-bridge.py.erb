@@ -128,7 +128,6 @@ def main():
             if cname == thischan:
                 v['cid'] = cid
                 print("Found %s as %s, subbing it to %s" % (cname, cid, v.get('jira', 'FOO')))
-                sendNotice([{'text': "JIRA notifications for %s enabled..." % v.get('jira', 'FOO')}], cid)
         
     
     last_ticket = {}
