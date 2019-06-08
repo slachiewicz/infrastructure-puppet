@@ -832,7 +832,7 @@ openejb-tck = r
 * =
 
 [/pmc/accumulo]
-@accumulo = rw
+@accumulo-pmc = rw
 
 [/pmc/airavata]
 @airavata-pmc = rw
@@ -841,7 +841,7 @@ openejb-tck = r
 @apex-pmc = rw
 
 [/pmc/apr]
-@apr = rw
+@apr-pmc = rw
 
 [/pmc/archiva]
 @archiva-pmc = rw
@@ -868,7 +868,7 @@ openejb-tck = r
 @cloudstack-pmc = rw
 
 [/pmc/cocoon]
-@cocoon = rw
+@cocoon-pmc = rw
 
 [/pmc/comdev]
 @comdev-pmc = rw
@@ -966,7 +966,7 @@ openejb-tck = r
 @security = rw
 
 [/pmc/jackrabbit]
-@jackrabbit = rw
+@jackrabbit-pmc = rw
 
 # [/pmc/jakarta]
 # @jakarta-pmc = rw
@@ -999,7 +999,7 @@ openejb-tck = r
 @maven-pmc = rw
 
 [/pmc/myfaces]
-@myfaces = rw
+@myfaces-pmc = rw
 
 [/pmc/nifi]
 @nifi-pmc = rw
@@ -1056,10 +1056,10 @@ openejb-tck = r
 @synapse-pmc = rw
 
 [/pmc/tapestry]
-@tapestry = rw
+@tapestry-pmc = rw
 
 [/pmc/tcl]
-@tcl = rw
+@tcl-pmc = rw
 
 [/pmc/thrift]
 @thrift-pmc = rw
@@ -1083,7 +1083,7 @@ openejb-tck = r
 @whimsy-pmc = rw
 
 [/pmc/wicket]
-@wicket = rw
+@wicket-pmc = rw
 
 [/pmc/ws]
 @ws-pmc = rw
