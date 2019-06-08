@@ -1179,7 +1179,7 @@ buildbot = rw
 @jena= rw
 
 [/jmeter]
-@jmeter = rw
+* = r
 
 [/jspwiki]
 @jspwiki = rw
