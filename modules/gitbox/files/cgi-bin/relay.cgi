@@ -18,12 +18,14 @@ PAYLOAD_FORMDATA = {
 
 GUID = os.environ.get('HTTP_X_GITHUB_DELIVERY',"")
 EVENT = os.environ.get('HTTP_X_GITHUB_EVENT', "push")
+SIG = os.environ.get('HTTP_X_HUB_SIGNATURE', "")
 DATE = int(time.time())
 
 HEADERS = {
     'User-Agent': os.environ.get('HTTP_USER_AGENT', 'GitHub-Hookshot/abcd'),
     'X-GitHub-Delivery': GUID,
     'X-GitHub-Event': EVENT,
+    'X-Hub-Signature': SIG,
   }
 
 
