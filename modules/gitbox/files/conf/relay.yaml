@@ -12,7 +12,7 @@ relays:
         repos: sling-*
         events: commit
         hook: https://builds.apache.org/github-webhook/
-        format: formdata
+        format: json
         enabled: true
     sling-jenkins-pr:
         repos: sling-*
