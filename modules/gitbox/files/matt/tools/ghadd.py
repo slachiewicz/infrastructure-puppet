@@ -88,9 +88,11 @@ def addGitHubTeamMember(teamID, login):
     data = json.loads(r.content)
     if 'state' in data:
         logging.info("- Additions done!")
+        return True
     else:
         logging.error("- Error occurred while trying to add member!")
         logging.error(data)
+        return False
 
 def getGitHubTeamMembers(teamID):
     """Given a Team ID, fetch the current list of members of the team"""
@@ -159,6 +161,7 @@ for member in current_team:
             removeGitHubOrgMember(member)
 
 # Check for new users, add if missing
+bad_invites = []
 for k in committers:
     member = committers[k]
     # Check that user is not in github (current_team) and hasn't been invited yet (MAP)
@@ -167,10 +170,15 @@ for k in committers:
         if re.match(r"^[-a-zA-Z_0-9.]+", member):
             gh_added += 1
             if not DEBUG_RUN:
-                addGitHubTeamMember(TEAM_ID, member)
+                if not addGitHubTeamMember(TEAM_ID, member):
+                    bad_invites.append(k)
         else:
             logging.info("Invalid GH username detected, ignoring this..")
 
+# Remove bad invites
+for k in bad_invites:
+    del committers[k]
+            
 # Save updated map
 MAP = committers
 
