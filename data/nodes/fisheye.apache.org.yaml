@@ -20,6 +20,9 @@ rsync_asf::fslist:
   - /x1/db_dump
   - /usr/local/fisheye/fisheye-data
 
+rsync_asf::excludelist:
+  - usr/local/fisheye/fisheye-data/var/tmp
+
 oraclejava::install::version: '8'
 oraclejava::install::unlimited_jce: true
 
