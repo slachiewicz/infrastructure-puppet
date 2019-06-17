@@ -365,7 +365,7 @@ def run_new_checks():
             if found:
                entry = found[0]
                syslog.syslog(syslog.LOG_INFO, "Removing %s from block list (found at line %s as %s)" % (ip, entry['linenumber'], entry['source']))
-               if not unban_line(ip, found[0]['linenumber']):
+               if not unban_line(ip, entry['linenumber'], chain = entry.get('chain', 'INPUT')):
                   syslog.syslog(syslog.LOG_WARNING, "Could not remove ban for %s from iptables!" % ip)
                else:
                   note_unban(CONFIG['client']['hostname'], found[0])
