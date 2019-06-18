@@ -208,10 +208,4 @@ file {
       minute      => '36',
       command     => "${install_base}/${atlassian_cli}/confluence-get-spaces.sh > /dev/null 2>&1",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
-'sync-moin-all':
-      user        => root,
-      minute      => '53',
-      command     => "${uwc_dir}/sync-moin-all.sh > /dev/null 2>&1",
-      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh"; # lint:ignore:double_quoted_strings
-  }
 }

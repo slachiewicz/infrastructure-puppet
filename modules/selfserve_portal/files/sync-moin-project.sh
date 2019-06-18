@@ -17,6 +17,6 @@ cd $MOINDATA
     --include data/pages         \
     --include data/user         \
     --exclude-from /usr/local/etc/moin-to-cwiki/universal-wiki-converter/exclude-list.txt \
-    --delete --delete-excluded \
+    --delete-excluded \
     rsync://apb-moin@moin-vm/moin/$PROJECT $MOINDATA
 
