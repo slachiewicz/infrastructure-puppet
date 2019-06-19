@@ -126,7 +126,7 @@ Facter.add("dd_autotag_colo") do
         "rackspace"
       when dc_loc.include?('secured servers')
         "pnap"
-      when dc_loc.include?('yahoo')
+      when dc_loc.include?('oath_holdings_inc')
         "yahoo"
       else
         dc_loc
