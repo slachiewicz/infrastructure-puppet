@@ -74,6 +74,7 @@ class buildbot_slave::buildbot (
     'openjdk-13-ea+4',
     'openjdk-13-ea+9',
     'openjdk-13-ea+23',
+    'openjdk-13-ea+25',
 ],
   $tools = [
     'ant',
@@ -207,6 +208,6 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest13':
     ensure => link,
-    target => '/usr/local/asfpackages/java/openjdk-13-ea+23',
+    target => '/usr/local/asfpackages/java/openjdk-13-ea+25',
   }
 }
