@@ -837,6 +837,9 @@ openejb-tck = r
 [/pmc/airavata]
 @airavata-pmc = rw
 
+[/pmc/ant]
+@ant-pmc = rw
+
 [/pmc/apex]
 @apex-pmc = rw
 
