@@ -50,7 +50,11 @@ def getActivity():
         dpath = os.path.join(repopath, 'description')
         if os.path.exists(dpath):
             repodesc = open(dpath).read().strip()
-            
+        
+        # Get archive status
+        nocommit = os.path.exists(os.path.join(repopath, "nocommit"))
+        if nocommit: repodesc += " (archived)"
+
         # Get git config items
         if False:
             configpath = os.path.join(repopath, "config")
@@ -113,7 +117,7 @@ def getActivity():
         projects[project].append(repo)
         if len(repodesc) > 64:
             repodesc = repodesc[:61] + "..."
-        gitrepos[repo] = [agotxt, repodesc, lcommit]
+        gitrepos[repo] = [agotxt, repodesc, lcommit, nocommit]
     
     html = ""
     a = 0
@@ -148,13 +152,14 @@ def getActivity():
     </tr>
 """ % (a, pname)
         for repo in sorted(projects[project]):
+            nclass = "disabled" if gitrepos[repo][3] else ""
             outjson['projects'][project]['repositories'][repo] = {
                 'description': gitrepos[repo][1],
                 'last_update_txt': gitrepos[repo][0],
                 'last_update_int': gitrepos[repo][2]
             }
             table += """
-    <tr>
+    <tr class="%s">
         <td><a href="/repos/asf/%s.git">%s.git</a></td>
         <td>%s</td>
         <td>%s</td>
@@ -165,7 +170,7 @@ def getActivity():
             <a href="/repos/asf/?p=%s.git;a=tree">Tree View</a>
         </td>
     </tr>
-""" % (repo, repo, gitrepos[repo][1],gitrepos[repo][0], repo, repo, repo, repo)
+""" % (nclass, repo, repo, gitrepos[repo][1],gitrepos[repo][0], repo, repo, repo, repo)
     
         table += "</table>"
         html += table
