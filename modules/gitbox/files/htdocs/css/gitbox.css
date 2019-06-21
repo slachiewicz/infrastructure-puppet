@@ -57,3 +57,11 @@ body {
    width: 1060px;
    margin: 10px auto;
 }
+
+.disabled {
+    color: #777 !important;
+}
+
+.disabled a {
+   color: #777;
+}
