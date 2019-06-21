@@ -20,7 +20,7 @@
 ################################################################
 
 DATASET=$1
-DAYS_TO_RETAIN=180
+DAYS_TO_RETAIN=90
 DAYS_AGO_TO_DELETE=`echo ${DAYS_TO_RETAIN} +1 | bc`
 SNAPDELETE=`date --date="${DAYS_AGO_TO_DELETE} days ago" +%Y%m%d`
 DAY=`/bin/date +%d`
