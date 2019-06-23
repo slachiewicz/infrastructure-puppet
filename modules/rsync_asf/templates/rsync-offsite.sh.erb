@@ -25,12 +25,16 @@ rsync_offsite() {
   --log-file=/root/rsynclogs/abi/backups-<%= @hostname %>-$TODAY.log \
   --password-file=/root/.pw-abi \
   ${EXCLUDE} \
-  ${FSNAME} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/
-  if [ $? -ne 0 ]
-    then
-      EXIT_STATUS=1
+  ${FSNAME} rsync://apb-<%= @hostname %>@localhost:1873/<%= @hostname %>/ \
+    2> >(grep -Ev '(file has |rsync warning: some files )vanished')
+  ret=$?
+  if [ $ret -eq 24 ]
+  then
+      EXIT_STATUS=0
+  else
+      EXIT_STATUS=$ret
   fi
-  
+
   /etc/init.d/stunnel4 stop
 
   $RM_BIN -f $OLD_LOG
