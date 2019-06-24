@@ -4,7 +4,6 @@ classes:
   - loggy
   - mx_asf
   - ssl::name::wildcard_apache_org
-  - update_ca
 
 postfix::server::inet_interfaces: 'all'
 postfix::server::postscreen: 'true'

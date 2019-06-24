@@ -13,6 +13,7 @@ classes:
   - snmp
   - timezone
   - ulimit_asf
+  - update_ca
 
 classes_windows:
   - asf999_windows::create_user
