@@ -84,12 +84,6 @@ file {
       owner  => 'root',
       group  => 'root',
       mode   => '0755';
-    "${uwc_dir}/sync-moin-all.sh":
-      ensure => present,
-      source => 'puppet:///modules/selfserve_portal/sync-moin-all.sh',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755';
     "${uwc_dir}/mv-FrontPage-to-Home.sh":
       ensure => present,
       source => 'puppet:///modules/selfserve_portal/mv-FrontPage-to-Home.sh',
