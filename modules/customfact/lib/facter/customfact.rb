@@ -116,9 +116,9 @@ Facter.add("dd_autotag_colo") do
           when dc_country == "united states"
             "leaseweb_us"
           end
-      when dc_loc.include?('microsoft_corporation')
+      when dc_loc.include?('microsoft corporation')
         "azure"
-      when dc_loc.include?('network_education_and_research_in_oregon_nero')
+      when dc_loc.include?('network education and research in oregon (nero)')
         "osu"
       when dc_loc.include?('online')
         "online.net"
@@ -126,7 +126,7 @@ Facter.add("dd_autotag_colo") do
         "rackspace"
       when dc_loc.include?('secured servers')
         "pnap"
-      when dc_loc.include?('oath_holdings_inc')
+      when dc_loc.include?('oath holdings inc')
         "yahoo"
       else
         dc_loc
