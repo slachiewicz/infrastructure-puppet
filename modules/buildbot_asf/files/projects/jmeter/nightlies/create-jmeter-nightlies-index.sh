@@ -6,11 +6,16 @@
 
 DATE_BIN=/bin/date
 TODAY=`$DATE_BIN +%Y-%m-%d`
-
-cd /x1/buildmaster/master1/public_html/projects/jmeter/nightlies
+NIGHTLIES_DIR='/x1/buildmaster/master1/public_html/projects/jmeter/nightlies'
 
 # remove r* directories older than 30 days first.
-find . -mindepth 1 -maxdepth 1 -type d -name "r*" -mtime +29 -exec rm -rf {} \;
+if [[ -d "$NIGHTLIES_DIR" ]];then
+  cd $NIGHTLIES_DIR
+  find . -mindepth 1 -maxdepth 1 -type d -name "r*" -mtime +29 -delete;
+else
+  echo "Nightlies directory doesnt exist, exiting script."
+  exit 1;
+fi
 
 # create page header
 cat header.inc > index.html
