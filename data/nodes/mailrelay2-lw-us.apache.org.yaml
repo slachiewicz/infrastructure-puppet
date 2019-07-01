@@ -21,8 +21,9 @@ fail2ban_asf::config::jails:
     action:
       - iptables-allports
     logpath: /var/log/mail.log
-    findtime: 600
-    maxretry: 5
+    findtime: 30
+    maxretry: 30
+    bantime: 300
     enable: true
 
 postfix::server::myhostname:             "%{::fqdn}"
