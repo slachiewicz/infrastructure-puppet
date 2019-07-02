@@ -23,7 +23,7 @@ class jenkins_slave_windows (
   user { 'jenkins':
     ensure   => present,
     comment  => 'non-admin Jenkins account',
-    groups   => ['Users'],
+    groups   => ['Users', 'Remote Desktop Users'],
     password => $user_password, #password has to meet whatever policy exists or the account doesn't get created with no error
   }
 
