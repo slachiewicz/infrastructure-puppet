@@ -15,6 +15,7 @@ EXIT_STATUS=0
 LOCKFILE='/tmp/postgres.dump.lock'
 PSQL='/usr/bin/psql'
 ALLDBS=`su - <%= @user %> -c "psql -lqtA -F \"\t\" -R \"\n\""`;
+ALLDBS=`su - <%= @user %> -c "psql -t -A -c 'SELECT datname FROM pg_database'" | sed -e 's/template.*//g'`
 DBLISTFILE="/tmp/postgres.dump.list"
 
 
