@@ -17,3 +17,4 @@ base::basepackages:
   - 'gulp'
   - 'hugo'
   - 'doxygen'
+  - 'npm'
