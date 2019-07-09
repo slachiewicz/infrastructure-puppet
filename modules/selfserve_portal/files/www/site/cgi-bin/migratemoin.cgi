@@ -33,7 +33,7 @@ requser = os.environ['REMOTE_USER']
 form = cgi.FieldStorage();
 
 moinwiki = form.getvalue('moinwiki', None)
-if not moinwiki or not re.match(r"^[-a-z0-9]+$", moinwiki):
+if not moinwiki or not re.match(r"^[-_a-z0-9]+$", moinwiki):
     sscommon.buggo("Invalid Moin Wiki name!")
 
 moinpath = '/usr/local/etc/moin-to-cwiki/universal-wiki-converter'
