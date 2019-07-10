@@ -26,3 +26,15 @@ relays:
         hook: https://builds.apache.org/github-webhook/
         format: json
         enabled: true
+     hadoop:
+        repos: hadoop
+        events: all
+        hook: https://builds.apache.org/github-webhook/
+        format: json
+        enabled: true
+     brooklyn-dist:
+        repos: brooklyn-dist
+        events: all
+        hook: https://builds.apache.org/github-webhook/
+        format: json
+        enabled: true
