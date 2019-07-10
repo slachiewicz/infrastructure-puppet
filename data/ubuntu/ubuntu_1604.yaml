@@ -21,6 +21,7 @@ base::basepackages:
   - bash
   - bc
   - ca-certificates
+  - chkrootkit
   - htop
   - iotop
   - libnet-snmp-perl
