@@ -7,7 +7,10 @@ import os
 import sys
 import fnmatch
 import time
+import ldap
 
+LDAP_BASE = "ou=people,dc=apache,dc=org"
+LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 YAML_PATH = "/x1/gitbox/conf/relay.yaml"
 YML = yaml.load(open(YAML_PATH))
 
@@ -29,6 +32,20 @@ HEADERS = {
   }
 
 
+def gh_to_ldap(username):
+    ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+    l = ldap.initialize(LDAP_URI)
+    # this search for all objectClasses that user is in.
+    # change this to suit your LDAP schema
+    search_filter= "(githubUsername=%s)" % username
+    groups = []
+    results = l.search_s(LDAP_BASE, ldap.SCOPE_SUBTREE, search_filter, ['dn',])
+    for res in results:
+        cn = res[0]
+        groups.append(cn)
+    return sorted(groups)
+
+
 def log_entry(key, msg):
     with open("/x1/gitbox/logs/relay-%s.log" % key, "a") as f:
         f.write(msg + "\n")
@@ -41,6 +58,12 @@ if 'pull_request' in PAYLOAD:
     what = 'pr'
 elif 'issue' in PAYLOAD:
     what = 'issue'
+    
+if what == 'pr':
+  is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
+  if not is_asf:
+    print("Status: 204 Handled\r\n\r\n")
+    sys.exit(0)
 
 for key, entry in YML['relays'].items():
     if fnmatch.fnmatch(repo, entry['repos']): # If yaml entry glob-matches the repo, then...
