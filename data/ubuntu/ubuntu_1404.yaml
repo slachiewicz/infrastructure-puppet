@@ -465,11 +465,14 @@ build_slaves::distro_packages:
   - build-essential
   - cabal-install
   - cmake
+  - containerd.io
   - cppcheck
   - curl
   - debhelper
   - devscripts
   - dh-make
+  - docker-ce
+  - docker-ce-cli
   - emacs24-nox
   - erlang-base
   - erlang-dev
