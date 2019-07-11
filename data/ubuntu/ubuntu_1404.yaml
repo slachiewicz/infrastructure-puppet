@@ -127,6 +127,27 @@ apt::sources:
     include:
       deb: true
       src: false
+  'docker-engine':
+    location: 'https://apt.dockerproject.org/repo'
+    release: 'ubuntu-bionic'
+    repos: 'main'
+    key:
+      id: '58118E89F3A912897C070ADBF76221572C52609D'
+      server: 'pool.sks-keyservers.net'
+    include:
+      deb: true
+      src: false
+    ensure: absent
+  'docker-ce':
+    location: 'https://download.docker.com/linux/ubuntu'
+    key: 
+      id: '9DC858229FC7DD38854AE2D88D81803C0EBFCD88'
+      server: 'pool.sks-keyservers.net'
+    repos: 'stable'
+    release: 'bionic'
+    include:
+      deb: true
+      src: false
   'nodesource-6':
     location: 'https://deb.nodesource.com/node_6.x'
     release: 'trusty'
