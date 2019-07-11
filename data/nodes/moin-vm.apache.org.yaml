@@ -108,6 +108,23 @@ vhosts_asf::vhosts::vhosts:
     custom_fragment: |
       # httpd wiki redirect
       Redirect permanent /httpd/ https://cwiki.apache.org/confluence/display/HTTPD/
+      # Redirs for Lucene and Solr
+      Redirect permanent /lucene-java/Support https://cwiki.apache.org/confluence/display/lucene/Support 
+      Redirect permanent /lucene-java/PoweredBy https://cwiki.apache.org/confluence/display/lucene/PoweredBy 
+      Redirect permanent /lucene-java/LucenePapers https://cwiki.apache.org/confluence/display/lucene/LucenePapers 
+      Redirect permanent /lucene-java/ImproveIndexingSpeed https://cwiki.apache.org/confluence/display/lucene/ImproveIndexingSpeed 
+      Redirect permanent /lucene-java/ReleaseTodo https://cwiki.apache.org/confluence/display/lucene/ReleaseTodo 
+
+      Redirect permanent /solr/Support https://cwiki.apache.org/confluence/display/solr/Support 
+      Redirect permanent /solr/PublicServers https://cwiki.apache.org/confluence/display/solr/PublicServers 
+      Redirect permanent /solr/SolrTerminology http://lucene.apache.org/solr/guide/solr-glossary.html 
+      Redirect permanent /solr/SpatialSearch https://cwiki.apache.org/confluence/display/solr/Spatial+Search 
+      Redirect permanent /solr/HowToContribute https://cwiki.apache.org/confluence/display/solr/HowToContribute 
+      Redirect permanent /solr/SolrSecurity https://cwiki.apache.org/confluence/display/solr/SolrSecurity 
+      Redirect permanent /solr/SolrPerformanceProblems https://cwiki.apache.org/confluence/display/solr/SolrPerformanceProblems 
+      Redirect permanent /solr/NegativeQueryProblems https://cwiki.apache.org/confluence/display/solr/NegativeQueryProblems 
+      Redirect permanent /solr/IntegratingSolr https://cwiki.apache.org/confluence/display/solr/IntegratingSolr 
+      Redirect permanent /solr/FAQ https://cwiki.apache.org/confluence/display/solr/FAQ 
       
       # WSGI
       WSGIDaemonProcess wiki processes=20 threads=1 maximum-requests=500 group=www-data display-name=moinwiki
