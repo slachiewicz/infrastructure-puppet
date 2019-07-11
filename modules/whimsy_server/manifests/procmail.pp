@@ -42,11 +42,6 @@ class whimsy_server::procmail (
     content => "MAILDIR=\$DEFAULT\n"
   }
 
-  exec { 'newaliases' :
-    command     => '/usr/bin/newaliases',
-    refreshonly => true,
-  }
-
   ############################################################
   #                      apache (www-data)                   #
   ############################################################

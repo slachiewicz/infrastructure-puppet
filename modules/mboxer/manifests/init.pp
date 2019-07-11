@@ -123,11 +123,6 @@ class mboxer (
       provider  => aliases,
       notify    => Exec['newaliases'],
       recipient => "|python3 ${install_base}/tools/probe.cgi check";
-}
-
-  exec {'newaliases' :
-    command     => '/usr/bin/newaliases',
-    refreshonly => true,
   }
 
 }

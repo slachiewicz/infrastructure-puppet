@@ -109,6 +109,14 @@ class base (
   $aptppa = hiera_hash('apt::ppa',{})
   create_resources(apt::ppa, $aptppa)
 
+  $newaliases = hiera_hash('mailalias',{})
+  create_resources(mailalias,$newaliases)
+
+  exec {'newaliases':
+    refreshonly => true,
+    command     => '/usr/bin/newaliases',
+  }
+
   class { "base::install::${::asfosname}::${::asfosname}_${::asfosrelease}":
   }
 }
