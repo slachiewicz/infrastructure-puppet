@@ -175,6 +175,14 @@ ldapserver::keyfile: '/etc/ldap/cacerts/ldap-wildcard-cert.key'
 
 mail_relay::mail_ldap_servers: 'ldaps://ldap-us-ro.apache.org ldaps://ldap-eu-ro.apache.org'
 
+mailalias:
+  root:
+    name: 'root'
+    ensure: present
+    recipient:
+      - root@apache.org
+    notify: Exec[newaliases]
+
 ntp::disable_monitor: true
 ntp::udlc: false
 ntp::servers:
