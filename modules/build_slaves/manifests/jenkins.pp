@@ -481,6 +481,7 @@ class build_slaves::jenkins (
   }
   package { 'runc':
     ensure => absent,
+  }
 
   package { $jenkins_packages:
     ensure => latest,
