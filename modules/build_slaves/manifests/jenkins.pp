@@ -467,6 +467,21 @@ class build_slaves::jenkins (
     recurse => true,
   }
 
+  package { 'docker':
+    ensure => absent,
+  }
+  package { 'docker-engine':
+    ensure => absent,
+  }
+  package { 'docker.io':
+    ensure => absent,
+  }
+  package { 'containerd':
+    ensure => absent,
+  }
+  package { 'runc':
+    ensure => absent,
+
   package { $jenkins_packages:
     ensure => latest,
   }
