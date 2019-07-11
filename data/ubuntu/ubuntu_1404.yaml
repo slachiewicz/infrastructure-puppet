@@ -137,6 +137,17 @@ apt::sources:
     include:
       deb: true
       src: false
+    ensure: absent
+  'docker-ce':
+    location: 'https://download.docker.com/linux/ubuntu'
+    key: 
+      id: '9DC858229FC7DD38854AE2D88D81803C0EBFCD88'
+      server: 'pool.sks-keyservers.net'
+    repos: 'stable'
+    release: 'trusty'
+    include:
+      deb: true
+      src: false
   'nodesource-6':
     location: 'https://deb.nodesource.com/node_6.x'
     release: 'trusty'
@@ -516,7 +527,6 @@ build_slaves::distro_packages:
   - libxml-xpath-perl
   - libz-dev
   - lua5.2
-  - docker-engine
   - mingw32
   - mingw32-binutils
   - mingw32-runtime
