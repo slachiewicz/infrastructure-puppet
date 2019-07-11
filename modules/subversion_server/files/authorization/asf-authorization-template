@@ -1513,7 +1513,7 @@ svn-site-role = rw
 * =
 
 [/openwebbeans]
-@openwebbeans = rw
+@openwebbeans = r
 
 [/parquet]
 @parquet = rw
