@@ -43,7 +43,7 @@ apache::mod::event::threadsperchild: '50'
 
 # blogs_asf class variables.
 blogs_asf::roller_version: '5.2'
-blogs_asf::roller_revision_number: '2'
+blogs_asf::roller_revision_number: '3'
 blogs_asf::mysql_connector_version: '5.1.40'
 blogs_asf::parent_dir: '/usr/local/roller'
 blogs_asf::data_dir: '/usr/local/roller/roller_data'
