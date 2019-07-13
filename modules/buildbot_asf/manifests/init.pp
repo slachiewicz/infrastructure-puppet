@@ -258,13 +258,13 @@ class buildbot_asf (
       owner  => $username,
       group  => $groupname,
       source => 'puppet:///modules/buildbot_asf/projects/create-subversion-nightlies-index.sh';
-    "${venv_dir}/master1/public_html/projects/jmeter/nightlies":
+    "${venv_dir}/master1/public_html/projects/jmeter":
       ensure  => 'present',
       recurse => true,
       mode    => '0755',
       owner   => $username,
       group   => $groupname,
-      source  => 'puppet:///modules/buildbot_asf/projects/jmeter/nightlies';
+      source  => 'puppet:///modules/buildbot_asf/projects/jmeter';
   }
 
   # cron jobs
@@ -315,7 +315,7 @@ class buildbot_asf (
       user        => $username,
       minute      => '5',
       hour        => '5',
-      command     => "${venv_dir}/master1/public_html/projects/jmeter/nightlies/create-jmeter-nightlies-index.sh",
+      command     => "${venv_dir}/master1/public_html/projects/jmeter/create-jmeter-nightlies-index.sh",
       environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
       require     => User[$username];
   }
