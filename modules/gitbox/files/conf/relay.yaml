@@ -50,4 +50,9 @@ relays:
         hook: https://builds.apache.org/ghprbhook/
         format: json
         enabled: true
-
+    hbase-push:
+        repos: hbase
+        events: commit
+        hook: https://builds.apache.org/github-webhook/
+        format: json
+        enabled: true
