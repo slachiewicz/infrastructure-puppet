@@ -51,7 +51,7 @@ relays:
         format: json
         enabled: true
     hbase-push:
-        repos: hbase
+        repos: hbase*
         events: commit
         hook: https://builds.apache.org/github-webhook/
         format: json
