@@ -107,9 +107,9 @@ vhosts_asf::vhosts::vhosts:
       - FollowSymLinks
     custom_fragment: |
       # httpd wiki redirect
-      Redirect permanent /httpd/ https://cwiki.apache.org/confluence/display/HTTPD/
+      Redirect permanent /httpd https://cwiki.apache.org/confluence/display/HTTPD
       # spamassassin wiki redirect
-      Redirect permanent /spamassassin/ https://cwiki.apache.org/confluence/display/SPAMASSASSIN
+      Redirect permanent /spamassassin https://cwiki.apache.org/confluence/display/SPAMASSASSIN
       # Redirs for Lucene and Solr
       Redirect permanent /lucene-java/Support https://cwiki.apache.org/confluence/display/lucene/Support 
       Redirect permanent /lucene-java/PoweredBy https://cwiki.apache.org/confluence/display/lucene/PoweredBy 
