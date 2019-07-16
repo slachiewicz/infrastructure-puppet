@@ -75,6 +75,8 @@ def main():
 
     if os.path.exists(git_dir):
         error("Git directory exists: %s" % git_dir)
+    if not git_dir.endswith(".git"):
+        error("Git dir MUST end in .git!")
 
     clone_git(git_url, git_dir, opts.desc)
     cleanup_clone()
