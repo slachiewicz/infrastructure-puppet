@@ -42,18 +42,18 @@ echo '
 <tr style="background-color:#F5F5AE;">
 <td>LATEST ('$REV')</td>
 <td>'$TODAY'</td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz">apache-jmeter-'${REAL_REVISION}'.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip">apache-jmeter-'${REAL_REVISION}'.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz">apache-jmeter-'${REAL_REVISION}'_src.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip">apache-jmeter-'${REAL_REVISION}'_src.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz">apache-jmeter-r'${REAL_REVISION}'.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip">apache-jmeter-r'${REAL_REVISION}'.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz">apache-jmeter-r'${REAL_REVISION}'_src.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip">apache-jmeter-r'${REAL_REVISION}'_src.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip.sha">SHA</a></td>
 </tr>' >> index.html
 
 
@@ -69,7 +69,7 @@ REV=`echo $LINE | cut -d ' ' -f9`
 REAL_REVISION=`echo $REV | cut -d '-' -f2`
 DATE=`echo $LINE | cut -d ' ' -f6,7`
 # Now list all existing entries in reverse order
-if [ -r ${REV}/apache-jmeter-${REAL_REVISION}.zip ]
+if [ -r ${REV}/apache-jmeter-r${REAL_REVISION}.zip ]
 then
 echo '<tr>
 <!-- $LINE -->
