@@ -220,7 +220,7 @@ def main():
         state = hashlib.sha1(("%f-%s") % (time.time(), os.environ['REMOTE_ADDR'])).hexdigest()
         rurl = urllib.quote("%s/oauth.cgi?key=%s&state=%s" % (rootURL, redirect, state))
         if redirect == "apache":
-            redir = "https://oauth.apache.org/?state=%s&redirect_uri=%s" % (state, rurl)
+            redir = "https://oauth.apache.org/auth?state=%s&redirect_uri=%s" % (state, rurl)
             print("Status: 302 Found\r\nLocation: %s\r\n\r\n" % redir)
         elif redirect == "github":
             f = open("/x1/gitbox/matt/tokens/appid.txt", "r").read()
