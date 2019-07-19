@@ -42,24 +42,28 @@ class ssl::name::wildcard_apache_org (
       require => File[$sslrootdir],
       content => $sslcertcontents,
       owner   => $sslrootdirowner,
-      group   => $sslrootdirgroup;
+      group   => $sslrootdirgroup,
+      notify  => Service['apache2'];
     "${sslrootdir}/private/${sslkeyname}":
       ensure  => present,
       require => File[$sslrootdir],
       content => $sslkeycontents,
       owner   => $sslrootdirowner,
-      group   => $sslrootdirgroup;
+      group   => $sslrootdirgroup,
+      notify  => Service['apache2'];
     "${sslrootdir}/certs/${sslchainname}":
       ensure  => present,
       require => File[$sslrootdir],
       content => $sslchaincontent,
       owner   => $sslrootdirowner,
-      group   => $sslrootdirgroup;
+      group   => $sslrootdirgroup,
+      notify  => Service['apache2'];
     "${sslrootdir}/private/${sslcombinedname}":
       ensure  => present,
       require => File[$sslrootdir],
       content => $sslcombinedcontents,
       owner   => $sslrootdirowner,
-      group   => $sslrootdirgroup;
+      group   => $sslrootdirgroup,
+      notify  => Service['apache2'];
   }
 }
