@@ -24,6 +24,8 @@ Facter.add("ipaddress_primary") do
       Facter.value('ipaddress_eth1')
     elsif Facter.value('ipaddress_em1')
       Facter.value('ipaddress_em1')
+    elsif Facter.value('ipaddress_eno1')
+      Facter.value('ipaddress_eno1')
     else
       Facter.value('ipaddress')
     end
