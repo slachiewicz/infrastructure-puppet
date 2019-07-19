@@ -111,7 +111,7 @@ vhosts_asf::vhosts::vhosts:
       # spamassassin wiki redirect
       Redirect permanent /spamassassin https://cwiki.apache.org/confluence/display/SPAMASSASSIN
       # Redirs for Lucene and Solr
-      Redirect permanent /lucene-java -> https://cwiki.a.o/confluence/display/lucene
+      Redirect permanent /lucene-java -> https://cwiki.apache.org/confluence/display/lucene
       Redirect permanent /solr -> https://cwiki.apache.org/confluence/display/solr
       Redirect permanent /jakarta-lucene -> https://cwiki.apache.org/confluence/display/lucene
       Redirect permanent /velocity -> https://cwiki.apache.org/confluence/display/velocity
