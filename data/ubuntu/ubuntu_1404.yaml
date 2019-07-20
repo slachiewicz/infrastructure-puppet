@@ -433,7 +433,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1
+  - asf-build-jdk-9.0.4
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk10.0.1
@@ -614,7 +614,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-jdk9-ea-b179
   - asf-build-jdk9-b181
   - asf-build-jdk9-b181-unlimited-security
-  - asf-build-jdk9.0.1
+  - asf-build-jdk-9.0.4
   - asf-build-jdk10-ea+36
   - asf-build-jdk10-46
   - asf-build-jdk10.0.1

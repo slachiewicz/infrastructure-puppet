@@ -58,7 +58,7 @@ class buildbot_slave::buildbot (
     'ibm-java-i386-60',
     'ibm-java2-x86_64-50',
     'ibm-java-x86_64-80',
-    'jdk-9.0.1',
+    'jdk-9.0.4',
     'jdk-10-ea+36',
     'jdk-10_46',
     'jdk-10.0.1',
@@ -193,7 +193,7 @@ class buildbot_slave::buildbot (
   }
   file { '/home/buildslave/slave/tools/java/latest1.9':
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk-9.0.1',
+    target => '/usr/local/asfpackages/java/jdk-9.0.4',
   }
   file { '/home/buildslave/slave/tools/java/latest10':
     ensure => link,

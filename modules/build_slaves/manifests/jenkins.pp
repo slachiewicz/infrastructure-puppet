@@ -122,7 +122,7 @@ class build_slaves::jenkins (
     'ibm-java-x86_64-60',
     'ibm-java-x86_64-70',
     'ibm-java-x86_64-80',
-    'jdk-9.0.1',
+    'jdk-9.0.4',
     'jdk-10-ea+36',
     'jdk-10_46',
     'jdk-10.0.1',
@@ -584,7 +584,7 @@ class build_slaves::jenkins (
   }
   file { "/home/${build_slaves::username}/tools/java/latest1.9":
     ensure => link,
-    target => '/usr/local/asfpackages/java/jdk-9.0.1',
+    target => '/usr/local/asfpackages/java/jdk-9.0.4',
   }
   file { "/home/${build_slaves::username}/tools/java/latest10":
     ensure => link,
