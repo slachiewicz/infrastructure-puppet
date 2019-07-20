@@ -7,9 +7,9 @@
           "fields": {
               "moinwiki": {
                   "desc": "Moin wiki name to migrate from",
-                  "placeholder": "agila,apachecon,commons etc - [-_a-z0-9] only",
+                  "placeholder": "agila,apachecon,commons etc - [-_a-zA-Z0-9] only",
                   "type": "text",
-                  "filter": "^[-_a-z0-9]+$",
+                  "filter": "^[-_a-zA-Z0-9]+$",
                   "mandatory": true
               },
               "space": {
