@@ -209,7 +209,10 @@ elif 'repository' in data and 'name' in data['repository']:
                 s = smtplib.SMTP('localhost')
                 s.sendmail(msg['From'], msg['To'], msg.as_string())
             else:
-                asfid = pusher # Set to the pusher ID for internal recording in case of github bots
+                if '[bot]' in pusher:
+                    asfid = 'no-reply'
+                else:
+                    asfid = pusher # Set to the pusher ID for internal recording in case of github bots
 
         #######################################
         # Check that we haven't missed a push #
