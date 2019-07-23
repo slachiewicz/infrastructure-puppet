@@ -18,24 +18,13 @@ postfix::server::relayhost: ~
 postfix::server::transport_maps: 'hash:/etc/postfix/transport_maps'
 postfix::server::inet_protocols: 'ipv4'        
 
-# This is a part of the MM3 PoC testing. Do not disable!
-# If you need to remove this, remove all but the wildcard last line.
-# This should cause /etc/postfix/transport_maps to be created. 
-# The creation is done by using postfix_asf // create_resources.
+# use transport maps to selectively route domains or addresses
+# to different mailservers.
+
 postfix::dbfile:
   transport_maps:
     content: |
-      testing10@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-accept-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-archive@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-digest-owner@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-digest-return-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-owner@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-reject-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      testing10-return-default@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      localgnome@infra.apache.org smtp:[hermes-vm2.apache.org]:2025
-      infratest.apache.org    smtp:[hermes-vm2.apache.org]:2025
+      infratest.apache.org    smtp:[mailgw01-he-de.apache.org]:2025
       infra.apache.org        smtp:[207.244.88.153]:2025
       apache.org              smtp:[hermes.apache.org]:2025
       .apache.org             smtp:[hermes.apache.org]:2025      
