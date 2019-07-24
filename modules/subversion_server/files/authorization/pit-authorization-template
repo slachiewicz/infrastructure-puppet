@@ -400,7 +400,8 @@ infrastructure-root={ldap:cn=infrastructure-root,ou=groups,ou=services,dc=apache
 legal=
 member={ldap:cn=member,ou=groups,dc=apache,dc=org}
 pmc-chairs={ldap:cn=pmc-chairs,ou=groups,ou=services,dc=apache,dc=org}
-security={ldap:cn=security,ou=groups,dc=apache,dc=org}
+security={ldap:cn=security,ou=project,ou=groups,dc=apache,dc=org;attr=member}
+security-pmc={ldap:cn=security,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 svnadmins={ldap:cn=svnadmins,ou=auth,ou=groups,dc=apache,dc=org}
 trademarks={ldap:cn=trademarks,ou=auth,ou=groups,dc=apache,dc=org}
 tac-pmc={ldap:cn=tac,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
@@ -1098,6 +1099,7 @@ openejb-tck = r
 @zookeeper-pmc = rw
 
 [/security]
+# This is deliberately not security-pmc -- see INFRA-18315
 @security = rw
 @svnadmins = rw
 * =
