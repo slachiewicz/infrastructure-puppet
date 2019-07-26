@@ -11,6 +11,7 @@ rsync_asf::fslist:
 rsync_asf::excludelist:
   - proc
   - sys
+  - dev
 
 base::basepackages:
   - 'build-essential'
