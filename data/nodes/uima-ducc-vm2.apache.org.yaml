@@ -1,4 +1,16 @@
 ---
+  - rsync_asf
+
+
+rsync_asf::cron_hour: 20
+rsync_asf::cron_minute: 07
+
+rsync_asf::fslist:
+  - /
+
+rsync_asf::excludelist:
+  - proc
+  - sys
 
 base::basepackages:
   - 'build-essential'
