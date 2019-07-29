@@ -81,6 +81,12 @@ class mboxer (
       provider  => aliases,
       notify    => Exec['newaliases'],
       recipient => "|python3 ${install_base}/tools/archive.py --lid ea@apache.org private";
+    'pmc-chairs':
+      ensure    => present,
+      name      => 'pmc-chairs',
+      provider  => aliases,
+      notify    => Exec['newaliases'],
+      recipient => "|python3 ${install_base}/tools/archive.py --lid pmc-chairs@apache.org private";
     'president':
       ensure    => present,
       name      => 'president',
