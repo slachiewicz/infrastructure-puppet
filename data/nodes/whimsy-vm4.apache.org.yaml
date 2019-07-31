@@ -175,6 +175,12 @@ vhosts_whimsy::vhosts::vhosts:
       - /members/
       - /voter/
 
+    - name: ASF Infrastructure Team
+      group: cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org
+      attribute: member
+      locations:
+      - /infra/
+
     - name: ASF Secretarial Team
       group:
       - cn=asf-secretary,ou=groups,ou=services,dc=apache,dc=org
