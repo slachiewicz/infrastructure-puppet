@@ -28,10 +28,10 @@ cat <<EOF
 * = r
 
 [/release/META]
-henkp = rw
+humbedooh = rw
 
 [/release/zzz]
-henkp = rw
+humbedooh = rw
 
 [groups]
 svnadmins=$SVNADMINS
