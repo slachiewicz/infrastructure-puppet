@@ -46,7 +46,7 @@ class svnqavm_pvm_asf (
       user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
-      environment => 'SVN=/usr/local/svn-current/bin/svn';
+      environment => 'SVN=svn';
     # Log the revision of backport.pl in use.
     # (There's no log rotation since this will use about 2KB a year.)
     'backport-version-log':
@@ -54,21 +54,21 @@ class svnqavm_pvm_asf (
       user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
-      environment => 'SVNVERSION=/usr/local/svn-current/bin/svnversion';
+      environment => 'SVNVERSION=svnversion';
 
     'Update our Haxx-URL-to-Message-Id map':
       command     => 'cd ~/src/svn/site && ${SVN} up -q && tools/generate-message-id-map.py',
       user        => 'svnsvn',
       hour        => 4,
       minute      => 0,
-      environment => 'SVN=/usr/local/svn-current/bin/svn';
+      environment => 'SVN=svn';
 
     'Update our upcoming changes list':
       command     => 'cd ~/src/svn/latest && chronic ~/src/svn/site/tools/generate-upcoming-changes-log.sh',
       user        => 'svnsvn',
       hour        => 4,
       minute      => 15,
-      environment => 'SVN=/usr/local/svn-current/bin/svn';
+      environment => 'SVN=svn';
 
   }
 
