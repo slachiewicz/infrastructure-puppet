@@ -10,7 +10,7 @@ XARGS="xargs"
 SED="sed"
 TR="tr"
 
-projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' -e '/^tac$/d' | sort -u`
+projects=`$LDAPSEARCH -x -LLL -b $PBASE 'cn=*' cn | $SED -ne 's/^cn: //p' | $SED -e '/^incubator$/d' -e '/^tac$/d' -e '/^diversity$/d' -e '/^security$/d' | sort -u`
 
 # ensure names match in full by using delimiters at each end
 committers_may_release=":couchdb: :lucene: :commons: :abdera: :bookkeeper: :camel: :zookeeper: :trafficcontrol:"
