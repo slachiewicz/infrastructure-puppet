@@ -126,9 +126,10 @@ vhosts_asf::vhosts::vhosts:
       ProxyPassReverse / http://projects-vm2.apache.org/
       ProxyPreserveHost On
       
+      RewriteEngine on
+      RewriteRule ^.*$ - [E=WHIMSY_AUTH:%%{}{HTTP:Authorization}]
+      
       <LocationMatch "/wizard/.*\.py">
-          RewriteEngine on
-          RewriteRule ^.*$ - [E=WHIMSY_AUTH:%(HTTP:Authorization)]
           RequestHeader set X-Whimsy-Auth %%{}{WHIMSY_AUTH}e
       </LocationMatch>
 
