@@ -125,6 +125,12 @@ vhosts_asf::vhosts::vhosts:
       ProxyPass / http://projects-vm2.apache.org/
       ProxyPassReverse / http://projects-vm2.apache.org/
       ProxyPreserveHost On
+      
+      <LocationMatch "/wizard/.*\.py">
+          RewriteEngine on
+          RewriteRule ^.*$ - [E=WHIMSY_AUTH:%(HTTP:Authorization)]
+          RequestHeader set X-Whimsy-Auth %%{}{WHIMSY_AUTH}e
+      </LocationMatch>
 
       <Location />
         AuthLDAPUrl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
