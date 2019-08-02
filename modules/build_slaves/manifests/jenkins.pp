@@ -263,6 +263,10 @@ class build_slaves::jenkins (
     groups     => ['docker', $username],
   }
 
+  # remove this entry once complete
+  file { '/home/${build_slaves::username}/.mavenrc':
+    ensure => absent;
+
   file { "/home/${build_slaves::username}/env.sh":
     ensure => present,
     mode   => '0755',
