@@ -1511,6 +1511,9 @@ svn-site-role = rw
 [/openwebbeans]
 @openwebbeans = r
 
+[/openwebbeans/cms-site]
+@openwebbeans = rw
+
 [/parquet]
 @parquet = rw
 
