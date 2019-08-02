@@ -395,7 +395,6 @@ concom={ldap:cn=concom,ou=groups,dc=apache,dc=org}
 exec-officers={ldap:cn=exec-officers,ou=auth,ou=groups,dc=apache,dc=org}
 fundraising={ldap:cn=fundraising,ou=auth,ou=groups,dc=apache,dc=org}
 infrastructure={ldap:cn=infrastructure,ou=groups,ou=services,dc=apache,dc=org}
-infrastructure-interest={ldap:cn=infrastructure-interest,ou=groups,ou=services,dc=apache,dc=org}
 infrastructure-root={ldap:cn=infrastructure-root,ou=groups,ou=services,dc=apache,dc=org}
 legal=
 member={ldap:cn=member,ou=groups,dc=apache,dc=org}
@@ -581,14 +580,12 @@ buildbot = rw
 [/infrastructure]
 @infrastructure = rw
 @member = r
-@infrastructure-interest = r
 @svnadmins = rw
 # deny all access to everyone else.
 * =
 
 [/infrastructure/apmail]
 @infrastructure = rw
-@infrastructure-interest = rw
 clr = rw
 whimsysvn = r
 acrequser = r
@@ -610,10 +607,6 @@ moin-role = rw
 # allow apmail to update netqmail patched source
 [/infrastructure/netqmail-asf]
 apezmlm = rw
-
-[/infrastructure/bugzilla]
-@infrastructure-interest = rw
-@infrastructure = rw
 
 [/infrastructure/buildbot]
 @infrastructure = rw
@@ -705,7 +698,6 @@ svn = r
 
 [/infrastructure/trunk/docs]
 @infrastructure = rw
-@infrastructure-interest = rw
 @member = r
 @svnadmins = rw
 # deny all access to everyone else.
@@ -719,26 +711,14 @@ svn = r
 @infrastructure = rw
 svn = r
 
-[/infrastructure/trunk/machines]
-@infrastructure-interest = rw
-
-[/infrastructure/trunk/machines/root]
-# restore rule from /infrastructure
-@infrastructure-interest = r
-@infrastructure = rw
-
 [/infrastructure/trunk/machines/vms/svn-qavm2.apache.org]
 @subversion = rw
 
 [/infrastructure/trunk/machines/vms/whimsy-vm.apache.org]
 whimsysvn = r
 
-[/infrastructure/trunk/nagios]
-@infrastructure-interest = rw
-
 [/infrastructure/trunk/projects]
 @infrastructure = rw
-@infrastructure-interest = rw
 @committers  = rw
 * = r
 
@@ -749,7 +729,6 @@ whimsysvn = r
 # Historic, PHP version of modules.apache.org site.
 [/infrastructure/trunk/projects/modules.a.o]
 @infrastructure = rw
-@infrastructure-interest = rw
 @committers  = rw
 * = 
 
@@ -759,18 +738,13 @@ smtpd = r
 # Need below for auto-sync with self-serve
 apezmlm = rw
 
-[/infrastructure/trunk/roller]
-@infrastructure-interest = rw
-
 [/infrastructure/trunk/ssh_keys/people]
 @committers  = rw
 @infrastructure = rw
-@infrastructure-interest = rw
 @svnadmins = rw
 
 [/infrastructure/trunk/ssh_keys/services]
 @infrastructure = rw
-@infrastructure-interest = rw
 @svnadmins = rw
 * =
 
@@ -784,10 +758,6 @@ acrequser = r
 @exec-officers = rw
 @svnadmins = rw
 jim = rw
-
-[/infrastructure/vendor]
-@infrastructure-interest = rw
-@infrastructure = rw
 
 [/jaxrs-tck]
 @jcp = rw
