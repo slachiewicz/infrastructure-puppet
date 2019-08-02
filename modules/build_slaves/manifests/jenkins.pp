@@ -264,7 +264,7 @@ class build_slaves::jenkins (
   }
 
   # remove this entry once complete
-  file { '/home/${build_slaves::username}/.mavenrc':
+  file { "/home/${build_slaves::username}/.mavenrc":
     ensure => absent;
   }
 
