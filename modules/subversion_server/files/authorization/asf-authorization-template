@@ -405,7 +405,6 @@ comdev-pmc={reuse:pit-authorization:comdev-pmc}
 comdev={reuse:pit-authorization:comdev}
 concom={reuse:pit-authorization:concom}
 infrastructure={reuse:pit-authorization:infrastructure}
-infrastructure-interest={reuse:pit-authorization:infrastructure-interest}
 infrastructure-root={reuse:pit-authorization:infrastructure-root}
 member={reuse:pit-authorization:member}
 pmc-chairs={reuse:pit-authorization:pmc-chairs}
@@ -1116,9 +1115,6 @@ buildbot = rw
 @apsite = rw
 @infrastructure = rw
 * = r
-
-[/infrastructure/site-tools/trunk/projects]
-@infrastructure-interest = rw
 
 [/isis]
 @isis = r
