@@ -5,7 +5,7 @@
 # https://svn.apache.org/repos/infra/infrastructure/buildbot/aegis/buildmaster/master1/projects/jmeter.conf
 
 DATE_BIN=/bin/date
-TODAY=`$DATE_BIN +%Y-%m-%d`
+TODAY=$($DATE_BIN "+%Y-%m-%d")
 NIGHTLIES_DIR='/x1/buildmaster/master1/public_html/projects/jmeter/nightlies'
 
 # remove r* directories older than 30 days first.
@@ -34,8 +34,8 @@ cat << 'EOD' >> index.html
 EOD
 
 # Find all directories named r*; remove leading r; descending numeric sort; pick first and add back r prefix
-REV=`find . -mindepth 1 -maxdepth 1 -type d -name "r*" | sed -e 's!./r!!' | sort -gr | sed -ne '1s!^!r!p'`
-REAL_REVISION=`echo $REV | cut -d '-' -f2`
+REV=$(find . -mindepth 1 -maxdepth 1 -type d -name "r*" | sed -e 's!./r!!' | sort -gr | sed -ne '1s!^!r!p')
+REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
 
 # Show LATEST
 echo '
@@ -65,11 +65,11 @@ echo '
 #  The --full-time flag has been removed , we are on FreeBSD 10 now.
 ls -dlt r* | while read LINE
 do
-REV=`echo $LINE | cut -d ' ' -f9`
-REAL_REVISION=`echo $REV | cut -d '-' -f2`
-DATE=`echo $LINE | cut -d ' ' -f6,7`
+REV=$(echo "$LINE" | cut -d ' ' -f9)
+REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
+DATE=$(echo "$LINE" | cut -d ' ' -f6,7)
 # Now list all existing entries in reverse order
-if [ -r ${REV}/apache-jmeter-r${REAL_REVISION}.zip ]
+if [ -r "${REV}/apache-jmeter-${REAL_REVISION}.zip" ]
 then
 echo '<tr>
 <!-- $LINE -->
