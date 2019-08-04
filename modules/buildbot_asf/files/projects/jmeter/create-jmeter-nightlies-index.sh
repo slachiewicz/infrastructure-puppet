@@ -65,13 +65,13 @@ echo '
 #  The --full-time flag has been removed , we are on FreeBSD 10 now.
 ls -dlt r* | while read LINE
 do
-REV=$(echo "$LINE" | cut -d ' ' -f9)
-REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
-DATE=$(echo "$LINE" | cut -d ' ' -f6,7)
-# Now list all existing entries in reverse order
-if [ -r "${REV}/apache-jmeter-${REAL_REVISION}.zip" ]
-then
-echo '<tr>
+  REV=$(echo "$LINE" | cut -d ' ' -f9)
+  REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
+  DATE=$(echo "$LINE" | cut -d ' ' -f6,7)
+  # Now list all existing entries in reverse order
+  if [ -r "${REV}/apache-jmeter-${REAL_REVISION}.zip" ]
+  then
+    echo '<tr>
 <!-- $LINE -->
 <td>'$REV'</td>
 <td>'$DATE'</td>
@@ -88,7 +88,7 @@ echo '<tr>
 <td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.zip.md5">MD5</a></td>
 <td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.zip.sha">SHA</a></td>
 </tr>' >> index.html
-fi
+  fi
 done
 
 # Add the footer
