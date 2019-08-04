@@ -35,7 +35,7 @@ EOD
 
 # Find all directories named r*; remove leading r; descending numeric sort; pick first and add back r prefix
 REV=$(find . -mindepth 1 -maxdepth 1 -type d -name "r*" | sed -e 's!./r!!' | sort -gr | sed -ne '1s!^!r!p')
-REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
+REAL_REVISION=$(basename "$REV"/apache-jmeter-*_src.tgz | sed -e 's/^apache-jmeter-//;s/_src.tgz$//')
 
 # Show LATEST
 echo '
@@ -66,7 +66,7 @@ echo '
 ls -dlt r* | while read LINE
 do
   REV=$(echo "$LINE" | cut -d ' ' -f9)
-  REAL_REVISION=$(echo "$REV" | cut -d '-' -f2)
+  REAL_REVISION=$(basename "$REV"/apache-jmeter-*_src.tgz | sed -e 's/^apache-jmeter-//;s/_src.tgz$//')
   DATE=$(echo "$LINE" | cut -d ' ' -f6,7)
   # Now list all existing entries in reverse order
   if [ -r "${REV}/apache-jmeter-${REAL_REVISION}.zip" ]
