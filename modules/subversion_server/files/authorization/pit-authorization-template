@@ -1459,6 +1459,7 @@ buildbot = rw
 @apsite = rw
 @pmc-chairs = rw
 buildbot = rw
+kp = rw
 
 [/websites/production/xmlgraphics]
 @xmlgraphics = rw
