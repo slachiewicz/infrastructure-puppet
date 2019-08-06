@@ -4,6 +4,8 @@ classes:
   - apache::mod::authnz_ldap
   - apache::mod::status
   - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::proxy_http
   - elasticsearch
   - vhosts_asf::vhosts
   - vhosts_asf::modules
@@ -65,6 +67,7 @@ vhosts_asf::modules::modules:
     name: 'cgi'
   lua:
     name: 'lua'
+  
 
 vhosts_asf::vhosts::vhosts:
   projects:
@@ -114,6 +117,8 @@ vhosts_asf::vhosts::vhosts:
         Require ip 140.211.11.75 140.211.11.138 140.211.11.139 140.211.11.140 62.210.60.251
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
+      ProxyPass /quickjson http://localhost:8000/quickjson
+      
 
   helpwanted:
     vhost_name: '*'
