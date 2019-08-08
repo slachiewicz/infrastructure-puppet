@@ -145,7 +145,6 @@ vhosts_asf::vhosts::vhosts:
         RewriteEngine On
         RewriteRule .* - [E=PROXY_USER:%%{}{LA-U:REMOTE_USER}]
         RequestHeader set X-Authenticated-User %%{}{PROXY_USER}e
-        RequestHeader unset Authorization
       </Location>
 
   helpwanted:
