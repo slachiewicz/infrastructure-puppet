@@ -118,6 +118,7 @@ vhosts_asf::vhosts::vhosts:
       </Location>
       Alias /releases/ /var/www/reporter.apache.org/data/releases/
       ProxyPass /api/ http://localhost:8000/api/
+      ProxyPass /quickjson http://localhost:8000/api/overview
       
 
   helpwanted:
