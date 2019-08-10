@@ -89,6 +89,11 @@ cron:
     minute: [0]
     hour: '2'
     command: 'cd /root/ && python3 curator.py'
+  fingerprints:
+    user: 'root'
+    minute: [0]
+    hour: '*'
+    command: 'cd /var/www/ && python fps.py > /var/www/snappy/fingerprints.html'
 
 loggy::service_ensure: 'stopped'
 
