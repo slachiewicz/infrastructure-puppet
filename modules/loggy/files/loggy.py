@@ -39,6 +39,7 @@ import subprocess, collections, argparse, grp, pwd, shutil
 import ConfigParser
 import platform
 import syslog
+import base64
 
 syslog.openlog('loggy', logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)
 
@@ -65,12 +66,24 @@ tag_overrides = {
 
 paths = ['/var/log/', '/x1/log']
 
+def l2fp(txt):
+    key = base64.b64decode(txt.strip().split()[1].encode('ascii'))
+    fp_plain = hashlib.md5(key).hexdigest()
+    return ':'.join(a+b for a,b in zip(fp_plain[::2], fp_plain[1::2]))
 
 es = None
 hostname = socket.gethostname()
 if hostname.find(".apache.org") == -1:
     hostname = hostname + ".apache.org"
 syslog.syslog(syslog.LOG_INFO, "Using %s as node name" % hostname)
+
+
+FINGERPRINT = ''
+try:
+    FINGERPRINT = l2fp(open('/etc/ssh/ssh_host_rsa_key.pub', 'r').read())
+    syslog.syslog(syslog.LOG_INFO, "Identifying as %s" % FINGERPRINT)
+except:
+    pass
 
 inodes = {}
 inodes_path = {}
@@ -162,7 +175,6 @@ tuples = {
         'filepath', 'logtype', 'timestamp']
         )
 }
-
 
 
 class Daemonize:
@@ -365,6 +377,7 @@ class NodeThread(Thread):
             js['@timestamp'] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js['host'] = hostname
             js['@node'] = hostname
+            js['@fingerprint'] = FINGERPRINT
             # Rogue string sometimes, we don't want that!
             if 'bytes' in js:
                 try:
