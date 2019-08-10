@@ -69,7 +69,11 @@ paths = ['/var/log/', '/x1/log']
 def l2fp(txt):
     key = base64.b64decode(txt.strip().split()[1].encode('ascii'))
     fp_plain = hashlib.md5(key).hexdigest()
-    return ':'.join(a+b for a,b in zip(fp_plain[::2], fp_plain[1::2]))
+    fp_md5 = ':'.join(a+b for a,b in zip(fp_plain[::2], fp_plain[1::2]))
+    fp_plain_sha = hashlib.sha256(key).digest()
+    fp_sha256 = base64.b64encode(fp_plain_sha).rstrip('=')
+    return fp_md5, fp_sha256
+    
 
 es = None
 hostname = socket.gethostname()
@@ -79,8 +83,9 @@ syslog.syslog(syslog.LOG_INFO, "Using %s as node name" % hostname)
 
 
 FINGERPRINT = ''
+FINGERPRINT_SHA = ''
 try:
-    FINGERPRINT = l2fp(open('/etc/ssh/ssh_host_rsa_key.pub', 'r').read())
+    FINGERPRINT, FINGERPRINT_SHA = l2fp(open('/etc/ssh/ssh_host_rsa_key.pub', 'r').read())
     syslog.syslog(syslog.LOG_INFO, "Identifying as %s" % FINGERPRINT)
 except:
     pass
@@ -378,6 +383,7 @@ class NodeThread(Thread):
             js['host'] = hostname
             js['@node'] = hostname
             js['@fingerprint'] = FINGERPRINT
+            js['@fingerprint_sha'] = FINGERPRINT_SHA
             # Rogue string sometimes, we don't want that!
             if 'bytes' in js:
                 try:
