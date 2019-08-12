@@ -1503,13 +1503,10 @@ svn-site-role = rw
 @opennlp = rw
 
 [/openoffice]
+@openoffice = rw
+
+[/openoffice/(trunk|branches|tags)]
 * = r
-
-[/openoffice/site]
-@openoffice = rw
-
-[/openoffice/ooo-site]
-@openoffice = rw
 
 [/openoffice/pmc]
 * =
