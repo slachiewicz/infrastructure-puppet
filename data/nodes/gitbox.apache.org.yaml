@@ -103,6 +103,7 @@ vhosts_asf::modules::modules:
     name: 'lua'
 
 gitbox::custom_fragment_80: |
+      ServerAlias git-wip-us.apache.org
       <Directory /x1/git/htdocs>
        Require all granted
       </Directory>
