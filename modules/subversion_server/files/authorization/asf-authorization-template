@@ -1746,6 +1746,9 @@ spamassassin_role = rw
 svn-role = rw
 
 [/synapse]
+@synapse = r
+
+[/synapse/site]
 @synapse = rw
 
 [/syncope]
