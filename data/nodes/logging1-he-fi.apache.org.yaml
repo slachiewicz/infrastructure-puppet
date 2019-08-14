@@ -94,6 +94,11 @@ cron:
     minute: [0]
     hour: '*'
     command: 'cd /var/www/ && python fps.py > /var/www/snappy/fingerprints.html'
+  fingerprintsraw:
+    user: 'root'
+    minute: [5]
+    hour: '*'
+    command: 'cd /var/www/ && python fps.py raw > /var/www/snappy/fingerprints_raw.html'
 
 loggy::service_ensure: 'stopped'
 
