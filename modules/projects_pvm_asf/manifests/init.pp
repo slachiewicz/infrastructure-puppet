@@ -17,6 +17,26 @@ class projects_pvm_asf (
       owner  => 'www-data',
       group  => 'www-data',
       mode   => '0775';
+
+    '/usr/local/etc/tokens':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0700';
+
+    '/usr/local/etc/tokens/kibble.txt':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      content => hiera($kibble_token);
+      mode   => '0600';
+
+    '/usr/local/etc/tokens/jira.txt':
+      ensure => present,
+      owner  => 'www-data',
+      group  => 'www-data',
+      content => hiera($jira_token);
+      mode   => '0600';
   }
 
   cron {
