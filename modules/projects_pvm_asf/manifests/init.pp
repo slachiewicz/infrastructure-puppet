@@ -28,14 +28,14 @@ class projects_pvm_asf (
       ensure => present,
       owner  => 'www-data',
       group  => 'www-data',
-      content => hiera($kibble_token);
+      content => hiera($kibble_token),
       mode   => '0600';
 
     '/usr/local/etc/tokens/jira.txt':
       ensure => present,
       owner  => 'www-data',
       group  => 'www-data',
-      content => hiera($jira_token);
+      content => hiera($jira_token),
       mode   => '0600';
   }
 
