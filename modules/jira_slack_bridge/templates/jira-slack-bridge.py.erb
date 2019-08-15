@@ -13,6 +13,8 @@ import requests
 import slackclient
 import yaml
 import re
+import datetime
+import pytz
 
 CONFIG_FILE = "slackbridge.yaml"
 CONFIG = yaml.load(open(CONFIG_FILE))
@@ -79,6 +81,7 @@ def parseChange(entry, cid):
     # The rest are sugar that we don't need (yet), so break early.
     for item in entry['change']['items']:
         
+        # Check timestamp first...
         # Changing resolution
         if item.get('field') == 'resolution':
             if not item.get('fromString'): # If changing from no res to a res, assume closing as $X
@@ -166,20 +169,23 @@ def main():
                                 'issues': []
                             }
                         changesets = []
+                        now = datetime.datetime.now(pytz.utc)
                         for issue in js['issues']:
     
                             for entry in issue['changelog']['histories']:
                                 chgid = int(entry['id'])
+                                chgwhen = datetime.datetime.strptime(entry['created'], '%Y-%m-%dT%H:%M:%S.%f%z')
+                                if (now - chgwhen).seconds < 300:
     
-                                # New changelog entry and not first run?
-                                if not firstRun and chgid > last_changeid.get(k, 0):
-                                    changesets.append({
-                                        'key': issue['key'],
-                                        'summary': issue['fields']['summary'],
-                                        'change': entry
-                                    })
-                                if last_changeid.get(k, 0) < chgid:
-                                    last_changeid[k] = chgid
+                                    # New changelog entry and not first run?
+                                    if not firstRun and chgid > last_changeid.get(k, 0):
+                                        changesets.append({
+                                            'key': issue['key'],
+                                            'summary': issue['fields']['summary'],
+                                            'change': entry
+                                        })
+                                    if last_changeid.get(k, 0) < chgid:
+                                        last_changeid[k] = chgid
     
                             # Newly created issue?
                             if len(issue['changelog']['histories']) == 0 and issue['key'] > last_ticket.get(k, 'A-000'):
