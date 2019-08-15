@@ -9,8 +9,7 @@ TODAY=$($DATE_BIN "+%Y-%m-%d")
 NIGHTLIES_DIR='/x1/buildmaster/master1/public_html/projects/jmeter/nightlies'
 
 # remove r* directories older than 30 days first.
-if [ -d "$NIGHTLIES_DIR" ];then
-  cd "$NIGHTLIES_DIR" || exit 1;
+if cd "$NIGHTLIES_DIR";then
   find . -mindepth 1 -maxdepth 1 -type d -name "r*" -mtime +29 -exec rm -rf {} \; 
 else
   echo "Nightlies directory doesnt exist, exiting script."
