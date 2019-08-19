@@ -10,6 +10,14 @@ class jira_slack_bridge (
   $jirauser       = '',
   $jirapass       = ''
 ) {
+    require python
+    if !defined(Python::Pip['slackclient']) {
+      python::pip {
+        'slackclient' :
+          provider => 'pip3',
+          ensure   => present;
+      }
+    }
     # dir and py script
     file {
       '/usr/local/etc/jira-slack-bridge':
