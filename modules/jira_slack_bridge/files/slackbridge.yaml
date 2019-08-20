@@ -3,7 +3,7 @@ subscriptions:
         channel: "#cassandra-dev"
         jira: CASSANDRA
     infra:
-        channel: "#asfinfra"
+        channel: "#asfjira"
         jira: INFRA
     guacamole:
         channel: "#guacamole"
