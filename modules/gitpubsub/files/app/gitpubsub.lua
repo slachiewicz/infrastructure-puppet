@@ -294,13 +294,15 @@ end
 
 --[[ prune: prunes the latest JSON history, dropping outdated data ]]--
 function prune()
+    local xhistory = {}
     local now = os.time()
-    local timeout = now - (60*60*48) -- keep the latest 48 hours of history
+    local timeout = now - (60*60*72) -- keep the latest 72 hours of history
     for k, entry in pairs(history) do
-        if entry.timestamp < timeout then
-            history[k] = nil
+        if entry.timestamp >= timeout then
+            table.insert(xhistory, entry)
         end
     end
+    history = xhistory
 end
 
 -- Wrap accept and read as coroutines
@@ -340,7 +342,9 @@ while true do
         latestPing = TIME
         ping(TIME)
         timeout()
-        prune()
+        if (TIME - latestPing) >= 60 then
+            prune()
+        end
     end
     for k, callback in pairs(callbacks) do
         if not coroutine.resume(callback) then
