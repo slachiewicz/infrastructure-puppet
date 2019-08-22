@@ -27,6 +27,7 @@ end
 --[[ Miscellaneous variables used throughout the process ]]--
 local latestGit = 0 -- timestamp for latest git update
 local latestPing = 0 -- timestamp for latest ping
+local latestPrune = 0 -- timestamp for latest ping
 local X = 0 -- number of connections server so far, used to keep track of open sockets
 local subscribers = {} -- socket placeholder for connections we are broadcasting to
 local presubscribers = {} -- socket placeholder for connections being set up
@@ -342,8 +343,9 @@ while true do
         latestPing = TIME
         ping(TIME)
         timeout()
-        if (TIME - latestPing) >= 60 then
+        if (TIME - latestPrune) >= 60 then
             prune()
+            latestPrune = TIME
         end
     end
     for k, callback in pairs(callbacks) do
