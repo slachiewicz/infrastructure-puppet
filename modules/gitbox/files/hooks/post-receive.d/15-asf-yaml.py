@@ -14,7 +14,10 @@ import asfgit.asfyaml
 DEFAULT_CONTACT = 'team@infra.apache.org' # Set to none to go to default project ML
 
 def has_feature(name):
-    return callable(getattr(asfgit.asfyaml,name))
+    try:
+        return callable(getattr(asfgit.asfyaml,name))
+    except:
+        return False
 
 def get_yaml():
     committer = cfg.committer
