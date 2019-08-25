@@ -91,7 +91,7 @@ logrotate::rule:
     ensure: 'present'
     path: '/x1/jenkins/tools/tomcat/current/logs/catalina.out'
     copytruncate: true
-    compress: false
+    compress: true
     ifempty: true
     rotate: 7
     missingok: true
