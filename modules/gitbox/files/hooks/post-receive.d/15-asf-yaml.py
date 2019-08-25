@@ -1,6 +1,10 @@
 #!/usr/bin/env python
-
+import os
 import sys
+if not os.environ.get("ASFGIT_ADMIN"):
+    print "Invalid server configuration."
+    exit(1)
+sys.path.append(os.environ["ASFGIT_ADMIN"])
 import yaml
 import subprocess
 import asfpy.messaging
