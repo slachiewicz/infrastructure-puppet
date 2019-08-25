@@ -48,7 +48,7 @@ def get_yaml():
         try:
             for k, v in config.iteritems():
                 if not has_feature(k):
-                    raise Exception("Found unknown feature entry '%s' in .asf.yaml!\nPlease fix this error ASAP.")
+                    raise Exception("Found unknown feature entry '%s' in .asf.yaml!\nPlease fix this error ASAP." % k)
         except Exception as e:
             msg = str(e)
             subject = "Failed to parse .asf.yaml in %s.git!" % cfg.repo_name
