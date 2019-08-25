@@ -45,20 +45,24 @@ def get_yaml():
     if config:
         
         # Validate
-        try:
-            for k, v in config.iteritems():
-                if not has_feature(k):
-                    raise Exception("Found unknown feature entry '%s' in .asf.yaml!\nPlease fix this error ASAP." % k)
-        except Exception as e:
-            msg = str(e)
-            subject = "Failed to parse .asf.yaml in %s.git!" % cfg.repo_name
-            asfpy.messaging.mail(recipients = [blamemail, main_contact], subject = subject, message = msg)
+        errors = ""
+        for k, v in config.iteritems():
+            if not has_feature(k):
+                errors += "Found unknown feature entry '%s' in .asf.yaml!\n" % k
+        if errors:
+            subject = "Failed to parse .asf.yaml in %s!" % cfg.repo_name
+            asfpy.messaging.mail(recipients = [blamemail, main_contact], subject = subject, message = errors)
             return
         
         # Run parts
         for k, v in config.iteritems():
             func = getattr(asfgit.asfyaml,k)
-            func(cfg, v)
+            try:
+                func(cfg, v)
+            except Exception as e:
+                msg = "An error occurred while running %s feature in .asf.yaml!:\n%s" % e
+                subject = "Error while running %s feature from .asf.yaml in %s!" % (k, cfg.repo_name)
+                asfpy.messaging.mail(recipients = [blamemail, main_contact], subject = subject, message = msg)
 
 if __name__ == '__main__':        
     get_yaml()
