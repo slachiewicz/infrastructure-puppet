@@ -16,7 +16,7 @@ DEFAULT_CONTACT = 'team@infra.apache.org' # Set to none to go to default project
 def has_feature(name):
     try:
         return callable(getattr(asfgit.asfyaml,name))
-    except:
+    except KeyError:
         return False
 
 def get_yaml():
