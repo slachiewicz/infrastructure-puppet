@@ -24,12 +24,12 @@ def get_yaml():
     try:
         config = yaml.safe_load(ydata)
     except yaml.YAMLError as e:
-        aspy.messaging.mail(recipients = [blamemail, 'team@infra.apache.org'], subject = "Failed to parse .asf.yaml in %s!" % cfg.repo_name, message = str(e))
+        asfpy.messaging.mail(recipients = [blamemail, 'team@infra.apache.org'], subject = "Failed to parse .asf.yaml in %s!" % cfg.repo_name, message = str(e))
         return
     
     if config:
         msg = "Found changes pushed by %s:\n\n%s" % (committer, ydata)
-        aspy.messaging.mail(recipient = 'team@infra.apache.org', subject = "Found .asf.yaml in %s (%s)" % (cfg.repo_name, refname), message = msg)
+        asfpy.messaging.mail(recipient = 'team@infra.apache.org', subject = "Found .asf.yaml in %s (%s)" % (cfg.repo_name, refname), message = msg)
 
 if __name__ == '__main__':        
     get_yaml()
