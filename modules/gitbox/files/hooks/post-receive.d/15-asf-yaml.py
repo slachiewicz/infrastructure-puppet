@@ -15,7 +15,7 @@ DEFAULT_CONTACT = 'team@infra.apache.org' # Set to none to go to default project
 
 def has_feature(name):
     try:
-        return callable(getattr(asfgit.asfyaml,name))
+        return callable(getattr(asfgit.asfyaml, name))
     except AttributeError:
         return False
 
@@ -56,7 +56,7 @@ def get_yaml():
         
         # Run parts
         for k, v in config.iteritems():
-            func = getattr(asfgit.asfyaml,k)
+            func = getattr(asfgit.asfyaml, k)
             try:
                 func(cfg, v)
             except Exception as e:
