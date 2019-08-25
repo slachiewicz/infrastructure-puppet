@@ -18,7 +18,7 @@ def get_yaml():
     line = sys.stdin.readline().strip()
     if not line:
         return
-    [oldrev, newrev, refname] = line.split(None, 2)
+    [oldrev, newrev, refname] = line.split()
     try:
         ydata = subprocess.check_output(("/usr/bin/git", "show", "%s:.asf.yaml" % refname))
     except:
