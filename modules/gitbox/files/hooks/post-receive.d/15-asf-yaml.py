@@ -20,7 +20,8 @@ def get_yaml():
         return
     [oldrev, newrev, refname] = line.split()
     try:
-        ydata = subprocess.check_output(("/usr/bin/git", "show", "%s:.asf.yaml" % refname))
+        FNULL = open(os.devnull, 'w')
+        ydata = subprocess.check_output(("/usr/bin/git", "show", "%s:.asf.yaml" % refname), stderr = FNULL)
     except:
         ydata = ""
     if not ydata:
