@@ -2,8 +2,8 @@
 import os
 import sys
 if not os.environ.get("ASFGIT_ADMIN"):
-    print "Invalid server configuration."
-    exit(1)
+    print("Invalid server configuration.")
+    sys.exit(1)
 sys.path.append(os.environ["ASFGIT_ADMIN"])
 import yaml
 import subprocess
@@ -15,7 +15,7 @@ def get_yaml():
     blamemail = cfg.remote_user
     
     # We just need the first line, as that has the branch affected:
-    line = sys.stdin.readline()
+    line = sys.stdin.readline().strip()
     if not line:
         return
     [oldrev, newrev, refname] = line.split(None, 2)
