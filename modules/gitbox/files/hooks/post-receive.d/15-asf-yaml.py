@@ -46,7 +46,7 @@ def get_yaml():
         
         # Validate
         errors = ""
-        for k, v in config.iteritems():
+        for k in config:
             if not has_feature(k):
                 errors += "Found unknown feature entry '%s' in .asf.yaml!\n" % k
         if errors:
