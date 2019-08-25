@@ -12,7 +12,7 @@ import asfgit.cfg as cfg
 
 def get_yaml():
     committer = cfg.committer
-    blamemail = cfg.remote_user
+    blamemail = "%s@apache.org" % committer
     
     # We just need the first line, as that has the branch affected:
     line = sys.stdin.readline().strip()
