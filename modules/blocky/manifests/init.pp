@@ -44,10 +44,10 @@ class blocky (
 
   cron {
     'restart_blocky':
-      ensure  => absent, 
+      ensure  => present, 
       user    => root,
       command => '/usr/sbin/service blocky restart',
-      minute  => '5';
+      minute  => fqdn_rand(59); # random minute in the hour
     }
     
   file {
