@@ -192,7 +192,7 @@ gitbox::custom_fragment_443: |
                   pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
                   git-(upload|receive)-pack))$" \
           /usr/lib/git-core/git-http-backend/$2
-      AliasMatch /repos/([^/]+) /usr/lib/cgi-bin/gitweb.cgi
+      AliasMatch /repos/([^/<>]+) /usr/lib/cgi-bin/gitweb.cgi
       RewriteRule ^/repos/([^/]+)/$ /repos/$1 [R]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?$ /repos/$1?p=$2.git [R]
       RewriteRule ^/repos/([^/]+)/([^/]+?)(?:\.git)?/commit/(.*)$ /repos/$1?p=$2.git;a=commit;h=$3 [R,NE]
