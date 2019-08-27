@@ -56,6 +56,9 @@ def get_yaml():
         
         # Run parts
         for k, v in config.iteritems():
+            if type(v) is not dict:
+                v = {}
+            v['refname'] = refname
             func = getattr(asfgit.asfyaml, k)
             try:
                 func(cfg, v)
