@@ -41,18 +41,18 @@ echo '
 <tr style="background-color:#F5F5AE;">
 <td>LATEST ('$REV')</td>
 <td>'$TODAY'</td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz">apache-jmeter-r'${REAL_REVISION}'.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip">apache-jmeter-r'${REAL_REVISION}'.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'.zip.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz">apache-jmeter-r'${REAL_REVISION}'_src.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip">apache-jmeter-r'${REAL_REVISION}'_src.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-r'${REAL_REVISION}'_src.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz">apache-jmeter-'${REAL_REVISION}'.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip">apache-jmeter-'${REAL_REVISION}'.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz">apache-jmeter-'${REAL_REVISION}'_src.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip">apache-jmeter-'${REAL_REVISION}'_src.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.sha">SHA</a></td>
 </tr>' >> index.html
 
 
@@ -74,18 +74,18 @@ do
 <!-- $LINE -->
 <td>'$REV'</td>
 <td>'$DATE'</td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.tgz">apache-jmeter-'${REAL_REVISION}'.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.zip">apache-jmeter-'${REAL_REVISION}'.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'.zip.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.tgz">apache-jmeter-'${REAL_REVISION}'_src.tgz</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.tgz.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.tgz.sha">SHA</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.zip">apache-jmeter-'${REAL_REVISION}'_src.zip</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.zip.md5">MD5</a></td>
-<td><a href="'$REV'/apache-jmeter-'${REAL_REVSION}'_src.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz">apache-jmeter-'${REAL_REVISION}'.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip">apache-jmeter-'${REAL_REVISION}'.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'.zip.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz">apache-jmeter-'${REAL_REVISION}'_src.tgz</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.tgz.sha">SHA</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip">apache-jmeter-'${REAL_REVISION}'_src.zip</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.md5">MD5</a></td>
+<td><a href="'$REV'/apache-jmeter-'${REAL_REVISION}'_src.zip.sha">SHA</a></td>
 </tr>' >> index.html
   fi
 done
