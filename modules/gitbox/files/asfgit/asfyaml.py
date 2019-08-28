@@ -22,7 +22,12 @@ def staging(cfg, yml):
     pname = m.group(1)
     
     # Get branch
-    ref = yml.get('refname', 'master')
+    ref = yml.get('refname', 'master').replace('refs/heads/', '')
+    
+    # If whoami specified, ignore this payload if branch does not match
+    whoami = yml.get('whoami')
+    if whoami and whoami != ref:
+        return
     
     # Get profile from .asf.yaml, if present
     profile = yml.get('profile', '')
