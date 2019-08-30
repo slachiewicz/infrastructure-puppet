@@ -266,8 +266,11 @@ def parseGitCommit(commit):
                 if ':' in trueRepo:
                     trueRepo, branchNeeded = trueRepo.split(':', 1)
                 if project == trueRepo and branch == branchNeeded:
-                    logging.info("Adding %s (%s) to the update queue" % (path, repo))
-                    pending[repo] = path
+                    if commit.get('autopublish', False) == True:
+                        logging.info("Repository %s has autopublish via .asf.yaml, ignoring payload..." % repo)
+                    else:
+                        logging.info("Adding %s (%s) to the update queue" % (path, repo))
+                        pending[repo] = path
                 
 
             
