@@ -184,6 +184,9 @@ gitbox::custom_fragment_443: |
       AliasMatch /static/([^/]+) /usr/share/gitweb/static/$1
       AliasMatch ^/repos/(asf|svn)/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /x1/repos/$1/$2
       AliasMatch ^/repos/(asf|svn)/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /x1/repos/$1/$2
+      # Block script kiddies
+      RewriteCond %%{}{QUERY_STRING} (<|>|%3C|%3E)
+      RewriteRule .* - [F,L,END]
       ScriptAliasMatch \
           "(?x)^/repos/([^/]+)/(.*/(HEAD | \
               info/refs | \
