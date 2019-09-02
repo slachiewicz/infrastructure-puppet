@@ -7,15 +7,17 @@ class staged (
   $username       = 'www-data',
   $group          = 'www-data'
 ) {
-    package { 
-      'pyyaml':
-        ensure   => installed,
-        name     => 'pyyaml',
-        provider => 'pip3';
-      'asfpy':
-        ensure   => installed,
-        name     => 'asfpy',
-        provider => 'pip3';
+    exec { "pip3_asfpy":
+      command => "pip3 install asfpy",
+      unless => "pip3 list | grep asfpy",
+      path => '/bin:/usr/bin',
+      require => Package['python3-pip']
+    }
+    exec { "pip3_pyyaml":
+      command => "pip3 install pyyaml",
+      unless => "pip3 list | grep pyyaml",
+      path => '/bin:/usr/bin',
+      require => Package['python3-pip']
     }
     # dir and py script
     file {
