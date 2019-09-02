@@ -63,7 +63,7 @@ def get_yaml():
             try:
                 func(cfg, v)
             except Exception as e:
-                msg = "An error occurred while running %s feature in .asf.yaml!:\n%s" % e
+                msg = "An error occurred while running %s feature in .asf.yaml!:\n%s" % (k, e)
                 subject = "Error while running %s feature from .asf.yaml in %s!" % (k, cfg.repo_name)
                 asfpy.messaging.mail(recipients = [blamemail, main_contact], subject = subject, message = msg)
 
