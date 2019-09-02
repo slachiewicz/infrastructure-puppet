@@ -36,7 +36,7 @@ def deploy_site(deploydir, source, branch, committer):
     if deploydir == 'www.apache.org':
         syslog.syslog(syslog.LOG_WARN, "Not going to touch www.a.o, nope!!" % deploydir)
         return
-    if not re.match(r"^[-a-z0-9]+$", deploydir):
+    if not re.match(r"^[-a-z0-9]+$", deploydir.replace('.apache.org', '')):
         syslog.syslog(syslog.LOG_WARN, "Invalid deployment dir, %s!" % deploydir)
         return
     if not source.startswith('https://gitbox.apache.org/repos/asf/'):
