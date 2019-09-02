@@ -20,6 +20,10 @@ def pelican(cfg, yml):
 def github(cfg, yml):
     """ GitHub settings updated. Can set up description, web site and topics """
     # Test if we need to process this
+    ref = yml.get('refname', 'master').replace('refs/heads/', '')
+    if ref not in ['master', 'asf-site']:
+        print("Saw GitHub meta-data in .asf.yaml, but not master or asf-site, not updating...")
+        return
     process = True
     ymlfile = '/tmp/ghsettings.%s.yml' % cfg.repo_name
     try:
