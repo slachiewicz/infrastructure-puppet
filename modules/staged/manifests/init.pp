@@ -7,6 +7,7 @@ class staged (
   $username       = 'www-data',
   $group          = 'www-data'
 ) {
+    package { 'python3-pip': ensure => installed }
     exec { "pip3_asfpy":
       command => "pip3 install asfpy",
       unless => "pip3 list | grep asfpy",
