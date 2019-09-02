@@ -3,7 +3,7 @@ import json
 import asfgit.log
 import asfgit.git
 import re
-import github
+import github as pygithub
 import os
 import yaml
 
@@ -38,7 +38,7 @@ def github(cfg, yml):
     if process:
         print("GitHub meta-data changed, updating...")
         GH_TOKEN = open('/x1/gitbox/matt/tools/asfyaml.txt').read().strip()
-        GH = github.Github(GH_TOKEN)
+        GH = pygithub.Github(GH_TOKEN)
         repo = GH.get_repo('apache/%s' % cfg.repo_name)
         # If repo is on github, update accordingly
         if repo:
