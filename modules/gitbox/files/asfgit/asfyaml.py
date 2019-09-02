@@ -3,6 +3,9 @@ import json
 import asfgit.log
 import asfgit.git
 import re
+import github
+import os
+import yaml
 
 # LDAP to CNAME mappings for some projects
 WSMAP = {
@@ -15,7 +18,40 @@ def pelican(cfg, yml):
     pass
 
 def github(cfg, yml):
-    pass
+    """ GitHub settings updated. Can set up description, web site and topics """
+    # Test if we need to process this
+    process = True
+    ymlfile = '/tmp/ghsettings.%s.yml' % cfg.repo_name
+    try:
+        if os.path.exists(ymlfile):
+            oldyml = yaml.safe_load(open(ymlfile).read())
+            if cmp(oldyml, yml) == 0:
+                process = False
+    except yaml.YAMLError as e: # Failed to parse old yaml? bah.
+        pass
+    
+    # Update items
+    if process:
+        print("GitHub meta-data changed, updating...")
+        GH_TOKEN = open('/x1/gitbox/matt/tools/asfyaml.txt').read().strip()
+        GH = github.Github(GH_TOKEN)
+        repo = GH.get_repo('apache/%s' % cfg.repo_name)
+        # If repo is on github, update accordingly
+        if repo:
+            desc = yml.get('description')
+            topics = yml.get('labels')
+            homepage = yml.get('homepage')
+            if desc:
+                repo.edit(description=desc)
+            if homepage:
+                repo.edit(description=homepage)
+            if topics and type(topics) is list:
+                repo.replace_topics(topics)
+            print("GitHub repository meta-data updated!")
+            
+            # Save cached version for late checks
+            with open(ymlfile, "w") as f:
+                f.write(yaml.dump(yml, default_flow_style=False))
 
 def staging(cfg, yml):
     """ Staging for websites. Sample entry .asf.yaml entry:
