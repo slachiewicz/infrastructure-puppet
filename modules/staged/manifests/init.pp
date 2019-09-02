@@ -11,14 +11,14 @@ class staged (
     if !defined(Python::Pip['pyyaml']) {
       python::pip {
         'pyyaml' :
-          pip_provider => 'pip3',
+          provider => 'pip3',
           ensure       => present;
       }
     }
     if !defined(Python::Pip['asfpy']) {
       python::pip {
         'asfpy' :
-          pip_provider => 'pip3',
+          provider => 'pip3',
           ensure       => present;
       }
     }
