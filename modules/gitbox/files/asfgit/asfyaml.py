@@ -44,7 +44,7 @@ def github(cfg, yml):
             if desc:
                 repo.edit(description=desc)
             if homepage:
-                repo.edit(description=homepage)
+                repo.edit(homepage=homepage)
             if topics and type(topics) is list:
                 repo.replace_topics(topics)
             print("GitHub repository meta-data updated!")
