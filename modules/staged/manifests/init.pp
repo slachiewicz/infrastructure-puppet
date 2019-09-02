@@ -7,20 +7,15 @@ class staged (
   $username       = 'www-data',
   $group          = 'www-data'
 ) {
-    require python
-    if !defined(Python::Pip['pyyaml']) {
-      python::pip {
-        'pyyaml' :
-          provider => 'pip3',
-          ensure       => present;
-      }
-    }
-    if !defined(Python::Pip['asfpy']) {
-      python::pip {
-        'asfpy' :
-          provider => 'pip3',
-          ensure       => present;
-      }
+    package { 
+      'pyyaml':
+        ensure   => installed,
+        name     => 'pyyaml',
+        provider => 'pip3';
+      'asfpy':
+        ensure   => installed,
+        name     => 'asfpy',
+        provider => 'pip3';
     }
     # dir and py script
     file {
