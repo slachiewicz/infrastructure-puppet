@@ -17,9 +17,9 @@ buildbot_slave::required_packages:
 ruby_version: '2.3.1'
 
 rvm::system_rubies:
-  "ruby-%{hiera('ruby_version')}": {}
+  "ruby-%{hiera('ruby_version')}":
     default_use: true
-  "ruby-2.6.3"
+  "ruby-2.6.3": {}
 
 rvm::system_users:
   - buildslave
