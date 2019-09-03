@@ -6,7 +6,7 @@ class gitbox (
   $custom_fragment_443 = '',
   $packages            = ['gitweb', 'libnet-github-perl',
                           'libnet-ldap-perl', 'swaks',
-                          'python-ldap', 'python-twisted',
+                          'python-ldap', 'python-pip', 'python-twisted',
                           'highlight'],
 
 # override below in eyaml
@@ -19,6 +19,25 @@ $pbcsPwd  = ''
   package {
     $packages:
       ensure => installed,
+  }
+  
+  exec { "pip_asfpy":
+    command => "pip install asfpy",
+    unless => "pip list | grep asfpy",
+    path => '/bin:/usr/bin',
+    require => Package['python-pip']
+  }
+  exec { "pip_pyyaml":
+    command => "pip install pyyaml",
+    unless => "pip list | grep pyyaml",
+    path => '/bin:/usr/bin',
+    require => Package['python-pip']
+  }
+  exec { "pip_pygithub":
+    command => "pip install pygithub",
+    unless => "pip list | grep pygithub",
+    path => '/bin:/usr/bin',
+    require => Package['python-pip']
   }
 
   file { '/x1':
