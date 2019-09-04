@@ -32,6 +32,7 @@ classes:
   - ssl::name::wildcard_incubator_apache_org
   - ssl::name::wildcard_openoffice_org
   - svnwcsub
+  - staged
   - tlp_vhosts::compat
   - vhosts_asf::custom_config
   - vhosts_asf::modules
