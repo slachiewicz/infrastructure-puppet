@@ -122,7 +122,7 @@ vhosts_asf::vhosts::vhosts:
 
   crowd:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 80
     docroot: '/var/www/html'
     servername: 'crowd.apache.org'
@@ -134,7 +134,7 @@ vhosts_asf::vhosts::vhosts:
 
   crowd-ssl:
     vhost_name: '*'
-    ensure: 'present'
+    ensure: 'absent'
     port: 443
     ssl: true
     docroot: '/var/www/html'
