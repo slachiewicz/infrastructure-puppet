@@ -11,7 +11,8 @@ import asfpy.messaging
 import asfgit.cfg as cfg
 import asfgit.asfyaml
 
-DEFAULT_CONTACT = 'team@infra.apache.org' # Set to none to go to default project ML
+#DEFAULT_CONTACT = 'team@infra.apache.org'
+DEFAULT_CONTACT = None # Set to none to go to default project ML
 
 def has_feature(name):
     try:
