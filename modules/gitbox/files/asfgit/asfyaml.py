@@ -49,14 +49,10 @@ def github(cfg, yml):
         if homepage:
             repo.edit(homepage=homepage)
         if topics and type(topics) is list:
-            canset = True
             for topic in topics:
                 if not re.match(r"^[-a-z0-9]{1,35}$", topic):
-                    print(".asf.yaml: Invalid GitHub label '%s' - must be lowercase alphanumerical and <= 35 characters!" % topic)
-                    canset = False
-                    break
-            if canset:
-                repo.replace_topics(topics)
+                    raise Exception(".asf.yaml: Invalid GitHub label '%s' - must be lowercase alphanumerical and <= 35 characters!" % topic)
+            repo.replace_topics(topics)
         print("GitHub repository meta-data updated!")
 
         # Save cached version for late checks
