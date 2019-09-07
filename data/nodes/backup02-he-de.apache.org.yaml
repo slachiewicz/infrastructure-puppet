@@ -9,6 +9,7 @@ classes:
   - backuppc::server
   - letsencrypt
   - postfix::server
+  - vhosts_asf::vhosts
 
 backuppc::client::manage_rsync: false
 backuppc::client::manage_sudo: false
@@ -36,7 +37,7 @@ apache::mpm_module:         'prefork'
 apache::serveradmin:        'root@apache.org'
 
 apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
-apache::vhost:
+vhosts_asf::vhosts::vhosts:
   nossl:
     servername: 'backup02-he-de.apache.org'
     port: 80
