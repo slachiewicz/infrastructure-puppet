@@ -79,8 +79,9 @@ vhosts_asf::vhosts::vhosts:
           extensions:
             - '.cgi'
 
+backuppc::client::ping_max_msec: '200'
+
 backuppc::server::apache_configuration: false
-backuppc::server::ping_max_msec: '200'
 backuppc::server::email_from_user_name: 'BackupPC <cml@apache.org>'
 backuppc::server::email_admin_user_name: 'cml@apache.org'
 
