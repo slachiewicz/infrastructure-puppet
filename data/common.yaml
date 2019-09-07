@@ -3,6 +3,7 @@ classes:
   - asf999::create_user
   - base
   - base::snmp::createv3users
+  - bpc_client_asf
   - customfact
   - ldapclient
   - ntp
@@ -14,6 +15,21 @@ classes:
   - timezone
   - ulimit_asf
   - update_ca
+
+backuppc::client::manage_rsync: false
+backuppc::client::manage_sudo: false
+
+backuppc::client::config_name: "%{::hostname}"
+backuppc::client::backuppc_hostname: 'backup02-he-de.apache.org'
+backuppc::client::backup_files_exclude:
+  - /proc
+  - /sys
+  - /dev
+backuppc::client::backup_files_only:
+  - /home
+  - /usr
+  - /var
+  - /x1
 
 classes_windows:
   - asf999_windows::create_user
