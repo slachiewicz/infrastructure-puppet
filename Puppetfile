@@ -16,7 +16,8 @@ mod 'awscli',
   :git => 'https://github.com/clambertus/puppet-awscli'
 
 mod 'backuppc',
-  :git => 'https://github.com/apache/puppet-backuppc'
+  :git => 'https://github.com/apache/puppet-backuppc',
+  :tag => 'v0.2.0'
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',
