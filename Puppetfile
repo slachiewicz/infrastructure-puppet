@@ -15,6 +15,8 @@ mod 'apt',
 mod 'awscli',
   :git => 'https://github.com/clambertus/puppet-awscli'
 
+mod 'backuppc',
+  :git => 'https://github.com/apache/puppet-backuppc'
 
 mod 'concat',
   :git => 'https://github.com/puppetlabs/puppetlabs-concat',

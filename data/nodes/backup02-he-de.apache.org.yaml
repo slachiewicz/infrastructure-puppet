@@ -1,0 +1,110 @@
+---
+classes:
+  - apache
+  - apache::mod::authnz_ldap
+  - apache::mod::headers
+  - apache::mod::proxy
+  - apache::mod::rewrite
+  - backuppc::client
+  - backuppc::server
+  - letsencrypt
+  - postfix::server
+
+backuppc::client::manage_rsync: false
+backuppc::client::manage_sudo: false
+backuppc::client::export_keys: true
+backuppc::client::config_name: "%{::hostname}"
+backuppc::client::backuppc_hostname: 'backup02-he-de.apache.org'
+backuppc::client::backup_files_exclude:
+  - /proc
+  - /sys
+  - /dev
+
+backuppc::client::backup_files_only:
+  - /home
+  - /usr
+  - /var
+  - /x1
+  - /data
+
+apache::keepalive:          'On'
+apache::keepalive_timeout:  '30'
+apache::default_vhost:      true
+apache::docroot:            '/var/www/html'
+
+apache::mpm_module:         'prefork'
+apache::serveradmin:        'root@apache.org'
+
+apache::mod::ssl::ssl_cipher: 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!DHE-RSA-AES128-SHA'
+apache::vhost:
+  nossl:
+    servername: 'backup02-he-de.apache.org'
+    port: 80
+    ssl: false
+    docroot: '/var/www/html'
+    rewrites:
+      -
+        comment: 'rewrite ssl'
+        rewrite_cond:
+          - "%%{}{HTTPS} !=on"
+        rewrite_rule:
+          - "^/?(.*) https://%%{}{SERVER_NAME}:8443/$1 [R,L]"
+  backup02-he-de.apache.org:
+    port: 8443
+    ssl: true
+    ssl_cert: '/etc/letsencrypt/live/backup02-he-de.apache.org/cert.pem'
+    ssl_key:  '/etc/letsencrypt/live/backup02-he-de.apache.org/privkey.pem'
+    ssl_chain: '/etc/letsencrypt/live/backup02-he-de.apache.org/chain.pem'
+    ssl_proxyengine: true
+    docroot: '/usr/share/backuppc/cgi-bin'
+    redirectmatch_regexp: '^/$'
+    redirectmatch_dest: 'https://backup02-he-de.apache.org:8443/backuppc/'
+    aliases:
+      -
+        alias: '/backuppc'
+        path: '/usr/share/backuppc/cgi-bin/'
+    directories:
+      auth_user_file: '/etc/backuppc/htpasswd'
+      auth_type: 'basic'
+      auth_name: 'backuppc'
+      auth_require: 'valid-user'
+      path: '/usr/share/backuppc/cgi-bin'
+      options:
+        - ExecCGI
+        - FollowSymLinks
+      addhandlers:
+        -
+          handler: 'cgi-script'
+          extensions:
+            - '.cgi'
+
+backuppc::server::apache_configuration: false
+backuppc::server::ping_max_msec: '200'
+backuppc::server::email_from_user_name: 'BackupPC <cml@apache.org>'
+backuppc::server::email_admin_user_name: 'cml@apache.org'
+
+backuppc::server::full_keep_cnt_min: '2'
+backuppc::server::full_age_max: '180'
+backuppc::server::full_keep_cnt:
+  - 2
+  - 2
+  - 2
+  - 2
+
+backuppc::server::incr_keep_cnt: '7'
+backuppc::server::incr_age_max: '30'
+backuppc::server::incr_levels:
+  - 1
+  - 2
+  - 3
+
+backuppc::client::backup_files_only:
+  - /home
+  - /etc
+
+letsencrypt::email: 'root@apache.org'
+letsencrypt::certonly:
+  backup02-he-de.apache.org:
+    domains: 
+      - backup02-he-de.apache.org
+    plugin: 'apache'
