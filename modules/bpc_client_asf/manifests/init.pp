@@ -8,7 +8,10 @@ class bpc_client_asf {
 
     if ($::noderole !~ /jenkins/) and
        ($::noderole !~ /tlpserver/) and
-       ($::noderole !~ /buildbot/) 
+       ($::noderole !~ /buildbot/) and
+       ($::hostname !~ /jenkins/) and
+       ($::hostname !~ /spamd/) and
+       ($::hostname !~ /bb-slave/) 
     {
       include backuppc::client
     }
