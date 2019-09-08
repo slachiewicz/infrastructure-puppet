@@ -81,11 +81,14 @@ if hostname.find(".apache.org") == -1:
     hostname = hostname + ".apache.org"
 syslog.syslog(syslog.LOG_INFO, "Using %s as node name" % hostname)
 
-
+RSA_KEY = '/etc/ssh/ssh_host_rsa_key.pub'
 FINGERPRINT = ''
 FINGERPRINT_SHA = ''
+# RSA_KEY_MTIME = 0.0
 try:
-    FINGERPRINT, FINGERPRINT_SHA = l2fp(open('/etc/ssh/ssh_host_rsa_key.pub', 'r').read())
+#     RSA_KEY_MTIME = os.path.getmtime(RSA_KEY)
+    with open(RSA_KEY, 'r') as rsa:
+        FINGERPRINT, FINGERPRINT_SHA = l2fp(rsa.read())
     syslog.syslog(syslog.LOG_INFO, "Identifying as %s" % FINGERPRINT)
 except:
     pass
@@ -384,6 +387,7 @@ class NodeThread(Thread):
             js['@node'] = hostname
             js['@fingerprint'] = FINGERPRINT
             js['@fingerprint_sha'] = FINGERPRINT_SHA
+#             js['@rsa_key_mtime'] = RSA_KEY_MTIME
             # Rogue string sometimes, we don't want that!
             if 'bytes' in js:
                 try:
