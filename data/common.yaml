@@ -25,6 +25,7 @@ backuppc::client::backup_files_exclude:
   - /proc
   - /sys
   - /dev
+  - /run
 backuppc::client::backup_files_only:
   - /home
   - /usr
