@@ -498,6 +498,7 @@ apsecmail = rw
 @staff = rw
 sk = rw
 druggeri = rw
+gris = rw
 @infrastructure = rw
 whimsysvn = r
 @tac-pmc = r
