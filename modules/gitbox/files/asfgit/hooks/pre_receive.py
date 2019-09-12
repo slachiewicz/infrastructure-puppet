@@ -2,6 +2,7 @@ import datetime
 import os
 import sys
 import sqlite3
+import re
 
 import asfgit.auth as auth
 import asfgit.cfg as cfg
@@ -75,8 +76,8 @@ def main():
     for ref in git.stream_refs(sys.stdin):
         refs.append(ref)
         # Site writer role
-        if ref.name.find("asf-site") == -1 and cfg.committer == "git-site-role":
-            util.abort(u"git-site-role can only write to asf-site branches!")
+        if cfg.committer == "git-site-role" and not re.match(r".*(asf-site|asf-staging.*)$", ref.name):
+            util.abort(u"git-site-role can only write to asf-site/asf-staging* branches!")
         if ref.is_protected(cfg.protect) and ref.is_rewrite():
             util.abort(NO_REWRITES % ref.name)
         if ref.is_tag():
