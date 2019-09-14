@@ -7,6 +7,7 @@ class asf_checkrootkit {
     minute      => 45,
     environment => "MAILTO=root@apache.org",
     require     => Package['chkrootkit'],
+    ensure      => absent,
   }
 
 }
