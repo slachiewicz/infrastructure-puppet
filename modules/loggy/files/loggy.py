@@ -96,6 +96,7 @@ except:
 inodes = {}
 inodes_path = {}
 
+# The names must agree with the tuples below
 regexes = {
     'apache_access': re.compile( 
             r"(?P<client_ip>[\d\.]+)\s" 
@@ -123,7 +124,7 @@ regexes = {
         ),
     'fail2ban': re.compile( 
             r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" 
-            r"(?P<type>[\S.]+):\s+" 
+            r"(?P<type>[^:]+):\s+"
             r"(?P<message>.+)"
         ),
     'rsync': re.compile( 
@@ -147,7 +148,7 @@ regexes = {
 }
 
 
-
+# The names must agree with the regexes above
 tuples = {
     'apache_access': namedtuple('apache_access',
         ['client_ip', 'identity', 'user', 'time', 'request',
