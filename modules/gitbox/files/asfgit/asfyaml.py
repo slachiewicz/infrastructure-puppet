@@ -27,6 +27,11 @@ def pelican(cfg, yml):
         print("Not auto-building from asf-site, ever...")
         return
     
+    # If whoami specified, ignore this payload if branch does not match
+    whoami = yml.get('whoami')
+    if whoami and whoami != ref:
+        return
+    
     # Get target branch, if any, default to same branch
     target = yml.get('target', ref)
     
