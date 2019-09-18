@@ -17,10 +17,6 @@ WSMAP = {
 def pelican(cfg, yml):
     """ Pelican auto-build """
     
-    # Return for now unless autobuild specifically set
-    if not yml.get('autobuild', False):
-        return
-    
     # Don't build from asf-site, like...ever
     ref = yml.get('refname', 'master').replace('refs/heads/', '')
     if ref == 'asf-site':
