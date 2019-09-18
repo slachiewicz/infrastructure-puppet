@@ -15,7 +15,38 @@ WSMAP = {
 }
 
 def pelican(cfg, yml):
-    pass
+    """ Pelican auto-build """
+    
+    # Return for now unless autobuild specifically set
+    if not yml.get('autobuild', False):
+        return
+    
+    # infer project name
+    m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
+    pname = m.group(1)
+    pname = WSMAP.get(pname, pname)
+    
+    # Contact buildbot 2
+    bbusr, bbpwd = open("/x1/gitbox/auth/bb2.txt").read().strip().split(':', 1)
+    import requests
+    s = requests.Session()
+    s.get("https://ci2.apache.org/auth/login", auth= (bbusr, bbpwd))
+    
+    payload = {
+        "method": "force",
+        "jsonrpc": "2.0",
+        "id":0,
+        "params":{
+            "reason": "Triggered pelican auto-build via .asf.yaml by %s" % cfg.committer,
+            "builderid": "3",
+            "repository": cfg.repo_name,
+            "project": pname,
+            "url": "https://%s.apache.org" % pname,
+            "description": yml.get('description', "%s web site" % pname),
+        }
+    }
+    s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
+
 
 def github(cfg, yml):
     """ GitHub settings updated. Can set up description, web site and topics """
