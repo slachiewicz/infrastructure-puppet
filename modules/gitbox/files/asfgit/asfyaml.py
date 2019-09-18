@@ -21,6 +21,12 @@ def pelican(cfg, yml):
     if not yml.get('autobuild', False):
         return
     
+    # Don't build from asf-site, like...ever
+    ref = yml.get('refname', 'master').replace('refs/heads/', '')
+    if ref == 'asf-site':
+        print("Not auto-building from asf-site, ever...")
+        return
+    
     # infer project name
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
     pname = m.group(1)
