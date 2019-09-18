@@ -27,6 +27,9 @@ def pelican(cfg, yml):
         print("Not auto-building from asf-site, ever...")
         return
     
+    # Get target branch, if any, default to same branch
+    target = yml.get('target', ref)
+    
     # infer project name
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
     pname = m.group(1)
@@ -45,10 +48,10 @@ def pelican(cfg, yml):
         "params":{
             "reason": "Triggered pelican auto-build via .asf.yaml by %s" % cfg.committer,
             "builderid": "3",
-            "repository": cfg.repo_name,
+            "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
+            "sourcebranch": ref,
+            "outputbranch": target,
             "project": pname,
-            "url": "https://%s.apache.org" % pname,
-            "description": yml.get('description', "%s web site" % pname),
         }
     }
     s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
