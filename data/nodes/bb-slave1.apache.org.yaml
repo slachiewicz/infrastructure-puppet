@@ -25,7 +25,7 @@ python::python_pips:
   beautifulsoup4:
     ensure: present
 
-ruby_version: '2.3.1'
+ruby_version: '2.4.6'
 
 rvm::system_rubies:
   "ruby-%{hiera('ruby_version')}": {}
