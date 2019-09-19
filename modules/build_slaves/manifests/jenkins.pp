@@ -662,6 +662,11 @@ class build_slaves::jenkins (
       recurse => '1',
   }
 
+  file {
+    '/etc/cron.hourly/fixes':
+      ensure => absent,
+  }
+
   service { 'apache2':
     ensure => 'stopped',
   }
