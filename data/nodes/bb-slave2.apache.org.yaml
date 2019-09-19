@@ -14,7 +14,7 @@ buildbot_slave::required_packages:
   - 'ruby2.0'
   - 'ruby2.0-dev'
 
-ruby_version: '2.3.1'
+ruby_version: '2.4.6'
 
 rvm::system_rubies:
   "ruby-%{hiera('ruby_version')}":
