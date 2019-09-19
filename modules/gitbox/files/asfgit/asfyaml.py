@@ -31,6 +31,9 @@ def pelican(cfg, yml):
     # Get target branch, if any, default to same branch
     target = yml.get('target', ref)
     
+    # Get optional theme
+    theme = yml.get('theme', 'theme')
+    
     # infer project name
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
     pname = m.group(1)
@@ -53,6 +56,7 @@ def pelican(cfg, yml):
             "sourcebranch": ref,
             "outputbranch": target,
             "project": pname,
+            "theme": theme,
         }
     }
     s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
