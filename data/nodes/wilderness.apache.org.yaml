@@ -6,7 +6,6 @@ classes:
   - vhosts_asf::modules
   - gitpubsub
   - rsync_asf
-  - staged
   - stunnel_asf
   - svnwcsub
   - svngit2jira
