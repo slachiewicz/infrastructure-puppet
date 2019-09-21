@@ -132,6 +132,7 @@ rsync_asf::fslist:
   - /x1/svn/repos/infra
   - /x1/svn/repos/tck
   - /x1/svn/repos/bigdata
+  - /x1/svn/repos/private
 
 snmp::snmpd_config:
   - 'disk /x1 10%'
