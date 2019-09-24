@@ -58,11 +58,8 @@ config = ConfigParser.ConfigParser()
 dd_config = ConfigParser.ConfigParser()
 mytags = ''
 
-# These boxes have the wrong tags due to Puppet. override!
-tag_overrides = {
-    'tlp-he-fi.apache.org': 'dc:hetzner',
-    'tlp-us-east.apache.org': 'dc:azure'
-}
+# If you'd like to override tags from Datadog, put them here. ex: 'tlp-he-fi.apache.org': 'dc:hetzner'
+tag_overrides = {}
 
 paths = ['/var/log/', '/x1/log']
 
