@@ -107,6 +107,10 @@ gitbox::custom_fragment_80: |
       <Directory /x1/git/htdocs>
        Require all granted
       </Directory>
+      # Rewrite git.a.o repos to github
+      RewriteEngine On
+      RewriteCond "%%{}{HTTP_HOST}"  "^git\.apache\.org"
+      RewriteRule ^/([^/]+\.git.*)$ https://github.com/apache/$1 [R=302]
       Redirect Permanent / https://gitbox.apache.org/
 
 gitbox::custom_fragment_443: |
@@ -124,6 +128,10 @@ gitbox::custom_fragment_443: |
       Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
       Header set Access-Control-Allow-Headers "X-PINGOTHER"
       Header set Access-Control-Max-Age "1728000"
+      # Rewrite git.a.o repos to github
+      RewriteEngine On
+      RewriteCond "%%{}{HTTP_HOST}"  "^git\.apache\.org"
+      RewriteRule ^/([^/]+\.git.*)$ https://github.com/apache/$1 [R=302]
       <Location /repos/>
           SetEnv WEB_HOST https://gitbox.apache.org
       </Location>
