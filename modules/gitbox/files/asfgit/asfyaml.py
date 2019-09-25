@@ -11,7 +11,8 @@ import yaml
 WSMAP = {
     'whimsy': 'whimsical',
     'empire': 'empire-db',
-    'webservices': 'ws'
+    'webservices': 'ws',
+    'infrastructure': 'infra',
 }
 
 def pelican(cfg, yml):
