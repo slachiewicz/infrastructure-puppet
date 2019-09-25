@@ -120,7 +120,7 @@ regexes = {
         ),
     'fail2ban': re.compile( 
             r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" 
-            r"(?P<type>[\S.]+):\s+" 
+            r"(?P<type>[^:]+):\s+"
             r"(?P<message>.+)"
         ),
     'rsync': re.compile( 
