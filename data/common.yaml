@@ -96,6 +96,12 @@ fail2ban::service_autorestart: true
 fail2ban::source_dir: 'puppet:///modules/fail2ban_asf/fail2ban/conf'
 fail2ban::source_dir_purge: true
 
+#disable the update message about 1604 or 1804
+file:
+  '/etc/update-motd.d/91-release-upgrade':
+    mode: '0644'
+
+
 # GITSERVER_ASF
 gitserver_asf::packages:
   - 'gitweb'
