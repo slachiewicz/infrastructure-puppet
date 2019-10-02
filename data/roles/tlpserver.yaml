@@ -193,7 +193,7 @@ apache::custom_config:
         RewriteCond /dist/%1 -d
         RewriteRule ^(.*)$ http://%1%2.apache.org$1 [R,L]
 
-        # change the DocumentRoot to ${DocumentRoot}/content if it exists
+        # change the DocumentRoot to ${DocumentRoot}/content if it exists (CMS)
         # accept multipart subdomains, but cut away eu|us|incubator from path
         RewriteCond %%{}{REQUEST_URI}              !^/cgi-bin/
         RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
@@ -201,6 +201,13 @@ apache::custom_config:
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
         RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
+        
+        # change the DocumentRoot to ${DocumentRoot}/output if it exists (pelican builds)
+        # accept multipart subdomains, but cut away eu|us|incubator from path
+        RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
+        RewriteCond /var/www/%1.apache.org/output -d
+        RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
+        RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
       </Macro>
 
   aoo:
