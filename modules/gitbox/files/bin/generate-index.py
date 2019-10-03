@@ -14,6 +14,7 @@ GITPATH = "/x1/repos/asf"
 PODLINGS_URL = "https://whimsy.apache.org/public/public_podlings.json"
 TLPS_URL = "https://whimsy.apache.org/public/committee-info.json"
 JSONFILE = "/x1/gitbox/htdocs/repositories.json"
+TXTFILE = "/x1/gitbox/htdocs/repos.txt"
 
 #PODLINGS['podling'][project]['name']
 #TLPS['committees'][project]['display_name']
@@ -203,4 +204,12 @@ print(html)
 # JSON OUTPUTS
 with open(JSONFILE, "w") as f:
     json.dump(asjson, f)
+    f.close()
+
+# TXT output
+repos = [x for x in os.listdir(GITPATH) if
+             os.path.isdir(os.path.join(GITPATH, x))
+        ]
+with open(TXTFILE, "w") as f:
+    f.write("\n".join(repos))
     f.close()
