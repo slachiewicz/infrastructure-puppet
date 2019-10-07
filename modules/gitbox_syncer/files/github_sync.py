@@ -190,7 +190,7 @@ def threaded_run(config, data):
                         )
                     
                 else:
-                    asfid = pusher # Set to the pusher ID for internal recording in case of github bots
+                    asfid = 'github-bot' # Set to the pusher ID for internal recording in case of github bots
     
             #######################################
             # Check that we haven't missed a push #
