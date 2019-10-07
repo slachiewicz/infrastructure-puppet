@@ -104,6 +104,11 @@ def rename_local_repo(old, new, project):
         print("  - Setting remote...")
         gconf.set('remote "origin"', 'url', "https://github.com/apache/%s" % new)
 
+    # Remote copy on GitHub
+    if gconf.has_section('remote "github-copy"'):
+        print("  - Setting remote...")
+        gconf.set('remote "github-copy"', 'url', "https://github.com/apache/%s" % new)
+  
     # Remote SVN origin?
     if gconf.has_section('svn-remote "svn"'):
         svnremote = gconf.get('svn-remote "svn"', 'url')
