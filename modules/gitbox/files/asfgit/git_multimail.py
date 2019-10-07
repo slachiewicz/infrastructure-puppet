@@ -2477,7 +2477,7 @@ class Environment(object):
 
     def get_fromaddr(self, change=None):
         config = Config('user')
-        fromname = ''
+        fromname = "%s@apache.org" % committer
         fromemail = "%s@apache.org" % committer
         if fromemail:
             return formataddr([fromname, fromemail])
