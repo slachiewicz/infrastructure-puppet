@@ -165,6 +165,8 @@ def publish(cfg, yml):
     
     # Get optional target domain:
     target = yml.get('hostname', pname)
+    if 'apache.org' in target:
+        raise Exception(".asf.yaml: Invalid hostname '%s' - you cannot specify *.apache.org hostnames, they must be inferred!" % target)
     
     # If whoami specified, ignore this payload if branch does not match
     whoami = yml.get('whoami')
