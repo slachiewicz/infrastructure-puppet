@@ -159,8 +159,12 @@ def publish(cfg, yml):
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
     pname = m.group(1)
     pname = WSMAP.get(pname, pname)
+    
     # Get branch
     ref = yml.get('refname', 'master').replace('refs/heads/', '')
+    
+    # Get optional target domain:
+    target = yml.get('hostname', pname)
     
     # If whoami specified, ignore this payload if branch does not match
     whoami = yml.get('whoami')
@@ -174,6 +178,7 @@ def publish(cfg, yml):
                 'source': "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
                 'branch': ref,
                 'pusher': cfg.committer,
+                'target': target,
             }
         }
         requests.post("http://%s:%s%s" %
