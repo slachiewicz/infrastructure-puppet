@@ -36,7 +36,7 @@ def deploy_site(deploydir, source, branch, committer):
     if deploydir == 'www.apache.org':
         syslog.syslog(syslog.LOG_WARN, "Not going to touch www.a.o, nope!!" % deploydir)
         return
-    if not re.match(r"^[-a-z0-9]+$", deploydir.replace('.apache.org', '')):
+    if (not re.match(r"^[-a-z0-9.]+$", deploydir.replace('.apache.org', ''))) or re.search(r"\.\.", deploydir):
         syslog.syslog(syslog.LOG_WARN, "Invalid deployment dir, %s!" % deploydir)
         return
     if not source.startswith('https://gitbox.apache.org/repos/asf/'):
@@ -145,6 +145,9 @@ def listen():
                     # Or if publishing, use the tlp-server naming format
                     if PUBLISH:
                         deploydir = "%s.apache.org" % project
+                        # Hardcoded hostnames (aoo etc):
+                        if 'hostname' in obj[what]:
+                            deploydir = obj[what].get('hostname')
                     
                     if (deploydir and source and branch):
                         syslog.syslog(syslog.LOG_INFO, "Found deploy delivery for %s, deploying as %s" % (project, deploydir))
