@@ -64,11 +64,11 @@ class gitbox_syncer (
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/gitbox_syncer/gitbox-poller.py';
-    '/usr/local/etc/gitbox-syncer/gitbox-syncer.yaml':
+    '/usr/local/etc/gitbox-syncer/gitbox-poller.yaml':
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => 'puppet:///modules/gitbox_syncer/gitbox-syncer.yaml';
+      source => 'puppet:///modules/gitbox_syncer/gitbox-poller.yaml';
     }
     # Set up systemd on first init
     -> file {
