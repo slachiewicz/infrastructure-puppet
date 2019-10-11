@@ -345,7 +345,7 @@ def parse_payload(config, data):
 
 # Spawn thread, detach and return
 def main():
-    config = yaml.load(open('gitbox-syncer.yaml'))
+    config = yaml.load(open('gitbox-poller.yaml'))
     # Forever fetch items and process them...
     SQS_URL_GET = "%s/get" % config['sqs_api']
     SQS_URL_DELETE = "%s/delete" % config['sqs_api']
