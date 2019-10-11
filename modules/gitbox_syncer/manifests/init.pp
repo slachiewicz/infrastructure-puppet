@@ -64,28 +64,23 @@ class gitbox_syncer (
       owner  => $username,
       group  => $group,
       source => "puppet:///modules/gitbox_syncer/gitbox-syncer.${::operatingsystem}";
-    '/usr/local/etc/gitbox-syncer/gitbox-syncer.py':
+    '/usr/local/etc/gitbox-syncer/gitbox-poller.py':
       mode   => '0755',
       owner  => $username,
       group  => $group,
-      source => 'puppet:///modules/gitbox_syncer/gitbox-syncer.py';
+      source => 'puppet:///modules/gitbox_syncer/gitbox-poller.py';
     '/usr/local/etc/gitbox-syncer/gitbox-syncer.yaml':
       mode   => '0755',
       owner  => $username,
       group  => $group,
       source => 'puppet:///modules/gitbox_syncer/gitbox-syncer.yaml';
-    '/usr/local/etc/gitbox-syncer/github_sync.py':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
-      source => 'puppet:///modules/gitbox_syncer/github_sync.py';
     }
     -> service { $service_name:
         ensure    => $service_ensure,
         enable    => true,
         hasstatus => true,
         subscribe => [
-          File['/usr/local/etc/gitbox-syncer/gitbox-syncer.py'],
+          File['/usr/local/etc/gitbox-syncer/gitbox-poller.py'],
           File['/usr/local/etc/gitbox-syncer/gitbox-syncer.yaml']
         ]
     }
