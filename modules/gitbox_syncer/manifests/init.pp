@@ -1,7 +1,7 @@
 #/etc/puppet/modules/gitbox_syncer/manifests/init.pp
 
 class gitbox_syncer (
-  $service_name   = 'gitbox-syncer',
+  $service_name   = 'gitbox-poller',
   $shell          = '/bin/bash',
   $service_ensure = 'running',
   $username       = 'root',
@@ -59,11 +59,6 @@ class gitbox_syncer (
       mode   => '0755',
       owner  => 'www-data',
       group  => 'www-data';
-    '/etc/init.d/gitbox-syncer':
-      mode   => '0755',
-      owner  => $username,
-      group  => $group,
-      source => "puppet:///modules/gitbox_syncer/gitbox-syncer.${::operatingsystem}";
     '/usr/local/etc/gitbox-syncer/gitbox-poller.py':
       mode   => '0755',
       owner  => $username,
@@ -75,13 +70,23 @@ class gitbox_syncer (
       group  => $group,
       source => 'puppet:///modules/gitbox_syncer/gitbox-syncer.yaml';
     }
+    # Set up systemd on first init
+    -> file {
+      '/lib/systemd/system/gitbox-poller.service':
+        mode   => '0644',
+        owner  => 'root',
+        group  => 'root',
+        source => "puppet:///modules/gitbox_syncer/gitbox-poller.${::operatingsystem}";
+    }
+    -> exec { 'staged-systemd-reload':
+      command     => 'systemctl daemon-reload',
+      path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
+      refreshonly => true,
+    }
     -> service { $service_name:
         ensure    => $service_ensure,
-        enable    => true,
-        hasstatus => true,
         subscribe => [
-          File['/usr/local/etc/gitbox-syncer/gitbox-poller.py'],
-          File['/usr/local/etc/gitbox-syncer/gitbox-syncer.yaml']
+          File['/usr/local/etc/gitbox-syncer/gitbox-poller.py']
         ]
     }
 }
