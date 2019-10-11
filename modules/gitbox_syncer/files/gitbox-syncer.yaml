@@ -15,4 +15,4 @@ allownetworks:
 
 brokenpath: /x1/gitbox/broken
 
-sqs_api:  https://wcg0ox6n18.execute-api.us-east-1.amazonaws.com/default/
+sqs_api:  https://wcg0ox6n18.execute-api.us-east-1.amazonaws.com/default
