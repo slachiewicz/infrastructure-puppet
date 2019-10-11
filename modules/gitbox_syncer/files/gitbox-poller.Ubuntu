@@ -1,0 +1,11 @@
+[Unit]
+Description=GitHub to GitBox Sync Daemon
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=cd /usr/local/etc/gitbox-syncer && /usr/bin/python3 gitbox-poller.py
+
+[Install]
+WantedBy=multi-user.target
