@@ -138,10 +138,10 @@ def getActivity():
         }
         
         table = """
-<table class="tbl%u">
+<table class="tbl%u" id="%s">
 <thead>
     <tr>
-        <td colspan="4">%s</td>
+        <td colspan="4"><a href="#%s">%s</a></td>
     </tr>
 </thead>
 <tbody>
@@ -151,7 +151,7 @@ def getActivity():
         <th>Last changed:</th>
         <th>Links:</th>
     </tr>
-""" % (a, pname)
+""" % (a, project, project, pname)
         for repo in sorted(projects[project]):
             nclass = "disabled" if gitrepos[repo][3] else ""
             outjson['projects'][project]['repositories'][repo] = {
