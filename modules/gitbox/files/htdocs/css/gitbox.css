@@ -24,12 +24,12 @@ table {
     width: 1040px;
 }
 
-table>thead {
+table>thead a {
     color: #FFF !important;
     font-weight: bold;
     font-size: 0.9rem;
     margin: 0 auto;
-    font-style: none !important;
+    text-decoration: none !important;
 }
 
 table>tbody>tr>td:nth-of-type(1) {
