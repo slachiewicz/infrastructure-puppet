@@ -294,7 +294,7 @@ def parse_payload(config, data):
                     f.close()
     
                 # Send an email to users@infra.a.o with the bork
-                errmsg = error.output
+                errmsg = error
                 asfpy.messaging.mail(
                         recipient = '<team@infra.apache.org>',
                         subject = "gitbox repository %s: sync failed!" % reponame,
