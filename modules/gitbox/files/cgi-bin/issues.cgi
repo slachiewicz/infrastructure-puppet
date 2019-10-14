@@ -66,16 +66,20 @@ def getvalue(key):
     else:
         return None
 
-def sendEmail(rcpt, subject, message):
+
+def sendEmail(rcpt, subject, message, message_id=None, reply_to_id=None):
     if rcpt == 'dev@null':
         return
     sender = "GitBox <git@apache.org>"
+    if not message_id:
+        message_id = email.utils.make_msgid("gitbox")
+    reply_headers = "\nReferences: %s\nIn-Reply-To: %s" % (reply_to_id, reply_to_id) if reply_to_id else ""
     receivers = [rcpt]
     sub = email.header.Header(subject, 'utf-8').encode()
     msg = """From: %s
 To: %s
 Subject: %s
-Message-ID: %s
+Message-ID: %s%s
 Date: %s
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -84,7 +88,7 @@ Content-Transfer-Encoding: 8bit
 
 With regards,
 Apache Git Services
-""" % (sender, rcpt, sub, email.utils.make_msgid("gitbox"), email.utils.formatdate(), message)
+""" % (sender, rcpt, sub, message_id, reply_headers, email.utils.formatdate(), message)
     msg = msg.encode('utf-8', errors='replace')
     try:
         smtpObj = smtplib.SMTP("mail.apache.org:2025")
@@ -329,10 +333,13 @@ def main():
     fmt = None
     email = None
     isComment = False
+    isNew = False
     if 'action' in data:
         # Issue opened or reopened
         if data['action'] in ['opened', 'reopened']:
             fmt = issueOpened(data)
+        if data['action'] == 'opened':
+            isNew = True
         # Issue closed
         elif data['action'] == 'closed':
             fmt = issueClosed(data, commitml)
@@ -364,7 +371,10 @@ def main():
         # Go ahead and generate the template
         email = formatMessage(fmt)
     if email:
-        sendEmail(mailto, email['subject'], email['message'])
+        thread_id = "<issue.%s.%s.gitbox@gitbox.apache.org>" % (fmt['id'], project)
+        message_id = thread_id if isNew else None
+        reply_to_id = thread_id if not isNew else None
+        sendEmail(mailto, email['subject'], email['message'], message_id = message_id, reply_to_id = reply_to_id)
     # PR Diff from fork to be sent to commit ML??
     if fmt and fmt.get('prdiff_real'):
         sendEmail(commitml, "[%s] Diff for: %s" % (repo, email['subject']), fmt['prdiff_real'])
