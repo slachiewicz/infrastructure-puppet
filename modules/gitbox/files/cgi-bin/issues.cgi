@@ -108,6 +108,7 @@ def issueOpened(payload):
     fmt['type'] = 'issue'
     if 'pull_request' in payload:
         fmt['type'] = 'pull request'
+    fmt['node_id'] = obj['node_id'] # Stable global issue/pr id
     fmt['id'] = obj['number']
     fmt['text'] = obj['body']
     fmt['title'] = obj['title']
@@ -371,7 +372,7 @@ def main():
         # Go ahead and generate the template
         email = formatMessage(fmt)
     if email:
-        thread_id = "<issue.%s.%s.gitbox@gitbox.apache.org>" % (fmt['id'], project)
+        thread_id = "<%s.%s.%s.gitbox@gitbox.apache.org>" % (project, fmt['id'], fmt['node_id'])
         message_id = thread_id if isNew else None
         reply_to_id = thread_id if not isNew else None
         sendEmail(mailto, email['subject'], email['message'], message_id = message_id, reply_to_id = reply_to_id)
