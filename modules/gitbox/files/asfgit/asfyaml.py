@@ -89,7 +89,7 @@ def github(cfg, yml):
     if repo:
         desc = yml.get('description')
         homepage = yml.get('homepage')
-        merges = yml.get('enabled_merge_buttons:')
+        merges = yml.get('enabled_merge_buttons')
         topics = yml.get('labels')
 
         if desc:
