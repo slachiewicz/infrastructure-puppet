@@ -74,7 +74,7 @@ asf999::create_user::sshdkeysdir: '/etc/ssh/ssh_keys'
 asf999::create_user::user: 'asf999'
 
 datadog_agent::tags:
-  - 'puppet_version:%{puppetversion}'
+  - 'puppetversion:%{puppetversion}'
   - 'datacenter:%{dd_autotag_colo}'
   - 'external_ip:%{external_ip}'
   - 'ubuntu_version:%{asfosrelease}'
