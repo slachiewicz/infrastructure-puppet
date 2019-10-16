@@ -75,7 +75,7 @@ asf999::create_user::user: 'asf999'
 
 datadog_agent::tags:
   - 'puppet_version:%{puppetversion}'
-  - 'dc:%{dd_autotag_colo}'
+  - 'datacenter:%{dd_autotag_colo}'
   - 'external_ip:%{external_ip}'
   - 'ubuntu_version:%{asfosrelease}'
 
