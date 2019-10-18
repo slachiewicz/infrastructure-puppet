@@ -88,12 +88,18 @@ def github(cfg, yml):
     # If repo is on github, update accordingly
     if repo:
         desc = yml.get('description')
-        topics = yml.get('labels')
         homepage = yml.get('homepage')
+        merges = yml.get('enabled_merge_buttons')
+        topics = yml.get('labels')
+
         if desc:
             repo.edit(description=desc)
         if homepage:
             repo.edit(homepage=homepage)
+        if merges:
+             repo.edit(allow_squash_merge=merges.get("squash", False),
+                allow_merge_commit=merges.get("merge", False),
+                allow_rebase_merge=merges.get("rebase", False))
         if topics and type(topics) is list:
             for topic in topics:
                 if not re.match(r"^[-a-z0-9]{1,35}$", topic):
