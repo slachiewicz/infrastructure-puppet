@@ -2630,7 +2630,6 @@ vhosts_asf::vhosts::vhosts:
     docroot: '/www/infra.apache.org/output'
     manage_docroot: false
     serveraliases:
-      - 'infra-test.apache.org'
       - 'infra.*.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
@@ -2644,7 +2643,7 @@ vhosts_asf::vhosts::vhosts:
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
       # Change to infra.a.o later on.
-      Redirect / https://infra-test.apache.org/
+      Redirect / https://infra.apache.org/
 
   infra-ssl:
     vhost_name: '*'
@@ -2655,7 +2654,6 @@ vhosts_asf::vhosts::vhosts:
     manage_docroot: false
     serveraliases:
       - 'infra.*.apache.org'
-      - 'infra-test.apache.org'
     serveradmin: 'users@infra.apache.org'
     directories:
       -
