@@ -13,6 +13,7 @@ base::hosts:
     ip: '140.211.11.135'
     ensure: absent
   svn.apache.org:
+    ensure: absent
     ip: '10.41.0.6'
     host_aliases:
       - 'svn-master.apache.org'
