@@ -64,12 +64,6 @@ cron:
     weekday: '3'
     command: '/usr/bin/certbot-auto renew > /var/log/letsencrypt.log 2>&1'
     
-base::hosts:
-  svn.us.apache.org:
-    ip: '10.41.0.6'
-  svn-master.apache.org:
-    ip: '10.41.0.6'
-
 logrotate::rule:
   apache2:
     ensure: 'present'
