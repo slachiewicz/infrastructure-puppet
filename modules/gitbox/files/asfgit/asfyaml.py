@@ -91,6 +91,8 @@ def github(cfg, yml):
         homepage = yml.get('homepage')
         merges = yml.get('enabled_merge_buttons')
         topics = yml.get('labels')
+        ghp_branch = yml.get('ghp_branch')
+        ghp_path = yml.get('ghp_path', '/docs')
 
         if desc:
             repo.edit(description=desc)
@@ -106,6 +108,48 @@ def github(cfg, yml):
                     raise Exception(".asf.yaml: Invalid GitHub label '%s' - must be lowercase alphanumerical and <= 35 characters!" % topic)
             repo.replace_topics(topics)
         print("GitHub repository meta-data updated!")
+        
+        # GitHub Pages?
+        if ghp_branch:
+            GHP_URL = 'https://api.github.com/repos/apache/%s/pages?access_token=%s' % (cfg.repo_name, GH_TOKEN)
+            # Test if GHP is enabled already
+            rv = requests.get(GHP_URL, headers = {'Accept': 'application/vnd.github.switcheroo-preview+json'})
+            
+            # Not enabled yet, enable?!
+            if rv.status_code == 404:
+                try:
+                    rv = requests.post(
+                        GHP_URL,
+                        headers = {'Accept': 'application/vnd.github.switcheroo-preview+json'},
+                        json = {
+                            'source': {
+                                'branch': ghp_branch,
+                                'path': ghp_path
+                            }
+                        }
+                    )
+                    print("GitHub Pages set to branch=%s, path=%s" % (ghp_branch, ghp_path))
+                except:
+                    print("Could not set GitHub Pages configuration!")
+            # Enabled, update settings?
+            elif rv.status_code == 200:
+                ghps = 'master /docs'
+                if ghp_branch == 'gh-pages':
+                    ghps = 'gh-pages'
+                elif not ghp_path:
+                    ghps = 'master'
+                try:
+                    rv = requests.put(
+                        GHP_URL,
+                        headers = {'Accept': 'application/vnd.github.switcheroo-preview+json'},
+                        json = {
+                            'source': ghps,
+                        }
+                    )
+                    print("GitHub Pages updated to %s" % ghps)
+                except:
+                    print("Could not set GitHub Pages configuration!")
+
 
         # Save cached version for late checks
         with open(ymlfile, "w") as f:
