@@ -3,6 +3,7 @@ import elasticsearch
 import pyexcel_ods
 import collections
 import requests
+import re
 
 # Elastic handler
 es = elasticsearch.Elasticsearch([
@@ -159,14 +160,15 @@ if __name__ == '__main__':
         cmts = requests.get('https://whimsy.apache.org/public/committee-info.json').json()
         pods = requests.get('https://whimsy.apache.org/public/public_podlings.json').json()
         
-        
+        regex = re.compile(r"https?://([^/]+)/?$", re.IGNORECASE)
         # Churn out a list of sub-domains to gather stats for
         subdomains = ['www.openoffice.org', 'openoffice.org', 'www.apache.org', 'apache.org']
         for k, cmt in cmts['committees'].items():
-            if not cmt['pmc']:
+            if not cmt['pmc'] or not cmt['site']:
                 continue
-            if not '@' in cmt['mail_list']:
-                subdomain = "%s.apache.org" % cmt['mail_list']
+            m = regex.match(cmt['site'])
+            if m:
+                subdomain = m.group(1)
                 subdomains.append(subdomain)
         
         for k, cmt in pods['podling'].items():
