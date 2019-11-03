@@ -163,6 +163,8 @@ if __name__ == '__main__':
         # Churn out a list of sub-domains to gather stats for
         subdomains = ['www.openoffice.org', 'openoffice.org', 'www.apache.org', 'apache.org']
         for k, cmt in cmts['committees'].items():
+            if not cmt['pmc']:
+                continue
             if not '@' in cmt['mail_list']:
                 subdomain = "%s.apache.org" % cmt['mail_list']
                 subdomains.append(subdomain)
