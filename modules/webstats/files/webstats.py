@@ -5,6 +5,11 @@ import collections
 import requests
 import re
 import sys
+import yaml
+from time import gmtime, strftime
+
+# Exported files go here
+EXPORTS = '/var/www/snappy/exports'
 
 # Elastic handler
 es = elasticsearch.Elasticsearch([
@@ -139,7 +144,30 @@ def makeBook(domain):
         book.update({'Geomapping, past month': arr})
         
         
-        pyexcel_ods.save_data("/var/www/snappy/exports/%s.ods" % domain, book)
+        pyexcel_ods.save_data("%s/%s.ods" % (EXPORTS, domain), book)
+
+#       Convert to YAML
+        booky = {}
+        booky['Sheet0'] = { # ensure it is first
+            'Domain': domain,
+            'Created': strftime("%Y-%m-%d %H:%M +0000", gmtime())
+        }
+        sheetno = 0
+        for key,val in book.items():
+            sheetno += 1
+            data = []
+            for k,v in val:
+                j = {}
+                j[k] = v
+                data.append(j)
+            sheet = booky["Sheet%d" % sheetno] = {
+                "Name": key,
+                "Values": data
+                }
+        with open("%s/%s.yaml" % (EXPORTS, domain),'w') as wy:
+            wy.write("# web statistics for %s\n" % domain)
+            wy.write("---\n")
+            yaml.dump(booky, wy)
 
 
 if __name__ == '__main__':
