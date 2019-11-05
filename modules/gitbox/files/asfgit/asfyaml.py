@@ -90,6 +90,7 @@ def github(cfg, yml):
         desc = yml.get('description')
         homepage = yml.get('homepage')
         merges = yml.get('enabled_merge_buttons')
+        features = yml.get('features')
         topics = yml.get('labels')
         ghp_branch = yml.get('ghp_branch')
         ghp_path = yml.get('ghp_path', '/docs')
@@ -99,9 +100,13 @@ def github(cfg, yml):
         if homepage:
             repo.edit(homepage=homepage)
         if merges:
-             repo.edit(allow_squash_merge=merges.get("squash", False),
+            repo.edit(allow_squash_merge=merges.get("squash", False),
                 allow_merge_commit=merges.get("merge", False),
                 allow_rebase_merge=merges.get("rebase", False))
+        if features:
+            repo.edit(has_issues=features.get("issues", False),
+                has_wiki=features.get("wiki", False),
+                has_projects=features.get("projects", False))
         if topics and type(topics) is list:
             for topic in topics:
                 if not re.match(r"^[-a-z0-9]{1,35}$", topic):
