@@ -165,6 +165,18 @@ overlay syncprov
 
 ############################################################################################
 
+## Service user that will recreate the ou=meta see INFRA-19237 
+access to dn.subtree="ou=groups,dc=apache,dc=org"
+  attrs=ou
+  by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
+  by dn="cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" write  
+  by dn="cn=idao-ro,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=ldaprepl,ou=users,ou=services,dc=apache,dc=org" read
+  by dn="cn=nss_ldap,ou=users,ou=services,dc=apache,dc=org" read
+  by * read
+  by anonymous auth
+
+
 ## Allow users, and selfserve to modify a users password.
 access to dn.subtree="ou=people,dc=apache,dc=org"
   attrs=userPassword
