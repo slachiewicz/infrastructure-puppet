@@ -165,7 +165,7 @@ overlay syncprov
 
 ############################################################################################
 
-## Service user that will recreate the 
+## Service user that will recreate the ou=meta see INFRA-19237 
 access to dn.subtree="ou=group,dc=apache,dc=org"
   attrs=ou
   by group.exact="cn=apldap,ou=groups,ou=services,dc=apache,dc=org" write
