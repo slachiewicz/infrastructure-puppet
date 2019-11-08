@@ -1,6 +1,7 @@
 local json = require 'cjson'
 local https = require 'ssl.https'
 local ip = require 'ip'
+local stagger = math.random(0,60) -- stagger reloads by up to 60 seconds
 
 local function getBans()
     local r, c, h, s = https.request("https://blocky.apache.org/blocky-public/bans")
@@ -18,7 +19,7 @@ local block_index = {}
 
 function handle(r)
     local now = os.time()
-    if ( (now - 600) > blocks_timestamp) then
+    if ( (now - (600 + stagger)) > blocks_timestamp) then
         blocks_cached, blocks_timestamp = getBans()
     end
     
