@@ -69,7 +69,7 @@ function handle(r)
                             <li>More than 2,000 viewvc requests per 24 hours.</li>
                             <li>More than 100,000 confluence (cwiki.apache.org) page visits per 24 hours.</li>
                             <li>More than 10,000 bugzilla requests per 24 hours.</li>
-                            <li>More than 1,000 gitweb (git-wip/gitbox) requests per hour.</li>
+                            <li>More than 1,000 gitbox requests per hour.</li>
                             <li>More than 75,000 repository.apache.org visits per 24 hours.</li>
                             <li>More than 100,000 builds.apache.org visits per 12 hours.</li>
                             <li>More than 2,500 code 429 (rate-limited) responses not respected per 12 hours.</li>
