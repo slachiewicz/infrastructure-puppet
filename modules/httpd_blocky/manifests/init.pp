@@ -3,8 +3,15 @@
 # requires mod_lua capable host (ubu >= 16.04)
 # and httpd on the box, or it will ignore things.
 
-class httpd_blocky (){
+class httpd_blocky (
+  $required_packages = ['lua-cjson', 'lua-sec', 'lua-bitop'],
+  ){
 
+  package {
+    $required_packages:
+      ensure => 'present',
+  }
+  
   # Make sure we are using httpd here
   if defined(Class['apache']) {
     file {
