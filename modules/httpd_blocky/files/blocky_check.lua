@@ -75,7 +75,7 @@ function handle(r)
                             <li>More than 2,500 code 429 (rate-limited) responses not respected per 12 hours.</li>
                         </ul>
                         <p>If you feel this has been in error, feel free to contact the ASF Infra team via the <a href="mailto:users@infra.apache.org">Infra Users list</a> with the subject "[IPBAN] InsertYourOrganizationHere", provide your IP address and any information or logs.</p>
-                     
+                        <p><b>IMPORTANT:</b><br/>Before you contact the Apache Infrastructure team, make sure the above reported abuse activity is not taking place and will not take place in the future. If you have been banned for excessive use of a service, ensure that this activity is curbed <u>and make sure to notify infrastructure that you have taken these steps.</u></p>
                     </body>
                     </html>
                ]]):format(is_blocked))
