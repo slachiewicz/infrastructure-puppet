@@ -21,7 +21,7 @@ classes:
   - apbackup
   - apbackup::backup
   - apmirror
-  - blocky
+  - httpd_blocky
   - datadog_asf::integrations::network
   - loggy
   - rootbin_asf
