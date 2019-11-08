@@ -28,9 +28,6 @@ class httpd_blocky (
         mode   => '0755',
         source => 'puppet:///modules/httpd_blocky/ip.lua';
     }
-    if !defined(Apache::Mod['lua']) {
-        apache::mod { 'lua': }
-    }
     apache::custom_config {
       'rate-limit':
         ensure   => present,
