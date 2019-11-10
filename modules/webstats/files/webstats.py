@@ -4,6 +4,12 @@ import pyexcel_ods
 import collections
 import requests
 import re
+import sys
+import yaml
+from time import gmtime, strftime
+
+# Exported files go here
+EXPORTS = '/var/www/snappy/exports'
 
 # Elastic handler
 es = elasticsearch.Elasticsearch([
@@ -43,7 +49,7 @@ def makeBook(domain):
             },
         }
         
-        # Get unique IPs
+        # Get most of the aggregations
         query['aggs'] = {
                 "per_day": {
                     "date_histogram": {
@@ -59,6 +65,20 @@ def makeBook(domain):
                             }
                         }
                     }
+                },
+                "popular" : {
+                    "terms" : {
+                        "field" : "uri.keyword",
+                        "size" : 50,
+                        "order" : {"_count":"desc"}
+                    }
+                },
+                "refs" : {
+                    "terms" : {
+                         "field" : "referer.keyword",
+                         "size" : 25,
+                         "order" : {"_count":"desc"}
+                     }
                 }
             }
         res = es.search(index='loggy-*', request_timeout=90, body = query)
@@ -72,10 +92,6 @@ def makeBook(domain):
         
         
         
-        # Get page views
-        # We already have the data here, so no need for an additional query.
-        res = es.search(index='loggy-*', request_timeout=90, body = query)
-        
         arr = [['Date', 'Pageviews']]
         for el in res['aggregations']['per_day']['buckets']:
                 d = el['key_as_string'].replace(' 00:00:00', '')
@@ -85,18 +101,6 @@ def makeBook(domain):
         
         
         
-        # Get most visited pages
-        query["aggs"] = {
-                "popular" : {
-                        "terms" : {
-                                "field" : "uri.keyword",
-                                "size" : 50,
-                                "order" : {"_count":"desc"}
-                                }
-                        }
-                }
-        res = es.search(index='loggy-*', request_timeout=90, body = query)
-        
         arr = [['URI', 'Pageviews']]
         for el in res['aggregations']['popular']['buckets']:
                 d = el['key']
@@ -105,18 +109,6 @@ def makeBook(domain):
         book.update({'Most visited pages, past month': arr})
         
         
-        
-        # Get top referrers
-        query["aggs"] = {
-                "refs" : {
-                        "terms" : {
-                                "field" : "referer.keyword",
-                                "size" : 25,
-                                "order" : {"_count":"desc"}
-                                }
-                        }
-                }
-        res = es.search(index='loggy-*', request_timeout=90, body = query)
         
         arr = [['Referrer', 'Pageviews']]
         for el in res['aggregations']['refs']['buckets']:
@@ -152,10 +144,38 @@ def makeBook(domain):
         book.update({'Geomapping, past month': arr})
         
         
-        pyexcel_ods.save_data("/var/www/snappy/exports/%s.ods" % domain, book)
+        pyexcel_ods.save_data("%s/%s.ods" % (EXPORTS, domain), book)
+
+#       Convert to YAML
+        booky = {}
+        booky['Sheet0'] = { # ensure it is first
+            'Domain': domain,
+            'Created': strftime("%Y-%m-%d %H:%M +0000", gmtime())
+        }
+        sheetno = 0
+        for key,val in book.items():
+            sheetno += 1
+            data = []
+            for k,v in val:
+                j = {}
+                j[k] = v
+                data.append(j)
+            sheet = booky["Sheet%d" % sheetno] = {
+                "Name": key,
+                "Values": data
+                }
+        with open("%s/%s.yaml" % (EXPORTS, domain),'w') as wy:
+            wy.write("# web statistics for %s\n" % domain)
+            wy.write("---\n")
+            yaml.dump(booky, wy)
 
 
 if __name__ == '__main__':
+    if sys.argv[1:]: # If arguments provided, then process only those (for testing)
+        for sdomain in sys.argv[1:]:
+            print("Charting %s" % sdomain)
+            makeBook(sdomain)
+    else:
         # Get all projects, committees, podlings
         cmts = requests.get('https://whimsy.apache.org/public/committee-info.json').json()
         pods = requests.get('https://whimsy.apache.org/public/public_podlings.json').json()
@@ -180,4 +200,4 @@ if __name__ == '__main__':
                 if sdomain:
                         print("Charting %s" % sdomain)
                         makeBook(sdomain)
-        print("All done")
+    print("All done")
