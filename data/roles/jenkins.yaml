@@ -6,6 +6,6 @@ classes:
 datadog_agent::tags:
   - 'monitor:build_node'
   - 'puppet_version:%{puppetversion}'
-  - 'dc:%{dd_autotag_colo}'
+  - 'datacenter:%{dd_autotag_colo}'
   - 'external_ip:%{external_ip}'
   - 'ubuntu_version:%{asfosrelease}'

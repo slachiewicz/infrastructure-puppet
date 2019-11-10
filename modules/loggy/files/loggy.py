@@ -58,7 +58,7 @@ config = ConfigParser.ConfigParser()
 dd_config = ConfigParser.ConfigParser()
 mytags = ''
 
-# If you'd like to override tags from Datadog, put them here. ex: 'tlp-he-fi.apache.org': 'dc:hetzner'
+# If you'd like to override tags from Datadog, put them here. ex: 'tlp-he-fi.apache.org': 'datacenter:hetzner'
 tag_overrides = {}
 
 paths = ['/var/log/', '/x1/log']
