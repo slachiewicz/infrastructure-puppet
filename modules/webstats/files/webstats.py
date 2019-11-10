@@ -15,6 +15,17 @@ EXPORTS = '/var/www/snappy/exports'
 es = elasticsearch.Elasticsearch([
         {'host': 'localhost', 'port': 9200, 'url_prefix': '', 'use_ssl': False},
 ])
+
+def dump_yaml(data, stream=None, Dumper=yaml.Dumper, **kwds):
+    class OrderedDumper(Dumper):
+        pass
+    def _dict_representer(dumper, data):
+        return dumper.represent_mapping(
+            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+            data.items())
+    OrderedDumper.add_representer(collections.OrderedDict, _dict_representer)
+    return yaml.dump(data, stream, OrderedDumper, encoding = None, default_flow_style=False)
+
         
 
 # Make a "book" (an ODS file)
@@ -155,11 +166,10 @@ def makeBook(domain):
         sheetno = 0
         for key,val in book.items():
             sheetno += 1
-            data = []
+            tmp = {}
             for k,v in val:
-                j = {}
-                j[k] = v
-                data.append(j)
+                tmp[k] = v
+            data = collections.OrderedDict(tmp.items())
             sheet = booky["Sheet%d" % sheetno] = {
                 "Name": key,
                 "Values": data
@@ -167,7 +177,7 @@ def makeBook(domain):
         with open("%s/%s.yaml" % (EXPORTS, domain),'w') as wy:
             wy.write("# web statistics for %s\n" % domain)
             wy.write("---\n")
-            yaml.dump(booky, wy)
+            dump_yaml(booky, wy)
 
 
 if __name__ == '__main__':
