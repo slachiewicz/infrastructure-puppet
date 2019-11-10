@@ -166,10 +166,11 @@ def makeBook(domain):
         sheetno = 0
         for key,val in book.items():
             sheetno += 1
-            tmp = {}
+            tmp = []
             for k,v in val:
-                tmp[k] = v
-            data = collections.OrderedDict(tmp.items())
+                tmp.append((k,v))
+            tmp.pop(0) # get rid of titles
+            data = collections.OrderedDict(tmp)
             sheet = booky["Sheet%d" % sheetno] = {
                 "Name": key,
                 "Values": data
