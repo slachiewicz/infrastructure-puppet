@@ -168,7 +168,7 @@ def makeBook(domain):
             sheetno += 1
             tmp = []
             for k,v in val:
-                tmp.append((k,v))
+                if k: tmp.append((k,v))
             tmp.pop(0) # get rid of titles
             data = collections.OrderedDict(tmp)
             sheet = booky["Sheet%d" % sheetno] = {
