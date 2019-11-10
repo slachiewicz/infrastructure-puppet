@@ -54,7 +54,7 @@ function handle(r)
                     <html>
                     <body>
                      
-                        <h2>You've been banned from using services provided by The Apache Software Foundation.</h2>
+                        <h2>You've been blocked from using services provided by The Apache Software Foundation.</h2>
                         <quote><p>The (automated) reason for your ban is: <kbd>%s</kbd>.<br/></quote>
                         <p><big>The following actions are <strong>NOT</strong> allowed on ASF services:</big></p>
                         <ul>
