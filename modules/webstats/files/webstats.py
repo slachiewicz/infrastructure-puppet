@@ -6,10 +6,12 @@ import requests
 import re
 import sys
 import yaml
+import time
 from time import gmtime, strftime
 
 # Exported files go here
 EXPORTS = '/var/www/snappy/exports'
+LDAPMAP = {}
 
 # Elastic handler
 es = elasticsearch.Elasticsearch([
@@ -154,7 +156,34 @@ def makeBook(domain):
                         arr.append([d,c])
         book.update({'Geomapping, past month': arr})
         
-        
+        try:
+            if domain in LDAPMAP:
+                lines = []
+                pmc = LDAPMAP[domain]
+                print("Fetching download stats for %s..." % pmc)
+                eu = requests.get('http://www.eu.apache.org/dyn/stats/%s.log' % pmc)
+                us = requests.get('http://www.eu.apache.org/dyn/stats/%s.log' % pmc)
+                if eu.status_code == 200:
+                    lines += eu.text.split("\n")
+                if us.status_code == 200:
+                    lines += us.text.split("\n")
+                cdownloads = {}
+                now = time.time()
+                for line in lines:
+                    try:
+                        ts, junk, cca, path = line.split(" ", 3)
+                        ts = int(ts)
+                        if (ts + (30*86400)) >= now:
+                            cdownloads[cca] = cdownloads.get(cca, 0) + 1
+                    except:
+                        pass
+                arr = [['Country', 'Downloads']]
+                for k, v in cdownloads.items():
+                    arr.append([k.upper(), v])
+                book.update({'Downloads, past month': arr})
+        except Exception as e:
+            print(e)
+
         pyexcel_ods.save_data("%s/%s.ods" % (EXPORTS, domain), book)
 
 #       Convert to YAML
@@ -201,6 +230,7 @@ if __name__ == '__main__':
             if m:
                 subdomain = m.group(1)
                 subdomains.append(subdomain)
+                LDAPMAP[subdomain] = k
         
         for k, cmt in pods['podling'].items():
             subdomain = "%s.apache.org" % k
