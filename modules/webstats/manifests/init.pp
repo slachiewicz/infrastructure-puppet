@@ -23,7 +23,7 @@ class webstats (
       user        => 'www-data',
       minute      => '0',
       hour        => '*/12',
-      command     => "cd /usr/local/etc && python webstats.py > /dev/null",
+      command     => "cd /usr/local/etc && python3 webstats.py > /dev/null",
       environment => [
         'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
         'SHELL=/bin/sh'
