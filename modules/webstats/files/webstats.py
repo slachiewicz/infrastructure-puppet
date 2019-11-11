@@ -162,7 +162,7 @@ def makeBook(domain):
                 pmc = LDAPMAP[domain]
                 print("Fetching download stats for %s..." % pmc)
                 eu = requests.get('http://www.eu.apache.org/dyn/stats/%s.log' % pmc)
-                us = requests.get('http://www.eu.apache.org/dyn/stats/%s.log' % pmc)
+                us = requests.get('http://www.us.apache.org/dyn/stats/%s.log' % pmc)
                 if eu.status_code == 200:
                     lines += eu.text.split("\n")
                 if us.status_code == 200:
