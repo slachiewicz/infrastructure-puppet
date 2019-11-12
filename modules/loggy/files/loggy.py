@@ -73,9 +73,7 @@ def l2fp(txt):
     
 
 es = None
-hostname = socket.gethostname()
-if hostname.find(".apache.org") == -1:
-    hostname = hostname + ".apache.org"
+hostname = socket.getfqdn()
 syslog.syslog(syslog.LOG_INFO, "Using %s as node name" % hostname)
 
 RSA_KEY = '/etc/ssh/ssh_host_rsa_key.pub'
