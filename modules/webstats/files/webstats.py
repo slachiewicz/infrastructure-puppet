@@ -8,6 +8,7 @@ import sys
 import yaml
 import time
 from time import gmtime, strftime
+import os
 
 # Exported files go here
 EXPORTS = '/var/www/snappy/exports'
@@ -216,6 +217,17 @@ if __name__ == '__main__':
             print("Charting %s" % sdomain)
             makeBook(sdomain)
     else:
+        
+        # Clean up stale files (more than a week old)
+        now = time.time()
+        for filename in os.listdir(EXPORTS):
+            filepath = os.path.join(EXPORTS, filename)
+            mtime = os.path.getmtime(filepath)
+            if (mtime < (now - 604800)):
+                print("Removing stale file %s" % filepath)
+                os.unlink(filepath)
+
+        os.path.getmtime
         # Get all projects, committees, podlings
         cmts = requests.get('https://whimsy.apache.org/public/committee-info.json').json()
         pods = requests.get('https://whimsy.apache.org/public/public_podlings.json').json()
