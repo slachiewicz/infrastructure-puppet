@@ -10,7 +10,7 @@ import asfgit.log as log
 import asfgit.util as util
 import subprocess, os, time
 
-locations = ['/x1/repos/asf/', '/x1/repos/private']/
+locations = ['/x1/repos/asf/', '/x1/repos/private']
 
 def main():
     ghurl = "git@github:apache/%s.git" % cfg.repo_name
