@@ -40,6 +40,9 @@ def pelican(cfg, yml):
     pname = m.group(1)
     pname = WSMAP.get(pname, pname)
     
+    # Get notification list
+    pnotify = yml.get('notify', cfg.recips[0])
+    
     # Contact buildbot 2
     bbusr, bbpwd = open("/x1/gitbox/auth/bb2.txt").read().strip().split(':', 1)
     import requests
@@ -58,10 +61,12 @@ def pelican(cfg, yml):
             "outputbranch": target,
             "project": pname,
             "theme": theme,
-            "notify": cfg.recips[0],
+            "notify": pnotify,
         }
     }
+    print("Triggering pelican build...")
     s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
+    print("Done!")
 
 
 def github(cfg, yml):
