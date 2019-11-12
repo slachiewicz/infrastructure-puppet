@@ -445,9 +445,7 @@ def base_parser():
 def start_client():
    global CONFIG
    # Figure out who we are
-   me = socket.gethostname()
-   if 'apache.org' not in me:
-      me += '.apache.org'
+   me = socket.getfqdn()
    
    # Load YAML
    CONFIG = yaml.load(open('./blocky.yaml').read())
