@@ -58,6 +58,7 @@ def pelican(cfg, yml):
             "outputbranch": target,
             "project": pname,
             "theme": theme,
+            "notify": cfg.recips[0],
         }
     }
     s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
