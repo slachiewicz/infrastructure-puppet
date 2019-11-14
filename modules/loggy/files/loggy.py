@@ -33,7 +33,7 @@ import socket
 import hashlib, random
 from collections import defaultdict, namedtuple
 from threading import Thread
-import random, atexit, signal, inspect
+import atexit, signal, inspect
 from threading import Lock
 import subprocess, collections, argparse, grp, pwd, shutil
 import ConfigParser
@@ -775,7 +775,6 @@ def main():
         uid = pwd.getpwnam(args.user[0])[2]
         os.setuid(uid)
     
-    global pending
     loggy = Loggy()
     loggy.start()
     
