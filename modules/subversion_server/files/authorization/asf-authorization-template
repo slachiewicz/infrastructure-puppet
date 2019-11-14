@@ -276,7 +276,6 @@ portals={ldap:cn=portals,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 portals-pmc={reuse:pit-authorization:portals-pmc}
 qpid={ldap:cn=qpid,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 qpid-pmc={reuse:pit-authorization:qpid-pmc}
-edgent={ldap:cn=edgent,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ranger={ldap:cn=ranger,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ranger-pmc={reuse:pit-authorization:ranger-pmc}
 reef={ldap:cn=reef,ou=project,ou=groups,dc=apache,dc=org;attr=member}
@@ -1012,9 +1011,6 @@ buildbot = rw
 [/incubator/public]
 @committers= rw
 @apsite = rw
-
-[/incubator/edgent]
-@edgent = rw
 
 [/incubator/rya]
 @rya = rw
