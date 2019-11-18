@@ -6,6 +6,7 @@ classes:
   - rsync_asf
   - stunnel_asf
   - kif
+  - genmeta_ldap
 
 
 rsync_asf::cron_hour: 19
