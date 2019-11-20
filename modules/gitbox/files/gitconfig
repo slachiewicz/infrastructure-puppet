@@ -2,3 +2,6 @@
         fsckObjects = true
 #        denyDeletes = true
 #        denyNonFastForwards = true
+
+[multimailhook]
+	commitBrowseURL = https://github.com/apache/%(repo_shortname)s/commit/%(id)s
