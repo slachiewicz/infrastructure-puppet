@@ -23,3 +23,6 @@
     max-size = 90000
     # buildbot-project = name # The buildbot project to notify
     # cia-project = name # The CIA.vc project to report to
+
+[multimailhook]
+	commitBrowseURL = https://github.com/apache/%(repo_shortname)s/commit/%(id)s
