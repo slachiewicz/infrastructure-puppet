@@ -36,6 +36,7 @@ def _git_config(key, default=NO_DEFAULT):
             raise
         return default
 
+DEFAULT_COMMIT_URL = 'https://github.com/apache/%(repo_shortname)s/commit/%(id)s'
 DEFAULT_SUBJECT = "%(repo)s git commit: %(subject)s"
 repo_name = _repo_name()
 repo_dir = os.path.join(os.environ.get("GIT_PROJECT_ROOT"), "%s.git" % repo_name)
@@ -46,6 +47,8 @@ recips = filter(lambda x: len(x) > 5, recips)
 subject_fmt = _git_config("hooks.asfgit.subject-fmt", DEFAULT_SUBJECT)
 max_size = int(_git_config("hooks.asfgit.max-size"))
 max_emails = int(_git_config("hooks.asfgit.max-emails"))
+
+
 
 # END ASF PART
 
@@ -2426,7 +2429,7 @@ class Environment(object):
         self.commit_email_format = "text"
         self.html_in_intro = False
         self.html_in_footer = False
-        self.commitBrowseURL = None
+        self.commitBrowseURL = DEFAULT_COMMIT_URL
         self.maxcommitemails = 500
         self.diffopts = ['--stat', '--summary', '--find-copies-harder']
         self.graphopts = ['--oneline', '--decorate']
