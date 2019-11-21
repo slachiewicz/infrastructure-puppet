@@ -247,7 +247,7 @@ def main():
                     print("Status: 500 NOT Okay\r\nContent-Type: application/json\r\n\r\n")
                     print(json.dumps({
                         'created': False,
-                        'error': e['message']
+                        'error': e.output
                     }))
 
 
