@@ -3,7 +3,7 @@
 class genmeta_ldap(
   # Located in eyaml
   $genmeta_rw_pw	= '',
-)
+) {
 
   file {
       "/usr/local/bin/refresh_meta.sh":
@@ -26,3 +26,4 @@ class genmeta_ldap(
 #      command     => "/usr/local/bin/refresh_meta.sh",
 #      environment => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh", # lint:ignore:double_quoted_strings
 #  }  
+}
