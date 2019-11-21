@@ -77,7 +77,11 @@ datadog_agent::tags:
   - 'puppetversion:%{puppetversion}'
   - 'datacenter:%{dd_autotag_colo}'
   - 'external_ip:%{external_ip}'
+  - 'ipaddress_primary:%{ipaddress_primary}'
   - 'ubuntu_version:%{asfosrelease}'
+  - 'monitor:load'
+  - 'monitor:space'
+  - 'monitor:memory'
 
 fail2ban::disable: false
 fail2ban::ignoreip:
