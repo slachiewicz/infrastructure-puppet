@@ -26,7 +26,7 @@ ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org -s one cn=* dn objec
 }
 
 # Remove ou=meta
-ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" > /dev/null 2>&1 || {
+ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" || {
     echo "$0: LDAP deletion of ou=meta failed, aborting"
     rm $TEMPFILE
     exit 1

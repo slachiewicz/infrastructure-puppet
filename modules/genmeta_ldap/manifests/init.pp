@@ -21,9 +21,8 @@ class genmeta_ldap(
   }
   cron {
     'Refresh ou=meta':
-      user        => root,
-      minute      => '19',
-      command     => '/usr/local/bin/refresh_meta.sh',
-      environment => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin\nSHELL=/bin/sh';
+      user    => root,
+      minute  => '19',
+      command => '/usr/local/bin/refresh_meta.sh',
   }
 }
