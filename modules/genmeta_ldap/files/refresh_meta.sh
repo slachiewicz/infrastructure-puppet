@@ -26,7 +26,7 @@ ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org -s one cn=* dn objec
 }
 
 # Remove ou=meta
-ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" || {
+ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" > /dev/null 2>&1 || {
     echo "$0: LDAP deletion of ou=meta failed, aborting"
     rm $TEMPFILE
     exit 1
@@ -36,7 +36,7 @@ ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=o
 # could be done with ldapmodify -F doing the delete and the re-addition in a single step reduce that window?
 
 # Run the ldif file to re-create ou=meta from queried data.
-ldapadd -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -f $TEMPFILE -c || {
+ldapadd -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -f $TEMPFILE -c > /dev/null 2>&1|| {
     echo "$0: LDAP addition of ou=meta failed, exiting without cleaning up"
     exit 1
 }
