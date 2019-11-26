@@ -36,7 +36,7 @@ ldapsearch -x -LLL -b cn=member,ou=groups,dc=apache,dc=org objectClass memberUid
     exit 1
 }
 
- Remove ou=meta
+# Remove ou=meta
 ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" || {
     echo "$0: LDAP deletion of ou=meta failed, aborting"
     rm $TEMPFILE
