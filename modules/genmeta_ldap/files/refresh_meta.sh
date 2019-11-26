@@ -32,7 +32,7 @@ ldapsearch -x -LLL -b cn=member,ou=groups,dc=apache,dc=org objectClass memberUid
     sed -e 's/Uid//' -e 's/posixGroup/groupOfNames/' -e 's/,/,ou=meta,/' |\
     awk '{if($1=="member:"){print $1" uid="$2",ou=people,dc=apache,dc=org"}else{print $0}}' >> $TEMPFILE || {
     echo "$0: LDAP Search failed, aborting"
-    rm $TEMPFIL
+    rm $TEMPFILE
     exit 1
 }
 
