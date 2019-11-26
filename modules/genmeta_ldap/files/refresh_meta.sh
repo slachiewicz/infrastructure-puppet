@@ -18,6 +18,8 @@ META_INFO="dn: ou=meta,ou=groups,dc=apache,dc=org\nobjectClass: top\nobjectClass
 
 echo -e $META_INFO > $TEMPFILE
 set -o pipefail
+
+# Get all information necessary to recreate all of the project groups
 ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org -s one cn=* dn objectClass owner |\
     sed -e 's/,ou=project/-pmc,ou=meta/' -e 's/owner/member/' >> $TEMPFILE || {
     echo "$0: LDAP search failed, aborting"
@@ -25,7 +27,16 @@ ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org -s one cn=* dn objec
     exit 1
 }
 
-# Remove ou=meta
+# Get all information necessary to create a members group in ou=meta
+ldapsearch -x -LLL -b cn=member,ou=groups,dc=apache,dc=org objectClass memberUid |\
+	sed -e 's/Uid//' -e 's/posixGroup/groupOfNames/' -e 's/,/,ou=meta,/' |\
+	awk '{if($1=="member:"){print $1" uid="$2",ou=people,dc=apache,dc=org"}else{print $0}}' >> $TEMPFILE || {
+	echo "$0: LDAP Search failed, aborting"
+	rm $TEMPFILE
+	exit 1
+}
+
+ Remove ou=meta
 ldapdelete -x -y $AUTHFILE -D "cn=genmeta-rw,ou=users,ou=services,dc=apache,dc=org" -r "ou=meta,ou=groups,dc=apache,dc=org" || {
     echo "$0: LDAP deletion of ou=meta failed, aborting"
     rm $TEMPFILE
