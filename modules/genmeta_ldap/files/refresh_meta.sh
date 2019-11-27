@@ -29,7 +29,7 @@ ldapsearch -x -LLL -b ou=project,ou=groups,dc=apache,dc=org -s one cn=* dn objec
 
 # Get all information necessary to create a members group in ou=meta
 ldapsearch -x -LLL -b cn=member,ou=groups,dc=apache,dc=org objectClass memberUid |\
-    sed -e 's/Uid//' -e 's/posixGroup/groupOfNames/' -e 's/,/,ou=meta,/' |\
+    sed -e 's/Uid//' -e 's/posixGroup/groupOfNames/' -e 's/,/,ou=meta,/' -e 's/cn=member/cn=member-meta/' |\
     awk '{if($1=="member:"){print $1" uid="$2",ou=people,dc=apache,dc=org"}else{print $0}}' >> $TEMPFILE || {
     echo "$0: LDAP Search failed, aborting"
     rm $TEMPFILE
