@@ -28,6 +28,7 @@ import time
 import sys
 import argparse
 import syslog
+import copy
 
 DEBUG = False
 CONFIG = None
@@ -36,7 +37,7 @@ MAX_IPTABLES_TRIES = 10
 IPTABLES_EXEC = '/sbin/iptables'
 IP6TABLES_EXEC = '/sbin/ip6tables'
 LAST_UPLOAD = 0
-UPLOAD_FREQUENCY = 180 # Upload iptables every 3 minutes
+UPLOAD_FREQUENCY = 180
 
 def getbans(chain = 'INPUT'):
    """ Gets a list of all bans in a chain """
@@ -73,6 +74,7 @@ def getbans(chain = 'INPUT'):
                   'protocol': protocol,
                   'option': option,
                   'source': source,
+                  'asNet': netaddr.IPNetwork(source),
                   'destination': destination,
                   'extensions': extensions,
                }
@@ -111,6 +113,7 @@ def getbans(chain = 'INPUT'):
                   'protocol': protocol,
                   'option': '---',
                   'source': source,
+                  'asNet': netaddr.IPNetwork(source),
                   'destination': destination,
                   'extensions': extensions,
                }
@@ -185,18 +188,16 @@ def inlist(banlist, ip):
    if '/' in ip:
       me = netaddr.IPNetwork(ip)
       for entry in banlist:
-         source = entry['source']
-         if '/' not in source: # We don't want to do block vs block just yet
-            them = netaddr.IPAddress(source)
-            if them in me:
-               lines.append(entry)
+         them = entry['asNet']
+         if them in me:
+            lines.append(entry)
    
    # Then the reverse; IP found within blocks?
    else:
       me = netaddr.IPAddress(ip)
       for entry in banlist:
          if '/' in entry['source'] and '/0' not in entry['source']: # blocks, but not /0
-            them = netaddr.IPNetwork(entry['source'])
+            them = entry['asNet']
             if me in them:
                lines.append(entry)
    return lines
@@ -318,15 +319,20 @@ def run_new_checks():
    
    if LAST_UPLOAD < (time.time() - UPLOAD_FREQUENCY):
       try:
+         mylistbare = copy.deepcopy(mylist)
+         for el in mylistbare:
+            del el['asNet']
          js = {
             'hostname': CONFIG['client']['hostname'],
-            'iptables': mylist
+            'iptables': mylistbare
          }
          apiurl = "%s/myrules" % CONFIG['server']['apiurl']
          rv = requests.put(apiurl, json = js)
+         print(rv.status_code)
          assert(rv.status_code == 200)
          LAST_UPLOAD = time.time()
-      except:
+      except Exception as e:
+         print(e)
          print(rv.text)
          syslog.syslog(syslog.LOG_WARNING, "Could not send my iptables list to server at %s - server down?" % apiurl)
 
