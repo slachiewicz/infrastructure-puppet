@@ -159,7 +159,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyPass / http://127.0.0.1:8080/
         ProxyPassReverse / http://127.0.0.1:8080/
         ProxyPassReverse  /  http://builds.apache.org/
-        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L
+        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
         RewriteRule "/analysis$" "/analysis/" [R]
         RewriteRule "/analysis/(.*)$" "https://cwiki.apache.org/confluence/display/INFRA/SonarQube+Analysis" [R=302,END]
 
