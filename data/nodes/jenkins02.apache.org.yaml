@@ -120,23 +120,6 @@ file:
     group: 'root'
     mode: '0600'
 
-vhosts_asf::vhosts::vhosts:
-  analysis-80:
-    vhost_name: '*'
-    priority: '14'
-    servername: 'analysis-test.apache.org'
-    port: 80
-    ssl: false
-    docroot: '/var/www'
-    error_log_file: 'analysis.apache.org.error.log'
-    access_log_file: 'analysis.apache.org.access.log'
-    custom_fragment: |
-      <Location "/server-status">
-        SetHandler server-status
-        Require local
-      </Location>
-      RedirectMatch permanent ^((?!\/(server-status)).*)$ https://builds.apache.org/analysis/$1
-
   jenkins-master-80:
     vhost_name: '*'
     priority: '12'
@@ -173,16 +156,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyRequests     Off
         AllowEncodedSlashes On
         RewriteRule "/analysis$" "/analysis/" [R]
-        RewriteRule "/analysis/(.*)$" "http://analysis-vm2.apache.org:8999/analysis/$1" [P]
-        ProxyPassReverse "/analysis/" "https://builds.apache.org/analysis/"
-        ProxyPass / http://127.0.0.1:8080/
-        ProxyPassReverse / http://127.0.0.1:8080/
-        ProxyPassReverse  /  http://builds.apache.org/
-        RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
-        Header set Access-Control-Allow-Origin "*"
-        Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
-        Header set Access-Control-Allow-Headers "X-PINGOTHER"
-        Header set Access-Control-Max-Age "1728000"
+        RewriteRule "/analysis/(.*)$" "https://cwiki.apache.org/confluence/display/INFRA/SonarQube+Analysis" [R=302,END]
 
 rsync_asf::cron_hour: 20
 rsync_asf::cron_minute: 07
