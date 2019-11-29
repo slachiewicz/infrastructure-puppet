@@ -120,6 +120,7 @@ file:
     group: 'root'
     mode: '0600'
 
+vhosts_asf::vhosts::vhosts:
   jenkins-master-80:
     vhost_name: '*'
     priority: '12'
