@@ -20,12 +20,6 @@ relays:
         hook: https://readthedocs.org/api/v2/webhook/apache-airavata-django-portal/60376/
         format: json
         enabled: true
-    skywalking:
-        repos: skywalking
-        events: all
-        hook: https://builds.apache.org/github-webhook/
-        format: json
-        enabled: true
     hadoop:
         repos: hadoop
         events: all
