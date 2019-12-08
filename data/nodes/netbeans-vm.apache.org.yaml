@@ -119,8 +119,7 @@ vhosts_asf::vhosts::vhosts:
 # Proxy the old netbeans plugin portal and offer it as SSL/TLS enabled download
 # NetBeans checks the updatecenter download and prevents downgrades from https
 # to http and so this must not be a redirect
-        RewriteEngine on
-        RewriteRule "^/updates/11.0/(.*)$" "http://plugins.netbeans.org/nbpluginportal/updates/11.0/%%{}{REQUEST_URI}" [P]
+        ProxyPass /updates/11.0/ http://plugins.netbeans.org/nbpluginportal/updates/11.0/
       </Directory>
 
       ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
