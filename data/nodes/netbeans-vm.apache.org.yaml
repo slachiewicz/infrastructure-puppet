@@ -75,6 +75,10 @@ vhosts_asf::vhosts::vhosts:
         AllowOverride None
       </Directory>
 
+      <Location /pluginportal2/>
+        ProxyPass http://plugins.netbeans.org/nbpluginportal/
+      </Location>
+
       ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
       <Directory "/usr/lib/cgi-bin">
           AllowOverride None
@@ -110,16 +114,6 @@ vhosts_asf::vhosts::vhosts:
       <Directory />
         Options FollowSymLinks
         AllowOverride None
-      </Directory>
-
-      <Directory /pluginportal2/>
-        DirectoryIndex index.html
-        Options FollowSymLinks
-        AllowOverride None
-# Proxy the old netbeans plugin portal and offer it as SSL/TLS enabled download
-# NetBeans checks the updatecenter download and prevents downgrades from https
-# to http and so this must not be a redirect
-        ProxyPass /updates/11.0/ http://plugins.netbeans.org/nbpluginportal/updates/11.0/
       </Directory>
 
       ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
