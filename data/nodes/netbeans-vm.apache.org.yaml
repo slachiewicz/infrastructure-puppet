@@ -2,6 +2,8 @@
 classes:
   - apache
   - apache::mod::rewrite
+  - apache::mod::proxy
+  - apache::mod::proxy_http
   - apache::mod::ssl
   - letsencrypt
   - netbeans_pvm_asf
@@ -73,6 +75,10 @@ vhosts_asf::vhosts::vhosts:
         Options FollowSymLinks
         AllowOverride None
       </Directory>
+
+      <Location /pluginportal2/>
+        ProxyPass http://plugins.netbeans.org/nbpluginportal/
+      </Location>
 
       ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
       <Directory "/usr/lib/cgi-bin">
