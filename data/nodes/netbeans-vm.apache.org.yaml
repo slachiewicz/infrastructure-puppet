@@ -3,6 +3,7 @@ classes:
   - apache
   - apache::mod::rewrite
   - apache::mod::proxy
+  - apache::mod::proxy_http
   - apache::mod::ssl
   - letsencrypt
   - netbeans_pvm_asf
