@@ -226,6 +226,14 @@ vhosts_whimsy::vhosts::vhosts:
       - /secretary/
       - /board/publish_minutes
 
+    - name: ASF Members and Incubator PMC
+      group:
+      - ldap-alias-member
+      - ldap-alias-incubator-pmc
+      attribute: ALIAS
+      locations:
+      - /test/member-inc/
+
     custom_fragment: |
       RemoteIPHeader X-Forwarded-For
 
