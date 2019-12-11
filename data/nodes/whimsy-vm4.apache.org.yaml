@@ -7,6 +7,7 @@ classes:
   - apache::mod::rewrite
   - blocky
   - rvm
+  - vhosts_whimsy::custom_config
   - vhosts_whimsy::modules
   - vhosts_whimsy::vhosts
   - whimsy_server
