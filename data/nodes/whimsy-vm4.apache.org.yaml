@@ -226,13 +226,29 @@ vhosts_whimsy::vhosts::vhosts:
       - /secretary/
       - /board/publish_minutes
 
+    #++ TEMP Tests of alias handling
+    - name: ASF Members
+      group:
+      - ldap-alias-member
+      attribute: ALIAS
+      locations:
+      - /test/member/
+
+    - name: Incubator PMC
+      group:
+      - ldap-alias-incubator-pmc
+      attribute: ALIAS
+      locations:
+      - /test/incubator/
+
     - name: ASF Members and Incubator PMC
       group:
       - ldap-alias-member
       - ldap-alias-incubator-pmc
       attribute: ALIAS
       locations:
-      - /test/member-inc/
+      - /test/member-incubator/
+      #-- TEMP
 
     custom_fragment: |
       RemoteIPHeader X-Forwarded-For
