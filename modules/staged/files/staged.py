@@ -93,7 +93,10 @@ class deploy(threading.Thread):
             XPQ = PUBSUB_QUEUE
             PUBSUB_QUEUE = {}
             for deploydir, opts in XPQ.items():
-                deploy_site(deploydir, opts[0], opts[1], opts[2])
+                try:
+                    deploy_site(deploydir, opts[0], opts[1], opts[2])
+                except Exception as e:
+                    syslog.syslog(syslog.LOG_WARNING, "BORK: Could not deploy to %s: %s" % (deploydir, e))
             time.sleep(5)
 
 def read_chunk(req):
