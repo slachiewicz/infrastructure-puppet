@@ -154,17 +154,17 @@ vhosts_asf::vhosts::vhosts:
       ## Allow the committers group to use the dropdown list.
       ## This is needed to see what lists are available.
       <LocationMatch ^/pmc/$>
-      <RequireAll>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers (/pmc/)"
-        AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute member
-        AuthLDAPGroupAttributeIsDN on
-        AuthLDAPMaxSubGroupDepth 0
-        Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
-      </RequireAll>
-      Options +Indexes
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Committers (/pmc/)"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          AuthLDAPMaxSubGroupDepth 0
+          Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
+        </RequireAll>
+        Options +Indexes
       </LocationMatch>
 
       # Default permissions for private-arch directories that aren't mentioned by mail-private-pmcs.macro
