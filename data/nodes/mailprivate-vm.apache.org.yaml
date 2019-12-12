@@ -53,6 +53,7 @@ apache::custom_config:
          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
          AuthLDAPGroupAttribute memberUid
          AuthLDAPGroupAttributeIsDN Off
+         AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
 vhosts_asf::vhosts::vhosts:
