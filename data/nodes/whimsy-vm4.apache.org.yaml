@@ -100,6 +100,7 @@ apache::custom_config:
          AuthLDAPurl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
          AuthLDAPGroupAttribute memberUid
          AuthLDAPGroupAttributeIsDN Off
+         AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
       # LDAP alias: ASF committer
@@ -107,6 +108,7 @@ apache::custom_config:
         AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
+        AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
       # LDAP alias: PMC chair
@@ -114,6 +116,7 @@ apache::custom_config:
         AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute member
         AuthLDAPGroupAttributeIsDN on
+        AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
       # LDAP alias: Incubator PMC
@@ -121,6 +124,7 @@ apache::custom_config:
         AuthLDAPUrl "ldaps://ldap-us-ro.apache.org:636 ldap-eu-ro.apache.org:636/ou=people,dc=apache,dc=org?uid"
         AuthLDAPGroupAttribute owner
         AuthLDAPGroupAttributeIsDN on
+        AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
 
