@@ -95,7 +95,11 @@ module Puppet::Parser::Functions
 
           # build require statements for each group
           groups = Array(auth['group']).map do |group|
-            "Require ldap-group #{group}"
+            if auth['attribute'] == 'ALIAS' # special processing for aliases
+                "Require #{group}"
+            else
+                "Require ldap-group #{group}"
+            end
           end
 
           # concatenate require statements
@@ -119,15 +123,25 @@ module Puppet::Parser::Functions
           end
 
           # emit auth section
-          section directive, path, %{
-            AuthType Basic
-            AuthName #{auth['name'].inspect}
-            AuthBasicProvider ldap
-            AuthLDAPUrl #{@ldap.inspect}
-            AuthLDAPGroupAttribute #{auth['attribute']}
-            AuthLDAPGroupAttributeIsDN #{isdn}
-            #{test}
-          }
+          if auth['attribute'] == 'ALIAS' # alias does not require Attribute[IsDN]
+              section directive, path, %{
+                AuthType Basic
+                AuthName #{auth['name'].inspect}
+                AuthBasicProvider ldap
+                AuthLDAPUrl #{@ldap.inspect}
+                #{test}
+              }
+          else
+              section directive, path, %{
+                AuthType Basic
+                AuthName #{auth['name'].inspect}
+                AuthBasicProvider ldap
+                AuthLDAPUrl #{@ldap.inspect}
+                AuthLDAPGroupAttribute #{auth['attribute']}
+                AuthLDAPGroupAttributeIsDN #{isdn}
+                #{test}
+              }
+          end
         end
       end
     end
