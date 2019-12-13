@@ -64,6 +64,7 @@ apache::custom_config:
         Use RenameProject "connectors"   "manifoldcf"
         Use RenameProject "deft"         "awf"
         Use RenameProject "fleece"       "johnzon"
+        Use RenameProject "mesatee"      "teaclave"
         Use RenameProject "mysos"        "cotton"
         Use RenameProject "ooo"          "openoffice"
         Use RenameProject "openejb"      "tomee"
