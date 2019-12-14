@@ -100,6 +100,7 @@ def github(cfg, yml):
         topics = yml.get('labels')
         ghp_branch = yml.get('ghp_branch')
         ghp_path = yml.get('ghp_path', '/docs')
+        autolink = yml.get('autolink') # TBD: https://help.github.com/en/github/administering-a-repository/configuring-autolinks-to-reference-external-resources
 
         if desc:
             repo.edit(description=desc)
