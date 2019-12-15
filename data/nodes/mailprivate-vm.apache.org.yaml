@@ -53,6 +53,7 @@ apache::custom_config:
          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
          AuthLDAPGroupAttribute memberUid
          AuthLDAPGroupAttributeIsDN Off
+         AuthLDAPMaxSubGroupDepth 0
       </AuthzProviderAlias>
 
 vhosts_asf::vhosts::vhosts:
@@ -102,6 +103,7 @@ vhosts_asf::vhosts::vhosts:
               AuthLDAPGroupAttribute owner
               AuthLDAPGroupAttributeIsDN On
               AuthLDAPRemoteUserIsDN On
+              AuthLDAPMaxSubGroupDepth 0
               Require ldap-group cn=$cn,ou=project,ou=groups,dc=apache,dc=org
             </RequireAll>
            <RequireAll>
@@ -122,6 +124,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN Off
+          AuthLDAPMaxSubGroupDepth 0
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
       </LocationMatch>
@@ -137,6 +140,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap-us-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute member
           AuthLDAPGroupAttributeIsDN on
+          AuthLDAPMaxSubGroupDepth 0
           Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
         </RequireAll>
       </LocationMatch>
@@ -150,16 +154,17 @@ vhosts_asf::vhosts::vhosts:
       ## Allow the committers group to use the dropdown list.
       ## This is needed to see what lists are available.
       <LocationMatch ^/pmc/$>
-      <RequireAll>
-        AuthType Basic
-        AuthBasicProvider ldap
-        AuthName "ASF Committers (/pmc/)"
-        AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
-        AuthLDAPGroupAttribute member
-        AuthLDAPGroupAttributeIsDN on
-        Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
-      </RequireAll>
-      Options +Indexes
+        <RequireAll>
+          AuthType Basic
+          AuthBasicProvider ldap
+          AuthName "ASF Committers (/pmc/)"
+          AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
+          AuthLDAPGroupAttribute member
+          AuthLDAPGroupAttributeIsDN on
+          AuthLDAPMaxSubGroupDepth 0
+          Require ldap-group cn=committers,ou=role,ou=groups,dc=apache,dc=org
+        </RequireAll>
+        Options +Indexes
       </LocationMatch>
 
       # Default permissions for private-arch directories that aren't mentioned by mail-private-pmcs.macro
@@ -179,6 +184,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
+          AuthLDAPMaxSubGroupDepth 0
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
         Options +Indexes
@@ -202,6 +208,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
+          AuthLDAPMaxSubGroupDepth 0
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
         Options +Indexes
@@ -216,6 +223,7 @@ vhosts_asf::vhosts::vhosts:
           AuthLDAPurl "ldaps://ldap-eu-ro.apache.org/ou=people,dc=apache,dc=org?uid"
           AuthLDAPGroupAttribute memberUid
           AuthLDAPGroupAttributeIsDN off
+          AuthLDAPMaxSubGroupDepth 0
           Require ldap-group cn=member,ou=groups,dc=apache,dc=org
         </RequireAll>
       </Location>
