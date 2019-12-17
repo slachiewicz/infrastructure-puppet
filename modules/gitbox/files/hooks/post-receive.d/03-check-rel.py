@@ -49,11 +49,10 @@ def main():
             notify(TMPL_REWRITE % tmplvars, "GitBox: Rewind attempted on %s in %s" % (ref.name, cfg.repo_name))
         if ref.is_tag():
             continue
-        if cfg.no_merges:
+        if cfg.no_merges and ref.is_protected(cfg.protect):
             for commit in ref.commits():
                 # If protected ref and merge is attempted:
-                if commit.is_merge() \
-                        and ref.is_protected(cfg.protect):
+                if commit.is_merge():
                     tmplvars['what'] = 'merge'
                     notify(TMPL_REWRITE % tmplvars, "GitBox: Merge attempted on %s in %s" % (ref.name, cfg.repo_name))
 
