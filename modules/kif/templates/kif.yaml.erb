@@ -58,8 +58,8 @@ rules:
             maxlocalconns:  <%= @httpd_connections %>
         runlist:
             - 'service apache2 restart'
-    gitwebzombies:
-        description:    'Any gitweb process caught in zombie mode'
+    gitzombies:
+        description:    'Any git process caught in zombie mode or timing out'
         procid:         '/usr/bin/git'
         triggers:
             # This can be any process state (zombie, sleeping, running, etc)
