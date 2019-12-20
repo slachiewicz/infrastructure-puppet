@@ -125,6 +125,7 @@ def issueClosed(payload, ml = "foo@bar"):
     if 'pull_request' in payload:
         fmt['type'] = 'pull request'
     fmt['id'] = obj['number']
+    fmt['node_id'] = obj['node_id']
     fmt['text'] = "" # empty line when closing, so as to not confuse
     fmt['title'] = obj['title']
     fmt['link'] = obj['html_url']
@@ -167,6 +168,7 @@ def ticketComment(payload):
     # This is different from open/close payloads!
     fmt['user'] = comment['user']['login']
     fmt['id'] = obj['number']
+    fmt['node_id'] = obj['node_id']
     fmt['text'] = comment['body']
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
@@ -184,6 +186,7 @@ def reviewComment(payload):
         fmt['type'] = 'pull request'
     fmt['user'] = comment['user']['login']
     fmt['id'] = obj['number']
+    fmt['node_id'] = obj['node_id']
     fmt['text'] = comment['body']
     fmt['title'] = obj['title']
     fmt['link'] = comment['html_url']
@@ -372,7 +375,7 @@ def main():
         # Go ahead and generate the template
         email = formatMessage(fmt)
     if email:
-        thread_id = "<%s.%s.%s.gitbox@gitbox.apache.org>" % (project, fmt['id'], fmt['node_id'])
+        thread_id = "<%s.%s.%s.gitbox@gitbox.apache.org>" % (project, fmt['id'], fmt.get('node_id', '--'))
         message_id = thread_id if isNew else None
         reply_to_id = thread_id if not isNew else None
         sendEmail(mailto, email['subject'], email['message'], message_id = message_id, reply_to_id = reply_to_id)
