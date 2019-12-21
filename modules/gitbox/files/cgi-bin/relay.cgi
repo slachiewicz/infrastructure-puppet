@@ -58,8 +58,13 @@ if 'pull_request' in PAYLOAD:
     what = 'pr'
 elif 'issue' in PAYLOAD:
     what = 'issue'
-    
-if what == 'pr':
+elif 'comment' in PAYLOAD:
+    if 'pull_request' in PAYLOAD['comment']:
+        what = 'pr_comment'
+    else:
+        what = 'issue_comment'
+
+if what == 'pr' or what == 'pr_comment':
   is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
