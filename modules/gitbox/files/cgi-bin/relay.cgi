@@ -58,10 +58,9 @@ if 'pull_request' in PAYLOAD:
     what = 'pr'
 elif 'issue' in PAYLOAD:
     what = 'issue'
-elif 'comment' in PAYLOAD:
-    if 'pull_request' in PAYLOAD['comment']:
+    if 'pull_request' in PAYLOAD['issue']:
         what = 'pr_comment'
-    else:
+    elif 'comment' in PAYLOAD['issue']:
         what = 'issue_comment'
 
 if what == 'pr' or what == 'pr_comment':
