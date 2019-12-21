@@ -63,12 +63,19 @@ elif 'issue' in PAYLOAD:
     elif 'comment' in PAYLOAD['issue']:
         what = 'issue_comment'
 
-if what == 'pr' or what == 'pr_comment':
+if what == 'pr':
   is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
     sys.exit(0)
 
+if what == 'pr_comment':
+  is_asf = gh_to_ldap(PAYLOAD['comment']['user']['login'])
+  if not is_asf:
+    print("Status: 204 Handled\r\n\r\n")
+    sys.exit(0)
+
+    
 for key, entry in YML['relays'].items():
     if fnmatch.fnmatch(repo, entry['repos']): # If yaml entry glob-matches the repo, then...
         hook = entry.get('hook') # Hook URL to post to
