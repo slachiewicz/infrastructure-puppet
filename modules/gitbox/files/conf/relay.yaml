@@ -40,7 +40,7 @@ relays:
         enabled: true
     jenkins-ghprb:
         repos: "*"
-        events: pr
+        events: pr pr_comment
         hook: https://builds.apache.org/ghprbhook/
         format: json
         enabled: true
