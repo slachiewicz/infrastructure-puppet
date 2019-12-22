@@ -100,6 +100,12 @@ class apmirror (
     creates => '/var/www/www.apache.org/content',
     require => [ Package['subversion'], User[$svnwc_user], Group[$groupname], Class['apache'] ],
   }
+  
+  exec { "check_dist_dir":
+    command => "true",
+    path    =>  ["/usr/bin","/usr/sbin", "/bin"],
+    onlyif  => "test -d /var/www/www.apache.org/dist"
+  }
 
   file { 'writable_mirrors':
     ensure  => 'directory',
@@ -108,6 +114,15 @@ class apmirror (
     owner   => $svnwc_user,
     group   => $groupname,
     require => [ Exec['apache.org co'], User[$svnwc_user] ],
+  }
+  
+  file { 'zzz_perms':
+    ensure  => 'directory',
+    path    => '/var/www/www.apache.org/dist/zzz',
+    require => [ Exec['check_dist_dir'], User[$username] ],
+    mode    => '2775',
+    owner   => $username,
+    group   => $groupname,
   }
 
   exec { 'mirmon list prime':
