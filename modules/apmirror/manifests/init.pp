@@ -104,7 +104,7 @@ class apmirror (
   exec { "check_dist_dir":
     command => "true",
     path    =>  ["/usr/bin","/usr/sbin", "/bin"],
-    onlyif  => "test -d /www/www.apache.org/dist"
+    onlyif  => "test -d /var/www/www.apache.org/dist"
   }
 
   file { 'writable_mirrors':
