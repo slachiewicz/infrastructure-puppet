@@ -55,6 +55,7 @@ function handle(r)
                     <body>
                      
                         <h2>You've been blocked from using services provided by The Apache Software Foundation.</h2>
+                        <p>Your IP, <kbd>%s</kbd>, has been blocked by our automated ban system from visiting this page.</p>
                         <quote><p>The (automated) reason for your ban is: <kbd>%s</kbd>.<br/></quote>
                         <p><big>The following actions are <strong>NOT</strong> allowed on ASF services:</big></p>
                         <ul>
@@ -78,7 +79,7 @@ function handle(r)
                         <p><b>IMPORTANT:</b><br/>Before you contact the Apache Infrastructure team, make sure the above reported abuse activity is not taking place and will not take place in the future. If you have been banned for excessive use of a service, ensure that this activity is curbed <u>and make sure to notify infrastructure that you have taken these steps.</u></p>
                     </body>
                     </html>
-               ]]):format(is_blocked))
+               ]]):format(r.useragent_ip, is_blocked))
         return apache2.DONE
     else
         return apache2.DECLINED
