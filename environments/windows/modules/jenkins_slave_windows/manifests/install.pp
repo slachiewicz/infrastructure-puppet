@@ -19,7 +19,7 @@ class jenkins_slave_windows::install (
   #### Install winSVN ####
   package { 'CMake':
     ensure => present,
-    source => 'c:\temp\cmake-3.7.2-win64-x64.msi',
+    source => 'c:\temp\cmake-3.16.2-win64-x64.msi',
   }
 
   #### Install Firefox silently for the system, but only if not already installed

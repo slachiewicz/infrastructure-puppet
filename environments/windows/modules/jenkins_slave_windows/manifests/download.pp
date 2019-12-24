@@ -15,9 +15,9 @@ class jenkins_slave_windows::download (
   $forrest = $jenkins_slave_windows::params::forrest,
 ) {
   include jenkins_slave_windows::params
-  #### Download CMake 3.7.2 from Bintray
+  #### Download CMake 3.16.2 from Bintray
   download_file { 'Download Cmake from bintray' :
-    url                   => 'http://apache.bintray.com/WindowsPackages/cmake-3.7.2-win64-x64.msi',
+    url                   => 'http://apache.bintray.com/WindowsPackages/cmake-3.16.2-win64-x64.msi',
     destination_directory => 'C:\temp',
   }
   #### Download cygwin from Bintray
