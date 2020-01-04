@@ -210,7 +210,7 @@ apache::custom_config:
         RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
         
         # Alias for internal sub-root rewrites such as Lucene docs (INFRA-19439)
-        AliasMatch ^/__root/(([-a-z0-9]+\.?)+)\/?(.*)$ /www/$1/$3
+        RewriteRule /__root/(([-a-z0-9]+\.?)+)\/?(.*)$ /www/$1/$3
       </Macro>
 
   aoo:
