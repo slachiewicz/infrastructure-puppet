@@ -7,6 +7,7 @@ classes:
   - stunnel_asf
   - kif
   - genmeta_ldap
+  - ssl::name::wildcard_apache_org
 
 
 rsync_asf::cron_hour: 19
