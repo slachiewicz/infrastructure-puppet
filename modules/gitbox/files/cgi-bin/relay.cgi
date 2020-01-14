@@ -64,13 +64,29 @@ elif 'issue' in PAYLOAD:
         what = 'issue_comment'
 
 if what == 'pr':
+  # Is Proper Committer?
   is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
+  # Deemed safe committer by .asf.yaml?
+  if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
+        ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
+        if PAYLOAD['pull_request']['user']['login'] in ghprb_whitelist:
+            is_asf = True
+            log_entry('whitelist', "%s [%s]: %s payload for %s allowed via GHPRB Whitelist for %s" % (DATE, GUID, what, hook, PAYLOAD['pull_request']['user']['login']))
+  # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
     sys.exit(0)
 
 if what == 'pr_comment':
+  # Is Proper Committer?
   is_asf = gh_to_ldap(PAYLOAD['comment']['user']['login'])
+  # Deemed safe committer by .asf.yaml?
+  if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
+        ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
+        if PAYLOAD['comment']['user']['login'] in ghprb_whitelist:
+            is_asf = True
+            log_entry('whitelist', "%s [%s]: %s payload for %s allowed via GHPRB Whitelist for %s" % (DATE, GUID, what, hook, PAYLOAD['comment']['user']['login']))
+  # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
     sys.exit(0)

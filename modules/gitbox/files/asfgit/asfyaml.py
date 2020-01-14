@@ -15,6 +15,18 @@ WSMAP = {
     'infrastructure': 'infra',
 }
 
+def jenkins(cfg, yml):
+    
+    # GitHub PR Builder Whitelist for known (safe) contributors
+    ghprb_whitelist = yml.get('github_whitelist')
+    if ghprb_whitelist and type(ghprb_whitelist) is list:
+        ghwl = "\n".join(ghprb_whitelist)
+        print("Updating GHPRB whitelist for GitHub...")
+        with open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % cfg.repo_name, "w") as f:
+            f.write(ghwl)
+            f.close()
+        print("Whitelist updated!")
+
 def jekyll(cfg, yml):
     """ Jekyll auto-build """
     
