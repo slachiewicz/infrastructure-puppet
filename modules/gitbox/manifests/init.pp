@@ -111,6 +111,11 @@ $pbcsPwd  = ''
       owner  => 'www-data',
       group  => 'www-data',
       mode   => '0750';
+    '/x1/gitbox/conf/ghprb-whitelist':
+      ensure => directory,
+      owner  => 'www-data',
+      group  => 'www-data',
+      mode   => '0750';
   }
 
   file {
