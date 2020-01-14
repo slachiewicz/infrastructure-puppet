@@ -64,13 +64,25 @@ elif 'issue' in PAYLOAD:
         what = 'issue_comment'
 
 if what == 'pr':
+  # Is Proper Committer?
   is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
+  # Deemed safe committer by .asf.yaml?
+  if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
+        ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
+        is_asf = PAYLOAD['pull_request']['user']['login'] in ghprb_whitelist
+  # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
     sys.exit(0)
 
 if what == 'pr_comment':
+  # Is Proper Committer?
   is_asf = gh_to_ldap(PAYLOAD['comment']['user']['login'])
+  # Deemed safe committer by .asf.yaml?
+  if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
+        ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
+        is_asf = PAYLOAD['comment']['user']['login'] in ghprb_whitelist
+  # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
     sys.exit(0)
