@@ -22,7 +22,7 @@ def jenkins(cfg, yml):
     if ghprb_whitelist and type(ghprb_whitelist) is list:
         ghwl = "\n".join(ghprb_whitelist)
         print("Updating GHPRB whitelist for GitHub...")
-        with open("/x1/gitbox/conf/%s.txt" % cfg.repo_name, "w") as f:
+        with open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % cfg.repo_name, "w") as f:
             f.write(ghwl)
             f.close()
         print("Whitelist updated!")
