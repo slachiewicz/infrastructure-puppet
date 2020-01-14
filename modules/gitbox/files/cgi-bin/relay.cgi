@@ -69,7 +69,9 @@ if what == 'pr':
   # Deemed safe committer by .asf.yaml?
   if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
         ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
-        is_asf = PAYLOAD['pull_request']['user']['login'] in ghprb_whitelist
+        if PAYLOAD['pull_request']['user']['login'] in ghprb_whitelist:
+            is_asf = True
+            log_entry('whitelist', "%s [%s]: %s payload for %s allowed via GHPRB Whitelist for %s" % (DATE, GUID, what, hook, PAYLOAD['pull_request']['user']['login']))
   # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
@@ -81,7 +83,9 @@ if what == 'pr_comment':
   # Deemed safe committer by .asf.yaml?
   if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
         ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
-        is_asf = PAYLOAD['comment']['user']['login'] in ghprb_whitelist
+        if PAYLOAD['comment']['user']['login'] in ghprb_whitelist:
+            is_asf = True
+            log_entry('whitelist', "%s [%s]: %s payload for %s allowed via GHPRB Whitelist for %s" % (DATE, GUID, what, hook, PAYLOAD['comment']['user']['login']))
   # If we don't trust, abort immediately
   if not is_asf:
     print("Status: 204 Handled\r\n\r\n")
