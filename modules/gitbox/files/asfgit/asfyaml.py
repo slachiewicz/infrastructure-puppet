@@ -15,8 +15,8 @@ WSMAP = {
     'infrastructure': 'infra',
 }
 
-def jekyll(cfg, yml):
-    """ Jekyll auto-build """
+def builder(cfg, yml):
+    """ ASF Auto-builderator """
     
     # Don't build from asf-site, like...ever
     ref = yml.get('refname', 'master').replace('refs/heads/', '')
@@ -28,66 +28,20 @@ def jekyll(cfg, yml):
     whoami = yml.get('whoami')
     if whoami and whoami != ref:
         return
-    
-    # Get target branch, if any, default to same branch
-    target = yml.get('target', ref)
-    
-    # Get optional theme
-    theme = yml.get('theme', 'theme')
-    
-    # infer project name
-    m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
-    pname = m.group(1)
-    pname = WSMAP.get(pname, pname)
-    
-    # Get notification list
-    pnotify = yml.get('notify', cfg.recips[0])
-    
-    # Contact buildbot 2
-    bbusr, bbpwd = open("/x1/gitbox/auth/bb2.txt").read().strip().split(':', 1)
-    import requests
-    s = requests.Session()
-    s.get("https://ci2.apache.org/auth/login", auth= (bbusr, bbpwd))
-    
-    payload = {
-        "method": "force",
-        "jsonrpc": "2.0",
-        "id":0,
-        "params":{
-            "reason": "Triggered jekyll auto-build via .asf.yaml by %s" % cfg.committer,
-            "builderid": "3",
-            "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
-            "sourcebranch": ref,
-            "outputbranch": target,
-            "project": pname,
-            "theme": theme,
-            "notify": pnotify,
-        }
-    }
-    print("Triggering jekyll build...")
-    s.post('https://ci2.apache.org/api/v2/forceschedulers/jekyll_websites', json = payload)
-    print("Done!")
+   
+    # Get builder type specified
+    builder = yml.get('type')
+    if builder == "manual":
+        commands = yml.get('commands', [])
+    else:
+        raise Exception('No builder type supplied in .asf.yaml')
 
-def pelican(cfg, yml):
-    """ Pelican auto-build """
-    
-    # Don't build from asf-site, like...ever
-    ref = yml.get('refname', 'master').replace('refs/heads/', '')
-    if ref == 'asf-site':
-        print("Not auto-building from asf-site, ever...")
-        return
-    
-    # If whoami specified, ignore this payload if branch does not match
-    whoami = yml.get('whoami')
-    if whoami and whoami != ref:
-        return
-    
     # Get target branch, if any, default to same branch
     target = yml.get('target', ref)
     
     # Get optional theme
     theme = yml.get('theme', 'theme')
-    
+   
     # infer project name
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
     pname = m.group(1)
@@ -115,10 +69,12 @@ def pelican(cfg, yml):
             "project": pname,
             "theme": theme,
             "notify": pnotify,
+            "builder": builder,
+            "commands": commands,
         }
     }
     print("Triggering pelican build...")
-    s.post('https://ci2.apache.org/api/v2/forceschedulers/pelican_websites', json = payload)
+    s.post('https://ci2.apache.org/api/v2/forceschedulers/asfbuilder', json = payload)
     print("Done!")
 
 
