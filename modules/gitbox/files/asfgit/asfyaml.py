@@ -22,6 +22,8 @@ def jenkins(cfg, yml):
     if ref == 'master':
         ghprb_whitelist = yml.get('github_whitelist')
         if ghprb_whitelist and type(ghprb_whitelist) is list:
+            if len(ghprb_whitelist) > 10:
+                raise Exception("GitHub whitelist cannot be more than 10 people!")
             ghwl = "\n".join(ghprb_whitelist)
             print("Updating GHPRB whitelist for GitHub...")
             with open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % cfg.repo_name, "w") as f:
