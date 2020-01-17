@@ -2032,7 +2032,8 @@ vhosts_asf::vhosts::vhosts:
       <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
-
+      # CORS, INFRA-19739
+      Header set Access-Control-Allow-Origin "*"
 
   tlp-ssl:
     priority: 99
@@ -2122,6 +2123,8 @@ vhosts_asf::vhosts::vhosts:
       <If "-d '/www/attic.apache.org/flagged/%%{}{reqenv:HOST_UNQUALIFIED}'">
         AddOutputFilter attic html
       </If>
+      # CORS, INFRA-19739
+      Header set Access-Control-Allow-Origin "*"
 
   tomee:
     vhost_name: '*'
