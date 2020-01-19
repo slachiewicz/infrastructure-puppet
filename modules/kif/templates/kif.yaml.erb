@@ -9,7 +9,7 @@ rules:
             - '--user=root'
             - '--group=root'
         triggers:
-            maxmemory:   1024mb
+            maxmemory:   512mb
         runlist:
             - 'service loggy restart'
         # notify: set to 'email' for email, 'hipchat' for hipchat, or both for...both
