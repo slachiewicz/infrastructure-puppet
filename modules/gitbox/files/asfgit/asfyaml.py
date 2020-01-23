@@ -71,7 +71,7 @@ def jekyll(cfg, yml):
         "id":0,
         "params":{
             "reason": "Triggered jekyll auto-build via .asf.yaml by %s" % cfg.committer,
-            "builderid": "3",
+            "builderid": "7",
             "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
             "sourcebranch": ref,
             "outputbranch": target,
