@@ -230,8 +230,6 @@ nifi={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 nifi-pmc={reuse:pit-authorization:nifi-pmc}
 nutch={ldap:cn=nutch,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 nutch-pmc={reuse:pit-authorization:nutch-pmc}
-ode={ldap:cn=ode,ou=project,ou=groups,dc=apache,dc=org;attr=member}
-ode-pmc={reuse:pit-authorization:ode-pmc}
 ofbiz={ldap:cn=ofbiz,ou=project,ou=groups,dc=apache,dc=org;attr=member}
 ofbiz-pmc={reuse:pit-authorization:ofbiz-pmc}
 olingo={ldap:cn=olingo,ou=project,ou=groups,dc=apache,dc=org;attr=member}

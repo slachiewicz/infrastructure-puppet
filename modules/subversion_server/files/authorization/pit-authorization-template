@@ -214,8 +214,6 @@ nifi={reuse:asf-authorization:nifi}
 nifi-pmc={ldap:cn=nifi,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 nutch={reuse:asf-authorization:nutch}
 nutch-pmc={ldap:cn=nutch,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
-ode={reuse:asf-authorization:ode}
-ode-pmc={ldap:cn=ode,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 ofbiz={reuse:asf-authorization:ofbiz}
 ofbiz-pmc={ldap:cn=ofbiz,ou=project,ou=groups,dc=apache,dc=org;attr=owner}
 olingo={reuse:asf-authorization:olingo}
