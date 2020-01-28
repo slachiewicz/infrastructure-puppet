@@ -8,8 +8,10 @@ local function getBans()
     local data = json.decode(r)
     local blocks = {}
     for k, v in pairs(data.bans) do
-        local block_parsed = ip.parse(v.ip)
-        table.insert(blocks, {kind = block_parsed:kind(), cidr = block_parsed, reason = v.reason or "unknown"})
+        if v.target == '*' then
+            local block_parsed = ip.parse(v.ip)
+            table.insert(blocks, {kind = block_parsed:kind(), cidr = block_parsed, reason = v.reason or "unknown"})
+        end
     end
     return blocks, os.time()
 end
