@@ -1454,12 +1454,6 @@ svn-site-role = rw
 [/nutch/site]
 @nutch = rw
 
-[/ode]
-@ode=r
-
-[/ode/site]
-@ode=rw
-
 [/ofbiz]
 @ofbiz=rw
 
