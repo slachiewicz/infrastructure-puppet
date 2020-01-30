@@ -37,7 +37,7 @@ import pwd
 
 REPO_ROOT = "/x1/repos/asf" # Root dir for all repos
 CONFIG_FILE = "/x1/gitbox/matt/tools/grouper.cfg" # config file with GH token in it
-
+CONFIG = ConfigParser.ConfigParser()
 CONFIG.read(CONFIG_FILE) # Shhhh
 TOKEN = CONFIG.get('github', 'token')
 
