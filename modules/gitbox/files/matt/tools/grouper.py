@@ -62,7 +62,7 @@ def getJSON(url):
             logging.warning("Giving up on URL %s" % url)
             return []
         try:
-            rv = requests.get(url)
+            rv = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN))
             if rv.status_code != 200:
                 rv.raise_for_status()
             js = rv.json()
@@ -88,8 +88,7 @@ def getGitHubTeams():
     logging.info("Fetching GitHub teams...")
     teams = {}
     for n in range(1, 100):
-        url = "https://api.github.com/orgs/apache/teams?access_token=%s&page=%u" % (
-            ORG_READ_TOKEN, n)
+        url = "https://api.github.com/orgs/apache/teams?page=%u" % n
         data = getJSON(url)
         # Break if we've hit the end
         if len(data) == 0:
@@ -113,8 +112,7 @@ def getGitHubRepos():
         "Fetching list of GitHub repos, hang on (this may take a while!)..")
     repos = []
     for n in range(1, 150):  # 150 would be 4500 repos, we have 1750ish now...
-        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (
-            ORG_READ_TOKEN, n)
+        url = "https://api.github.com/orgs/apache/repos?page=%u" % n
         data = getJSON(url)
         # Break if no more repos
         if len(data) == 0:
@@ -131,8 +129,8 @@ def getGitHubTeamMembers(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
     for n in range(1, 100):  # 100 would be 3000 members
-        url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (
-            teamID, ORG_READ_TOKEN, n)
+        url = "https://api.github.com/teams/%s/members?page=%u" % (
+            teamID, n)
         data = getJSON(url)
         # Break if no more members
         if len(data) == 0:
@@ -148,9 +146,9 @@ def getGitHubTeamRepos(teamID):
     if str(int(teamID)) != str(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
-    for n in range(1, 50): # 50 pages = 500 repos max
-        url = "https://api.github.com/teams/%s/repos?per_page=10&access_token=%s&page=%u" % (
-            teamID, ORG_READ_TOKEN, n)
+    for n in range(1, 50): # 50 pages = 1000 repos max
+        url = "https://api.github.com/teams/%s/repos?per_page=20&page=%u" % (
+            teamID, n)
         data = getJSON(url)
         # Break if no more members
         if len(data) == 0:
@@ -169,9 +167,9 @@ def createGitHubTeam(project):
             " - This project has not been cleared for GitBox yet. Aborting team creation")
         return False
 
-    url = "https://api.github.com/orgs/apache/teams?access_token=%s" % ORG_READ_TOKEN
+    url = "https://api.github.com/orgs/apache/teams"
     data = json.dumps({'name': "%s committers" % project})
-    r = requests.post(url, data=data, allow_redirects=True)
+    r = requests.post(url, data=data, allow_redirects=True, auth = ('asf-gitbox', ORG_READ_TOKEN))
     data = json.loads(r.content)
     if data and 'id' in data:
         logging.info("New GitHub team created as #%s" % str(data['id']))
