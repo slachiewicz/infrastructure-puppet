@@ -54,20 +54,18 @@ apache::mod::dir::indexes:
   - 'index.php'
   - 'index.xhtml'
 
-apache::mod::event::listenbacklog:           '1024'
+apache::mod::event::listenbacklog:           '1023'
+apache::mod::event::maxclients:              '5000'
 apache::mod::event::maxconnectionsperchild:  '0'
-apache::mod::event::maxrequestworkers:       '1024'
-apache::mod::event::maxsparethreads:         '1024'
-apache::mod::event::minsparethreads:         '256'
-apache::mod::event::serverlimit:             '12'
-apache::mod::event::startservers:            '8'
-apache::mod::event::threadlimit:             '128'
-apache::mod::event::threadsperchild:         '128'
+apache::mod::event::maxrequestworkers:       '5000'
+apache::mod::event::maxsparethreads:         '1500'
+apache::mod::event::minsparethreads:         '500'
+apache::mod::event::serverlimit:             '20'
+apache::mod::event::startservers:            '5'
+apache::mod::event::threadlimit:             '250'
+apache::mod::event::threadsperchild:         '250'
 
-apache::mod::reqtimeout::timeouts:
-  - 'header=0'
-  - 'body=0'
-  - 'handshake=0'
+apache::mod::reqtimeout::timeouts:            ['header=0', 'body=0', 'handshake=0']
 
 apache::mod::status::allow_from:
   - 'All'
