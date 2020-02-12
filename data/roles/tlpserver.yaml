@@ -118,7 +118,7 @@ logrotate::rule:
     create: true
     sharedscripts: true
     postrotate:
-      - 'if /etc/init.d/apache2 status > /dev/null ; then /etc/init.d/apache2 reload > /dev/null; fi;'
+      - 'if /etc/init.d/apache2 status > /dev/null ; then /etc/init.d/apache2 restart > /dev/null; fi;'
     prerotate:
       - 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi;'
 
