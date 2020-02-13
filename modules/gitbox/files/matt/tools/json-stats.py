@@ -34,10 +34,9 @@ ORG_READ_TOKEN = CONFIG.get('github', 'token')
 def getGitHubRepos():
     """ Fetches all GitHub repos we own """
     repos = []
-    for n in range(1, 100): # 100 would be 3000 repos, we have 750ish now...
-        url = "https://api.github.com/orgs/apache/repos?access_token=%s&page=%u" % (ORG_READ_TOKEN, n)
-        response = urllib2.urlopen(url)
-        data = json.load(response)
+    for n in range(1, 100): # 100 would be 3000 repos, we have 2000ish now...
+        url = "https://api.github.com/orgs/apache/repos?page=%u" % n
+        data = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
         # Break if no more repos
         if len(data) == 0:
             break
@@ -48,17 +47,15 @@ def getGitHubRepos():
 def getClones(repo):
     """ Fetches all clone stats """
     repos = []
-    url = "https://api.github.com/repos/apache/%s/traffic/clones?per=day&access_token=%s" % (repo, ORG_READ_TOKEN)
-    response = urllib2.urlopen(url)
-    data = json.load(response)
+    url = "https://api.github.com/repos/apache/%s/traffic/clones?per=day&" % repo
+    data = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
     return data
 
 def getViews(repo):
     """ Fetches all view stats """
     repos = []
-    url = "https://api.github.com/repos/apache/%s/traffic/views?per=day&access_token=%s" % (repo, ORG_READ_TOKEN)
-    response = urllib2.urlopen(url)
-    data = json.load(response)
+    url = "https://api.github.com/repos/apache/%s/traffic/views?per=day&" % repo
+    data = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
     return data
 
 

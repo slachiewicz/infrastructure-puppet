@@ -101,9 +101,8 @@ def getGitHubTeamMembers(teamID):
         logging.warning("Bad Team ID passed!!")
         return None
     for n in range(1, 200): # 200 would be 6000 members, we have 1300ish now...
-        url = "https://api.github.com/teams/%s/members?access_token=%s&page=%u" % (teamID, ORG_READ_TOKEN, n)
-        response = urllib2.urlopen(url)
-        data = json.load(response)
+        url = "https://api.github.com/teams/%s/members?page=%u" % (teamID, n)
+        data = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
         # Break if no more members
         if len(data) == 0:
             break

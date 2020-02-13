@@ -28,14 +28,12 @@ MAX_PAGES = 1000
 def fetch_users(token, filter, count=MAX_PAGES):
     users = set()
     for n in range(count):
-        url = "https://api.github.com/orgs/apache/members?access_token=%s&filter=%s&page=%u" % (token, filter, n)
-        response = urllib2.urlopen(url).read()
-        if response:
-            js = json.loads(response)
-            if len(js) == 0:
-                break
-            for user in js:
-                users.add(user['login'])
+        url = "https://api.github.com/orgs/apache/members?filter=%s&page=%u" % (filter, n)
+        js = requests.get(url, auth = ('asf-gitbox', token)).json()
+        if len(js) == 0:
+            break
+        for user in js:
+            users.add(user['login'])
     return users
 
 

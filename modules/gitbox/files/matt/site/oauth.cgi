@@ -19,11 +19,13 @@
 # This is oauth.cgi - script for handling ASF and GitHub OAuth.
 
 import hashlib, json, random, os, sys, time, subprocess, re, ldap
-import cgi, sqlite3, hashlib, Cookie, urllib, urllib2, ConfigParser
+import cgi, sqlite3, hashlib, Cookie, urllib, ConfigParser
+import requests
 
 # LDAP settings
 CONFIG = ConfigParser.ConfigParser()
 CONFIG.read("/x1/gitbox/matt/tools/grouper.cfg")
+ORG_READ_TOKEN = CONFIG.get('github', 'token')
 
 LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
 LDAP_USER = CONFIG.get('ldap', 'user')
@@ -244,23 +246,18 @@ def main():
         # Construct OAuth backend check POST data
         rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
         
-        req = urllib2.Request("https://github.com/login/oauth/access_token", rargs)
-        response = urllib2.urlopen(req).read()
+        response = requests.post("https://github.com/login/oauth/access_token", data = rargs).text
         token = re.search(r"(access_token=[a-f0-9]+)", response)
         # If we got an access token, fetch user data
         if token:
-            req = urllib2.Request("https://api.github.com/user?%s" % token.group(1))
-            response = urllib2.urlopen(req).read()
-            js = json.loads(response)
+            js = requests.get("https://api.github.com/user", headers = {'Authorization': "TOKEN %s" % token}).json()
             valid = True
         
     # ASF Oauth callback
     elif state and code and key == 'apache':
         doingOAuth = True
         isASF = True
-        req = urllib2.Request("https://oauth.apache.org/token", os.environ.get("QUERY_STRING"))
-        response = urllib2.urlopen(req).read()
-        js = json.loads(response)
+        js = requests.post("https://oauth.apache.org/token", data = os.environ.get("QUERY_STRING")).json()
         valid = True
     
     # Did we get something useful from the backend?
@@ -340,9 +337,8 @@ def main():
             csec = m[1].strip()
             for n in range(0,100):
                 try:
-                    result = urllib2.urlopen("https://api.github.com/orgs/apache/repos?client_id=%s&client_secret=%s&page=%u" % (cid, csec, n)).read()
-                    js = json.loads(result)
-                    if json:
+                    js = requests.get("https://api.github.com/orgs/apache/repos?page=%u" % n, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
+                    if js:
                         if len(js) == 0:
                             break
                         for repo in js:
