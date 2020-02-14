@@ -201,7 +201,7 @@ apache::custom_config:
         RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/output -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
-        RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
+        RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2 [L]
       </Macro>
 
   aoo:
