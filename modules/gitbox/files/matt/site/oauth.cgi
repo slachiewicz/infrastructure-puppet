@@ -247,10 +247,10 @@ def main():
         rargs = "%s&client_id=%s&client_secret=%s" % (os.environ.get("QUERY_STRING"), cid, csec)
         
         response = requests.post("https://github.com/login/oauth/access_token", data = rargs).text
-        token = re.search(r"(access_token=[a-f0-9]+)", response)
+        token = re.search(r"access_token=([a-f0-9]+)", response)
         # If we got an access token, fetch user data
         if token:
-            js = requests.get("https://api.github.com/user", headers = {'Authorization': "TOKEN %s" % token}).json()
+            js = requests.get("https://api.github.com/user", headers = {'Authorization': "TOKEN %s" % token.group(1)}).json()
             valid = True
         
     # ASF Oauth callback
