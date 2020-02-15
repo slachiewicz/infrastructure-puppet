@@ -488,12 +488,7 @@ vhosts_asf::vhosts::vhosts:
         ExpiresActive On
         ExpiresDefault A3600
       </IfModule>
-
-      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
-      <LocationMatch ^/dist/.*>
-        Header set Access-Control-Allow-Origin "*"
-      </LocationMatch>
-
+      
       <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
@@ -506,10 +501,9 @@ vhosts_asf::vhosts::vhosts:
         RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
-
-      <Directory /www/www.apache.org/dist/httpd>
-        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
-      </Directory>
+      
+      ## dist/ is now served from downloads.apache.org
+      Redirect /dist/ https://downloads.apache.org/dist/
 
       <Location "/server-status-dd">
         SetHandler server-status
@@ -600,11 +594,6 @@ vhosts_asf::vhosts::vhosts:
         ExpiresDefault A3600
       </IfModule>
 
-      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
-      <LocationMatch ^/dist/.*>
-        Header set Access-Control-Allow-Origin "*"
-      </LocationMatch>
-
       <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
@@ -617,10 +606,9 @@ vhosts_asf::vhosts::vhosts:
         RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
-
-      <Directory /www/www.apache.org/dist/httpd>
-        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
-      </Directory>
+      
+      ## dist/ is now served from downloads.apache.org
+      Redirect /dist/ https://downloads.apache.org/dist/
 
       <Location "/server-status-dd">
         SetHandler server-status
