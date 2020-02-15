@@ -608,7 +608,7 @@ vhosts_asf::vhosts::vhosts:
       </Directory>
       
       ## dist/ is now served from downloads.apache.org
-      Redirect /dist/ https://downloads.apache.org/dist/
+      Redirect /dist/ https://downloads.apache.org/
 
       <Location "/server-status-dd">
         SetHandler server-status
