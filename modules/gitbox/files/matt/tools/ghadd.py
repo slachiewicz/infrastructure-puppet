@@ -102,7 +102,7 @@ def getGitHubTeamMembers(teamID):
         return None
     for n in range(1, 200): # 200 would be 6000 members, we have 1300ish now...
         url = "https://api.github.com/teams/%s/members?page=%u" % (teamID, n)
-        data = requests.get(url, auth = ('asf-gitbox', ORG_READ_TOKEN)).json()
+        data = requests.get(url, headers = {'Authorization': "token %s" % ORG_READ_TOKEN}).json()
         # Break if no more members
         if len(data) == 0:
             break
