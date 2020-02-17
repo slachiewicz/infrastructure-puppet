@@ -19,7 +19,7 @@
 # This is mfa.py - cron job for updating the MFA status of people
 
 import json
-import urllib2
+import requests
 import ConfigParser
 
 MAX_PAGES = 1000
