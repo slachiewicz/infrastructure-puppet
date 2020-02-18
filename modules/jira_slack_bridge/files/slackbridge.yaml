@@ -11,3 +11,6 @@ subscriptions:
     nemo:
         channel: "#nemo-notifications"
         jira: NEMO
+    whimsy:
+        channel: "#whimsy"
+        jira: WHIMSY
