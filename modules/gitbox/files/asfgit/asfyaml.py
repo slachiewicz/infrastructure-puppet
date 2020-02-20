@@ -52,7 +52,7 @@ def custombuild(cfg, yml):
     commands = yml.get('commands', None)
     if commands is None:
         print("No commands specified, exiting")
-        sys.exit(0)
+        return
 
     # infer project name
     m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
