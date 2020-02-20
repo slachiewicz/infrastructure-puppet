@@ -6,6 +6,7 @@ import re
 import github as pygithub
 import os
 import yaml
+import pickle
 
 # LDAP to CNAME mappings for some projects
 WSMAP = {
@@ -49,9 +50,9 @@ def custombuild(cfg, yml):
     target = yml.get('target', ref)
 
     # Get commands
-    commands = yml.get('commands', None)
-    if commands is None:
-        print("No commands specified, exiting")
+    buildscript = yml.get('buildscript', None)
+    if buildscript is None:
+        print("No buildscript specified")
         return
 
     # infer project name
@@ -79,7 +80,7 @@ def custombuild(cfg, yml):
             "sourcebranch": ref,
             "outputbranch": target,
             "project": pname,
-            "theme": theme,
+            "buildscript": buildscript,
             "notify": pnotify,
         }
     }
