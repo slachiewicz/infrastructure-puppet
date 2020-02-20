@@ -31,6 +31,62 @@ def jenkins(cfg, yml):
                 f.close()
             print("Whitelist updated!")
 
+def custombuild(cfg, yml):
+    """ Custom Command Builder """
+
+    # Don't build from asf-site, like...ever
+    ref = yml.get('refname', 'master').replace('refs/heads/', '')
+    if ref == 'asf-site':
+        print("Not auto-building from asf-site, ever...")
+        return
+
+    # If whoami specified, ignore this payload if branch does not match
+    whoami = yml.get('whoami')
+    if whoami and whoami != ref:
+        return
+
+    # Get target branch, if any, default to same branch
+    target = yml.get('target', ref)
+
+    # Get commands
+    commands = yml.get('commands', None)
+    if commands is None:
+        print("No commands specified, exiting")
+        sys.exit(0)
+
+    # infer project name
+    m = re.match(r"(?:incubator-)?([^-.]+)", cfg.repo_name)
+    pname = m.group(1)
+    pname = WSMAP.get(pname, pname)
+
+    # Get notification list
+    pnotify = yml.get('notify', cfg.recips[0])
+
+    # Contact buildbot 2
+    bbusr, bbpwd = open("/x1/gitbox/auth/bb2.txt").read().strip().split(':', 1)
+    import requests
+    s = requests.Session()
+    s.get("https://ci2.apache.org/auth/login", auth= (bbusr, bbpwd))
+
+    payload = {
+        "method": "force",
+        "jsonrpc": "2.0",
+        "id":0,
+        "params":{
+            "reason": "Triggered custom builder via .asf.yaml by %s" % cfg.committer,
+            "builderid": "7",
+            "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
+            "sourcebranch": ref,
+            "outputbranch": target,
+            "project": pname,
+            "theme": theme,
+            "notify": pnotify,
+        }
+    }
+    print("Triggering custom build...")
+    s.post('https://ci2.apache.org/api/v2/forceschedulers/custombuilder_websites', json = payload)
+    print("Done!")
+
 def jekyll(cfg, yml):
     """ Jekyll auto-build """
     
