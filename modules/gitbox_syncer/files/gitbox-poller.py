@@ -183,7 +183,7 @@ def parse_payload(config, data):
                 if '[bot]' not in pusher: # If not internal GitHub bot, complain!
                     # Send an email to users@infra.a.o with the bork
                     asfpy.messaging.mail(
-                        recipient = '<team@infra.apache.org>',
+                        recipient = '<notifications@infra.apache.org>',
                         subject = "gitbox repository %s: push from unknown github user!" % reponame,
                         sender = '<gitbox@apache.org>',
                         message = tmpl_unknown_user % locals(),
@@ -215,7 +215,7 @@ def parse_payload(config, data):
                 except Exception as errmsg:
                     # Send an email to users@infra.a.o with the bork
                     asfpy.messaging.mail(
-                        recipient = '<team@infra.apache.org>',
+                        recipient = '<notifications@infra.apache.org>',
                         subject = "gitbox repository %s: missed event/push!" % reponame,
                         sender = '<gitbox@apache.org>',
                         message = tmpl_missed_webhook % locals(),
@@ -239,7 +239,7 @@ def parse_payload(config, data):
             except sqlite3.Error as e:
                 txt = e.args[0]
                 asfpy.messaging.mail(
-                        recipient = '<team@infra.apache.org>',
+                        recipient = '<notifications@infra.apache.org>',
                         subject = "gitbox repository %s: sqlite operational error!" % reponame,
                         sender = '<gitbox@apache.org>',
                         message = "gitbox.db could not be written to: %s" % txt,
@@ -296,7 +296,7 @@ def parse_payload(config, data):
                 # Send an email to users@infra.a.o with the bork
                 errmsg = error
                 asfpy.messaging.mail(
-                        recipient = '<team@infra.apache.org>',
+                        recipient = '<notifications@infra.apache.org>',
                         subject = "gitbox repository %s: sync failed!" % reponame,
                         sender = '<gitbox@apache.org>',
                         message = tmpl_sync_failed % locals(),
