@@ -66,7 +66,7 @@ function cwrite(who, what, uri)
     for k, socket in pairs(who) do
         if socket then
             request = requests[socket]
-            if not uri or uri:match("^"..request.uri) then
+            if not uri or uri:match("^"..request.uri:gsub("%%", "%%%%")) then
                 local len = string.format("%x", what:len() + 2)
                 local x = socket:send(len .. "\r\n" .. what .. "\r\n\r\n")
                 if x == nil then
