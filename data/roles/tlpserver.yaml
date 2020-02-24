@@ -194,7 +194,7 @@ apache::custom_config:
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
+        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2 [L]
         
         # change the DocumentRoot to ${DocumentRoot}/output if it exists (pelican builds)
         # accept multipart subdomains, but cut away eu|us|incubator from path
