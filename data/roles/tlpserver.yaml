@@ -202,6 +202,9 @@ apache::custom_config:
         RewriteCond /var/www/%1.apache.org/output -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
         RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2 [L]
+        
+        # Alias for internal sub-root rewrites such as Lucene docs (INFRA-19439)
+        RewriteRule /__root/(([-a-z0-9]+\.?)+)\/?(.*)$ /www/$1/$3
       </Macro>
 
   aoo:
@@ -488,12 +491,7 @@ vhosts_asf::vhosts::vhosts:
         ExpiresActive On
         ExpiresDefault A3600
       </IfModule>
-
-      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
-      <LocationMatch ^/dist/.*>
-        Header set Access-Control-Allow-Origin "*"
-      </LocationMatch>
-
+      
       <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
@@ -506,10 +504,9 @@ vhosts_asf::vhosts::vhosts:
         RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
-
-      <Directory /www/www.apache.org/dist/httpd>
-        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
-      </Directory>
+      
+      ## dist/ is now served from downloads.apache.org
+      Redirect /dist/ https://downloads.apache.org/
 
       <Location "/server-status-dd">
         SetHandler server-status
@@ -600,11 +597,6 @@ vhosts_asf::vhosts::vhosts:
         ExpiresDefault A3600
       </IfModule>
 
-      ## Set " Access-Control-Allow-Origin: *"  as per https://issues.apache.org/jira/browse/INFRA-2877
-      <LocationMatch ^/dist/.*>
-        Header set Access-Control-Allow-Origin "*"
-      </LocationMatch>
-
       <Directory /www/www.apache.org/content/dist>
         IndexOptions FancyIndexing NameWidth=* FoldersFirst \
           ScanHTMLTitles DescriptionWidth=*
@@ -617,10 +609,9 @@ vhosts_asf::vhosts::vhosts:
         RewriteCond "/www/attic.apache.org/projects/%1.html" -f
         RewriteRule ".*" "http://attic.apache.org/projects/%1.html" [R=307,L]
       </Directory>
-
-      <Directory /www/www.apache.org/dist/httpd>
-        IndexOptions +FoldersFirst +ScanHTMLTitles +DescriptionWidth=*
-      </Directory>
+      
+      ## dist/ is now served from downloads.apache.org
+      Redirect /dist/ https://downloads.apache.org/
 
       <Location "/server-status-dd">
         SetHandler server-status
