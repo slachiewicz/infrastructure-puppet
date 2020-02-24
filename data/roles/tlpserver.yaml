@@ -194,14 +194,14 @@ apache::custom_config:
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
+        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2 [L]
         
         # change the DocumentRoot to ${DocumentRoot}/output if it exists (pelican builds)
         # accept multipart subdomains, but cut away eu|us|incubator from path
         RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/output -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
-        RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2 [L]
+        RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
         
         # Alias for internal sub-root rewrites such as Lucene docs (INFRA-19439)
         RewriteRule /__root/(([-a-z0-9]+\.?)+)\/?(.*)$ /www/$1/$3
