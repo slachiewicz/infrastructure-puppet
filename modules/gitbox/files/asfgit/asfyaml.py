@@ -49,6 +49,9 @@ def custombuild(cfg, yml):
     # Get target branch, if any, default to same branch
     target = yml.get('target', ref)
 
+    # get the directory the build script will output it's generated content to.
+    outputdir = yml.get('outputdir', None)
+
     # Get commands
     buildscript = yml.get('buildscript', None)
     if buildscript is None:
@@ -81,6 +84,7 @@ def custombuild(cfg, yml):
             "outputbranch": target,
             "project": pname,
             "buildscript": buildscript,
+            "outputdir": outputdir,
             "notify": pnotify,
         }
     }
