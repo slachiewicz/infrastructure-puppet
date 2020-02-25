@@ -141,7 +141,7 @@ apache::custom_config:
       LuaCodeCache stat
       RewriteEngine On
       RewriteOptions InheritDown
-      RewriteRule .*\.cgi /var/www/www.apache.org/content/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /var/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       <Directory /var/www/www.apache.org/dyn/>
         Require all granted
         <FilesMatch "(closer|ss)\.lua">
