@@ -193,6 +193,7 @@ apache::custom_config:
         RewriteCond %%{}{REQUEST_URI}              !^/[.]revision$
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
+        RewriteCond /var/www/%1.apache.org/output !-d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
         RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
         
@@ -200,7 +201,6 @@ apache::custom_config:
         # accept multipart subdomains, but cut away eu|us|incubator from path
         RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/output -d
-        RewriteCond /var/www/%1.apache.org/content !-d
         RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
         RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
         
