@@ -141,7 +141,7 @@ apache::custom_config:
       LuaCodeCache stat
       RewriteEngine On
       RewriteOptions InheritDown
-      RewriteRule .*\.cgi /var/www/www.apache.org/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
+      RewriteRule .*\.cgi /var/www/www.apache.org/content/dyn/closer.lua?f=%%{}{DOCUMENT_ROOT}/%%{}{REQUEST_FILENAME} [QSA]
       <Directory /var/www/www.apache.org/dyn/>
         Require all granted
         <FilesMatch "(closer|ss)\.lua">
@@ -194,12 +194,13 @@ apache::custom_config:
         RewriteCond ${lowercase:%%{}{SERVER_NAME}} ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/content -d
         RewriteRule ^(.*)$ ${lowercase:%%{}{SERVER_NAME}}$1 [C]
-        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2 [L]
+        RewriteRule ^([\w.]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/content/$2
         
         # change the DocumentRoot to ${DocumentRoot}/output if it exists (pelican builds)
         # accept multipart subdomains, but cut away eu|us|incubator from path
         RewriteCond ${lowercase:%%{}{HTTP_HOST}} ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org$
         RewriteCond /var/www/%1.apache.org/output -d
+        RewriteCond /var/www/%1.apache.org/content !-d
         RewriteRule ^(.*)$ ${lowercase:%%{}{HTTP_HOST}}$1 [C]
         RewriteRule ^([-a-z0-9]+?)(?:\.(?:us|eu|incubator))?\.apache\.org/(.*) /www/$1.apache.org/output/$2
         
