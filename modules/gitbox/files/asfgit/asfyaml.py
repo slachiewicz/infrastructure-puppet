@@ -6,7 +6,6 @@ import re
 import github as pygithub
 import os
 import yaml
-import pickle
 
 # LDAP to CNAME mappings for some projects
 WSMAP = {
@@ -72,22 +71,25 @@ def custombuild(cfg, yml):
     s = requests.Session()
     s.get("https://ci2.apache.org/auth/login", auth= (bbusr, bbpwd))
 
-    payload = {
-        "method": "force",
-        "jsonrpc": "2.0",
-        "id":0,
-        "params":{
-            "reason": "Triggered custom builder via .asf.yaml by %s" % cfg.committer,
-            "builderid": "7",
-            "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
-            "sourcebranch": ref,
-            "outputbranch": target,
-            "project": pname,
-            "buildscript": buildscript,
-            "outputdir": outputdir,
-            "notify": pnotify,
-        }
-    }
+    if type(buildscript) is not 'string':
+        raise ValueError("Buildscript invocation is not a string")
+    else:
+            payload = {
+                "method": "force",
+                "jsonrpc": "2.0",
+                "id":0,
+                "params":{
+                    "reason": "Triggered custom builder via .asf.yaml by %s" % cfg.committer,
+                    "builderid": "7",
+                    "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
+                    "sourcebranch": ref,
+                    "outputbranch": target,
+                    "project": pname,
+                    "buildscript": buildscript,
+                    "outputdir": outputdir,
+                    "notify": pnotify,
+                }
+            }
     print("Triggering custom build...")
     s.post('https://ci2.apache.org/api/v2/forceschedulers/custombuilder_websites', json = payload)
     print("Done!")
