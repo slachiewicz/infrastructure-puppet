@@ -156,7 +156,7 @@ vhosts_asf::vhosts::vhosts:
         ProxyPreserveHost On
         ProxyRequests     Off
         AllowEncodedSlashes On
-        ProxyPass / http://127.0.0.1:8080/
+        ProxyPass / http://127.0.0.1:8080/ nocanon
         ProxyPassReverse / http://127.0.0.1:8080/
         ProxyPassReverse  /  http://builds.apache.org/
         RewriteRule   ^/robots\.txt$  http://127.0.0.1:8080/robots.txt [P,L]
