@@ -80,7 +80,7 @@ def custombuild(cfg, yml):
                 "id":0,
                 "params":{
                     "reason": "Triggered custom builder via .asf.yaml by %s" % cfg.committer,
-                    "builderid": "7",
+                    "builderid": "8",
                     "source": "https://gitbox.apache.org/repos/asf/%s.git" % cfg.repo_name,
                     "sourcebranch": ref,
                     "outputbranch": target,
