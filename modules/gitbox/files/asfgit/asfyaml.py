@@ -71,7 +71,7 @@ def custombuild(cfg, yml):
     s = requests.Session()
     s.get("https://ci2.apache.org/auth/login", auth= (bbusr, bbpwd))
 
-    if type(buildscript) is not 'string':
+    if type(buildscript) is not str:
         raise ValueError("Buildscript invocation is not a string")
     else:
             payload = {
