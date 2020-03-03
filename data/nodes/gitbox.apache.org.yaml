@@ -215,7 +215,7 @@ gitbox::custom_fragment_443: |
       RewriteCond %%{}{QUERY_STRING} p=([^;.]+)\.git;a=commitdiff.*?h=([a-f0-9]+)
       RewriteRule .* https://github.com/apache/%1/commit/%2/ [QSD]
 
-      RewriteCond %%{}{QUERY_STRING}p=([^;.]+)\.git;a=history.*?;f=([^*].*?);.*?hb=([a-f0-9]+)
+      RewriteCond %%{}{QUERY_STRING} p=([^;.]+)\.git;a=history.*?;f=([^*].*?);.*?hb=([a-f0-9]+)
       RewriteRule .* https://github.com/apache/%1/commits/%3/%2/ [QSD]
 
       RewriteCond %%{}{QUERY_STRING} p=([^;.]+)\.git;a=blobdiff.*?hb=([a-f0-9]+)
