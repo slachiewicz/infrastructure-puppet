@@ -1960,6 +1960,7 @@ vhosts_asf::vhosts::vhosts:
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
+      SSLProxyEngine On
       <Directory /www/trafficserver.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
@@ -2051,6 +2052,7 @@ vhosts_asf::vhosts::vhosts:
       UseCanonicalName Off
       Use CatchAll
       Use BlockSvn
+      SSLProxyEngine On
       <Directory /www/trafficserver.apache.org>
         Options +Includes
         AddOutputFilter INCLUDES .html
