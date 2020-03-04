@@ -447,6 +447,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
+      SSLProxyEngine On
       Redirect permanent /docs/vif.info http://httpd.apache.org/docs/misc/vif-info
       Redirect permanent /docs/directives.html http://httpd.apache.org/docs/mod/directives.html
       Redirect permanent /docs/API.html http://httpd.apache.org/docs/misc/API.html
@@ -552,6 +553,7 @@ vhosts_asf::vhosts::vhosts:
     access_log_file: '/x1/logs/weblog.log'
     error_log_file: '/x1/logs/errorlog.log'
     custom_fragment: |
+      SSLProxyEngine On
       Redirect permanent /docs/vif.info https://httpd.apache.org/docs/misc/vif-info
       Redirect permanent /docs/directives.html https://httpd.apache.org/docs/mod/directives.html
       Redirect permanent /docs/API.html https://httpd.apache.org/docs/misc/API.html
