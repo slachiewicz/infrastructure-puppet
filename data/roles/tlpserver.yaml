@@ -11,6 +11,7 @@ classes:
   - apache::mod::negotiation
   - apache::mod::proxy
   - apache::mod::proxy_http
+  - apache::mod::proxy_connect
   - apache::mod::reqtimeout
   - apache::mod::rewrite
   - apache::mod::setenvif
