@@ -91,7 +91,7 @@ def custombuild(cfg, yml):
                 }
             }
     print("Triggering custom build...")
-    s.post('https://ci2.apache.org/api/v2/forceschedulers/custombuilder_websites', json = payload)
+    s.post('https://ci2.apache.org/api/v2/forceschedulers/custombuild_websites', json = payload)
     print("Done!")
 
 def jekyll(cfg, yml):
