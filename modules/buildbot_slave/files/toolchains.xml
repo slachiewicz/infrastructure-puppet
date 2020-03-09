@@ -101,7 +101,6 @@
       <jdkHome>/home/buildslave/slave/tools/java/latest14/</jdkHome>
     </configuration>
   </toolchain>
-  </toolchain>
     <toolchain>
     <type>jdk</type>
     <provides>
