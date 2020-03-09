@@ -457,6 +457,7 @@ build_slaves::jenkins::jenkins_packages:
   - asf-build-openjdk13-ea+33
   - asf-build-openjdk14-ea+1
   - asf-build-openjdk14-ea+10
+  - asf-build-openjdk15-ea+11
 
 # Not all build slaves. This is just for Jenkins slaves.
 build_slaves::distro_packages:
@@ -641,6 +642,7 @@ buildbot_slave::buildbot::buildbot_packages:
   - asf-build-openjdk13-ea+33
   - asf-build-openjdk14-ea+1
   - asf-build-openjdk14-ea+10
+  - asf-build-openjdk15-ea+11
 
 buildbot_slave::bb_basepackages:
   - ant
