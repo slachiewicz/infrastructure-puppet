@@ -133,6 +133,7 @@ class build_slaves::jenkins (
     'jdk-11-ea+28',
     'jdk-11.0.1',
     'jdk-11.0.4',
+    'openjdk-8u242-b08',
     'openjdk-jdk-10.0.2',
     'openjdk-12-ea+18',
     'openjdk-12-ea+28',
