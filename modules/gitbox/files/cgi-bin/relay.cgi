@@ -8,6 +8,7 @@ import sys
 import fnmatch
 import time
 import ldap
+import datetime
 
 LDAP_BASE = "ou=people,dc=apache,dc=org"
 LDAP_URI = "ldaps://ldap-us-ro.apache.org:636"
@@ -47,25 +48,32 @@ def gh_to_ldap(username):
 
 
 def log_entry(key, msg):
+    now = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()
     with open("/x1/gitbox/logs/relay-%s.log" % key, "a") as f:
-        f.write(msg + "\n")
+        f.write("[%s] %s\n" % (now, msg))
         f.close()
 
 # determine what and where
 repo = PAYLOAD['repository']['name']
 what = 'commit'
+who = 'unknown'
+how = 'commit'
 if 'pull_request' in PAYLOAD:
     what = 'pr'
+    how = "PR #%s" % PAYLOAD['pull_request']['number']
 elif 'issue' in PAYLOAD:
     what = 'issue'
+    how = "Issue #%s" % PAYLOAD['issue']['number']
     if 'pull_request' in PAYLOAD['issue']:
         what = 'pr_comment'
+        how = "PR #%s" % PAYLOAD['issue']['number']
     elif 'comment' in PAYLOAD['issue']:
         what = 'issue_comment'
 
 if what == 'pr':
   # Is Proper Committer?
-  is_asf = gh_to_ldap(PAYLOAD['pull_request']['user']['login'])
+  who = PAYLOAD['pull_request']['user']['login']
+  is_asf = gh_to_ldap(who)
   # Deemed safe committer by .asf.yaml?
   if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
         ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
@@ -79,7 +87,8 @@ if what == 'pr':
 
 if what == 'pr_comment':
   # Is Proper Committer?
-  is_asf = gh_to_ldap(PAYLOAD['comment']['user']['login'])
+  who = PAYLOAD['comment']['user']['login']
+  is_asf = gh_to_ldap(who)
   # Deemed safe committer by .asf.yaml?
   if not is_asf and os.path.exists("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo):
         ghprb_whitelist = open("/x1/gitbox/conf/ghprb-whitelist/%s.txt" % repo).read().split("\n")
@@ -104,8 +113,8 @@ for key, entry in YML['relays'].items():
                     rv = requests.post(hook, data = PAYLOAD_FORMDATA, headers = HEADERS)
                 elif fmt == 'json':
                     rv = requests.post(hook, json = PAYLOAD, headers = HEADERS)
-                log_entry(key, "%s [%s]: Delivered %s payload for %s to %s: %u\n" % (DATE, GUID, what, repo, hook, rv.status_code))
+                log_entry(key, "%s [%s]: Delivered %s payload from %s for %s (%s) to %s: %u\n" % (DATE, GUID, what, who, repo, how, hook, rv.status_code))
         except requests.exceptions.RequestException as e:
-            log_entry(key, "%s [%s]: Could not deliver %s payload for %s: %s" % (DATE, GUID, what, hook, e))
+            log_entry(key, "%s [%s]: Could not deliver %s payload from %s for %s (%s): %s" % (DATE, GUID, what, who, hook, how, e))
             
 print("Status: 204 Handled\r\n\r\n")
