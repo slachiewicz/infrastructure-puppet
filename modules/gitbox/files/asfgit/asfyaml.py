@@ -387,6 +387,10 @@ def publish(cfg, yml):
                       (cfg.gitpubsub_host, cfg.gitpubsub_port, cfg.gitpubsub_path),
                       data = json.dumps(payload))
         
+        # Send to pubsub.a.o
+        requests.post("http://pubsub.apache.org:2069/publish/%s" % pname,
+                      data = json.dumps(payload))
+        
         print("Publishing contents at https://%s.apache.org/ ..." % pname)
     except Exception as e:
         print(e)
